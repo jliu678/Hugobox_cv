@@ -59,55 +59,66 @@ education:
     date_start: 2016-12-27
     date_end: 2018-12-10
     summary: |
-      Thesis on _Why LLMs are awesome_. Supervised by [Prof Joe Smith](https://example.com). Presented papers at 5 IEEE conferences with the contributions being published in 2 Springer journals.
-    button:
-      text: 'Read Thesis'
-      url: 'https://example.com'
-  - area: MEng Artificial Intelligence
-    institution: Massachusetts Institute of Technology
-    date_start: 2016-01-01
-    date_end: 2020-12-31
+      The role of Redox signaling and oxidative stress in Naïve T cell differentiation in colitic mice fed by polyphenol-rich foods.
+      
+      Training included:
+      - Nutrition, Immunology, Molecular and Cellular Biology, Biochemistry
+      - flow cytometry, confocal, qPCR, western-blot, Magnetic assist cell sort, mouse techniques (i.p., i.v., retro-orbital injection, dissection, tissue and immunocyte collection etc.)
+      - Modeling redox singaling using differential equations  
+    #button:
+    #  text: 'Read Thesis'
+    #  url: 'https://example.com'
+  - area: PhD Nutrition
+    institution: China Agricultural University
+    date_start: 2013-08-01
+    date_end: 2018-06-30
     summary: |
-      GPA: 3.8/4.0
+      A simple and scalable procedure enhances antioxidant capacity of Chinese vinegar by reshaping metabolism and absorption of the polyphenols.
 
       Courses included:
-      - lorem ipsum dolor sit amet, consectetur adipiscing elit
-      - lorem ipsum dolor sit amet, consectetur adipiscing elit
-      - lorem ipsum dolor sit amet, consectetur adipiscing elit
-  - area: BSc Artificial Intelligence
-    institution: Massachusetts Institute of Technology
-    date_start: 2016-01-01
-    date_end: 2020-12-31
+      - Nutrion, Molecular and Cellular Biology, Microbiology, Biochemistry
+      - HPLC-MS, mouse techniques (i.p., i.v., gavage, lavage, dissection, tissue collection etc.), cell culture, CRISPR-cas9 knock out, DNA recombination
+      - Teaching Assistant for undergraduate courses, Mentoring junior researchers
+  - area: BSc Nutrition and Machine Learning
+    institution: Huazhong Agricultural University
+    date_start: 2009-08-01
+    date_end: 2013-07-01
     summary: |
-      GPA: 3.4/4.0
-      
+      <div style="text-align: justify;">
+      Achieved all A grades, including three instances of perfect scores (100%) in mathematics and programming courses. Ranked in the top 0.3% of students not majoring in Computer Science, I was recruited for and excelled in a training camp focused on mathematical modeling and programming for machine learning. Selected as a varsity member to represent the university in the National Mathematical Contest in Modeling.
+      </div>
+
       Courses included:
-      - lorem ipsum dolor sit amet, consectetur adipiscing elit
-      - lorem ipsum dolor sit amet, consectetur adipiscing elit
-      - lorem ipsum dolor sit amet, consectetur adipiscing elit
+      - Advanced Mathematics, Calculus, Linear algebra, Probability and Statistics
+      - Object Oriented Programming, Computer Fundamental Experiment
+      - Matlab, R, SAS, Statistics and Optimization, to be continued
 work:
-  - position: Director of Cloud Infrastructure
-    company_name: GenCoin
+  - position: Postdoc Scientist, Cancer Immunology and Bioinfomatics
+    company_name: Harvard Medical School/Mass General Hospital
     company_url: ''
     company_logo: ''
-    date_start: 2021-01-01
+    date_start: 2021-09-01
     date_end: ''
-    summary: |2-
-      Responsibilities include:
-      - lorem ipsum dolor sit amet, consectetur adipiscing elit
-      - lorem ipsum dolor sit amet, consectetur adipiscing elit
-      - lorem ipsum dolor sit amet, consectetur adipiscing elit
-  - position: Backend Software Engineer
-    company_name: X
-    company_url: ''
-    company_logo: ''
-    date_start: 2016-01-01
-    date_end: 2020-12-31
     summary: |
       Responsibilities include:
-      - Migrated infrastructure to a new data center
       - lorem ipsum dolor sit amet, consectetur adipiscing elit
       - lorem ipsum dolor sit amet, consectetur adipiscing elit
+      - lorem ipsum dolor sit amet, consectetur adipiscing elit
+  - position: Postdoc Scientist, Infection Immunology and Bioinfomatics
+    company_name: Harvard Medical School/Mass General Hospital
+    company_url: ''
+    company_logo: ''
+    date_start: 2018-12-10
+    date_end: 2021-08-31
+    summary: |
+      Responsibilities include:
+      - Biosafety Level 3 operation and techniques (highly precise/refined bench work skills)
+      - Developed lung slice models to enable investigation on the initial host-pathogen interaction _in situ_ in human lungs, paving the way for early detection of asymptomatic infections
+      - Developed powerful and comprehensive pathway analysis pipline that successfully reveal the key signaling for macrophage to control infection
+    button:
+      text: 'Conference Talk'
+      url: /uploads/Jiyuan_Aug2021d.pdf
+
 
 # Skills
 # Add your own SVG icons to `assets/media/icons/`
@@ -147,9 +158,7 @@ languages:
   - name: English
     percent: 100
   - name: Chinese
-    percent: 75
-  - name: Portuguese
-    percent: 25
+    percent: 100
 
 # Awards.
 #   Add/remove as many awards below as you like.
@@ -162,7 +171,7 @@ awards:
     awarder: Coursera
     icon: coursera
     summary: |
-      I studied the foundational concept of neural networks and deep learning. By the end, I was familiar with the significant technological trends driving the rise of deep learning; build, train, and apply fully connected deep neural networks; implement efficient (vectorized) neural networks; identify key parameters in a neural network’s architecture; and apply deep learning to your own applications.
+      I am a passionate biomedical scientist with seamlessly integrated expertise in bench work and bioinformatics, enabling me to design and execute comprehensive research strategies that effectively bridge experimental and computational approaches. Proficient in leveraging data-driven hypothesis generation and mechanistic validation as exemplified in my publications. revealing novel cellular and molecular targets and treatments of cancers (Oncogene, 2022; EMBO reports, 2023; Nature Communications, 2025; Oncogene, 2025 and two manuscripts in preparation).Experienced in discovering and developing novel cellular and molecular targets for treatments of cancers, validating …..by preclinical modes….and modeling…A team player, proficient in data-driven hypothesis generation and mechanistic validation….Seeking a career opportunity to apply my scientific skills and to pursue my passion in drug discovery and development.
   - title: Blockchain Fundamentals
     url: https://www.edx.org/professional-certificate/uc-berkeleyx-blockchain-fundamentals
     date: '2023-07-01'
@@ -184,5 +193,8 @@ awards:
 ---
 
 ## About Me
+<div style="text-align: justify;">
+Jiyuan Liu is a passionate biomedical scientist with seamlessly integrated expertise in bench work and bioinformatics, enabling him to design and execute comprehensive research strategies that bridge experimental and computational approaches.  
 
-Chien Shiung Wu is a professor of artificial intelligence at the Stanford AI Lab. Her research interests include distributed robotics, mobile computing and programmable matter. She leads the Robotic Neurobiology group, which develops self-reconfiguring robots, systems of self-organizing robots, and mobile sensor networks.
+He extensively leverages single-cell and spatial genomic data to discover, develop, and preclinically validate novel cellular and molecular targets for cancer prevention and treatment _(Oncogene, 2022; EMBO Reports, 2023; Nature Communications, 2025; Oncogene, 2025; two manuscripts in preparation)_. His bioinformatics analysis combines in-depth mathematical and biological reasoning to generate data-driven hypotheses and achieve mechanistic validation. Proficient in building R packages from scratch and debugging and customizing R/Python/ source codes, he is seeking career opportunities to apply computational biology and pursue his passion for drug discovery and development.
+</div>
