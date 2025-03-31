@@ -115,6 +115,7 @@ work:
       - Biosafety Level 3 operation and techniques (highly precise/refined bench work skills)
       - Developed lung slice models to enable investigation on the initial host-pathogen interaction _in situ_ in human lungs, paving the way for early detection of asymptomatic infections
       - Developed powerful and comprehensive pathway analysis pipline that successfully reveal the key signaling for macrophage to control infection
+      - [things for deb](/post/data-visualization/)
     button:
       text: 'Conference Talk'
       url: /uploads/Jiyuan_Aug2021d.pdf
