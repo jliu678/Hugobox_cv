@@ -195,7 +195,9 @@ awards:
 
 ## About Me
 <div style="text-align: justify;">
-Jiyuan Liu is a passionate biomedical scientist with seamlessly integrated expertise in bench work and bioinformatics, enabling him to design and execute comprehensive research strategies that bridge experimental and computational approaches.  
+Jiyuan Liu is a passionate biomedical scientist with seamlessly integrated expertise in bench science and bioinformatics, enabling him to design and execute comprehensive research strategies that bridge experimental and computational approaches.
 
-He extensively leverages single-cell and spatial genomic data to discover, develop, and preclinically validate novel cellular and molecular targets for cancer prevention and treatment _(Oncogene, 2022; EMBO Reports, 2023; Nature Communications, 2025; Oncogene, 2025; two manuscripts in preparation)_. His bioinformatics analysis combines in-depth mathematical and biological reasoning to generate data-driven hypotheses and achieve mechanistic validation. Proficient in building R packages from scratch and debugging and customizing R/Python/ source codes, he is seeking career opportunities to apply computational biology and pursue his passion for drug discovery and development.
+He extensively leverages single-cell and spatial genomic data to discover, develop, and preclinically validate novel cellular and molecular targets for cancer prevention and treatment (Oncogene, 2022; EMBO Reports, 2023; Nature Communications, 2025; Oncogene, 2025; two manuscripts in preparation). His bioinformatics work is grounded in deep mathematical and biological reasoning, empowering high-quality and efficient data-driven hypothesis generation and mechanistic validation.
+
+Proficient in building R packages from scratch and in debugging and customizing R, Python, and open-source pipelines, he is seeking career opportunities to apply computational biology and pursue his passion for drug discovery and development.
 </div>
