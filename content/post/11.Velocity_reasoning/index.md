@@ -1,7 +1,7 @@
 ---
 title: 🧬 Velocity reasoning and discussion
 summary: Velocity uses more biology than trajectory analysis.  
-date: 2025-03-26
+date: 2025-04-04
 authors:
   - admin
 tags:

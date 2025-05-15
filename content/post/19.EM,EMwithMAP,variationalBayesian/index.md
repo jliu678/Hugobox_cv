@@ -1,7 +1,7 @@
 ---
 title: 🧬 EM algorithm, EM with max a posterior, full Bayesian inferences (variational Bayesian) which might be used in auto-coder 
 summary: EM algorithm, EM with max a posterior, full Bayesian inferences (variational Bayesian) which might be used in auto-coder  
-date: 2025-03-26
+date: 2025-04-12
 authors:
   - admin
 tags:

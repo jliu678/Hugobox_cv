@@ -1,7 +1,7 @@
 ---
 title: 🧬 CCA reasoning and integration discussion
 summary: what is CCA really doing? here we dicepher it and present the mathmatical intuition to appreicate its applicability. Also, discuss the integration.  
-date: 2025-03-26
+date: 2025-04-03
 authors:
   - admin
 tags:

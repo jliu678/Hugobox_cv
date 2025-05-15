@@ -1,7 +1,7 @@
 ---
 title: 🧬 how good is negative binomial, why AI works for biology
 summary: how good is negative binomial 
-date: 2025-03-26
+date: 2025-04-09
 authors:
   - admin
 tags:

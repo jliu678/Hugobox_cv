@@ -1,7 +1,7 @@
 ---
 title: 🧬 counteract treatment-specific background in differential expressed gene analysis (huangcong paper)
 summary: The RNAseq dataset involves siRNA treatment, lentivirus infection and shRNA treatment. Here I present a way to formulate the generalized linear models to counteract treatment-specific background during differential expressed gene analysis  
-date: 2025-03-26
+date: 2025-03-27
 authors:
   - admin
 tags:

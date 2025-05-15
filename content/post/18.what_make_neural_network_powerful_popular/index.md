@@ -1,7 +1,7 @@
 ---
 title: 🧬 what makes neural network so powerful and popular 
 summary: what makes neural network so powerful and popular  
-date: 2025-03-26
+date: 2025-04-11
 authors:
   - admin
 tags:

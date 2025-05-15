@@ -1,7 +1,7 @@
 ---
 title: 🧬 Seurat to analysis large sample size of bulk RNAseq. Discuss Wixcox is better for clinical samples
 summary: Seurat to analysis large sample size of bulk RNAseq. Discuss Wixcox is better for clinical samples 
-date: 2025-03-26
+date: 2025-04-08
 authors:
   - admin
 tags:

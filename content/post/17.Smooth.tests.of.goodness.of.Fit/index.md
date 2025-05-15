@@ -1,7 +1,7 @@
 ---
 title: 🧬 Smooth tests of goodness of Fit used in Stijn Hawinkel ’s plos one paper
 summary: Smooth tests of goodness of Fit used in Stijn Hawinkel ’s plos one paper 
-date: 2025-03-26
+date: 2025-04-10
 authors:
   - admin
 tags:

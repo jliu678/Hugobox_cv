@@ -1,7 +1,7 @@
 ---
 title: 🧬 Spatial genomics presentation
 summary: What we can get from Spatial genomics is most meaningful? how to present?  
-date: 2025-03-26
+date: 2025-04-07
 authors:
   - admin
 tags:

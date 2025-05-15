@@ -1,7 +1,7 @@
 ---
 title: 🧬 Expressive cord diagram in PRCC
 summary: What could be expressive and concise presentation of cell-cell interaction? Here I write an small tool to draw Expressive cord diagram  
-date: 2025-03-26
+date: 2025-03-30
 authors:
   - admin
 tags:

@@ -1,7 +1,7 @@
 ---
 title: 🧬 quantify transgenes and herv from well-based single-cell RNAseq
 summary: The algorithm to quantify gene features used by common single-cell RNAseq analysis cannot represent hERV which overlap frequently with genes. Here I discussed the algorithms for feature quantification, and successfully quantified hERV and transgenes by implementing the proper one  
-date: 2025-03-25
+date: 2025-03-26
 authors:
   - admin
 tags:
