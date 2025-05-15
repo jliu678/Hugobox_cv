@@ -172,7 +172,7 @@ awards:
     awarder: Coursera
     icon: coursera
     summary: |
-      I am a passionate biomedical scientist with seamlessly integrated expertise in bench work and bioinformatics, enabling me to design and execute comprehensive research strategies that effectively bridge experimental and computational approaches. Proficient in leveraging data-driven hypothesis generation and mechanistic validation as exemplified in my publications. revealing novel cellular and molecular targets and treatments of cancers (Oncogene, 2022; EMBO reports, 2023; Nature Communications, 2025; Oncogene, 2025 and two manuscripts in preparation).Experienced in discovering and developing novel cellular and molecular targets for treatments of cancers, validating …..by preclinical modes….and modeling…A team player, proficient in data-driven hypothesis generation and mechanistic validation….Seeking a career opportunity to apply my scientific skills and to pursue my passion in drug discovery and development.
+      I am a passionate biomed.
   - title: Blockchain Fundamentals
     url: https://www.edx.org/professional-certificate/uc-berkeleyx-blockchain-fundamentals
     date: '2023-07-01'
