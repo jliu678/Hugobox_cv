@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Transgene | Jiyuan Liu</title>
+    <link>http://localhost:1313/tags/transgene/</link>
+      <atom:link href="http://localhost:1313/tags/transgene/index.xml" rel="self" type="application/rss+xml" />
+    <description>Transgene</description>
+    <generator>Hugo Blox Builder (https://hugoblox.com)</generator><language>en-us</language><lastBuildDate>Mon, 24 Mar 2025 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>http://localhost:1313/media/icon_hu_fd2be5a69becaf9e.png</url>
+      <title>Transgene</title>
+      <link>http://localhost:1313/tags/transgene/</link>
+    </image>
+    
+    <item>
+      <title>🧬 Quantify HERV and transgenes from Bulk-RNAseq</title>
+      <link>http://localhost:1313/post/01.bulkrnaseq_allow_herv_quantification/</link>
+      <pubDate>Mon, 24 Mar 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/post/01.bulkrnaseq_allow_herv_quantification/</guid>
+      <description>&lt;p&gt;The roles of hERVs in gene regulation, immunity, development and cancer are under intense research. Transgenes including GFP, CRE, Luciferase, rtTA/Tet-On/Tet-Off and epitopically expressed genes are common targets to be quantified in sample from transgenic mouse models.&lt;/p&gt;
+&lt;p&gt;Their sequencing reads are frequently charasteristic of repetitive or overlaping with host genome.&lt;/p&gt;
+&lt;p&gt;we need 1) modify fasta and gtf files to include the their sequencing and annotation 2) a feature quantification algorithm to handle multimapping commonly seen for HERV and transgenes. The algorithm to quantify gene features used by common bulk-RNAseq cannot represent hERV which overlap frequently with genes. Here I discussed the algorithms for feature quantification, and successfully quantified hERV and transgenes by implementing the proper one&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,6 +1,6 @@
 <!doctype html>
 <!-- This site was created with Hugo Blox. https://hugoblox.com -->
-<!-- Last Published: May 15, 2025 --><html lang="en-us" dir="ltr"
+<!-- Last Published: May 18, 2025 --><html lang="en-us" dir="ltr"
       data-wc-theme-default="system">
   
 <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
@@ -41,7 +41,7 @@
   
     
   
-  <meta name="description" content="The algorithm to quantify gene features used by common bulk-RNAseq cannot represent hERV which overlap frequently with genes. Here I discussed the algorithms for feature quantification, and successfully quantified hERV and transgenes by implementing the proper one" />
+  <meta name="description" content="Human Endogenous Retroviruses (hERVs) are ancient viral sequences embedded in the human genome. Transgenes are common in transgenic mouse models. To quantify them from sequencing reads, we need-- a) modify fasta and gtf files to include the their sequencing and annotation; b) a feature quantification algorithm to handle multimapping commonly seen for hERV and transgenes. Here I discussed the algorithms for feature quantification, and successfully quantified hERV and transgenes by implementing an EM algorithm." />
 
   
   <link rel="alternate" hreflang="en-us" href="http://localhost:1313/post/01.bulkrnaseq_allow_herv_quantification/" />
@@ -187,8 +187,8 @@
   
   <meta property="og:site_name" content="Jiyuan Liu" />
   <meta property="og:url" content="http://localhost:1313/post/01.bulkrnaseq_allow_herv_quantification/" />
-  <meta property="og:title" content="🧬 bulk-RNAseq allows transgenes, herv quantification | Jiyuan Liu" />
-  <meta property="og:description" content="The algorithm to quantify gene features used by common bulk-RNAseq cannot represent hERV which overlap frequently with genes. Here I discussed the algorithms for feature quantification, and successfully quantified hERV and transgenes by implementing the proper one" /><meta property="og:image" content="http://localhost:1313/post/01.bulkrnaseq_allow_herv_quantification/featured.jpg" />
+  <meta property="og:title" content="🧬 Quantify HERV and transgenes from Bulk-RNAseq | Jiyuan Liu" />
+  <meta property="og:description" content="Human Endogenous Retroviruses (hERVs) are ancient viral sequences embedded in the human genome. Transgenes are common in transgenic mouse models. To quantify them from sequencing reads, we need-- a) modify fasta and gtf files to include the their sequencing and annotation; b) a feature quantification algorithm to handle multimapping commonly seen for hERV and transgenes. Here I discussed the algorithms for feature quantification, and successfully quantified hERV and transgenes by implementing an EM algorithm." /><meta property="og:image" content="http://localhost:1313/post/01.bulkrnaseq_allow_herv_quantification/featured.jpg" />
     <meta property="twitter:image" content="http://localhost:1313/post/01.bulkrnaseq_allow_herv_quantification/featured.jpg" /><meta property="og:locale" content="en-us" />
   
     
@@ -207,7 +207,7 @@
   
 
 
-  <title>🧬 bulk-RNAseq allows transgenes, herv quantification | Jiyuan Liu</title>
+  <title>🧬 Quantify HERV and transgenes from Bulk-RNAseq | Jiyuan Liu</title>
 
   
   
@@ -234,6 +234,10 @@
   
 
 
+  
+  
+  
+  
   
   
   
@@ -600,6 +604,140 @@
 
 
 
+  
+  
+  <link type="text/css" rel="stylesheet" href="/dist/lib/katex/katex.min.505d5f829022bb7b4f24dfee0aa1141cd7bba67afe411d1240335f820960b5c3.css" integrity="sha256-UF1fgpAiu3tPJN/uCqEUHNe7pnr&#43;QR0SQDNfgglgtcM=" />
+  
+  
+  <script defer src="/dist/lib/katex/katex.min.dc84b296ec3e884de093158f760fd9d45b6c7abe58b5381557f4e138f46a58ae.js" integrity="sha256-3ISyluw&#43;iE3gkxWPdg/Z1Ftser5YtTgVV/ThOPRqWK4="></script>
+  
+  
+  
+  
+  <script defer src="/js/katex-renderer.6579ec9683211cfb952064aedf3a3baea5eeb17a061775b32b70917474637c80.js" integrity="sha256-ZXnsloMhHPuVIGSu3zo7rqXusXoGF3WzK3CRdHRjfIA="></script>
+  
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+
 
 
 
@@ -897,113 +1035,9 @@
         <ul class="hb-sidebar-list"><li class="flex flex-col "><a
     class="hb-sidebar-custom-link
       text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
-    href="/post/13.yolov8/"
-    
-  >🧬 Bayesian abundance statistics in PRCC
-    </a>
-              
-            </li><li class="flex flex-col "><a
-    class="hb-sidebar-custom-link
-      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
-    href="/post/10.cca_reasoning/"
-    
-  >🧬 CCA reasoning and integration discussion
-    </a>
-              
-            </li><li class="flex flex-col "><a
-    class="hb-sidebar-custom-link
-      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
-    href="/post/08.clinical_relevance/"
-    
-  >🧬 Clinical relevance evaluation in PRCC
-    </a>
-              
-            </li><li class="flex flex-col "><a
-    class="hb-sidebar-custom-link
-      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
-    href="/post/04.huangcong_oncogene/"
-    
-  >🧬 counteract treatment-specific background in differential expressed gene analysis (huangcong paper)
-    </a>
-              
-            </li><li class="flex flex-col "><a
-    class="hb-sidebar-custom-link
-      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
-    href="/post/06.noise_or_true_stem_cell/"
-    
-  >🧬 Determine whether it’s noise or true stem like cells in PRCC
-    </a>
-              
-            </li><li class="flex flex-col "><a
-    class="hb-sidebar-custom-link
-      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
     href="/post/19.ememwithmapvariationalbayesian/"
     
   >🧬 EM algorithm, EM with max a posterior, full Bayesian inferences (variational Bayesian) which might be used in auto-coder
-    </a>
-              
-            </li><li class="flex flex-col "><a
-    class="hb-sidebar-custom-link
-      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
-    href="/post/07.cord_diagram/"
-    
-  >🧬 Expressive cord diagram in PRCC
-    </a>
-              
-            </li><li class="flex flex-col "><a
-    class="hb-sidebar-custom-link
-      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
-    href="/post/16.how.good.is.negative.binominal/"
-    
-  >🧬 how good is negative binomial, why AI works for biology
-    </a>
-              
-            </li><li class="flex flex-col "><a
-    class="hb-sidebar-custom-link
-      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
-    href="/post/05.xensoft_caki_paper/"
-    
-  >🧬 quantify xenograft and host gene expression from the same sample
-    </a>
-              
-            </li><li class="flex flex-col "><a
-    class="hb-sidebar-custom-link
-      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
-    href="/post/09.sctransform/"
-    
-  >🧬 sctransfrom reasoning
-    </a>
-              
-            </li><li class="flex flex-col "><a
-    class="hb-sidebar-custom-link
-      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
-    href="/post/15.use.seurat.for.bulk.rnaseq/"
-    
-  >🧬 Seurat to analysis large sample size of bulk RNAseq. Discuss Wixcox is better for clinical samples
-    </a>
-              
-            </li><li class="flex flex-col "><a
-    class="hb-sidebar-custom-link
-      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
-    href="/post/17.smooth.tests.of.goodness.of.fit/"
-    
-  >🧬 Smooth tests of goodness of Fit used in Stijn Hawinkel ’s plos one paper
-    </a>
-              
-            </li><li class="flex flex-col "><a
-    class="hb-sidebar-custom-link
-      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
-    href="/post/14.spatial_genomics_presentation/"
-    
-  >🧬 Spatial genomics presentation
-    </a>
-              
-            </li><li class="flex flex-col "><a
-    class="hb-sidebar-custom-link
-      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
-    href="/post/11.velocity_reasoning/"
-    
-  >🧬 Velocity reasoning and discussion
     </a>
               
             </li><li class="flex flex-col "><a
@@ -1017,6 +1051,46 @@
             </li><li class="flex flex-col "><a
     class="hb-sidebar-custom-link
       text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/post/17.smooth.tests.of.goodness.of.fit/"
+    
+  >🧬 Smooth tests of goodness of Fit used in Stijn Hawinkel ’s plos one paper
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/post/16.how.good.is.negative.binominal/"
+    
+  >🧬 how good is negative binomial, why AI works for biology
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/post/15.use.seurat.for.bulk.rnaseq/"
+    
+  >🧬 Seurat to analysis large sample size of bulk RNAseq. Discuss Wixcox is better for clinical samples
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/post/14.spatial_genomics_presentation/"
+    
+  >🧬 Spatial genomics presentation
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/post/13.yolov8/"
+    
+  >🧬 Bayesian abundance statistics in PRCC
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
     href="/post/12.basian_abundance_statistics/"
     
   >🧬 Yolov8
@@ -1025,9 +1099,65 @@
             </li><li class="flex flex-col "><a
     class="hb-sidebar-custom-link
       text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
-    href="/post/02.10x_scrnaseq_herv_quantification/"
+    href="/post/11.velocity_reasoning/"
     
-  >🧬 quantify transgenes and herv from 10x single-cell RNAseq
+  >🧬 Velocity reasoning and discussion
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/post/10.cca_reasoning/"
+    
+  >🧬 CCA reasoning and integration discussion
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/post/09.sctransform/"
+    
+  >🧬 sctransfrom reasoning
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/post/08.clinical_relevance/"
+    
+  >🧬 Clinical relevance evaluation in PRCC
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/post/07.cord_diagram/"
+    
+  >🧬 Expressive cord diagram in PRCC
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/post/06.noise_or_true_stem_cell/"
+    
+  >🧬 Determine whether it’s noise or true stem like cells in PRCC
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/post/05.xensoft_caki_paper/"
+    
+  >🧬 quantify xenograft and host gene expression from the same sample
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/post/04.huangcong_oncogene/"
+    
+  >🧬 counteract treatment-specific background in differential expressed gene analysis (huangcong paper)
     </a>
               
             </li><li class="flex flex-col "><a
@@ -1038,13 +1168,41 @@
   >🧬 quantify transgenes and herv from well-based single-cell RNAseq
     </a>
               
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/post/02.10x_scrnaseq_herv_quantification/"
+    
+  >🧬 quantify transgenes and herv from 10x single-cell RNAseq
+    </a>
+              
             </li><li class="flex flex-col open"><a
     class="hb-sidebar-custom-link
       sidebar-active-item bg-primary-100 font-semibold text-primary-800 dark:bg-primary-300 dark:text-primary-900"
     href="/post/01.bulkrnaseq_allow_herv_quantification/"
     
-  >🧬 bulk-RNAseq allows transgenes, herv quantification
+  >🧬 Quantify HERV and transgenes from Bulk-RNAseq
     </a>
+  
+    <ul class="hb-sidebar-mobile-toc"><li>
+              <a
+                href="#what-are-hervs-and-transgenes"
+                class="hb-docs-link"
+              >What are hERVs and transgenes</a>
+            </li>
+          <li>
+              <a
+                href="#how-to-quantify-them"
+                class="hb-docs-link"
+              >How to quantify them</a>
+            </li>
+          <li>
+              <a
+                href="#quantificaiton-using-salmon"
+                class="hb-docs-link"
+              >Quantificaiton using Salmon</a>
+            </li>
+          </ul>
   
               
             </li><li class="flex flex-col "><a
@@ -1231,7 +1389,52 @@
 
 
 
-  <div class="hb-scrollbar text-sm [hyphens:auto] sticky top-16 overflow-y-auto pr-4 pt-6 max-h-[calc(100vh-var(--navbar-height)-env(safe-area-inset-bottom))] -mr-4 rtl:-ml-4">
+  <div class="hb-scrollbar text-sm [hyphens:auto] sticky top-16 overflow-y-auto pr-4 pt-6 max-h-[calc(100vh-var(--navbar-height)-env(safe-area-inset-bottom))] -mr-4 rtl:-ml-4"><p class="mb-4 font-semibold tracking-tight">On this page</p><ul>
+      <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="font-semibold inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#what-are-hervs-and-transgenes">What are hERVs and transgenes</a>
+      </li>
+      <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="font-semibold inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#how-to-quantify-them">How to quantify them</a>
+      </li>
+      <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="pl-4 rtl:pr-4 inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#their-fasta-and-gtf">Their fasta and gtf</a>
+      </li>
+      <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="pl-4 rtl:pr-4 inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#how-tools-deal-with-multimapping">How tools deal with multimapping</a>
+      </li>
+      <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="pl-4 rtl:pr-4 inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#why-em-algorithm-for-multimapping">Why EM algorithm for multimapping</a>
+      </li>
+      <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="pl-8 rtl:pr-8 inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#em-is-proved-to-resolve-gmm-well">EM is proved to resolve GMM well</a>
+      </li>
+      <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="pl-8 rtl:pr-8 inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#multimapping-is-modeled-as-mixtures-of-distributions-that-account-for-mapping-bias">Multimapping is modeled as mixtures of distributions that account for mapping bias</a>
+      </li>
+      <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="pl-12 rtl:pr-12 inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#e-step">E-Step</a>
+      </li>
+      <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="pl-12 rtl:pr-12 inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#bias-corrections">Bias Corrections</a>
+      </li>
+      <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="pl-12 rtl:pr-12 inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#m-step">M-Step</a>
+      </li>
+      <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="font-semibold inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#quantificaiton-using-salmon">Quantificaiton using Salmon</a>
+      </li>
+      <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="pl-4 rtl:pr-4 inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#excerpt-scripts">Excerpt scripts</a>
+      </li>
+      <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="pl-8 rtl:pr-8 inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#build-index">build index</a>
+      </li>
+      <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="pl-8 rtl:pr-8 inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#qc">QC</a>
+      </li>
+      <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="pl-8 rtl:pr-8 inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#quantification">quantification</a>
+      </li></ul>
 
   
   
@@ -1263,7 +1466,7 @@
 
       
 
-      <h1 class="mt-2 text-4xl font-bold tracking-tight text-slate-900 dark:text-slate-100">🧬 bulk-RNAseq allows transgenes, herv quantification</h1>
+      <h1 class="mt-2 text-4xl font-bold tracking-tight text-slate-900 dark:text-slate-100">🧬 Quantify HERV and transgenes from Bulk-RNAseq</h1>
 
       <div class="mt-4 mb-16">
       <div class="text-gray-500 dark:text-gray-300 text-sm flex items-center flex-wrap gap-y-2"><span class="mr-1">Mar 24, 2025</span><span class="mx-1">·</span>
@@ -1283,7 +1486,7 @@
         
         <span class="mx-1">·</span>
         <span class="mx-1">
-          1 min read
+          8 min read
         </span>
         
         </div>
@@ -1316,10 +1519,10 @@
       
       
       
-      <div class="article-header article-container featured-image-wrapper mt-4 mb-16" style="max-width: 720px; max-height: 480px;">
+      <div class="article-header article-container featured-image-wrapper mt-4 mb-16" style="max-width: 720px; max-height: 720px;">
         <div style="position: relative">
-          <img src="/post/01.bulkrnaseq_allow_herv_quantification/featured_hu_9c8d8a355dcd5602.webp" width="720" height="480" alt="" class="featured-image">
-          <span class="article-header-caption">Image credit: <a href="https://unsplash.com" target="_blank" rel="noopener"><strong>Andrey Soldatov on Unsplash</strong></a></span>
+          <img src="/post/01.bulkrnaseq_allow_herv_quantification/featured_hu_b87379d4f1989fc.webp" width="720" height="720" alt="" class="featured-image">
+          <span class="article-header-caption">Image credit: <a href="https://unsplash.com" target="_blank" rel="noopener"><strong>Illustration by Round Icons on unsplash</strong></a></span>
         </div>
       </div>
       
@@ -1328,8 +1531,425 @@
       
 
       <div class="prose prose-slate lg:prose-xl dark:prose-invert">
-        <p>will be composed soon!</p>
+        <h2 id="what-are-hervs-and-transgenes">What are hERVs and transgenes</h2>
+<p>Human Endogenous Retroviruses (hERVs) are ancient viral sequences embedded in the human genome. The roles of hERVs in gene regulation, immunity, development and cancer are under intense research. Transgenes including GFP, CRE, Luciferase, rtTA/Tet-On/Tet-Off and epitopically expressed genes are common targets to be quantified in sample from transgenic mouse models.</p>
+<h2 id="how-to-quantify-them">How to quantify them</h2>
+<p>To quantify them, we of course need modify fasta and gtf files to include the their sequencing and annotation. Also, because their sequencing reads are frequently repetitive or overlaping with host genome, we need a feature quantification algorithm to handle multimapping commonly seen for HERV and transgenes.</p>
+<h3 id="their-fasta-and-gtf">Their fasta and gtf</h3>
+<p>The transgenes can be included as chromosomes in fasta as below</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">&gt; EGFP
+</span></span><span class="line"><span class="cl">ATGGTGAGCAAGGGCGAGGAGCTGTTCACCGGGGTGGTGCCCATCCTGGTCGAGCTGGACGGCG
+</span></span><span class="line"><span class="cl">ACGTAAACGGCCACAAGTTCAGCGTGTCCGGCGAGGGCGAGGGCGATGCCACCTACGGCAAGCT
+</span></span><span class="line"><span class="cl">GACCCTGAAGTTCATCTGCACCACCGGCAAGCTGCCCGTGCCCTGGCCCACCCTCGTGACCACC
+</span></span><span class="line"><span class="cl">CTGACCTACGGCGTGCAGTGCTTCAGCCGCTACCCCGACCACATGAAGCAGCACGACTTCTTCA
+</span></span><span class="line"><span class="cl">AGTCCGCCATGCCCGAAGGCTACGTCCAGGAGCGCACCATCTTCTTCAAGGACGACGGCAACTA
+</span></span><span class="line"><span class="cl">CAAGACCCGCGCCGAGGTGAAGTTCGAGGGCGACACCCTGGTGAACCGCATCGAGCTGAAGGGC
+</span></span><span class="line"><span class="cl">ATCGACTTCAAGGAGGACGGCAACATCCTGGGGCACAAGCTGGAGTACAACTACAACAGCCACA
+</span></span><span class="line"><span class="cl">ACGTCTATATCATGGCCGACAAGCAGAAGAACGGCATCAAGGTGAACTTCAAGATCCGCCACAA
+</span></span><span class="line"><span class="cl">CATCGAGGACGGCAGCGTGCAGCTCGCCGACCACTACCAGCAGAACACCCCCATCGGCGACGGC
+</span></span><span class="line"><span class="cl">CCCGTGCTGCTGCCCGACAACCACTACCTGAGCACCCAGTCCGCCCTGAGCAAAGACCCCAACG
+</span></span><span class="line"><span class="cl">AGAAGCGCGATCACATGGTCCTGCTGGAGTTCGTGACCGCCGCCGGGATCACTCTCGGCATGGA
+</span></span><span class="line"><span class="cl">CGAGCTGTACAAGTAA
+</span></span></code></pre></div><p>The transgenes are formated as below in gtf</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">EGFP    self    exon    <span class="m">1</span>       <span class="m">720</span>     <span class="m">500</span>     +       .       gene_id <span class="s2">&#34;custom_3&#34;</span><span class="p">;</span> gene_name <span class="s2">&#34;EGFP&#34;</span>
+</span></span><span class="line"><span class="cl">Cre     self    exon    <span class="m">1</span>       <span class="m">1023</span>    <span class="m">500</span>     +       .       gene_id <span class="s2">&#34;custom_4&#34;</span><span class="p">;</span> gene_name <span class="s2">&#34;Cre&#34;</span>
+</span></span><span class="line"><span class="cl">ERT2    self    exon    <span class="m">1</span>       <span class="m">931</span>     <span class="m">500</span>     +       .       gene_id <span class="s2">&#34;custom_5&#34;</span><span class="p">;</span> gene_name <span class="s2">&#34;ERT2&#34;</span>
+</span></span></code></pre></div><p>The hERV sequences are already in reference genome, but their gtf need be added as below. We will talk about <strong><a href="willbecomposedsoon">how to generate the hERV gtf matching the latest reference genome in anohter blog</a></strong>.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">chr10   RepeatMasker    exon    <span class="m">3083835</span> <span class="m">3085549</span> 4.5     -       .       gene_id <span class="s2">&#34;RepMasker_dc1fbd39-e43b-4ac4-90ef-1da20b1d6249&#34;</span><span class="p">;</span> gene_name <span class="s2">&#34;chr10:LTR/ERVL-MaLR:ORR1A0:3&#34;</span>
+</span></span><span class="line"><span class="cl">chr10   RepeatMasker    exon    <span class="m">3114480</span> <span class="m">3115385</span> <span class="m">6</span>       -       .       gene_id <span class="s2">&#34;RepMasker_c49d8024-0b45-46a9-bcaa-c44f7a305a03&#34;</span><span class="p">;</span> gene_name <span class="s2">&#34;chr10:LTR/ERVK:RLTR13F:8&#34;</span>
+</span></span><span class="line"><span class="cl">chr10   RepeatMasker    exon    <span class="m">3122665</span> <span class="m">3123530</span> 13.8    +       .       gene_id <span class="s2">&#34;RepMasker_5154950a-1e53-4528-a5cf-37d121e3e1a4&#34;</span><span class="p">;</span> gene_name <span class="s2">&#34;chr10:LTR/ERVK:RLTR13D6:11&#34;</span>
+</span></span><span class="line"><span class="cl">chr11   RepeatMasker    exon    <span class="m">3055489</span> <span class="m">3061982</span> 25.9    +       .       gene_id <span class="s2">&#34;RepMasker_f6a34047-357d-4ed5-9744-eaf4c862be26&#34;</span><span class="p">;</span> gene_name <span class="s2">&#34;chr11:LTR/ERVK:IAPLTR3-int:1&#34;</span>
+</span></span><span class="line"><span class="cl">chr11   RepeatMasker    exon    <span class="m">3139464</span> <span class="m">3140302</span> 11.7    +       .       gene_id <span class="s2">&#34;RepMasker_ad8b23ab-de54-4f73-be4d-f8405ad13e66&#34;</span><span class="p">;</span> gene_name <span class="s2">&#34;chr11:LTR/ERVK:RLTR33:3&#34;</span>
+</span></span><span class="line"><span class="cl">chr11   RepeatMasker    exon    <span class="m">3410867</span> <span class="m">3413285</span> 16.9    +       .       gene_id <span class="s2">&#34;RepMasker_ec06076e-c8d0-4a94-8cfa-358f352bb1e8&#34;</span><span class="p">;</span> gene_name <span class="s2">&#34;chr11:LTR/ERV1:RLTR14-int:7&#34;</span>
+</span></span><span class="line"><span class="cl">chr12   RepeatMasker    exon    <span class="m">3052672</span> <span class="m">3059141</span> 1.6     +       .       gene_id <span class="s2">&#34;RepMasker_8ea0db28-2cd0-4d7e-b151-b5b6480ee320&#34;</span><span class="p">;</span> gene_name <span class="s2">&#34;chr12:LTR/ERVK:IAPEz-int:1&#34;</span>
+</span></span><span class="line"><span class="cl">chr12   RepeatMasker    exon    <span class="m">3065049</span> <span class="m">3072337</span> 27.3    -       .       gene_id <span class="s2">&#34;RepMasker_f3379b4a-cdfa-4b24-a4c9-5dacbdaf004c&#34;</span><span class="p">;</span> gene_name <span class="s2">&#34;chr12:LTR/ERV1:MMERGLN-int:2&#34;</span>
+</span></span><span class="line"><span class="cl">chr12   RepeatMasker    exon    <span class="m">3084084</span> <span class="m">3084938</span> 5.8     -       .       gene_id <span class="s2">&#34;RepMasker_062a5737-d991-4220-9648-33c43ad467a2&#34;</span><span class="p">;</span> gene_name <span class="s2">&#34;chr12:LTR/ERVK:IAPEz-int:4&#34;</span>
+</span></span></code></pre></div><h3 id="how-tools-deal-with-multimapping">How tools deal with multimapping</h3>
+<p>Below list common feature count/qunatification tools emphasizing on the core algorithms they wrapped to deal with multimapping. <a href="https://bmcgenomics.biomedcentral.com/articles/10.1186/s12864-017-4002-1" target="_blank" rel="noopener">These common tools have similar quantification accuracy</a>.</p>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table class="table-auto w-full">
+  
+    
+    
+    <thead>
+      <tr>  <th class="border-b dark:border-slate-600 font-medium p-4 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">Tool</th>  <th class="border-b dark:border-slate-600 font-medium p-4 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">Default(option)</th>  <th class="border-b dark:border-slate-600 font-medium p-4 pt-0 pb-3 text-slate-400 dark:text-slate-200 text-left">Core algorithm</th>  </tr>
+    </thead>
+  
+  <tbody>
+  
+    <tr>
+      
+        
+          <td data-table-dtype="text" class="border-b border-slate-100 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">HTSeq-count</td>
+        
+      
+        
+          <td data-table-dtype="text" class="border-b border-slate-100 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">discard(&ndash;nonunique=all/fraction)</td>
+        
+      
+        
+          <td data-table-dtype="text" class="border-b border-slate-100 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">fraction</td>
+        
+      
+    </tr>
+  
+    <tr>
+      
+        
+          <td data-table-dtype="text" class="border-b border-slate-100 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">featureCounts</td>
+        
+      
+        
+          <td data-table-dtype="text" class="border-b border-slate-100 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">discard(-M &ndash;fraction)</td>
+        
+      
+        
+          <td data-table-dtype="text" class="border-b border-slate-100 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">fraction</td>
+        
+      
+    </tr>
+  
+    <tr>
+      
+        
+          <td data-table-dtype="text" class="border-b border-slate-100 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">RSEM</td>
+        
+      
+        
+          <td data-table-dtype="text" class="border-b border-slate-100 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">EM Probabilistic</td>
+        
+      
+        
+          <td data-table-dtype="text" class="border-b border-slate-100 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">EM</td>
+        
+      
+    </tr>
+  
+    <tr>
+      
+        
+          <td data-table-dtype="text" class="border-b border-slate-100 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">Salmon</td>
+        
+      
+        
+          <td data-table-dtype="text" class="border-b border-slate-100 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">EM Probabilistic</td>
+        
+      
+        
+          <td data-table-dtype="text" class="border-b border-slate-100 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">(Bayesian) EM</td>
+        
+      
+    </tr>
+  
+    <tr>
+      
+        
+          <td data-table-dtype="text" class="border-b border-slate-100 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">kallisto</td>
+        
+      
+        
+          <td data-table-dtype="text" class="border-b border-slate-100 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">EM Probabilistic</td>
+        
+      
+        
+          <td data-table-dtype="text" class="border-b border-slate-100 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">EM</td>
+        
+      
+    </tr>
+  
+    <tr>
+      
+        
+          <td data-table-dtype="text" class="border-b border-slate-100 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">StringTie</td>
+        
+      
+        
+          <td data-table-dtype="text" class="border-b border-slate-100 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">EM Probabilistic</td>
+        
+      
+        
+          <td data-table-dtype="text" class="border-b border-slate-100 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">EM</td>
+        
+      
+    </tr>
+  
+    <tr>
+      
+        
+          <td data-table-dtype="text" class="border-b border-slate-100 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">TEtranscripts</td>
+        
+      
+        
+          <td data-table-dtype="text" class="border-b border-slate-100 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">EM Probabilistic</td>
+        
+      
+        
+          <td data-table-dtype="text" class="border-b border-slate-100 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">EM</td>
+        
+      
+    </tr>
+  
+    <tr>
+      
+        
+          <td data-table-dtype="text" class="border-b border-slate-100 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">Telescope</td>
+        
+      
+        
+          <td data-table-dtype="text" class="border-b border-slate-100 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">EM Probabilistic</td>
+        
+      
+        
+          <td data-table-dtype="text" class="border-b border-slate-100 dark:border-slate-700 p-4 text-slate-500 dark:text-slate-400">EM with MAP</td>
+        
+      
+    </tr>
+  
+  </tbody>
+  
+    <caption class="table-caption"><strong>Table 1. Multimapping options and algorithms of tools</strong></caption>
+  
+</table>
+
+<p>They by default may simply discard multimapping reads, which ignores most of hERVs. With carefully specified arguments, they either distribute read counts equally among certian features (fraction) or estimate using EM algorithm.</p>
+<hr>
+<h3 id="why-em-algorithm-for-multimapping">Why EM algorithm for multimapping</h3>
+<p>&ldquo;Fraction&rdquo; algorithm overlooked how likely the reads can match with reference sequences. The biological prior information, if reasonably exploited, can significantly improve the multimapping quantification. Beatifully, multimapping by nature is similar to the problem of Gaussian Mixtures and EM has been proved to resolve Gaussian Mixture Model (GMM) well.</p>
+<h4 id="em-is-proved-to-resolve-gmm-well">EM is proved to resolve GMM well</h4>
+<p>GMM describes a set of data points of which each comes from one of several Gaussian distributions, but we don&rsquo;t know which one. This missing information makes direct estimation (like via maximum likelihood) of the Gaussian parameters hard. EM solve this by iterating below E and M steps until converge:</p>
+<ul>
+<li>
+<p>E-step (Expectation): Use initiallized parameter to compute the <strong>posterior probability (sounds like bayesian, but it is not in standard EM)</strong> that each data point was generated by each Gaussian (i.e., the responsibility γ for each component).</p>
+</li>
+<li>
+<p>M-step (Maximization): Update the parameters (π, μ, σ²) by performing <strong>weighted MLE</strong> using the expected values (responsibilities) computed in the E-step.</p>
+</li>
+</ul>
+<hr>
+<h4 id="multimapping-is-modeled-as-mixtures-of-distributions-that-account-for-mapping-bias">Multimapping is modeled as mixtures of distributions that account for mapping bias</h4>
+<p><a href="https://www.nature.com/articles/nmeth.4197" target="_blank" rel="noopener">Salmon model </a> describes a set of fragments (seqeuncing reads) of which each fragment <em>f</em> originates from one of the several transcripts <em>t</em> at a probability distribution  $P(t \mid f)$ 
+, but we don&rsquo;t know which one. Thus EM goes:</p>
+<h5 id="e-step"><em>E-Step</em></h5>
+<p>For each fragment  $f$ 
+ and transcript  $t$ 
+:</p>
+
+$$
+P(t \mid f) = \frac{\alpha_t \cdot P(f \mid t)}{\sum_{t'} \alpha_{t'} \cdot P(f \mid t')}
+$$
+
+
+<p>Where:</p>
+<ul>
+<li> $\alpha_t$ 
+: Current estimate of the relative abundance of transcript  $t$ 
+.</li>
+<li> $P(f \mid t)$ 
+: Probability of observing fragment  $f$ 
+ given transcript  $t$ 
+, incorporating bias corrections.</li>
+</ul>
+<hr>
+<h5 id="bias-corrections"><em>Bias Corrections</em></h5>
+<p>The fragment-transcript probability is modeled as:</p>
+
+$$
+P(f \mid t) = P_{\text{len}}(l_f \mid t) \cdot P_{\text{pos}}(p_f \mid t) \cdot P_{\text{seq}}(s_f \mid t)
+$$
+
+
+<p>Where:</p>
+<ul>
+<li> $l_f$ 
+: Length of fragment  $f$ 
+.</li>
+<li> $p_f$ 
+: Position of fragment  $f$ 
+ on transcript  $t$ 
+.</li>
+<li> $s_f$ 
+: Sequence content of fragment  $f$ 
+.</li>
+<li> $P_{\text{len}}$ 
+: Probability of fragment length, modeling the empirical fragment length distribution.</li>
+<li> $P_{\text{pos}}$ 
+: Positional bias model, capturing biases in fragment start locations.</li>
+<li> $P_{\text{seq}}$ 
+: Sequence-specific bias model, correcting for nucleotide composition effects.</li>
+</ul>
+<p>Importantly, the bias models:  $P_{\text{len}}$ 
+,  $P_{\text{pos}}$ 
+ and  $P_{\text{seq}}$ 
+ are not directly updated by the EM algorithm during transcript abundance estimation. Instead, these bias models are learned once, typically in a preprocessing or auxiliary phase before the EM iterations begin. The EM algorithm then uses the fixed values of these bias models to compute the probability  $P(f \mid t)$ 
+ in the E-step.</p>
+<p><strong>The only parameters updated by EM are the relative abundances  $\alpha_t$ 
+ of the transcripts.</strong></p>
+<hr>
+<h5 id="m-step"><em>M-Step</em></h5>
+<p>Update the abundance estimates:</p>
+
+$$
+\alpha_t = \sum_f P(t \mid f)
+$$
+
+
+<p>Then normalize:</p>
+
+$$
+\sum_t \alpha_t = 1
+$$
+
+
+<hr>
+<h2 id="quantificaiton-using-salmon">Quantificaiton using Salmon</h2>
+<p>Now we see EM algorithm superior than fraction algorithms in quantifing multimappings since EM</p>
+<ul>
+<li>is well suitable for estimating parameters in Gaussian Mixture Models, which is similar to the multimapping mathematical model</li>
+<li>takes multimapping mathematical models accounting for the mapping bias</li>
+</ul>
+<p>We implemented Salmon since it allows both EM and full bayesian EM. We will talk about <a href="donesoon">EM (with MLE), EM with MAP and bayesian EM</a> as well as <a href="donesoon">Frequentist vs Bayesian</a> in other blogs.</p>
+<p>Please see source codes in <a href="https://github.com/jliu678/herv_project_siyi/tree/main" target="_blank" rel="noopener">github</a> that can be deploied in Cloud Cluster Computational platform and local desktops, and allows for:</p>
+<ul>
+<li>batch computaion with tunable batch size</li>
+<li>automatic environment setting up</li>
+<li>file preprocessing</li>
+<li>QC</li>
+<li>index buidling, alignment and feature counting by either <code>subread</code> or <code>salmon</code></li>
+</ul>
+<p><a href="https://github.com/jliu678/herv_project_siyi/tree/main" target="_blank" rel="noopener">github</a> also contains usage examples using <code>SLURM</code> or <code>LSF</code> job scheduler and handy utility tools.</p>
+<hr>
+<h3 id="excerpt-scripts">Excerpt scripts</h3>
+<p>Below excerpt scripts call each needed analysis step specified as <code>ANALYSIS_STEP</code> array, including file preprocessing, index buidling by <code>build_index()</code>, QC by <code>qc_all()</code>, alignment by <code>align_all()</code> if using <code>subread</code>, and feature counting by <code>count_all()</code>.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">	<span class="k">for</span> i in <span class="si">${</span><span class="nv">ANALYSIS_STEP</span><span class="p">[@]</span><span class="si">}</span><span class="p">;</span> <span class="k">do</span>
+</span></span><span class="line"><span class="cl">	  timed_print <span class="s2">&#34;</span><span class="nv">$i</span><span class="s2">-ing...&#34;</span>	
+</span></span><span class="line"><span class="cl">		<span class="k">case</span> <span class="s2">&#34;</span><span class="nv">$i</span><span class="s2">&#34;</span> in 
+</span></span><span class="line"><span class="cl">			<span class="c1"># for the first 2, do not run if they are in a child/forked process</span>
+</span></span><span class="line"><span class="cl">			index<span class="o">)</span> <span class="k">if</span> <span class="o">[</span> <span class="nv">$CHILD</span> <span class="o">=</span> <span class="nb">false</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span> build_index<span class="p">;</span> <span class="k">fi</span> <span class="p">;;</span> 
+</span></span><span class="line"><span class="cl">			convert<span class="o">)</span> <span class="k">if</span> <span class="o">[</span> <span class="nv">$CHILD</span> <span class="o">=</span> <span class="nb">false</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span> get_pairs_all<span class="p">;</span> <span class="k">fi</span> <span class="p">;;</span>
+</span></span><span class="line"><span class="cl">			qc<span class="o">)</span> qc_all <span class="p">;;</span>
+</span></span><span class="line"><span class="cl">			align<span class="o">)</span> align_all <span class="p">;;</span>
+</span></span><span class="line"><span class="cl">			count<span class="o">)</span> count_all <span class="p">;;</span>
+</span></span><span class="line"><span class="cl">		<span class="k">esac</span> 
+</span></span><span class="line"><span class="cl">		timed_print <span class="s2">&#34;finished </span><span class="nv">$i</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">	<span class="k">done</span>
+</span></span></code></pre></div><p>Some of the core functions in the anylysis are below:</p>
+<h4 id="build-index">build index</h4>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">salmon_build_index<span class="o">(){</span> <span class="c1"># supports multiple transcripts</span>
+</span></span><span class="line"><span class="cl">	<span class="c1"># get dir name for the index, which is the transcript names seperated by a hyphen(-)</span>
+</span></span><span class="line"><span class="cl">	<span class="c1"># eg. for erv.fa and line.fa, you get: erv-line</span>
+</span></span><span class="line"><span class="cl">	<span class="nb">local</span> <span class="nv">index_name</span><span class="o">=</span><span class="s2">&#34;salmon/</span><span class="k">$(</span><span class="nv">IFS</span><span class="o">=</span>-<span class="p">;</span> <span class="nb">echo</span> <span class="s2">&#34;</span><span class="si">${</span><span class="nv">TRANSCRIPTS</span><span class="p">[*]%.*</span><span class="si">}</span><span class="s2">&#34;</span><span class="k">)</span><span class="s2">&#34;</span> 
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="nv">$OVER_WRITE</span><span class="s2">&#34;</span> <span class="o">=</span> <span class="s2">&#34;true&#34;</span> <span class="o">]</span> <span class="o">||</span> <span class="o">[</span> ! -d <span class="s2">&#34;</span><span class="si">${</span><span class="nv">index_name</span><span class="si">}</span><span class="s2">_index&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span> 
+</span></span><span class="line"><span class="cl">		timed_print <span class="s2">&#34;building salmon index @: </span><span class="si">${</span><span class="nv">index_name</span><span class="si">}</span><span class="s2">_index&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">		<span class="c1"># salmon requires a decoy, which in this case is the entire reference genome</span>
+</span></span><span class="line"><span class="cl">		<span class="k">if</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="nv">$OVER_WRITE</span><span class="s2">&#34;</span> <span class="o">=</span> <span class="s2">&#34;true&#34;</span> <span class="o">]</span> <span class="o">||</span> <span class="o">[</span> ! -f <span class="s2">&#34;</span><span class="si">${</span><span class="nv">index_name</span><span class="si">}</span><span class="s2">_decoys.txt&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">			timed_print <span class="s2">&#34;building decoys...&#34;</span>
+</span></span><span class="line"><span class="cl">			grep <span class="s2">&#34;^&gt;&#34;</span> <span class="s2">&#34;</span><span class="si">${</span><span class="nv">REF_GENOME</span><span class="si">}</span><span class="s2">&#34;</span> <span class="p">|</span> cut -d <span class="s2">&#34; &#34;</span> -f <span class="m">1</span> &gt; <span class="s2">&#34;</span><span class="si">${</span><span class="nv">index_name</span><span class="si">}</span><span class="s2">_decoys.txt&#34;</span>
+</span></span><span class="line"><span class="cl">			sed -i.bak -e <span class="s1">&#39;s/&gt;//g&#39;</span> <span class="s2">&#34;</span><span class="si">${</span><span class="nv">index_name</span><span class="si">}</span><span class="s2">_decoys.txt&#34;</span>
+</span></span><span class="line"><span class="cl">		<span class="k">fi</span> 
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">		<span class="c1"># salmon requires all the transcripts being quantified to be concat into one file</span>
+</span></span><span class="line"><span class="cl">		<span class="k">if</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="nv">$OVER_WRITE</span><span class="s2">&#34;</span> <span class="o">=</span> <span class="s2">&#34;true&#34;</span> <span class="o">]</span> <span class="o">||</span> <span class="o">[</span> ! -f <span class="s2">&#34;</span><span class="si">${</span><span class="nv">index_name</span><span class="si">}</span><span class="s2">_gentrome.fa&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">			timed_print <span class="s2">&#34;building gentrome...&#34;</span>
+</span></span><span class="line"><span class="cl">			cat <span class="s2">&#34;</span><span class="si">${</span><span class="nv">TRANSCRIPTS</span><span class="p">[@]</span><span class="si">}</span><span class="s2">&#34;</span> <span class="s2">&#34;</span><span class="si">${</span><span class="nv">REF_TRANSCRIPT</span><span class="si">}</span><span class="s2">&#34;</span> <span class="s2">&#34;</span><span class="si">${</span><span class="nv">REF_GENOME</span><span class="si">}</span><span class="s2">&#34;</span> &gt; <span class="s2">&#34;</span><span class="si">${</span><span class="nv">index_name</span><span class="si">}</span><span class="s2">.fa&#34;</span>
+</span></span><span class="line"><span class="cl">		<span class="k">fi</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">		<span class="c1"># adding --gencode flag due to salmon doing some preprocessing for it</span>
+</span></span><span class="line"><span class="cl">		<span class="c1"># this flag does nothing for none gencode files (I think)</span>
+</span></span><span class="line"><span class="cl">		salmon index -t <span class="si">${</span><span class="nv">index_name</span><span class="si">}</span>.fa -d <span class="s2">&#34;</span><span class="si">${</span><span class="nv">index_name</span><span class="si">}</span><span class="s2">_decoys.txt&#34;</span> -i <span class="s2">&#34;</span><span class="si">${</span><span class="nv">index_name</span><span class="si">}</span><span class="s2">_index&#34;</span> --gencode
+</span></span><span class="line"><span class="cl">	<span class="k">fi</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">build_index<span class="o">()</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">	<span class="k">case</span> <span class="nv">$ALIGN_METHOD</span> in
+</span></span><span class="line"><span class="cl">		subread<span class="o">)</span> subread_build_index <span class="p">;;</span>
+</span></span><span class="line"><span class="cl">		salmon<span class="o">)</span> salmon_build_index <span class="p">;;</span>
+</span></span><span class="line"><span class="cl">	<span class="k">esac</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></div><h4 id="qc">QC</h4>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">fastp_qc<span class="o">(){</span> 
+</span></span><span class="line"><span class="cl">	<span class="c1"># results stored in /tmp/{name of the source}/qc/* and all end in *.qc.fq.gz</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="nv">$OVER_WRITE</span><span class="s2">&#34;</span> <span class="o">=</span> <span class="s2">&#34;true&#34;</span> <span class="o">]</span> <span class="o">||</span> <span class="o">[</span> ! -f <span class="s2">&#34;tmp/</span><span class="si">${</span><span class="nv">SOURCE</span><span class="si">}</span><span class="s2">/qc/</span><span class="nv">$1</span><span class="s2">.qc.fq.gz&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">		<span class="k">if</span> <span class="o">[[</span> <span class="nv">$#</span> -eq <span class="m">2</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span> <span class="c1"># if pair ended</span>
+</span></span><span class="line"><span class="cl">			./fastp -i <span class="s2">&#34;tmp/</span><span class="si">${</span><span class="nv">SOURCE</span><span class="si">}</span><span class="s2">/</span><span class="nv">$1</span><span class="s2">.fq.gz&#34;</span> -o <span class="s2">&#34;tmp/</span><span class="si">${</span><span class="nv">SOURCE</span><span class="si">}</span><span class="s2">/qc/</span><span class="nv">$1</span><span class="s2">.qc.fq.gz&#34;</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>				-I <span class="s2">&#34;tmp/</span><span class="si">${</span><span class="nv">SOURCE</span><span class="si">}</span><span class="s2">/</span><span class="nv">$2</span><span class="s2">.fq.gz&#34;</span> -O <span class="s2">&#34;tmp/</span><span class="si">${</span><span class="nv">SOURCE</span><span class="si">}</span><span class="s2">/qc/</span><span class="nv">$2</span><span class="s2">.qc.fq.gz&#34;</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>				-j <span class="s2">&#34;results/fastp/</span><span class="nv">$1</span><span class="s2">.json&#34;</span> -h <span class="s2">&#34;results/fastp/</span><span class="nv">$1</span><span class="s2">.html&#34;</span>
+</span></span><span class="line"><span class="cl">		<span class="k">elif</span> <span class="o">[[</span> <span class="nv">$#</span> -eq <span class="m">1</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span> <span class="c1"># if single ended</span>
+</span></span><span class="line"><span class="cl">			./fastp -i <span class="s2">&#34;tmp/</span><span class="si">${</span><span class="nv">SOURCE</span><span class="si">}</span><span class="s2">/</span><span class="nv">$1</span><span class="s2">.fq.gz&#34;</span> -o <span class="s2">&#34;tmp/</span><span class="si">${</span><span class="nv">SOURCE</span><span class="si">}</span><span class="s2">/qc/</span><span class="nv">$1</span><span class="s2">.qc.fq.gz&#34;</span> <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>				-j <span class="s2">&#34;results/fastp/</span><span class="nv">$1</span><span class="s2">.json&#34;</span> -h <span class="s2">&#34;results/fastp/</span><span class="nv">$1</span><span class="s2">.html&#34;</span>
+</span></span><span class="line"><span class="cl">		<span class="k">fi</span>	
+</span></span><span class="line"><span class="cl">	<span class="k">fi</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">qc_all<span class="o">(){</span> <span class="c1"># only supports fastp as of now</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="o">[[</span> ! -d <span class="s2">&#34;tmp/</span><span class="si">${</span><span class="nv">SOURCE</span><span class="si">}</span><span class="s2">/qc&#34;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span> 
+</span></span><span class="line"><span class="cl">		mkdir <span class="s2">&#34;tmp/</span><span class="si">${</span><span class="nv">SOURCE</span><span class="si">}</span><span class="s2">/qc&#34;</span>
+</span></span><span class="line"><span class="cl">	<span class="k">fi</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="o">[[</span> ! -d <span class="s2">&#34;results/</span><span class="si">${</span><span class="nv">QC_METHOD</span><span class="si">}</span><span class="s2">&#34;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span> 
+</span></span><span class="line"><span class="cl">		mkdir <span class="s2">&#34;results/</span><span class="si">${</span><span class="nv">QC_METHOD</span><span class="si">}</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">	<span class="k">fi</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	timed_print <span class="s2">&#34;qc-ing with </span><span class="nv">$QC_METHOD</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">	<span class="k">while</span> <span class="nv">IFS</span><span class="o">=</span>, <span class="nb">read</span> -r r1 r2<span class="p">;</span> <span class="k">do</span> <span class="c1"># loop over pair file, csv</span>
+</span></span><span class="line"><span class="cl">		<span class="k">if</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="nv">$OVER_WRITE</span><span class="s2">&#34;</span> <span class="o">=</span> <span class="s2">&#34;true&#34;</span> <span class="o">]</span> <span class="o">||</span> <span class="o">[</span> ! -d <span class="s2">&#34;results/</span><span class="si">${</span><span class="nv">ALIGN_METHOD</span><span class="si">}</span><span class="s2">/</span><span class="nv">$r1</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span> 
+</span></span><span class="line"><span class="cl">			<span class="c1">#if salmon quant already exists</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">			timed_print <span class="s2">&#34;qc-ing </span><span class="si">${</span><span class="nv">r1</span><span class="si">}</span><span class="s2"> and </span><span class="si">${</span><span class="nv">r2</span><span class="si">}</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">			<span class="k">case</span> <span class="nv">$QC_METHOD</span> in 
+</span></span><span class="line"><span class="cl">				fastp<span class="o">)</span> fastp_qc <span class="nv">$r1</span> <span class="nv">$r2</span> <span class="p">;;</span>
+</span></span><span class="line"><span class="cl">			<span class="k">esac</span> 
+</span></span><span class="line"><span class="cl">		<span class="k">fi</span>
+</span></span><span class="line"><span class="cl">	<span class="k">done</span> &lt; <span class="nv">$PAIR_FILE</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></div><h4 id="quantification">quantification</h4>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">salmon_quant<span class="o">()</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">	<span class="c1"># get the same index_name as specified in &#34;salmon_build_index()&#34;</span>
+</span></span><span class="line"><span class="cl">	<span class="nb">local</span> <span class="nv">index_name</span><span class="o">=</span><span class="s2">&#34;salmon/</span><span class="k">$(</span><span class="nv">IFS</span><span class="o">=</span>-<span class="p">;</span> <span class="nb">echo</span> <span class="s2">&#34;</span><span class="si">${</span><span class="nv">TRANSCRIPTS</span><span class="p">[*]%.*</span><span class="si">}</span><span class="s2">&#34;</span><span class="k">)</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">	<span class="c1">#salmon outputs into a dir, so we check for that instead</span>
+</span></span><span class="line"><span class="cl">	<span class="c1">#results stored in results/salmon/*</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="o">[</span> <span class="s2">&#34;</span><span class="nv">$OVER_WRITE</span><span class="s2">&#34;</span> <span class="o">=</span> <span class="s2">&#34;true&#34;</span> <span class="o">]</span> <span class="o">||</span> <span class="o">[</span> ! -d <span class="s2">&#34;results/salmon/</span><span class="nv">$1</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span>
+</span></span><span class="line"><span class="cl">		mkdir results/salmon/<span class="nv">$1</span>
+</span></span><span class="line"><span class="cl">		<span class="k">if</span> <span class="o">[[</span> <span class="nv">$#</span> -eq <span class="m">2</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span> <span class="c1"># if pair ended</span>
+</span></span><span class="line"><span class="cl">			salmon quant -i <span class="s2">&#34;</span><span class="si">${</span><span class="nv">index_name</span><span class="si">}</span><span class="s2">_index&#34;</span> -l A -1 <span class="s2">&#34;tmp/</span><span class="si">${</span><span class="nv">SOURCE</span><span class="si">}</span><span class="s2">/qc/</span><span class="nv">$1</span><span class="s2">.qc.fq.gz&#34;</span> -2 <span class="s2">&#34;tmp/</span><span class="si">${</span><span class="nv">SOURCE</span><span class="si">}</span><span class="s2">/qc/</span><span class="nv">$2</span><span class="s2">.qc.fq.gz&#34;</span> --validateMappings -o <span class="s2">&#34;results/salmon/</span><span class="nv">$1</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">			<span class="c1">#sleep 1</span>
+</span></span><span class="line"><span class="cl">		<span class="k">elif</span> <span class="o">[[</span> <span class="nv">$#</span> -eq <span class="m">1</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span> <span class="c1"># if single ended</span>
+</span></span><span class="line"><span class="cl">			salmon quant -i <span class="s2">&#34;</span><span class="si">${</span><span class="nv">index_name</span><span class="si">}</span><span class="s2">_index&#34;</span> -l A -r <span class="s2">&#34;tmp/</span><span class="si">${</span><span class="nv">SOURCE</span><span class="si">}</span><span class="s2">/qc/</span><span class="nv">$1</span><span class="s2">.qc.fq.gz&#34;</span> --validateMappings -o <span class="s2">&#34;results/salmon/</span><span class="nv">$1</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">			<span class="c1">#sleep 1</span>
+</span></span><span class="line"><span class="cl">		<span class="k">fi</span> 
+</span></span><span class="line"><span class="cl">	<span class="k">fi</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">salmon_count<span class="o">()</span> <span class="o">{</span>
+</span></span><span class="line"><span class="cl">	<span class="k">while</span> <span class="nv">IFS</span><span class="o">=</span>, <span class="nb">read</span> -r r1 r2<span class="p">;</span> <span class="k">do</span>
+</span></span><span class="line"><span class="cl">		salmon_quant <span class="nv">$r1</span> <span class="nv">$r2</span>
+</span></span><span class="line"><span class="cl">	<span class="k">done</span> &lt; <span class="nv">$PAIR_FILE</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">count_all<span class="o">(){</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="o">[</span> ! -d <span class="s2">&#34;results/</span><span class="si">${</span><span class="nv">ALIGN_METHOD</span><span class="si">}</span><span class="s2">&#34;</span> <span class="o">]</span><span class="p">;</span> <span class="k">then</span> 
+</span></span><span class="line"><span class="cl">		mkdir <span class="s2">&#34;results/</span><span class="si">${</span><span class="nv">ALIGN_METHOD</span><span class="si">}</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">	<span class="k">fi</span>
+</span></span><span class="line"><span class="cl">	
+</span></span><span class="line"><span class="cl">	<span class="k">case</span> <span class="nv">$ALIGN_METHOD</span> in 
+</span></span><span class="line"><span class="cl">		subread<span class="o">)</span> subread_count <span class="p">;;</span>
+</span></span><span class="line"><span class="cl">		salmon<span class="o">)</span> salmon_count
+</span></span><span class="line"><span class="cl">	<span class="k">esac</span>
+</span></span><span class="line"><span class="cl"><span class="o">}</span>
+</span></span></code></pre></div>
       </div>
 
       
@@ -1347,15 +1967,17 @@
 
 <div class="flex justify-center">
   
-  <a class="no-underline bg-primary-100 hover:bg-primary-300 text-primary-800 text-xs font-medium mr-2 px-2.5 py-0.5 lg:px-5 lg:py-2 rounded dark:bg-primary-900 dark:hover:bg-primary-700 dark:text-primary-300" href="/tags/algorithm/">Algorithm</a>
+  <a class="no-underline bg-primary-100 hover:bg-primary-300 text-primary-800 text-xs font-medium mr-2 px-2.5 py-0.5 lg:px-5 lg:py-2 rounded dark:bg-primary-900 dark:hover:bg-primary-700 dark:text-primary-300" href="/tags/herv/">HERV</a>
+  
+  <a class="no-underline bg-primary-100 hover:bg-primary-300 text-primary-800 text-xs font-medium mr-2 px-2.5 py-0.5 lg:px-5 lg:py-2 rounded dark:bg-primary-900 dark:hover:bg-primary-700 dark:text-primary-300" href="/tags/transgene/">Transgene</a>
   
   <a class="no-underline bg-primary-100 hover:bg-primary-300 text-primary-800 text-xs font-medium mr-2 px-2.5 py-0.5 lg:px-5 lg:py-2 rounded dark:bg-primary-900 dark:hover:bg-primary-700 dark:text-primary-300" href="/tags/feature-quantification/">Feature Quantification</a>
   
-  <a class="no-underline bg-primary-100 hover:bg-primary-300 text-primary-800 text-xs font-medium mr-2 px-2.5 py-0.5 lg:px-5 lg:py-2 rounded dark:bg-primary-900 dark:hover:bg-primary-700 dark:text-primary-300" href="/tags/em/">EM</a>
+  <a class="no-underline bg-primary-100 hover:bg-primary-300 text-primary-800 text-xs font-medium mr-2 px-2.5 py-0.5 lg:px-5 lg:py-2 rounded dark:bg-primary-900 dark:hover:bg-primary-700 dark:text-primary-300" href="/tags/algorithm/">Algorithm</a>
   
-  <a class="no-underline bg-primary-100 hover:bg-primary-300 text-primary-800 text-xs font-medium mr-2 px-2.5 py-0.5 lg:px-5 lg:py-2 rounded dark:bg-primary-900 dark:hover:bg-primary-700 dark:text-primary-300" href="/tags/ggaminate/">Ggaminate</a>
+  <a class="no-underline bg-primary-100 hover:bg-primary-300 text-primary-800 text-xs font-medium mr-2 px-2.5 py-0.5 lg:px-5 lg:py-2 rounded dark:bg-primary-900 dark:hover:bg-primary-700 dark:text-primary-300" href="/tags/expectation-maximization-em/">Expectation-Maximization (EM)</a>
   
-  <a class="no-underline bg-primary-100 hover:bg-primary-300 text-primary-800 text-xs font-medium mr-2 px-2.5 py-0.5 lg:px-5 lg:py-2 rounded dark:bg-primary-900 dark:hover:bg-primary-700 dark:text-primary-300" href="/tags/gradient-descenct/">Gradient Descenct</a>
+  <a class="no-underline bg-primary-100 hover:bg-primary-300 text-primary-800 text-xs font-medium mr-2 px-2.5 py-0.5 lg:px-5 lg:py-2 rounded dark:bg-primary-900 dark:hover:bg-primary-700 dark:text-primary-300" href="/tags/em-with-map/">EM With MAP</a>
   
 </div>
 
@@ -1373,7 +1995,7 @@
   <a
     target="_blank" rel="noopener"
     class="m-1 rounded-md bg-neutral-300 p-1.5 text-neutral-700 hover:bg-primary-500 hover:text-neutral-300 dark:bg-neutral-700 dark:text-neutral-300 dark:hover:bg-primary-400 dark:hover:text-neutral-800"
-    href="https://twitter.com/intent/tweet?url=http%3A%2F%2Flocalhost%3A1313%2Fpost%2F01.bulkrnaseq_allow_herv_quantification%2F&amp;text=%F0%9F%A7%AC&#43;bulk-RNAseq&#43;allows&#43;transgenes%2C&#43;herv&#43;quantification"
+    href="https://twitter.com/intent/tweet?url=http%3A%2F%2Flocalhost%3A1313%2Fpost%2F01.bulkrnaseq_allow_herv_quantification%2F&amp;text=%F0%9F%A7%AC&#43;Quantify&#43;HERV&#43;and&#43;transgenes&#43;from&#43;Bulk-RNAseq"
     title="X"
     aria-label="X"
     id="share-link-x"
@@ -1391,7 +2013,7 @@
   <a
     target="_blank" rel="noopener"
     class="m-1 rounded-md bg-neutral-300 p-1.5 text-neutral-700 hover:bg-primary-500 hover:text-neutral-300 dark:bg-neutral-700 dark:text-neutral-300 dark:hover:bg-primary-400 dark:hover:text-neutral-800"
-    href="https://www.facebook.com/sharer.php?u=http%3A%2F%2Flocalhost%3A1313%2Fpost%2F01.bulkrnaseq_allow_herv_quantification%2F&amp;t=%F0%9F%A7%AC&#43;bulk-RNAseq&#43;allows&#43;transgenes%2C&#43;herv&#43;quantification"
+    href="https://www.facebook.com/sharer.php?u=http%3A%2F%2Flocalhost%3A1313%2Fpost%2F01.bulkrnaseq_allow_herv_quantification%2F&amp;t=%F0%9F%A7%AC&#43;Quantify&#43;HERV&#43;and&#43;transgenes&#43;from&#43;Bulk-RNAseq"
     title="Facebook"
     aria-label="Facebook"
     id="share-link-facebook"
@@ -1411,7 +2033,7 @@
   <a
     target="_blank" rel="noopener"
     class="m-1 rounded-md bg-neutral-300 p-1.5 text-neutral-700 hover:bg-primary-500 hover:text-neutral-300 dark:bg-neutral-700 dark:text-neutral-300 dark:hover:bg-primary-400 dark:hover:text-neutral-800"
-    href="mailto:?subject=%F0%9F%A7%AC%20bulk-RNAseq%20allows%20transgenes%2C%20herv%20quantification&amp;body=http%3A%2F%2Flocalhost%3A1313%2Fpost%2F01.bulkrnaseq_allow_herv_quantification%2F"
+    href="mailto:?subject=%F0%9F%A7%AC%20Quantify%20HERV%20and%20transgenes%20from%20Bulk-RNAseq&amp;body=http%3A%2F%2Flocalhost%3A1313%2Fpost%2F01.bulkrnaseq_allow_herv_quantification%2F"
     title="Email"
     aria-label="Email"
     id="share-link-email"
@@ -1429,7 +2051,7 @@
   <a
     target="_blank" rel="noopener"
     class="m-1 rounded-md bg-neutral-300 p-1.5 text-neutral-700 hover:bg-primary-500 hover:text-neutral-300 dark:bg-neutral-700 dark:text-neutral-300 dark:hover:bg-primary-400 dark:hover:text-neutral-800"
-    href="https://www.linkedin.com/shareArticle?url=http%3A%2F%2Flocalhost%3A1313%2Fpost%2F01.bulkrnaseq_allow_herv_quantification%2F&amp;title=%F0%9F%A7%AC&#43;bulk-RNAseq&#43;allows&#43;transgenes%2C&#43;herv&#43;quantification"
+    href="https://www.linkedin.com/shareArticle?url=http%3A%2F%2Flocalhost%3A1313%2Fpost%2F01.bulkrnaseq_allow_herv_quantification%2F&amp;title=%F0%9F%A7%AC&#43;Quantify&#43;HERV&#43;and&#43;transgenes&#43;from&#43;Bulk-RNAseq"
     title="LinkedIn"
     aria-label="LinkedIn"
     id="share-link-linkedin"
@@ -1447,7 +2069,7 @@
   <a
     target="_blank" rel="noopener"
     class="m-1 rounded-md bg-neutral-300 p-1.5 text-neutral-700 hover:bg-primary-500 hover:text-neutral-300 dark:bg-neutral-700 dark:text-neutral-300 dark:hover:bg-primary-400 dark:hover:text-neutral-800"
-    href="whatsapp://send?text=%F0%9F%A7%AC&#43;bulk-RNAseq&#43;allows&#43;transgenes%2C&#43;herv&#43;quantification%20http%3A%2F%2Flocalhost%3A1313%2Fpost%2F01.bulkrnaseq_allow_herv_quantification%2F"
+    href="whatsapp://send?text=%F0%9F%A7%AC&#43;Quantify&#43;HERV&#43;and&#43;transgenes&#43;from&#43;Bulk-RNAseq%20http%3A%2F%2Flocalhost%3A1313%2Fpost%2F01.bulkrnaseq_allow_herv_quantification%2F"
     title="WhatsApp"
     aria-label="WhatsApp"
     id="share-link-whatsapp"
@@ -1599,14 +2221,14 @@
   <div class="flex flex-col md:flex-row flex-nowrap justify-between gap-5 pt-2">
     <div class="">
       
-        <a class="group flex no-underline" href="/post/03.well-based_scrnaseq_herv_quantification/">
+        <a class="group flex no-underline" href="/post/02.10x_scrnaseq_herv_quantification/">
           <span
             class="mt-[-0.3rem] me-2 text-neutral-700 transition-transform group-hover:-translate-x-[2px] group-hover:text-primary-600 dark:text-neutral dark:group-hover:text-primary-400"
           ><span class="ltr:inline rtl:hidden">&larr;</span></span>
           <span class="flex flex-col">
             <span
               class="mt-[0.1rem] leading-6 group-hover:underline group-hover:decoration-primary-500"
-            >🧬 quantify transgenes and herv from well-based single-cell RNAseq</span>
+            >🧬 quantify transgenes and herv from 10x single-cell RNAseq</span>
             <span class="mt-[0.1rem] text-xs text-neutral-500 dark:text-neutral-400">
               
                 Mar 25, 2025

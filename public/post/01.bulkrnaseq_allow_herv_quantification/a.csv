@@ -1,0 +1,9 @@
+Tool,Default(option),Core algorithm
+HTSeq-count,discard(--nonunique=all/fraction),fraction
+featureCounts,discard(-M --fraction),fraction
+RSEM,EM Probabilistic,EM
+Salmon,EM Probabilistic,(Bayesian) EM
+kallisto,EM Probabilistic,EM
+StringTie,EM Probabilistic,EM
+TEtranscripts,EM Probabilistic,EM
+Telescope,EM Probabilistic,EM with MAP

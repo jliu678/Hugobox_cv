@@ -5,7 +5,7 @@
     <link>http://localhost:1313/tags/algorithm/</link>
       <atom:link href="http://localhost:1313/tags/algorithm/index.xml" rel="self" type="application/rss+xml" />
     <description>Algorithm</description>
-    <generator>Hugo Blox Builder (https://hugoblox.com)</generator><language>en-us</language><lastBuildDate>Wed, 26 Mar 2025 00:00:00 +0000</lastBuildDate>
+    <generator>Hugo Blox Builder (https://hugoblox.com)</generator><language>en-us</language><lastBuildDate>Sat, 12 Apr 2025 00:00:00 +0000</lastBuildDate>
     <image>
       <url>http://localhost:1313/media/icon_hu_fd2be5a69becaf9e.png</url>
       <title>Algorithm</title>
@@ -13,127 +13,10 @@
     </image>
     
     <item>
-      <title>🧬 Bayesian abundance statistics in PRCC</title>
-      <link>http://localhost:1313/post/13.yolov8/</link>
-      <pubDate>Wed, 26 Mar 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/post/13.yolov8/</guid>
-      <description>&lt;p&gt;will be composed soon!&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>🧬 CCA reasoning and integration discussion</title>
-      <link>http://localhost:1313/post/10.cca_reasoning/</link>
-      <pubDate>Wed, 26 Mar 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/post/10.cca_reasoning/</guid>
-      <description>&lt;p&gt;will be composed soon!&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>🧬 Clinical relevance evaluation in PRCC</title>
-      <link>http://localhost:1313/post/08.clinical_relevance/</link>
-      <pubDate>Wed, 26 Mar 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/post/08.clinical_relevance/</guid>
-      <description>&lt;p&gt;will be composed soon!&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>🧬 counteract treatment-specific background in differential expressed gene analysis (huangcong paper)</title>
-      <link>http://localhost:1313/post/04.huangcong_oncogene/</link>
-      <pubDate>Wed, 26 Mar 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/post/04.huangcong_oncogene/</guid>
-      <description>&lt;p&gt;will be composed soon!&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>🧬 Determine whether it’s noise or true stem like cells in PRCC</title>
-      <link>http://localhost:1313/post/06.noise_or_true_stem_cell/</link>
-      <pubDate>Wed, 26 Mar 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/post/06.noise_or_true_stem_cell/</guid>
-      <description>&lt;p&gt;will be composed soon!&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
       <title>🧬 EM algorithm, EM with max a posterior, full Bayesian inferences (variational Bayesian) which might be used in auto-coder</title>
       <link>http://localhost:1313/post/19.ememwithmapvariationalbayesian/</link>
-      <pubDate>Wed, 26 Mar 2025 00:00:00 +0000</pubDate>
+      <pubDate>Sat, 12 Apr 2025 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/post/19.ememwithmapvariationalbayesian/</guid>
-      <description>&lt;p&gt;will be composed soon!&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>🧬 Expressive cord diagram in PRCC</title>
-      <link>http://localhost:1313/post/07.cord_diagram/</link>
-      <pubDate>Wed, 26 Mar 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/post/07.cord_diagram/</guid>
-      <description>&lt;p&gt;will be composed soon!&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>🧬 how good is negative binomial, why AI works for biology</title>
-      <link>http://localhost:1313/post/16.how.good.is.negative.binominal/</link>
-      <pubDate>Wed, 26 Mar 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/post/16.how.good.is.negative.binominal/</guid>
-      <description>&lt;p&gt;will be composed soon!&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>🧬 quantify xenograft and host gene expression from the same sample</title>
-      <link>http://localhost:1313/post/05.xensoft_caki_paper/</link>
-      <pubDate>Wed, 26 Mar 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/post/05.xensoft_caki_paper/</guid>
-      <description>&lt;p&gt;will be composed soon!&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>🧬 sctransfrom reasoning</title>
-      <link>http://localhost:1313/post/09.sctransform/</link>
-      <pubDate>Wed, 26 Mar 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/post/09.sctransform/</guid>
-      <description>&lt;p&gt;will be composed soon!&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>🧬 Seurat to analysis large sample size of bulk RNAseq. Discuss Wixcox is better for clinical samples</title>
-      <link>http://localhost:1313/post/15.use.seurat.for.bulk.rnaseq/</link>
-      <pubDate>Wed, 26 Mar 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/post/15.use.seurat.for.bulk.rnaseq/</guid>
-      <description>&lt;p&gt;will be composed soon!&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>🧬 Smooth tests of goodness of Fit used in Stijn Hawinkel ’s plos one paper</title>
-      <link>http://localhost:1313/post/17.smooth.tests.of.goodness.of.fit/</link>
-      <pubDate>Wed, 26 Mar 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/post/17.smooth.tests.of.goodness.of.fit/</guid>
-      <description>&lt;p&gt;will be composed soon!&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>🧬 Spatial genomics presentation</title>
-      <link>http://localhost:1313/post/14.spatial_genomics_presentation/</link>
-      <pubDate>Wed, 26 Mar 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/post/14.spatial_genomics_presentation/</guid>
-      <description>&lt;p&gt;will be composed soon!&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>🧬 Velocity reasoning and discussion</title>
-      <link>http://localhost:1313/post/11.velocity_reasoning/</link>
-      <pubDate>Wed, 26 Mar 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/post/11.velocity_reasoning/</guid>
       <description>&lt;p&gt;will be composed soon!&lt;/p&gt;
 </description>
     </item>
@@ -141,8 +24,53 @@
     <item>
       <title>🧬 what makes neural network so powerful and popular</title>
       <link>http://localhost:1313/post/18.what_make_neural_network_powerful_popular/</link>
-      <pubDate>Wed, 26 Mar 2025 00:00:00 +0000</pubDate>
+      <pubDate>Fri, 11 Apr 2025 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/post/18.what_make_neural_network_powerful_popular/</guid>
+      <description>&lt;p&gt;will be composed soon!&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>🧬 Smooth tests of goodness of Fit used in Stijn Hawinkel ’s plos one paper</title>
+      <link>http://localhost:1313/post/17.smooth.tests.of.goodness.of.fit/</link>
+      <pubDate>Thu, 10 Apr 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/post/17.smooth.tests.of.goodness.of.fit/</guid>
+      <description>&lt;p&gt;will be composed soon!&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>🧬 how good is negative binomial, why AI works for biology</title>
+      <link>http://localhost:1313/post/16.how.good.is.negative.binominal/</link>
+      <pubDate>Wed, 09 Apr 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/post/16.how.good.is.negative.binominal/</guid>
+      <description>&lt;p&gt;will be composed soon!&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>🧬 Seurat to analysis large sample size of bulk RNAseq. Discuss Wixcox is better for clinical samples</title>
+      <link>http://localhost:1313/post/15.use.seurat.for.bulk.rnaseq/</link>
+      <pubDate>Tue, 08 Apr 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/post/15.use.seurat.for.bulk.rnaseq/</guid>
+      <description>&lt;p&gt;will be composed soon!&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>🧬 Spatial genomics presentation</title>
+      <link>http://localhost:1313/post/14.spatial_genomics_presentation/</link>
+      <pubDate>Mon, 07 Apr 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/post/14.spatial_genomics_presentation/</guid>
+      <description>&lt;p&gt;will be composed soon!&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>🧬 Bayesian abundance statistics in PRCC</title>
+      <link>http://localhost:1313/post/13.yolov8/</link>
+      <pubDate>Sun, 06 Apr 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/post/13.yolov8/</guid>
       <description>&lt;p&gt;will be composed soon!&lt;/p&gt;
 </description>
     </item>
@@ -150,8 +78,89 @@
     <item>
       <title>🧬 Yolov8</title>
       <link>http://localhost:1313/post/12.basian_abundance_statistics/</link>
-      <pubDate>Wed, 26 Mar 2025 00:00:00 +0000</pubDate>
+      <pubDate>Sat, 05 Apr 2025 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/post/12.basian_abundance_statistics/</guid>
+      <description>&lt;p&gt;will be composed soon!&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>🧬 Velocity reasoning and discussion</title>
+      <link>http://localhost:1313/post/11.velocity_reasoning/</link>
+      <pubDate>Fri, 04 Apr 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/post/11.velocity_reasoning/</guid>
+      <description>&lt;p&gt;will be composed soon!&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>🧬 CCA reasoning and integration discussion</title>
+      <link>http://localhost:1313/post/10.cca_reasoning/</link>
+      <pubDate>Thu, 03 Apr 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/post/10.cca_reasoning/</guid>
+      <description>&lt;p&gt;will be composed soon!&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>🧬 sctransfrom reasoning</title>
+      <link>http://localhost:1313/post/09.sctransform/</link>
+      <pubDate>Wed, 02 Apr 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/post/09.sctransform/</guid>
+      <description>&lt;p&gt;will be composed soon!&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>🧬 Clinical relevance evaluation in PRCC</title>
+      <link>http://localhost:1313/post/08.clinical_relevance/</link>
+      <pubDate>Mon, 31 Mar 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/post/08.clinical_relevance/</guid>
+      <description>&lt;p&gt;will be composed soon!&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>🧬 Expressive cord diagram in PRCC</title>
+      <link>http://localhost:1313/post/07.cord_diagram/</link>
+      <pubDate>Sun, 30 Mar 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/post/07.cord_diagram/</guid>
+      <description>&lt;p&gt;will be composed soon!&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>🧬 Determine whether it’s noise or true stem like cells in PRCC</title>
+      <link>http://localhost:1313/post/06.noise_or_true_stem_cell/</link>
+      <pubDate>Sat, 29 Mar 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/post/06.noise_or_true_stem_cell/</guid>
+      <description>&lt;p&gt;will be composed soon!&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>🧬 quantify xenograft and host gene expression from the same sample</title>
+      <link>http://localhost:1313/post/05.xensoft_caki_paper/</link>
+      <pubDate>Fri, 28 Mar 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/post/05.xensoft_caki_paper/</guid>
+      <description>&lt;p&gt;will be composed soon!&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>🧬 counteract treatment-specific background in differential expressed gene analysis (huangcong paper)</title>
+      <link>http://localhost:1313/post/04.huangcong_oncogene/</link>
+      <pubDate>Thu, 27 Mar 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/post/04.huangcong_oncogene/</guid>
+      <description>&lt;p&gt;will be composed soon!&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>🧬 quantify transgenes and herv from well-based single-cell RNAseq</title>
+      <link>http://localhost:1313/post/03.well-based_scrnaseq_herv_quantification/</link>
+      <pubDate>Wed, 26 Mar 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/post/03.well-based_scrnaseq_herv_quantification/</guid>
       <description>&lt;p&gt;will be composed soon!&lt;/p&gt;
 </description>
     </item>
@@ -166,20 +175,13 @@
     </item>
     
     <item>
-      <title>🧬 quantify transgenes and herv from well-based single-cell RNAseq</title>
-      <link>http://localhost:1313/post/03.well-based_scrnaseq_herv_quantification/</link>
-      <pubDate>Tue, 25 Mar 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/post/03.well-based_scrnaseq_herv_quantification/</guid>
-      <description>&lt;p&gt;will be composed soon!&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>🧬 bulk-RNAseq allows transgenes, herv quantification</title>
+      <title>🧬 Quantify HERV and transgenes from Bulk-RNAseq</title>
       <link>http://localhost:1313/post/01.bulkrnaseq_allow_herv_quantification/</link>
       <pubDate>Mon, 24 Mar 2025 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/post/01.bulkrnaseq_allow_herv_quantification/</guid>
-      <description>&lt;p&gt;will be composed soon!&lt;/p&gt;
+      <description>&lt;p&gt;The roles of hERVs in gene regulation, immunity, development and cancer are under intense research. Transgenes including GFP, CRE, Luciferase, rtTA/Tet-On/Tet-Off and epitopically expressed genes are common targets to be quantified in sample from transgenic mouse models.&lt;/p&gt;
+&lt;p&gt;Their sequencing reads are frequently charasteristic of repetitive or overlaping with host genome.&lt;/p&gt;
+&lt;p&gt;we need 1) modify fasta and gtf files to include the their sequencing and annotation 2) a feature quantification algorithm to handle multimapping commonly seen for HERV and transgenes. The algorithm to quantify gene features used by common bulk-RNAseq cannot represent hERV which overlap frequently with genes. Here I discussed the algorithms for feature quantification, and successfully quantified hERV and transgenes by implementing the proper one&lt;/p&gt;
 </description>
     </item>
     
