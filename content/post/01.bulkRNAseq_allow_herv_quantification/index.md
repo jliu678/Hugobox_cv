@@ -158,7 +158,7 @@ Please see source codes in [github](https://github.com/jliu678/herv_project_siyi
 - QC
 - index buidling, alignment and feature counting by either `subread` or `salmon`  
 
-[github](https://github.com/jliu678/herv_project_siyi/tree/main) also contains usage examples using `SLURM` or `LSF` job scheduler and handy utility tools.
+The github repo also contains [usage examples using `SLURM` or `LSF` job scheduler](https://github.com/jliu678/herv_project_siyi/tree/main/example_usage) and [handy utility tools](https://github.com/jliu678/herv_project_siyi/tree/main/utils).
 
 ---
 
