@@ -1,5 +1,5 @@
 ---
-title: 🧬 Quantify HERV and transgenes from Bulk-RNAseq
+title: 🧬 Quantify hERV and transgenes from Bulk-RNAseq
 summary: Human Endogenous Retroviruses (hERVs) are ancient viral sequences embedded in the human genome. Transgenes are common in transgenic mouse models. To quantify them from sequencing reads, we need-- a) modify fasta and gtf files to include the their sequencing and annotation; b) a feature quantification algorithm to handle multimapping commonly seen for hERV and transgenes. Here I discussed the algorithms for feature quantification, and successfully quantified hERV and transgenes by implementing an EM algorithm.  
 date: 2025-03-24
 authors:

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Snakemake | Jiyuan Liu</title>
+    <link>http://localhost:1313/tags/snakemake/</link>
+      <atom:link href="http://localhost:1313/tags/snakemake/index.xml" rel="self" type="application/rss+xml" />
+    <description>Snakemake</description>
+    <generator>Hugo Blox Builder (https://hugoblox.com)</generator><language>en-us</language><lastBuildDate>Tue, 25 Mar 2025 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>http://localhost:1313/media/icon_hu_fd2be5a69becaf9e.png</url>
+      <title>Snakemake</title>
+      <link>http://localhost:1313/tags/snakemake/</link>
+    </image>
+    
+    <item>
+      <title>🧬 A snakemake pipline-- quantify hERV, trangenes and genome from 10x scRNAseq</title>
+      <link>http://localhost:1313/post/02.snakemake_quantify-herv_10xscrnaseq/</link>
+      <pubDate>Tue, 25 Mar 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/post/02.snakemake_quantify-herv_10xscrnaseq/</guid>
+      <description>&lt;h2 id=&#34;what-are-hervs-and-transgenes&#34;&gt;What are hERVs and transgenes&lt;/h2&gt;
+&lt;p&gt;Human Endogenous Retroviruses (hERVs) are ancient viral sequences embedded in the human genome. The roles of hERVs in gene regulation, immunity, development and cancer are under intense research. Transgenes including GFP, CRE, Luciferase, rtTA/Tet-On/Tet-Off and epitopically expressed genes are common targets to be quantified in sample from transgenic mouse models.&lt;/p&gt;
+&lt;h2 id=&#34;how-to-quantify-them-from-10x-scrnaseq&#34;&gt;How to quantify them from 10x scRNAseq&lt;/h2&gt;
+&lt;p&gt;The EM algorithm is well-suited for quantifying them, as elucidated in &lt;a href=&#34;aaaaaaaaa&#34;&gt;my previous blog&lt;/a&gt;. &lt;a href=&#34;https://github.com/alexdobin/STAR/blob/master/docs/STARsolo.md#all-parameters-that-control-starsolo-output-are-listed-again-below-with-defaults-and-short-descriptions&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Starsolo&lt;/a&gt; is particularly handy for this task because it:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;implements EM algorithm&lt;/li&gt;
+&lt;li&gt;produces nearly identical gene counts in the same format as the 10x CellRanger does by following CellRanger logic for cell barcode whitelisting and UMI deduplication&lt;/li&gt;
+&lt;li&gt;is the foundation of alignment in CellRanger&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;why-compatibility-with-cellranger-matters&#34;&gt;Why compatibility with CellRanger matters&lt;/h2&gt;
+&lt;p&gt;The compatibility of STARsolo with CellRanger is important. While CellRanger is not a gold standard, a substantial and growing body of biological interpretations is derived from data processed by it. Aligning with CellRanger enables more meaningful comparisons with such datasets. This is particularly crucial when data integration is required, as no current method can fully correct for technical artifacts without distorting true biological signals.&lt;/p&gt;
+&lt;h2 id=&#34;snakemake-workflow-management&#34;&gt;Snakemake Workflow Management&lt;/h2&gt;
+&lt;p&gt;Snakemake is used to manage a workflow as illustrated below:
+&lt;figure class=&#34;ma0 w-75&#34;&gt;&lt;img src=&#34;http://localhost:1313/post/02.snakemake_quantify-herv_10xscrnaseq/dag.svg&#34;&gt;
+&lt;/figure&gt;
+&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

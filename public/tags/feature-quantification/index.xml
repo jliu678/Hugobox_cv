@@ -166,16 +166,7 @@
     </item>
     
     <item>
-      <title>🧬 quantify transgenes and herv from 10x single-cell RNAseq</title>
-      <link>http://localhost:1313/post/02.10x_scrnaseq_herv_quantification/</link>
-      <pubDate>Tue, 25 Mar 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/post/02.10x_scrnaseq_herv_quantification/</guid>
-      <description>&lt;p&gt;will be composed soon!&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>🧬 Quantify HERV and transgenes from Bulk-RNAseq</title>
+      <title>🧬 Quantify hERV and transgenes from Bulk-RNAseq</title>
       <link>http://localhost:1313/post/01.bulkrnaseq_allow_herv_quantification/</link>
       <pubDate>Mon, 24 Mar 2025 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/post/01.bulkrnaseq_allow_herv_quantification/</guid>
@@ -477,7 +468,7 @@ $$
 &lt;li&gt;QC&lt;/li&gt;
 &lt;li&gt;index buidling, alignment and feature counting by either &lt;code&gt;subread&lt;/code&gt; or &lt;code&gt;salmon&lt;/code&gt;&lt;/li&gt;
 &lt;/ul&gt;
-&lt;p&gt;&lt;a href=&#34;https://github.com/jliu678/herv_project_siyi/tree/main&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;github&lt;/a&gt; also contains usage examples using &lt;code&gt;SLURM&lt;/code&gt; or &lt;code&gt;LSF&lt;/code&gt; job scheduler and handy utility tools.&lt;/p&gt;
+&lt;p&gt;The github repo also contains &lt;a href=&#34;https://github.com/jliu678/herv_project_siyi/tree/main/example_usage&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;usage examples using &lt;code&gt;SLURM&lt;/code&gt; or &lt;code&gt;LSF&lt;/code&gt; job scheduler&lt;/a&gt; and &lt;a href=&#34;https://github.com/jliu678/herv_project_siyi/tree/main/utils&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;handy utility tools&lt;/a&gt;.&lt;/p&gt;
 &lt;hr&gt;
 &lt;h3 id=&#34;excerpt-scripts&#34;&gt;Excerpt scripts&lt;/h3&gt;
 &lt;p&gt;Below excerpt scripts call each needed analysis step specified as &lt;code&gt;ANALYSIS_STEP&lt;/code&gt; array, including file preprocessing, index buidling by &lt;code&gt;build_index()&lt;/code&gt;, QC by &lt;code&gt;qc_all()&lt;/code&gt;, alignment by &lt;code&gt;align_all()&lt;/code&gt; if using &lt;code&gt;subread&lt;/code&gt;, and feature counting by &lt;code&gt;count_all()&lt;/code&gt;.&lt;/p&gt;

@@ -1,6 +1,6 @@
 <!doctype html>
 <!-- This site was created with Hugo Blox. https://hugoblox.com -->
-<!-- Last Published: May 18, 2025 --><html lang="en-us" dir="ltr"
+<!-- Last Published: May 24, 2025 --><html lang="en-us" dir="ltr"
       data-wc-theme-default="system">
   
 <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
@@ -187,7 +187,7 @@
   
   <meta property="og:site_name" content="Jiyuan Liu" />
   <meta property="og:url" content="http://localhost:1313/post/01.bulkrnaseq_allow_herv_quantification/" />
-  <meta property="og:title" content="🧬 Quantify HERV and transgenes from Bulk-RNAseq | Jiyuan Liu" />
+  <meta property="og:title" content="🧬 Quantify hERV and transgenes from Bulk-RNAseq | Jiyuan Liu" />
   <meta property="og:description" content="Human Endogenous Retroviruses (hERVs) are ancient viral sequences embedded in the human genome. Transgenes are common in transgenic mouse models. To quantify them from sequencing reads, we need-- a) modify fasta and gtf files to include the their sequencing and annotation; b) a feature quantification algorithm to handle multimapping commonly seen for hERV and transgenes. Here I discussed the algorithms for feature quantification, and successfully quantified hERV and transgenes by implementing an EM algorithm." /><meta property="og:image" content="http://localhost:1313/post/01.bulkrnaseq_allow_herv_quantification/featured.jpg" />
     <meta property="twitter:image" content="http://localhost:1313/post/01.bulkrnaseq_allow_herv_quantification/featured.jpg" /><meta property="og:locale" content="en-us" />
   
@@ -207,7 +207,7 @@
   
 
 
-  <title>🧬 Quantify HERV and transgenes from Bulk-RNAseq | Jiyuan Liu</title>
+  <title>🧬 Quantify hERV and transgenes from Bulk-RNAseq | Jiyuan Liu</title>
 
   
   
@@ -234,6 +234,8 @@
   
 
 
+  
+  
   
   
   
@@ -1171,9 +1173,9 @@
             </li><li class="flex flex-col "><a
     class="hb-sidebar-custom-link
       text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
-    href="/post/02.10x_scrnaseq_herv_quantification/"
+    href="/post/02.snakemake_quantify-herv_10xscrnaseq/"
     
-  >🧬 quantify transgenes and herv from 10x single-cell RNAseq
+  >🧬 A snakemake pipline-- quantify hERV, trangenes and genome from 10x scRNAseq
     </a>
               
             </li><li class="flex flex-col open"><a
@@ -1181,7 +1183,7 @@
       sidebar-active-item bg-primary-100 font-semibold text-primary-800 dark:bg-primary-300 dark:text-primary-900"
     href="/post/01.bulkrnaseq_allow_herv_quantification/"
     
-  >🧬 Quantify HERV and transgenes from Bulk-RNAseq
+  >🧬 Quantify hERV and transgenes from Bulk-RNAseq
     </a>
   
     <ul class="hb-sidebar-mobile-toc"><li>
@@ -1209,6 +1211,14 @@
     class="hb-sidebar-custom-link
       text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
     href="/post/00.model_aerosol_depostion/"
+    
+  >💨 Modeling the deposition of infectious agents suggests that aerosolized drugs offer enhanced specificity
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/post/01a.repeatmasker/"
     
   >💨 Modeling the deposition of infectious agents suggests that aerosolized drugs offer enhanced specificity
     </a>
@@ -1466,7 +1476,7 @@
 
       
 
-      <h1 class="mt-2 text-4xl font-bold tracking-tight text-slate-900 dark:text-slate-100">🧬 Quantify HERV and transgenes from Bulk-RNAseq</h1>
+      <h1 class="mt-2 text-4xl font-bold tracking-tight text-slate-900 dark:text-slate-100">🧬 Quantify hERV and transgenes from Bulk-RNAseq</h1>
 
       <div class="mt-4 mb-16">
       <div class="text-gray-500 dark:text-gray-300 text-sm flex items-center flex-wrap gap-y-2"><span class="mr-1">Mar 24, 2025</span><span class="mx-1">·</span>
@@ -1829,7 +1839,7 @@ $$
 <li>QC</li>
 <li>index buidling, alignment and feature counting by either <code>subread</code> or <code>salmon</code></li>
 </ul>
-<p><a href="https://github.com/jliu678/herv_project_siyi/tree/main" target="_blank" rel="noopener">github</a> also contains usage examples using <code>SLURM</code> or <code>LSF</code> job scheduler and handy utility tools.</p>
+<p>The github repo also contains <a href="https://github.com/jliu678/herv_project_siyi/tree/main/example_usage" target="_blank" rel="noopener">usage examples using <code>SLURM</code> or <code>LSF</code> job scheduler</a> and <a href="https://github.com/jliu678/herv_project_siyi/tree/main/utils" target="_blank" rel="noopener">handy utility tools</a>.</p>
 <hr>
 <h3 id="excerpt-scripts">Excerpt scripts</h3>
 <p>Below excerpt scripts call each needed analysis step specified as <code>ANALYSIS_STEP</code> array, including file preprocessing, index buidling by <code>build_index()</code>, QC by <code>qc_all()</code>, alignment by <code>align_all()</code> if using <code>subread</code>, and feature counting by <code>count_all()</code>.</p>
@@ -1995,7 +2005,7 @@ $$
   <a
     target="_blank" rel="noopener"
     class="m-1 rounded-md bg-neutral-300 p-1.5 text-neutral-700 hover:bg-primary-500 hover:text-neutral-300 dark:bg-neutral-700 dark:text-neutral-300 dark:hover:bg-primary-400 dark:hover:text-neutral-800"
-    href="https://twitter.com/intent/tweet?url=http%3A%2F%2Flocalhost%3A1313%2Fpost%2F01.bulkrnaseq_allow_herv_quantification%2F&amp;text=%F0%9F%A7%AC&#43;Quantify&#43;HERV&#43;and&#43;transgenes&#43;from&#43;Bulk-RNAseq"
+    href="https://twitter.com/intent/tweet?url=http%3A%2F%2Flocalhost%3A1313%2Fpost%2F01.bulkrnaseq_allow_herv_quantification%2F&amp;text=%F0%9F%A7%AC&#43;Quantify&#43;hERV&#43;and&#43;transgenes&#43;from&#43;Bulk-RNAseq"
     title="X"
     aria-label="X"
     id="share-link-x"
@@ -2013,7 +2023,7 @@ $$
   <a
     target="_blank" rel="noopener"
     class="m-1 rounded-md bg-neutral-300 p-1.5 text-neutral-700 hover:bg-primary-500 hover:text-neutral-300 dark:bg-neutral-700 dark:text-neutral-300 dark:hover:bg-primary-400 dark:hover:text-neutral-800"
-    href="https://www.facebook.com/sharer.php?u=http%3A%2F%2Flocalhost%3A1313%2Fpost%2F01.bulkrnaseq_allow_herv_quantification%2F&amp;t=%F0%9F%A7%AC&#43;Quantify&#43;HERV&#43;and&#43;transgenes&#43;from&#43;Bulk-RNAseq"
+    href="https://www.facebook.com/sharer.php?u=http%3A%2F%2Flocalhost%3A1313%2Fpost%2F01.bulkrnaseq_allow_herv_quantification%2F&amp;t=%F0%9F%A7%AC&#43;Quantify&#43;hERV&#43;and&#43;transgenes&#43;from&#43;Bulk-RNAseq"
     title="Facebook"
     aria-label="Facebook"
     id="share-link-facebook"
@@ -2033,7 +2043,7 @@ $$
   <a
     target="_blank" rel="noopener"
     class="m-1 rounded-md bg-neutral-300 p-1.5 text-neutral-700 hover:bg-primary-500 hover:text-neutral-300 dark:bg-neutral-700 dark:text-neutral-300 dark:hover:bg-primary-400 dark:hover:text-neutral-800"
-    href="mailto:?subject=%F0%9F%A7%AC%20Quantify%20HERV%20and%20transgenes%20from%20Bulk-RNAseq&amp;body=http%3A%2F%2Flocalhost%3A1313%2Fpost%2F01.bulkrnaseq_allow_herv_quantification%2F"
+    href="mailto:?subject=%F0%9F%A7%AC%20Quantify%20hERV%20and%20transgenes%20from%20Bulk-RNAseq&amp;body=http%3A%2F%2Flocalhost%3A1313%2Fpost%2F01.bulkrnaseq_allow_herv_quantification%2F"
     title="Email"
     aria-label="Email"
     id="share-link-email"
@@ -2051,7 +2061,7 @@ $$
   <a
     target="_blank" rel="noopener"
     class="m-1 rounded-md bg-neutral-300 p-1.5 text-neutral-700 hover:bg-primary-500 hover:text-neutral-300 dark:bg-neutral-700 dark:text-neutral-300 dark:hover:bg-primary-400 dark:hover:text-neutral-800"
-    href="https://www.linkedin.com/shareArticle?url=http%3A%2F%2Flocalhost%3A1313%2Fpost%2F01.bulkrnaseq_allow_herv_quantification%2F&amp;title=%F0%9F%A7%AC&#43;Quantify&#43;HERV&#43;and&#43;transgenes&#43;from&#43;Bulk-RNAseq"
+    href="https://www.linkedin.com/shareArticle?url=http%3A%2F%2Flocalhost%3A1313%2Fpost%2F01.bulkrnaseq_allow_herv_quantification%2F&amp;title=%F0%9F%A7%AC&#43;Quantify&#43;hERV&#43;and&#43;transgenes&#43;from&#43;Bulk-RNAseq"
     title="LinkedIn"
     aria-label="LinkedIn"
     id="share-link-linkedin"
@@ -2069,7 +2079,7 @@ $$
   <a
     target="_blank" rel="noopener"
     class="m-1 rounded-md bg-neutral-300 p-1.5 text-neutral-700 hover:bg-primary-500 hover:text-neutral-300 dark:bg-neutral-700 dark:text-neutral-300 dark:hover:bg-primary-400 dark:hover:text-neutral-800"
-    href="whatsapp://send?text=%F0%9F%A7%AC&#43;Quantify&#43;HERV&#43;and&#43;transgenes&#43;from&#43;Bulk-RNAseq%20http%3A%2F%2Flocalhost%3A1313%2Fpost%2F01.bulkrnaseq_allow_herv_quantification%2F"
+    href="whatsapp://send?text=%F0%9F%A7%AC&#43;Quantify&#43;hERV&#43;and&#43;transgenes&#43;from&#43;Bulk-RNAseq%20http%3A%2F%2Flocalhost%3A1313%2Fpost%2F01.bulkrnaseq_allow_herv_quantification%2F"
     title="WhatsApp"
     aria-label="WhatsApp"
     id="share-link-whatsapp"
@@ -2221,14 +2231,14 @@ $$
   <div class="flex flex-col md:flex-row flex-nowrap justify-between gap-5 pt-2">
     <div class="">
       
-        <a class="group flex no-underline" href="/post/02.10x_scrnaseq_herv_quantification/">
+        <a class="group flex no-underline" href="/post/02.snakemake_quantify-herv_10xscrnaseq/">
           <span
             class="mt-[-0.3rem] me-2 text-neutral-700 transition-transform group-hover:-translate-x-[2px] group-hover:text-primary-600 dark:text-neutral dark:group-hover:text-primary-400"
           ><span class="ltr:inline rtl:hidden">&larr;</span></span>
           <span class="flex flex-col">
             <span
               class="mt-[0.1rem] leading-6 group-hover:underline group-hover:decoration-primary-500"
-            >🧬 quantify transgenes and herv from 10x single-cell RNAseq</span>
+            >🧬 A snakemake pipline-- quantify hERV, trangenes and genome from 10x scRNAseq</span>
             <span class="mt-[0.1rem] text-xs text-neutral-500 dark:text-neutral-400">
               
                 Mar 25, 2025
