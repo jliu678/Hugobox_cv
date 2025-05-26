@@ -41,7 +41,7 @@
   
     
   
-  <meta name="description" content="The algorithm to quantify gene features used by common single-cell RNAseq analysis cannot represent hERV which overlap frequently with genes. Here I discussed the algorithms for feature quantification, and successfully quantified hERV and transgenes by implementing the proper one" />
+  <meta name="description" content="Well based scRNAseq has many more details than 10x scRNAseq to pay attention to in order to quantify features using Starsolo. Here, we discuss and present the snakemake pipline to quantify hERV, transgenes and genome from well-based single-cell RNAseq data" />
 
   
   <link rel="alternate" hreflang="en-us" href="http://localhost:1313/post/03.well-based_scrnaseq_herv_quantification/" />
@@ -187,8 +187,8 @@
   
   <meta property="og:site_name" content="Jiyuan Liu" />
   <meta property="og:url" content="http://localhost:1313/post/03.well-based_scrnaseq_herv_quantification/" />
-  <meta property="og:title" content="🧬 quantify transgenes and herv from well-based single-cell RNAseq | Jiyuan Liu" />
-  <meta property="og:description" content="The algorithm to quantify gene features used by common single-cell RNAseq analysis cannot represent hERV which overlap frequently with genes. Here I discussed the algorithms for feature quantification, and successfully quantified hERV and transgenes by implementing the proper one" /><meta property="og:image" content="http://localhost:1313/post/03.well-based_scrnaseq_herv_quantification/featured.jpg" />
+  <meta property="og:title" content="🧬 A snakemake pipline-- quantify hERV, transgenes and genome from well-based single-cell RNAseq | Jiyuan Liu" />
+  <meta property="og:description" content="Well based scRNAseq has many more details than 10x scRNAseq to pay attention to in order to quantify features using Starsolo. Here, we discuss and present the snakemake pipline to quantify hERV, transgenes and genome from well-based single-cell RNAseq data" /><meta property="og:image" content="http://localhost:1313/post/03.well-based_scrnaseq_herv_quantification/featured.jpg" />
     <meta property="twitter:image" content="http://localhost:1313/post/03.well-based_scrnaseq_herv_quantification/featured.jpg" /><meta property="og:locale" content="en-us" />
   
     
@@ -207,7 +207,7 @@
   
 
 
-  <title>🧬 quantify transgenes and herv from well-based single-cell RNAseq | Jiyuan Liu</title>
+  <title>🧬 A snakemake pipline-- quantify hERV, transgenes and genome from well-based single-cell RNAseq | Jiyuan Liu</title>
 
   
   
@@ -234,6 +234,8 @@
   
 
 
+  
+  
   
   
   
@@ -1033,8 +1035,40 @@
       sidebar-active-item bg-primary-100 font-semibold text-primary-800 dark:bg-primary-300 dark:text-primary-900"
     href="/post/03.well-based_scrnaseq_herv_quantification/"
     
-  >🧬 quantify transgenes and herv from well-based single-cell RNAseq
+  >🧬 A snakemake pipline-- quantify hERV, transgenes and genome from well-based single-cell RNAseq
     </a>
+  
+    <ul class="hb-sidebar-mobile-toc"><li>
+              <a
+                href="#github-source-code"
+                class="hb-docs-link"
+              >Github source code</a>
+            </li>
+          <li>
+              <a
+                href="#what-are-hervs-and-transgenes"
+                class="hb-docs-link"
+              >What are hERVs and transgenes</a>
+            </li>
+          <li>
+              <a
+                href="#how-to-quantify-them-from-well-based-scrnaseq"
+                class="hb-docs-link"
+              >How to quantify them from Well-based scRNAseq</a>
+            </li>
+          <li>
+              <a
+                href="#why-resembling-cellranger-helps"
+                class="hb-docs-link"
+              >Why resembling CellRanger helps</a>
+            </li>
+          <li>
+              <a
+                href="#snakemake-workflow-management"
+                class="hb-docs-link"
+              >Snakemake Workflow Management</a>
+            </li>
+          </ul>
   
               
             </li><li class="flex flex-col "><a
@@ -1245,7 +1279,25 @@
 
 
 
-  <div class="hb-scrollbar text-sm [hyphens:auto] sticky top-16 overflow-y-auto pr-4 pt-6 max-h-[calc(100vh-var(--navbar-height)-env(safe-area-inset-bottom))] -mr-4 rtl:-ml-4">
+  <div class="hb-scrollbar text-sm [hyphens:auto] sticky top-16 overflow-y-auto pr-4 pt-6 max-h-[calc(100vh-var(--navbar-height)-env(safe-area-inset-bottom))] -mr-4 rtl:-ml-4"><p class="mb-4 font-semibold tracking-tight">On this page</p><ul>
+      <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="font-semibold inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#github-source-code">Github source code</a>
+      </li>
+      <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="font-semibold inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#what-are-hervs-and-transgenes">What are hERVs and transgenes</a>
+      </li>
+      <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="font-semibold inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#how-to-quantify-them-from-well-based-scrnaseq">How to quantify them from Well-based scRNAseq</a>
+      </li>
+      <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="font-semibold inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#why-resembling-cellranger-helps">Why resembling CellRanger helps</a>
+      </li>
+      <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="font-semibold inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#snakemake-workflow-management">Snakemake Workflow Management</a>
+      </li>
+      <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="pl-4 rtl:pr-4 inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#align-and-count-genes-herv-and-transgenes">Align and count genes, hERV and transgenes</a>
+      </li></ul>
 
   
   
@@ -1277,7 +1329,7 @@
 
       
 
-      <h1 class="mt-2 text-4xl font-bold tracking-tight text-slate-900 dark:text-slate-100">🧬 quantify transgenes and herv from well-based single-cell RNAseq</h1>
+      <h1 class="mt-2 text-4xl font-bold tracking-tight text-slate-900 dark:text-slate-100">🧬 A snakemake pipline-- quantify hERV, transgenes and genome from well-based single-cell RNAseq</h1>
 
       <div class="mt-4 mb-16">
       <div class="text-gray-500 dark:text-gray-300 text-sm flex items-center flex-wrap gap-y-2"><span class="mr-1">Mar 26, 2025</span><span class="mx-1">·</span>
@@ -1297,7 +1349,7 @@
         
         <span class="mx-1">·</span>
         <span class="mx-1">
-          1 min read
+          5 min read
         </span>
         
         </div>
@@ -1342,8 +1394,76 @@
       
 
       <div class="prose prose-slate lg:prose-xl dark:prose-invert">
-        <p>will be composed soon!</p>
-
+        <h2 id="github-source-code">Github source code</h2>
+<p>Please see <a href="https://github.com/jliu678/snakemake-pipline_quantify-hERV-trangene_well-based-scRNAseq" target="_blank" rel="noopener">github repo</a>.</p>
+<h2 id="what-are-hervs-and-transgenes">What are hERVs and transgenes</h2>
+<p>Human Endogenous Retroviruses (hERVs) are ancient viral sequences embedded in the human genome. The roles of hERVs in gene regulation, immunity, development and cancer are under intense research. Transgenes including GFP, CRE, Luciferase, rtTA/Tet-On/Tet-Off and epitopically expressed genes are common targets to be quantified in sample from transgenic mouse models.</p>
+<h2 id="how-to-quantify-them-from-well-based-scrnaseq">How to quantify them from Well-based scRNAseq</h2>
+<p>The EM algorithm is well-suited for quantifying them as elucidated in <a href="aaaaaaaaa">my previous blog</a>. Briefly, EM algorithm is advantageous in dealing with  multimaping, which is commonly seen for hERV and transgene quantification, because:</p>
+<ul>
+<li>mathematically, EM is well suitable for estimating parameters in Gaussian Mixture Models, which is similar to the model describing multimapping</li>
+<li>biologically, EM can takes into consideration the mapping probability and mapping bias, though Starsolo dose not use bias correction</li>
+</ul>
+<p><a href="https://github.com/alexdobin/STAR/blob/master/docs/STARsolo.md#all-parameters-that-control-starsolo-output-are-listed-again-below-with-defaults-and-short-descriptions" target="_blank" rel="noopener">Starsolo</a> is particularly handy for this task because it:</p>
+<ul>
+<li>implements EM algorithm</li>
+<li>follows CellRanger logic for cell barcode whitelisting and UMI deduplication to produce nearly identical gene counts in the same format as the CellRanger does</li>
+<li>is the foundation of alignment in CellRanger</li>
+</ul>
+<h2 id="why-resembling-cellranger-helps">Why resembling CellRanger helps</h2>
+<p>The similarity of STARsolo with CellRanger is important. While CellRanger is not a gold standard, a substantial and growing body of biological interpretations is derived from data processed by it. Aligning with CellRanger enables more meaningful comparisons with such datasets. This is particularly crucial when data integration is required, as no current method can fully correct for technical artifacts without distorting true biological signals.</p>
+<h2 id="snakemake-workflow-management">Snakemake Workflow Management</h2>
+<p>Snakemake is used to manage a workflow as illustrated below. Briefly, I generated star index and wrangled all fastqs belonging to the same end reading and the same sample into one fastq file. The combined fastqs and star index were input to starsolo in rule <code>star_mapping</code>. After making sure both input fastq wrangling and rule <code>star_mapping</code> were done, I moved the input fastqs to a specified directory to safely carry out cleaning up.
+<figure class="ma0 w-75"><img src="/post/03.well-based_scrnaseq_herv_quantification/dag.svg">
+</figure>
+</p>
+<p>Compared with that for 10x scRNAseq, the Snakemake file to quantify hERV, transgenes and genome from well-based single-cell RNAseq data has more details to pay attention to. Below discussed the key unique lines of the Snakemake file for well-based single-cell RNAseq, and please see the common parts of the Snakemake files for both well-based and 10x scRNAseq data in <a href="10xscrnaseq">my previous blog</a>.</p>
+<h3 id="align-and-count-genes-herv-and-transgenes">Align and count genes, hERV and transgenes</h3>
+<p>Rule <code>star_mapping</code> calls STARsolo with a detailed configuration for single-cell RNA-seq analysis, using a customized CB/UMI structure and enabling EM-based handling of multimappers.</p>
+<p>The soloType for seqWell(well-based scRNAseq) is <code>CB_UMI_Complex</code> as excerpted below from <a href="https://github.com/alexdobin/STAR/blob/master/docs/STARsolo.md#all-parameters-that-control-starsolo-output-are-listed-again-below-with-defaults-and-short-descriptions" target="_blank" rel="noopener">star-solo github</a></p>
+<pre><code>- soloType input options:
+    - CB_UMI_Simple   ... (a.k.a. Droplet) one UMI and one Cell Barcode of fixed length in read2, e.g. Drop-seq and 10X Chromium.
+    - CB_UMI_Complex  ... one UMI of fixed length, but multiple Cell Barcodes of varying length, as well as adapters sequences are allowed in read2 only, e.g. inDrop.
+</code></pre>
+<p>Microwell-seq uses three separate barcodes with adaptors aside them rather than a single barcode. Generating their three white lists requires reading through the methods in <a href="https://doi.org/10.1016/j.cell.2018.02.001" target="_blank" rel="noopener">Mapping the Mouse Cell Atlas by Microwell-Seq</a>. NOTE the results only showed 5&rsquo; to 3&rsquo; strands, while barcodes 2 and 3 were presented on the 3&rsquo; to 5&rsquo; strands and reversed when being transcribed onto the beads, we have to take the complement and reverse the resultant sequence. Below successfully accomplished the three white lists step by step:</p>
+<ul>
+<li>Download table S1 of paper <a href="https://doi.org/10.1016/j.cell.2018.02.001" target="_blank" rel="noopener">Mapping the Mouse Cell Atlas by Microwell-Seq</a> containing the sequences of well-specific barcodes. The 1st barcode is one of A1-96; the 2nd barcode is one of B1-96; the 3rd barcode is one of C1-96</li>
+<li>Take A1 <code>TTTAGGGATAACAGGGTAATAAGCAGTGGTATCAACGCAGAGTACGTTTTAGGCGACTCACTACAGGG</code> as example. We first remove adaptor whose sequence can be seen in the <a href="https://teichlab.github.io/scg_lib_structs/methods_html/Microwell-seq.html" target="_blank" rel="noopener">&ldquo;Step-by-step generation of Indexed-Beads-seqA:
+&quot; section of Microwell-seq github introduction</a>, which is the sequences beside [barcode1] in <code>5'-TTTAGGGATAACAGGGTAATAAGCAGTGGTATCAACGCAGAGTACGT[barcode1]CGACTCACTACAGGG -3'</code></li>
+<li>After removing adaptor the barcode inside A1 is &ldquo;TTTTAGG&rdquo;. That is all for A1.</li>
+<li>But for B1-96 and C1-96 barcodes, we need remove adaptor as above and further get the reverse complementary of them. Please note the direction of sequence listed in the table S1 downloaded above and that of the adaptor in  <a href="https://teichlab.github.io/scg_lib_structs/methods_html/Microwell-seq.html" target="_blank" rel="noopener">&ldquo;Step-by-step generation of Indexed-Beads-seqA:&rdquo; section of Microwell-seq github introduction</a>. Also check directions of the raw reads in <a href="https://trace.ncbi.nlm.nih.gov/Traces/?view=run_browser&amp;page_size=10&amp;acc=SRR9843415&amp;display=reads" target="_blank" rel="noopener">sra of GSM3980130: Adult-Cervix1; Homo sapiens; RNA-Seq (SRR9843415)</a></li>
+<li><code>soloCBposition</code> and <code>soloUMIposition</code> of Starsolo needs input in this pattern (0_0_0_5) to know the start and end of barcodes and UMI. See <a href="https://teichlab.github.io/scg_lib_structs/methods_html/Microwell-seq.html" target="_blank" rel="noopener">&ldquo;Library sequencing:&rdquo; section of Microwell-seq github introduction</a> and <a href="https://github.com/alexdobin/STAR/blob/master/docs/STARsolo.md#complex-barcodes" target="_blank" rel="noopener">&ldquo;Complex barcodes:&rdquo; section of Star-Solo github introduction</a>. For example: 0_0_0_5 means the barcode starts at bp 0 and ends at bp 5.</li>
+<li>Because there are 3 seperate barcodes, the wl option in &ldquo;config.yaml&rdquo; needs to specify 3 different files corresponding to the 3 barcode segments.</li>
+<li>Importantly, in the <code>--readFilesIn</code> option, the 1st file has to be cDNA read, and the 2nd file has to be the barcode (cell+UMI) read.</li>
+</ul>
+<p>The rest of the configurations are copied from the <a href="https://github.com/alexdobin/STAR/blob/master/docs/STARsolo.md#all-parameters-that-control-starsolo-output-are-listed-again-below-with-defaults-and-short-descriptions" target="_blank" rel="noopener">STARsolo guide on github</a>. That gives</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">rule</span> <span class="n">star_mapping</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">input</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;combined_reads/</span><span class="si">{input_reads}</span><span class="s2">.r1.fastq.gz&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;combined_reads/</span><span class="si">{input_reads}</span><span class="s2">.r2.fastq.gz&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="n">idx</span><span class="o">=</span><span class="n">expand</span><span class="p">(</span><span class="s2">&#34;</span><span class="si">{star_index}</span><span class="s2">&#34;</span><span class="p">,</span> <span class="n">star_index</span><span class="o">=</span><span class="n">config</span><span class="p">[</span><span class="s2">&#34;star_index&#34;</span><span class="p">]),</span>
+</span></span><span class="line"><span class="cl">    <span class="n">output</span><span class="p">:</span> 
+</span></span><span class="line"><span class="cl">        <span class="n">directory</span><span class="p">(</span><span class="s2">&#34;mapped_reads/</span><span class="si">{input_reads}</span><span class="s2">/&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">message</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;star mapping...&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">threads</span><span class="p">:</span> <span class="mi">24</span>
+</span></span><span class="line"><span class="cl">    <span class="n">resources</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">mem</span> <span class="o">=</span> <span class="mi">64000</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">        <span class="n">time</span> <span class="o">=</span> <span class="s1">&#39;4:00:00&#39;</span>
+</span></span><span class="line"><span class="cl">    <span class="n">shell</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="s2">&#34;&#34;&#34;STAR --genomeDir </span><span class="si">{input.idx}</span><span class="s2"> --runThreadN </span><span class="si">{threads}</span><span class="s2"> </span><span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span><span class="s2">            --soloType CB_UMI_Complex </span><span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span><span class="s2">            --soloCBposition 0_0_0_5 0_21_0_26 0_42_0_47 </span><span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span><span class="s2">            --soloUMIposition 0_48_0_53 </span><span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span><span class="s2">            --soloCBwhitelist </span><span class="si">{config[wl]}</span><span class="s2"> </span><span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span><span class="s2">            --clipAdapterType CellRanger4 --outFilterScoreMin 10 </span><span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span><span class="s2">            --soloCBmatchWLtype 1MM_multi </span><span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span><span class="s2">            --soloUMIfiltering MultiGeneUMI_CR --soloUMIdedup 1MM_CR </span><span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span><span class="s2">            --soloFeatures Gene GeneFull SJ --soloCellFilter EmptyDrops_CR </span><span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span><span class="s2">            --soloMultiMappers EM </span><span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span><span class="s2">            --readFilesIn </span><span class="si">{input[1]}</span><span class="s2"> </span><span class="si">{input[0]}</span><span class="s2"> --readFilesCommand &#39;gunzip -c&#39;</span><span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span><span class="s2">            --outFileNamePrefix </span><span class="si">{output}</span><span class="s2">/&#34;&#34;&#34;</span>
+</span></span></code></pre></div>
       </div>
 
       
@@ -1363,13 +1483,15 @@
   
   <a class="no-underline bg-primary-100 hover:bg-primary-300 text-primary-800 text-xs font-medium mr-2 px-2.5 py-0.5 lg:px-5 lg:py-2 rounded dark:bg-primary-900 dark:hover:bg-primary-700 dark:text-primary-300" href="/tags/algorithm/">Algorithm</a>
   
-  <a class="no-underline bg-primary-100 hover:bg-primary-300 text-primary-800 text-xs font-medium mr-2 px-2.5 py-0.5 lg:px-5 lg:py-2 rounded dark:bg-primary-900 dark:hover:bg-primary-700 dark:text-primary-300" href="/tags/feature-quantification/">Feature Quantification</a>
+  <a class="no-underline bg-primary-100 hover:bg-primary-300 text-primary-800 text-xs font-medium mr-2 px-2.5 py-0.5 lg:px-5 lg:py-2 rounded dark:bg-primary-900 dark:hover:bg-primary-700 dark:text-primary-300" href="/tags/herv/">HERV</a>
+  
+  <a class="no-underline bg-primary-100 hover:bg-primary-300 text-primary-800 text-xs font-medium mr-2 px-2.5 py-0.5 lg:px-5 lg:py-2 rounded dark:bg-primary-900 dark:hover:bg-primary-700 dark:text-primary-300" href="/tags/transgene/">Transgene</a>
   
   <a class="no-underline bg-primary-100 hover:bg-primary-300 text-primary-800 text-xs font-medium mr-2 px-2.5 py-0.5 lg:px-5 lg:py-2 rounded dark:bg-primary-900 dark:hover:bg-primary-700 dark:text-primary-300" href="/tags/em/">EM</a>
   
   <a class="no-underline bg-primary-100 hover:bg-primary-300 text-primary-800 text-xs font-medium mr-2 px-2.5 py-0.5 lg:px-5 lg:py-2 rounded dark:bg-primary-900 dark:hover:bg-primary-700 dark:text-primary-300" href="/tags/scrnaseq/">ScRNAseq</a>
   
-  <a class="no-underline bg-primary-100 hover:bg-primary-300 text-primary-800 text-xs font-medium mr-2 px-2.5 py-0.5 lg:px-5 lg:py-2 rounded dark:bg-primary-900 dark:hover:bg-primary-700 dark:text-primary-300" href="/tags/10x/">10X</a>
+  <a class="no-underline bg-primary-100 hover:bg-primary-300 text-primary-800 text-xs font-medium mr-2 px-2.5 py-0.5 lg:px-5 lg:py-2 rounded dark:bg-primary-900 dark:hover:bg-primary-700 dark:text-primary-300" href="/tags/well-based/">Well-Based</a>
   
 </div>
 
@@ -1387,7 +1509,7 @@
   <a
     target="_blank" rel="noopener"
     class="m-1 rounded-md bg-neutral-300 p-1.5 text-neutral-700 hover:bg-primary-500 hover:text-neutral-300 dark:bg-neutral-700 dark:text-neutral-300 dark:hover:bg-primary-400 dark:hover:text-neutral-800"
-    href="https://twitter.com/intent/tweet?url=http%3A%2F%2Flocalhost%3A1313%2Fpost%2F03.well-based_scrnaseq_herv_quantification%2F&amp;text=%F0%9F%A7%AC&#43;quantify&#43;transgenes&#43;and&#43;herv&#43;from&#43;well-based&#43;single-cell&#43;RNAseq"
+    href="https://twitter.com/intent/tweet?url=http%3A%2F%2Flocalhost%3A1313%2Fpost%2F03.well-based_scrnaseq_herv_quantification%2F&amp;text=%F0%9F%A7%AC&#43;A&#43;snakemake&#43;pipline--&#43;quantify&#43;hERV%2C&#43;transgenes&#43;and&#43;genome&#43;from&#43;well-based&#43;single-cell&#43;RNAseq"
     title="X"
     aria-label="X"
     id="share-link-x"
@@ -1405,7 +1527,7 @@
   <a
     target="_blank" rel="noopener"
     class="m-1 rounded-md bg-neutral-300 p-1.5 text-neutral-700 hover:bg-primary-500 hover:text-neutral-300 dark:bg-neutral-700 dark:text-neutral-300 dark:hover:bg-primary-400 dark:hover:text-neutral-800"
-    href="https://www.facebook.com/sharer.php?u=http%3A%2F%2Flocalhost%3A1313%2Fpost%2F03.well-based_scrnaseq_herv_quantification%2F&amp;t=%F0%9F%A7%AC&#43;quantify&#43;transgenes&#43;and&#43;herv&#43;from&#43;well-based&#43;single-cell&#43;RNAseq"
+    href="https://www.facebook.com/sharer.php?u=http%3A%2F%2Flocalhost%3A1313%2Fpost%2F03.well-based_scrnaseq_herv_quantification%2F&amp;t=%F0%9F%A7%AC&#43;A&#43;snakemake&#43;pipline--&#43;quantify&#43;hERV%2C&#43;transgenes&#43;and&#43;genome&#43;from&#43;well-based&#43;single-cell&#43;RNAseq"
     title="Facebook"
     aria-label="Facebook"
     id="share-link-facebook"
@@ -1425,7 +1547,7 @@
   <a
     target="_blank" rel="noopener"
     class="m-1 rounded-md bg-neutral-300 p-1.5 text-neutral-700 hover:bg-primary-500 hover:text-neutral-300 dark:bg-neutral-700 dark:text-neutral-300 dark:hover:bg-primary-400 dark:hover:text-neutral-800"
-    href="mailto:?subject=%F0%9F%A7%AC%20quantify%20transgenes%20and%20herv%20from%20well-based%20single-cell%20RNAseq&amp;body=http%3A%2F%2Flocalhost%3A1313%2Fpost%2F03.well-based_scrnaseq_herv_quantification%2F"
+    href="mailto:?subject=%F0%9F%A7%AC%20A%20snakemake%20pipline--%20quantify%20hERV%2C%20transgenes%20and%20genome%20from%20well-based%20single-cell%20RNAseq&amp;body=http%3A%2F%2Flocalhost%3A1313%2Fpost%2F03.well-based_scrnaseq_herv_quantification%2F"
     title="Email"
     aria-label="Email"
     id="share-link-email"
@@ -1443,7 +1565,7 @@
   <a
     target="_blank" rel="noopener"
     class="m-1 rounded-md bg-neutral-300 p-1.5 text-neutral-700 hover:bg-primary-500 hover:text-neutral-300 dark:bg-neutral-700 dark:text-neutral-300 dark:hover:bg-primary-400 dark:hover:text-neutral-800"
-    href="https://www.linkedin.com/shareArticle?url=http%3A%2F%2Flocalhost%3A1313%2Fpost%2F03.well-based_scrnaseq_herv_quantification%2F&amp;title=%F0%9F%A7%AC&#43;quantify&#43;transgenes&#43;and&#43;herv&#43;from&#43;well-based&#43;single-cell&#43;RNAseq"
+    href="https://www.linkedin.com/shareArticle?url=http%3A%2F%2Flocalhost%3A1313%2Fpost%2F03.well-based_scrnaseq_herv_quantification%2F&amp;title=%F0%9F%A7%AC&#43;A&#43;snakemake&#43;pipline--&#43;quantify&#43;hERV%2C&#43;transgenes&#43;and&#43;genome&#43;from&#43;well-based&#43;single-cell&#43;RNAseq"
     title="LinkedIn"
     aria-label="LinkedIn"
     id="share-link-linkedin"
@@ -1461,7 +1583,7 @@
   <a
     target="_blank" rel="noopener"
     class="m-1 rounded-md bg-neutral-300 p-1.5 text-neutral-700 hover:bg-primary-500 hover:text-neutral-300 dark:bg-neutral-700 dark:text-neutral-300 dark:hover:bg-primary-400 dark:hover:text-neutral-800"
-    href="whatsapp://send?text=%F0%9F%A7%AC&#43;quantify&#43;transgenes&#43;and&#43;herv&#43;from&#43;well-based&#43;single-cell&#43;RNAseq%20http%3A%2F%2Flocalhost%3A1313%2Fpost%2F03.well-based_scrnaseq_herv_quantification%2F"
+    href="whatsapp://send?text=%F0%9F%A7%AC&#43;A&#43;snakemake&#43;pipline--&#43;quantify&#43;hERV%2C&#43;transgenes&#43;and&#43;genome&#43;from&#43;well-based&#43;single-cell&#43;RNAseq%20http%3A%2F%2Flocalhost%3A1313%2Fpost%2F03.well-based_scrnaseq_herv_quantification%2F"
     title="WhatsApp"
     aria-label="WhatsApp"
     id="share-link-whatsapp"

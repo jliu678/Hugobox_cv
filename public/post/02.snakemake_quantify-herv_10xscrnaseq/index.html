@@ -277,6 +277,8 @@
   
   
   
+  
+  
     
       
       
@@ -1033,7 +1035,7 @@
       text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
     href="/post/03.well-based_scrnaseq_herv_quantification/"
     
-  >🧬 quantify transgenes and herv from well-based single-cell RNAseq
+  >🧬 A snakemake pipline-- quantify hERV, transgenes and genome from well-based single-cell RNAseq
     </a>
               
             </li><li class="flex flex-col open"><a
@@ -1356,7 +1358,7 @@
         
         <span class="mx-1">·</span>
         <span class="mx-1">
-          5 min read
+          6 min read
         </span>
         
         </div>
@@ -1409,7 +1411,7 @@
 <p>The EM algorithm is well-suited for quantifying them as elucidated in <a href="aaaaaaaaa">my previous blog</a>. Briefly, EM algorithm is advantageous in dealing with  multimaping, which is commonly seen for hERV and transgene quantification, because:</p>
 <ul>
 <li>mathematically, EM is well suitable for estimating parameters in Gaussian Mixture Models, which is similar to the model describing multimapping</li>
-<li>biologically, EM can takes into consideration the mapping bias, though Starsolo dose not use bias correction</li>
+<li>biologically, EM can takes into consideration the mapping probability and mapping bias, though Starsolo dose not use bias correction</li>
 </ul>
 <p><a href="https://github.com/alexdobin/STAR/blob/master/docs/STARsolo.md#all-parameters-that-control-starsolo-output-are-listed-again-below-with-defaults-and-short-descriptions" target="_blank" rel="noopener">Starsolo</a> is particularly handy for this task because it:</p>
 <ul>
@@ -1426,7 +1428,12 @@
 </p>
 <p>Key lines of the Snakemake file are discussed below</p>
 <h3 id="import-configyaml">Import config.yaml</h3>
-<p>This line imports a configuration file in YAML format. The config file specify the genome and annotation files, the whitelist file(s), the star index directory and the CellBarcode/UMI lengths, etc.</p>
+<p>This line imports a configuration file in YAML format. The config file specify the genome and annotation files, the whitelist file(s), the star index directory and the CellBarcode/UMI lengths, etc. The cell barcode will be provided to <code>--soloCBwhitelist</code> option in STARsolo to:</p>
+<ul>
+<li>Match observed barcodes in your data,</li>
+<li>Correct sequencing errors (if close matches are allowed),</li>
+<li>Filter out barcodes that are not from real, expected cells.</li>
+</ul>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">configfile</span><span class="p">:</span> <span class="s2">&#34;config.yaml&#34;</span>
 </span></span></code></pre></div><p>Part of values defined in the yaml are as below, other will be discussed otherwhere in the blog.</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">genome</span><span class="p">:</span><span class="w"> </span><span class="s2">&#34;combined.fa&#34;</span><span class="w">
@@ -1477,6 +1484,7 @@
     - CB_UMI_Simple   ... (a.k.a. Droplet) one UMI and one Cell Barcode of fixed length in read2, e.g. Drop-seq and 10X Chromium.
     - CB_UMI_Complex  ... one UMI of fixed length, but multiple Cell Barcodes of varying length, as well as adapters sequences are allowed in read2 only, e.g. inDrop.
 </code></pre>
+<p>10x barcode inclusion list (formerly barcode whitelist) can be downloaded <a href="https://kb.10xgenomics.com/hc/en-us/articles/115004506263-What-is-a-barcode-inclusion-list-formerly-barcode-whitelist#:~:text=For%20example%2C%20there%20are%20roughly,AAACCTGAGAAAGTGG%20AAACCTGAGAACAACT%20AAACCTGAGAACAATC%20AAACCTGAGAACTCGG%20AAACCTGAGAACTGTA" target="_blank" rel="noopener">here</a>.</p>
 <p>Importantly, in the &ndash;readFilesIn option, the 1st file has to be cDNA read, and the 2nd file has to be the barcode (cell+UMI) read, i.e.</p>
 <p>10X data have a variety of CB and UMI lengths, I decided for them to be a configurable option.
 Please Ref to <a href="https://github.com/alexdobin/STAR/blob/master/docs/STARsolo.md#barcode-geometry" target="_blank" rel="noopener">barcode-geomery section of Star-Solo github</a> to quickly understand below arguments.</p>
@@ -1571,6 +1579,8 @@ Please Ref to <a href="https://github.com/alexdobin/STAR/blob/master/docs/STARso
 <div class="flex justify-center">
   
   <a class="no-underline bg-primary-100 hover:bg-primary-300 text-primary-800 text-xs font-medium mr-2 px-2.5 py-0.5 lg:px-5 lg:py-2 rounded dark:bg-primary-900 dark:hover:bg-primary-700 dark:text-primary-300" href="/tags/snakemake/">Snakemake</a>
+  
+  <a class="no-underline bg-primary-100 hover:bg-primary-300 text-primary-800 text-xs font-medium mr-2 px-2.5 py-0.5 lg:px-5 lg:py-2 rounded dark:bg-primary-900 dark:hover:bg-primary-700 dark:text-primary-300" href="/tags/em-algorithm/">EM Algorithm</a>
   
   <a class="no-underline bg-primary-100 hover:bg-primary-300 text-primary-800 text-xs font-medium mr-2 px-2.5 py-0.5 lg:px-5 lg:py-2 rounded dark:bg-primary-900 dark:hover:bg-primary-700 dark:text-primary-300" href="/tags/herv/">HERV</a>
   
@@ -1829,7 +1839,7 @@ Please Ref to <a href="https://github.com/alexdobin/STAR/blob/master/docs/STARso
           <span class="flex flex-col">
             <span
               class="mt-[0.1rem] leading-6 group-hover:underline group-hover:decoration-primary-500"
-            >🧬 quantify transgenes and herv from well-based single-cell RNAseq</span>
+            >🧬 A snakemake pipline-- quantify hERV, transgenes and genome from well-based single-cell RNAseq</span>
             <span class="mt-[0.1rem] text-xs text-neutral-500 dark:text-neutral-400">
               
                 Mar 26, 2025

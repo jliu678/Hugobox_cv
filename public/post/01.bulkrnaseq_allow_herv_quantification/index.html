@@ -1,6 +1,6 @@
 <!doctype html>
 <!-- This site was created with Hugo Blox. https://hugoblox.com -->
-<!-- Last Published: May 24, 2025 --><html lang="en-us" dir="ltr"
+<!-- Last Published: May 25, 2025 --><html lang="en-us" dir="ltr"
       data-wc-theme-default="system">
   
 <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
@@ -234,6 +234,8 @@
   
 
 
+  
+  
   
   
   
@@ -1167,7 +1169,7 @@
       text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
     href="/post/03.well-based_scrnaseq_herv_quantification/"
     
-  >🧬 quantify transgenes and herv from well-based single-cell RNAseq
+  >🧬 A snakemake pipline-- quantify hERV, transgenes and genome from well-based single-cell RNAseq
     </a>
               
             </li><li class="flex flex-col "><a
@@ -1175,7 +1177,7 @@
       text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
     href="/post/02.snakemake_quantify-herv_10xscrnaseq/"
     
-  >🧬 A snakemake pipline-- quantify hERV, trangenes and genome from 10x scRNAseq
+  >🧬 A snakemake pipline-- quantify hERV, transgenes and genome from 10x scRNAseq
     </a>
               
             </li><li class="flex flex-col open"><a
@@ -1187,6 +1189,12 @@
     </a>
   
     <ul class="hb-sidebar-mobile-toc"><li>
+              <a
+                href="#github-source-code"
+                class="hb-docs-link"
+              >Github source code</a>
+            </li>
+          <li>
               <a
                 href="#what-are-hervs-and-transgenes"
                 class="hb-docs-link"
@@ -1401,6 +1409,9 @@
 
   <div class="hb-scrollbar text-sm [hyphens:auto] sticky top-16 overflow-y-auto pr-4 pt-6 max-h-[calc(100vh-var(--navbar-height)-env(safe-area-inset-bottom))] -mr-4 rtl:-ml-4"><p class="mb-4 font-semibold tracking-tight">On this page</p><ul>
       <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="font-semibold inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#github-source-code">Github source code</a>
+      </li>
+      <li class="my-2 scroll-my-6 scroll-py-6">
         <a class="font-semibold inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#what-are-hervs-and-transgenes">What are hERVs and transgenes</a>
       </li>
       <li class="my-2 scroll-my-6 scroll-py-6">
@@ -1541,7 +1552,17 @@
       
 
       <div class="prose prose-slate lg:prose-xl dark:prose-invert">
-        <h2 id="what-are-hervs-and-transgenes">What are hERVs and transgenes</h2>
+        <h2 id="github-source-code">Github source code</h2>
+<p>Please see source codes in <a href="https://github.com/jliu678/herv_project_siyi/tree/main" target="_blank" rel="noopener">github</a> that can be deploied in Cloud Cluster Computational platform and local desktops, and allows for:</p>
+<ul>
+<li>batch computaion with tunable batch size</li>
+<li>automatic environment setting up</li>
+<li>file preprocessing</li>
+<li>QC</li>
+<li>index buidling, alignment and feature counting by either <code>subread</code> or <code>salmon</code></li>
+</ul>
+<p>The github repo also contains <a href="https://github.com/jliu678/herv_project_siyi/tree/main/example_usage" target="_blank" rel="noopener">usage examples using <code>SLURM</code> or <code>LSF</code> job scheduler</a> and <a href="https://github.com/jliu678/herv_project_siyi/tree/main/utils" target="_blank" rel="noopener">handy utility tools</a>.</p>
+<h2 id="what-are-hervs-and-transgenes">What are hERVs and transgenes</h2>
 <p>Human Endogenous Retroviruses (hERVs) are ancient viral sequences embedded in the human genome. The roles of hERVs in gene regulation, immunity, development and cancer are under intense research. Transgenes including GFP, CRE, Luciferase, rtTA/Tet-On/Tet-Off and epitopically expressed genes are common targets to be quantified in sample from transgenic mouse models.</p>
 <h2 id="how-to-quantify-them">How to quantify them</h2>
 <p>To quantify them, we of course need modify fasta and gtf files to include the their sequencing and annotation. Also, because their sequencing reads are frequently repetitive or overlaping with host genome, we need a feature quantification algorithm to handle multimapping commonly seen for HERV and transgenes.</p>
@@ -1828,7 +1849,7 @@ $$
 <p>Now we see EM algorithm superior than fraction algorithms in quantifing multimappings since EM</p>
 <ul>
 <li>is well suitable for estimating parameters in Gaussian Mixture Models, which is similar to the multimapping mathematical model</li>
-<li>takes multimapping mathematical models accounting for the mapping bias</li>
+<li>takes multimapping mathematical models of mapping probability that accounts for the mapping bias</li>
 </ul>
 <p>We implemented Salmon since it allows both EM and full bayesian EM. We will talk about <a href="donesoon">EM (with MLE), EM with MAP and bayesian EM</a> as well as <a href="donesoon">Frequentist vs Bayesian</a> in other blogs.</p>
 <p>Please see source codes in <a href="https://github.com/jliu678/herv_project_siyi/tree/main" target="_blank" rel="noopener">github</a> that can be deploied in Cloud Cluster Computational platform and local desktops, and allows for:</p>
@@ -2238,7 +2259,7 @@ $$
           <span class="flex flex-col">
             <span
               class="mt-[0.1rem] leading-6 group-hover:underline group-hover:decoration-primary-500"
-            >🧬 A snakemake pipline-- quantify hERV, trangenes and genome from 10x scRNAseq</span>
+            >🧬 A snakemake pipline-- quantify hERV, transgenes and genome from 10x scRNAseq</span>
             <span class="mt-[0.1rem] text-xs text-neutral-500 dark:text-neutral-400">
               
                 Mar 25, 2025

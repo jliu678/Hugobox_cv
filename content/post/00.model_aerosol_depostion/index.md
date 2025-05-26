@@ -13,7 +13,10 @@ tags:
 image:
   caption: 'Image credit: [**Andrey Soldatov on Unsplash**](https://unsplash.com)'
 ---
+## Github source code
+please see [source codes in github](https://github.com/jliu678/model_aerosol_depostion).
 
+## Introduction
 Alveolar deposition is indeed a key event in respiratory infections, including pneumonia and viral infections like COVID-19. It allows many infectious agents (like bacteria, viruses, and fungi) to establish infection and cause damage to the lungs and overall health. Aerosols of 1–5 microns in diameter are able to bypass the upper airways and reach the deep parts of the lungs, including the alveoli. It is through aerosols that respiratory diseases like COVID-19, tuberculosis, and influenza spread so effectively.
 
 I thought the small size of aerosols that deeply reach alveoli made them subject to [Brownian motion](https://en.wikipedia.org/wiki/Brownian_motion) and deposit in a random, erratic pattern. But the Fig 1D of [Rothchild et al.,(2019)](https://pmc.ncbi.nlm.nih.gov/articles/PMC6910245/) strongly challenged this idea. Specifically, the mice were infected with 2 × 10^3^ aerosolized tuberculosis bateria (M.tb), and one day later more than 15% of the infected alveoli contained two bacteria. Considering the [36-hour douling time of M.tb](https://pmc.ncbi.nlm.nih.gov/articles/PMC2779834/) even in rich growth conditions, we can reasonably ignore M.tb proliferation within the first day, during which the bacteria must acclimate to the immunocompetent lung environment. The frequency, therefore, does not align with the assumption that M.tb deposits randomly in each infection niche—the region surveilled by one of the more than 7 × 10⁵ individual alveolar macrophages—at the same probability.

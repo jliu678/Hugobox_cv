@@ -6,6 +6,7 @@ authors:
   - admin
 tags:
   - Snakemake
+  - EM algorithm
   - hERV
   - transgene
   - scRNAseq
@@ -15,6 +16,7 @@ image:
 ---
 ## Github source code
 Please see [github repo](https://github.com/jliu678/snakemake-pipline_quantify-hERV-trangene_10x-scRNAseq).
+
 ## What are hERVs and transgenes
 Human Endogenous Retroviruses (hERVs) are ancient viral sequences embedded in the human genome. The roles of hERVs in gene regulation, immunity, development and cancer are under intense research. Transgenes including GFP, CRE, Luciferase, rtTA/Tet-On/Tet-Off and epitopically expressed genes are common targets to be quantified in sample from transgenic mouse models. 
 
@@ -22,7 +24,7 @@ Human Endogenous Retroviruses (hERVs) are ancient viral sequences embedded in th
 ## How to quantify them from 10x scRNAseq 
 The EM algorithm is well-suited for quantifying them as elucidated in [my previous blog](aaaaaaaaa). Briefly, EM algorithm is advantageous in dealing with  multimaping, which is commonly seen for hERV and transgene quantification, because:
 - mathematically, EM is well suitable for estimating parameters in Gaussian Mixture Models, which is similar to the model describing multimapping
-- biologically, EM can takes into consideration the mapping bias, though Starsolo dose not use bias correction
+- biologically, EM can takes into consideration the mapping probability and mapping bias, though Starsolo dose not use bias correction
 
 [Starsolo](https://github.com/alexdobin/STAR/blob/master/docs/STARsolo.md#all-parameters-that-control-starsolo-output-are-listed-again-below-with-defaults-and-short-descriptions) is particularly handy for this task because it:
 - implements EM algorithm
@@ -44,7 +46,10 @@ Snakemake is used to manage a workflow as illustrated below. Briefly, I generate
 
 Key lines of the Snakemake file are discussed below
 ### Import config.yaml
-This line imports a configuration file in YAML format. The config file specify the genome and annotation files, the whitelist file(s), the star index directory and the CellBarcode/UMI lengths, etc.
+This line imports a configuration file in YAML format. The config file specify the genome and annotation files, the whitelist file(s), the star index directory and the CellBarcode/UMI lengths, etc. The cell barcode will be provided to `--soloCBwhitelist` option in STARsolo to:
+- Match observed barcodes in your data,
+- Correct sequencing errors (if close matches are allowed),
+- Filter out barcodes that are not from real, expected cells.
 ```python
 configfile: "config.yaml"
 ```
@@ -110,6 +115,8 @@ The soloType for 10x dropSeq is `CB_UMI_Simple` as excerpted below from [star-so
         - CB_UMI_Simple   ... (a.k.a. Droplet) one UMI and one Cell Barcode of fixed length in read2, e.g. Drop-seq and 10X Chromium.
         - CB_UMI_Complex  ... one UMI of fixed length, but multiple Cell Barcodes of varying length, as well as adapters sequences are allowed in read2 only, e.g. inDrop.
        
+10x barcode inclusion list (formerly barcode whitelist) can be downloaded [here](https://kb.10xgenomics.com/hc/en-us/articles/115004506263-What-is-a-barcode-inclusion-list-formerly-barcode-whitelist#:~:text=For%20example%2C%20there%20are%20roughly,AAACCTGAGAAAGTGG%20AAACCTGAGAACAACT%20AAACCTGAGAACAATC%20AAACCTGAGAACTCGG%20AAACCTGAGAACTGTA).
+
 Importantly, in the --readFilesIn option, the 1st file has to be cDNA read, and the 2nd file has to be the barcode (cell+UMI) read, i.e.
 
 10X data have a variety of CB and UMI lengths, I decided for them to be a configurable option. 

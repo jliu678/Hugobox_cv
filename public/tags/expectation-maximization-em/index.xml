@@ -17,7 +17,17 @@
       <link>http://localhost:1313/post/01.bulkrnaseq_allow_herv_quantification/</link>
       <pubDate>Mon, 24 Mar 2025 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/post/01.bulkrnaseq_allow_herv_quantification/</guid>
-      <description>&lt;h2 id=&#34;what-are-hervs-and-transgenes&#34;&gt;What are hERVs and transgenes&lt;/h2&gt;
+      <description>&lt;h2 id=&#34;github-source-code&#34;&gt;Github source code&lt;/h2&gt;
+&lt;p&gt;Please see source codes in &lt;a href=&#34;https://github.com/jliu678/herv_project_siyi/tree/main&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;github&lt;/a&gt; that can be deploied in Cloud Cluster Computational platform and local desktops, and allows for:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;batch computaion with tunable batch size&lt;/li&gt;
+&lt;li&gt;automatic environment setting up&lt;/li&gt;
+&lt;li&gt;file preprocessing&lt;/li&gt;
+&lt;li&gt;QC&lt;/li&gt;
+&lt;li&gt;index buidling, alignment and feature counting by either &lt;code&gt;subread&lt;/code&gt; or &lt;code&gt;salmon&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The github repo also contains &lt;a href=&#34;https://github.com/jliu678/herv_project_siyi/tree/main/example_usage&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;usage examples using &lt;code&gt;SLURM&lt;/code&gt; or &lt;code&gt;LSF&lt;/code&gt; job scheduler&lt;/a&gt; and &lt;a href=&#34;https://github.com/jliu678/herv_project_siyi/tree/main/utils&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;handy utility tools&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;what-are-hervs-and-transgenes&#34;&gt;What are hERVs and transgenes&lt;/h2&gt;
 &lt;p&gt;Human Endogenous Retroviruses (hERVs) are ancient viral sequences embedded in the human genome. The roles of hERVs in gene regulation, immunity, development and cancer are under intense research. Transgenes including GFP, CRE, Luciferase, rtTA/Tet-On/Tet-Off and epitopically expressed genes are common targets to be quantified in sample from transgenic mouse models.&lt;/p&gt;
 &lt;h2 id=&#34;how-to-quantify-them&#34;&gt;How to quantify them&lt;/h2&gt;
 &lt;p&gt;To quantify them, we of course need modify fasta and gtf files to include the their sequencing and annotation. Also, because their sequencing reads are frequently repetitive or overlaping with host genome, we need a feature quantification algorithm to handle multimapping commonly seen for HERV and transgenes.&lt;/p&gt;

@@ -1,6 +1,6 @@
 <!doctype html>
 <!-- This site was created with Hugo Blox. https://hugoblox.com -->
-<!-- Last Published: May 24, 2025 --><html lang="en-us" dir="ltr"
+<!-- Last Published: May 25, 2025 --><html lang="en-us" dir="ltr"
       data-wc-theme-default="system">
   
 <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
@@ -234,6 +234,8 @@
   
 
 
+  
+  
   
   
   
@@ -1167,7 +1169,7 @@
       text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
     href="/post/03.well-based_scrnaseq_herv_quantification/"
     
-  >🧬 quantify transgenes and herv from well-based single-cell RNAseq
+  >🧬 A snakemake pipline-- quantify hERV, transgenes and genome from well-based single-cell RNAseq
     </a>
               
             </li><li class="flex flex-col "><a
@@ -1175,7 +1177,7 @@
       text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
     href="/post/02.snakemake_quantify-herv_10xscrnaseq/"
     
-  >🧬 A snakemake pipline-- quantify hERV, trangenes and genome from 10x scRNAseq
+  >🧬 A snakemake pipline-- quantify hERV, transgenes and genome from 10x scRNAseq
     </a>
               
             </li><li class="flex flex-col "><a
@@ -1195,6 +1197,18 @@
     </a>
   
     <ul class="hb-sidebar-mobile-toc"><li>
+              <a
+                href="#github-source-code"
+                class="hb-docs-link"
+              >Github source code</a>
+            </li>
+          <li>
+              <a
+                href="#introduction"
+                class="hb-docs-link"
+              >Introduction</a>
+            </li>
+          <li>
               <a
                 href="#random-deposition"
                 class="hb-docs-link"
@@ -1395,6 +1409,12 @@
 
   <div class="hb-scrollbar text-sm [hyphens:auto] sticky top-16 overflow-y-auto pr-4 pt-6 max-h-[calc(100vh-var(--navbar-height)-env(safe-area-inset-bottom))] -mr-4 rtl:-ml-4"><p class="mb-4 font-semibold tracking-tight">On this page</p><ul>
       <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="font-semibold inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#github-source-code">Github source code</a>
+      </li>
+      <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="font-semibold inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#introduction">Introduction</a>
+      </li>
+      <li class="my-2 scroll-my-6 scroll-py-6">
         <a class="font-semibold inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#random-deposition">Random deposition</a>
       </li>
       <li class="my-2 scroll-my-6 scroll-py-6">
@@ -1505,7 +1525,10 @@
       
 
       <div class="prose prose-slate lg:prose-xl dark:prose-invert">
-        <p>Alveolar deposition is indeed a key event in respiratory infections, including pneumonia and viral infections like COVID-19. It allows many infectious agents (like bacteria, viruses, and fungi) to establish infection and cause damage to the lungs and overall health. Aerosols of 1–5 microns in diameter are able to bypass the upper airways and reach the deep parts of the lungs, including the alveoli. It is through aerosols that respiratory diseases like COVID-19, tuberculosis, and influenza spread so effectively.</p>
+        <h2 id="github-source-code">Github source code</h2>
+<p>please see <a href="https://github.com/jliu678/model_aerosol_depostion" target="_blank" rel="noopener">source codes in github</a>.</p>
+<h2 id="introduction">Introduction</h2>
+<p>Alveolar deposition is indeed a key event in respiratory infections, including pneumonia and viral infections like COVID-19. It allows many infectious agents (like bacteria, viruses, and fungi) to establish infection and cause damage to the lungs and overall health. Aerosols of 1–5 microns in diameter are able to bypass the upper airways and reach the deep parts of the lungs, including the alveoli. It is through aerosols that respiratory diseases like COVID-19, tuberculosis, and influenza spread so effectively.</p>
 <p>I thought the small size of aerosols that deeply reach alveoli made them subject to <a href="https://en.wikipedia.org/wiki/Brownian_motion" target="_blank" rel="noopener">Brownian motion</a> and deposit in a random, erratic pattern. But the Fig 1D of <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC6910245/" target="_blank" rel="noopener">Rothchild et al.,(2019)</a> strongly challenged this idea. Specifically, the mice were infected with 2 × 10<sup>3</sup> aerosolized tuberculosis bateria (M.tb), and one day later more than 15% of the infected alveoli contained two bacteria. Considering the <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC2779834/" target="_blank" rel="noopener">36-hour douling time of M.tb</a> even in rich growth conditions, we can reasonably ignore M.tb proliferation within the first day, during which the bacteria must acclimate to the immunocompetent lung environment. The frequency, therefore, does not align with the assumption that M.tb deposits randomly in each infection niche—the region surveilled by one of the more than 7 × 10⁵ individual alveolar macrophages—at the same probability.</p>
 <p>I will demonstrate below that random niche deposition cannot recapitulate the results shown in <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC6910245/" target="_blank" rel="noopener">Fig 1D</a>, however, preferential deposition in certain niches successfully reproduces the findings. This suggests that infectious agents affect alveoli unevenly, and precision medicine should account for this variability to achieve satisfactory specificity and efficacy. Aerosolized drugs with similar deposition patterns are expected to be more advantageous compared to the same drugs delivered by other routes. Also please see <a href="https://github.com/jliu678/model_aerosol_depostion" target="_blank" rel="noopener">source codes in github</a>.</p>
 <h2 id="random-deposition">Random deposition</h2>

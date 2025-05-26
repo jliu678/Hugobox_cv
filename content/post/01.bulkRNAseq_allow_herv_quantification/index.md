@@ -14,6 +14,15 @@ tags:
 image:
   caption: 'Image credit: [**Illustration by Round Icons on unsplash**](https://unsplash.com)'
 ---
+## Github source code
+Please see source codes in [github](https://github.com/jliu678/herv_project_siyi/tree/main) that can be deploied in Cloud Cluster Computational platform and local desktops, and allows for: 
+- batch computaion with tunable batch size
+- automatic environment setting up
+- file preprocessing
+- QC
+- index buidling, alignment and feature counting by either `subread` or `salmon`  
+
+The github repo also contains [usage examples using `SLURM` or `LSF` job scheduler](https://github.com/jliu678/herv_project_siyi/tree/main/example_usage) and [handy utility tools](https://github.com/jliu678/herv_project_siyi/tree/main/utils).
 ## What are hERVs and transgenes
 Human Endogenous Retroviruses (hERVs) are ancient viral sequences embedded in the human genome. The roles of hERVs in gene regulation, immunity, development and cancer are under intense research. Transgenes including GFP, CRE, Luciferase, rtTA/Tet-On/Tet-Off and epitopically expressed genes are common targets to be quantified in sample from transgenic mouse models. 
 
@@ -147,7 +156,7 @@ $$
 
 Now we see EM algorithm superior than fraction algorithms in quantifing multimappings since EM 
 - is well suitable for estimating parameters in Gaussian Mixture Models, which is similar to the multimapping mathematical model
-- takes multimapping mathematical models accounting for the mapping bias
+- takes multimapping mathematical models of mapping probability that accounts for the mapping bias
 
 We implemented Salmon since it allows both EM and full bayesian EM. We will talk about [EM (with MLE), EM with MAP and bayesian EM](donesoon) as well as [Frequentist vs Bayesian](donesoon) in other blogs.
 
