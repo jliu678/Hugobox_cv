@@ -169,7 +169,7 @@
 &lt;p&gt;The EM algorithm is well-suited for quantifying them as elucidated in &lt;a href=&#34;aaaaaaaaa&#34;&gt;my previous blog&lt;/a&gt;. Briefly, EM algorithm is advantageous in dealing with  multimaping, which is commonly seen for hERV and transgene quantification, because:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;mathematically, EM is well suitable for estimating parameters in Gaussian Mixture Models, which is similar to the model describing multimapping&lt;/li&gt;
-&lt;li&gt;biologically, EM can takes into consideration the mapping bias, though Starsolo dose not use bias correction&lt;/li&gt;
+&lt;li&gt;biologically, EM can takes into consideration the mapping probability and mapping bias, though Starsolo dose not use bias correction&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;&lt;a href=&#34;https://github.com/alexdobin/STAR/blob/master/docs/STARsolo.md#all-parameters-that-control-starsolo-output-are-listed-again-below-with-defaults-and-short-descriptions&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Starsolo&lt;/a&gt; is particularly handy for this task because it:&lt;/p&gt;
 &lt;ul&gt;

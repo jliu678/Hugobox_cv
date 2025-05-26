@@ -314,7 +314,7 @@ $$
 &lt;p&gt;Now we see EM algorithm superior than fraction algorithms in quantifing multimappings since EM&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;is well suitable for estimating parameters in Gaussian Mixture Models, which is similar to the multimapping mathematical model&lt;/li&gt;
-&lt;li&gt;takes multimapping mathematical models accounting for the mapping bias&lt;/li&gt;
+&lt;li&gt;takes multimapping mathematical models of mapping probability that accounts for the mapping bias&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;We implemented Salmon since it allows both EM and full bayesian EM. We will talk about &lt;a href=&#34;donesoon&#34;&gt;EM (with MLE), EM with MAP and bayesian EM&lt;/a&gt; as well as &lt;a href=&#34;donesoon&#34;&gt;Frequentist vs Bayesian&lt;/a&gt; in other blogs.&lt;/p&gt;
 &lt;p&gt;Please see source codes in &lt;a href=&#34;https://github.com/jliu678/herv_project_siyi/tree/main&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;github&lt;/a&gt; that can be deploied in Cloud Cluster Computational platform and local desktops, and allows for:&lt;/p&gt;

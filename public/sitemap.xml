@@ -142,6 +142,10 @@
     <lastmod>2025-03-24T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
+    <loc>http://localhost:1313/post/00a.seqwins/</loc>
+    <lastmod>2025-03-23T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+  </url><url>
     <loc>http://localhost:1313/post/00.model_aerosol_depostion/</loc>
     <lastmod>2025-03-23T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -151,6 +155,14 @@
     <changefreq>weekly</changefreq>
   </url><url>
     <loc>http://localhost:1313/tags/aerosol/</loc>
+    <lastmod>2025-03-23T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+  </url><url>
+    <loc>http://localhost:1313/tags/base-trimming/</loc>
+    <lastmod>2025-03-23T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+  </url><url>
+    <loc>http://localhost:1313/tags/fastq/</loc>
     <lastmod>2025-03-23T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
@@ -167,6 +179,26 @@
     <changefreq>weekly</changefreq>
   </url><url>
     <loc>http://localhost:1313/tags/modeling/</loc>
+    <lastmod>2025-03-23T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+  </url><url>
+    <loc>http://localhost:1313/tags/quality-control/</loc>
+    <lastmod>2025-03-23T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+  </url><url>
+    <loc>http://localhost:1313/tags/read-filtration/</loc>
+    <lastmod>2025-03-23T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+  </url><url>
+    <loc>http://localhost:1313/tags/rnaseq/</loc>
+    <lastmod>2025-03-23T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+  </url><url>
+    <loc>http://localhost:1313/tags/seqwins/</loc>
+    <lastmod>2025-03-23T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+  </url><url>
+    <loc>http://localhost:1313/tags/windows/</loc>
     <lastmod>2025-03-23T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>

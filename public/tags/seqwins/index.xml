@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>SeqWins | Jiyuan Liu</title>
+    <link>http://localhost:1313/tags/seqwins/</link>
+      <atom:link href="http://localhost:1313/tags/seqwins/index.xml" rel="self" type="application/rss+xml" />
+    <description>SeqWins</description>
+    <generator>Hugo Blox Builder (https://hugoblox.com)</generator><language>en-us</language><lastBuildDate>Sun, 23 Mar 2025 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>http://localhost:1313/media/icon_hu_fd2be5a69becaf9e.png</url>
+      <title>SeqWins</title>
+      <link>http://localhost:1313/tags/seqwins/</link>
+    </image>
+    
+    <item>
+      <title>⚡ SeqWins, An R Package for Flexible Base Trimming and Comprehensive FASTQ Analysis on Windows</title>
+      <link>http://localhost:1313/post/00a.seqwins/</link>
+      <pubDate>Sun, 23 Mar 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/post/00a.seqwins/</guid>
+      <description>&lt;h2 id=&#34;github-source-code&#34;&gt;Github source code&lt;/h2&gt;
+&lt;p&gt;Please see source codes and Vignette in &lt;a href=&#34;https://github.com/jliu678/SeqWins&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;github&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;H&lt;/p&gt;
+&lt;h2 id=&#34;how-to-quantify-them&#34;&gt;How to quantify them&lt;/h2&gt;
+&lt;p&gt;T&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
