@@ -55,7 +55,7 @@ Cre     self    exon    1       1023    500     +       .       gene_id "custom_
 ERT2    self    exon    1       931     500     +       .       gene_id "custom_5"; gene_name "ERT2"
 ```
 
-The hERV sequences are already in reference genome, but their gtf need be added as below. We will talk about **[how to generate the hERV gtf matching the latest reference genome in anohter blog](willbecomposedsoon)**.
+The hERV sequences are already in reference genome, but their gtf need be added as below. We will talk about **[how to generate the hERV gtf matching the latest reference genome in another blog](willbecomposedsoon)**.
 ```bash
 chr10   RepeatMasker    exon    3083835 3085549 4.5     -       .       gene_id "RepMasker_dc1fbd39-e43b-4ac4-90ef-1da20b1d6249"; gene_name "chr10:LTR/ERVL-MaLR:ORR1A0:3"
 chr10   RepeatMasker    exon    3114480 3115385 6       -       .       gene_id "RepMasker_c49d8024-0b45-46a9-bcaa-c44f7a305a03"; gene_name "chr10:LTR/ERVK:RLTR13F:8"

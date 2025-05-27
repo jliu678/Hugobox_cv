@@ -287,6 +287,11 @@
   
   
   
+  
+  
+  
+  
+  
     
       
       
@@ -1188,6 +1193,14 @@
   >🧬 A snakemake pipline-- quantify hERV, transgenes and genome from 10x scRNAseq
     </a>
               
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/post/01a.repeatmasker/"
+    
+  >🛠️ Generate and validate ERV gtf that matches the latest reference genome
+    </a>
+              
             </li><li class="flex flex-col open"><a
     class="hb-sidebar-custom-link
       sidebar-active-item bg-primary-100 font-semibold text-primary-800 dark:bg-primary-300 dark:text-primary-900"
@@ -1235,14 +1248,6 @@
     class="hb-sidebar-custom-link
       text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
     href="/post/00.model_aerosol_depostion/"
-    
-  >💨 Modeling the deposition of infectious agents suggests that aerosolized drugs offer enhanced specificity
-    </a>
-              
-            </li><li class="flex flex-col "><a
-    class="hb-sidebar-custom-link
-      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
-    href="/post/01a.repeatmasker/"
     
   >💨 Modeling the deposition of infectious agents suggests that aerosolized drugs offer enhanced specificity
     </a>
@@ -1601,7 +1606,7 @@
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">EGFP    self    exon    <span class="m">1</span>       <span class="m">720</span>     <span class="m">500</span>     +       .       gene_id <span class="s2">&#34;custom_3&#34;</span><span class="p">;</span> gene_name <span class="s2">&#34;EGFP&#34;</span>
 </span></span><span class="line"><span class="cl">Cre     self    exon    <span class="m">1</span>       <span class="m">1023</span>    <span class="m">500</span>     +       .       gene_id <span class="s2">&#34;custom_4&#34;</span><span class="p">;</span> gene_name <span class="s2">&#34;Cre&#34;</span>
 </span></span><span class="line"><span class="cl">ERT2    self    exon    <span class="m">1</span>       <span class="m">931</span>     <span class="m">500</span>     +       .       gene_id <span class="s2">&#34;custom_5&#34;</span><span class="p">;</span> gene_name <span class="s2">&#34;ERT2&#34;</span>
-</span></span></code></pre></div><p>The hERV sequences are already in reference genome, but their gtf need be added as below. We will talk about <strong><a href="willbecomposedsoon">how to generate the hERV gtf matching the latest reference genome in anohter blog</a></strong>.</p>
+</span></span></code></pre></div><p>The hERV sequences are already in reference genome, but their gtf need be added as below. We will talk about <strong><a href="willbecomposedsoon">how to generate the hERV gtf matching the latest reference genome in another blog</a></strong>.</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">chr10   RepeatMasker    exon    <span class="m">3083835</span> <span class="m">3085549</span> 4.5     -       .       gene_id <span class="s2">&#34;RepMasker_dc1fbd39-e43b-4ac4-90ef-1da20b1d6249&#34;</span><span class="p">;</span> gene_name <span class="s2">&#34;chr10:LTR/ERVL-MaLR:ORR1A0:3&#34;</span>
 </span></span><span class="line"><span class="cl">chr10   RepeatMasker    exon    <span class="m">3114480</span> <span class="m">3115385</span> <span class="m">6</span>       -       .       gene_id <span class="s2">&#34;RepMasker_c49d8024-0b45-46a9-bcaa-c44f7a305a03&#34;</span><span class="p">;</span> gene_name <span class="s2">&#34;chr10:LTR/ERVK:RLTR13F:8&#34;</span>
 </span></span><span class="line"><span class="cl">chr10   RepeatMasker    exon    <span class="m">3122665</span> <span class="m">3123530</span> 13.8    +       .       gene_id <span class="s2">&#34;RepMasker_5154950a-1e53-4528-a5cf-37d121e3e1a4&#34;</span><span class="p">;</span> gene_name <span class="s2">&#34;chr10:LTR/ERVK:RLTR13D6:11&#34;</span>
@@ -2268,17 +2273,17 @@ $$
   <div class="flex flex-col md:flex-row flex-nowrap justify-between gap-5 pt-2">
     <div class="">
       
-        <a class="group flex no-underline" href="/post/02.snakemake_quantify-herv_10xscrnaseq/">
+        <a class="group flex no-underline" href="/post/01a.repeatmasker/">
           <span
             class="mt-[-0.3rem] me-2 text-neutral-700 transition-transform group-hover:-translate-x-[2px] group-hover:text-primary-600 dark:text-neutral dark:group-hover:text-primary-400"
           ><span class="ltr:inline rtl:hidden">&larr;</span></span>
           <span class="flex flex-col">
             <span
               class="mt-[0.1rem] leading-6 group-hover:underline group-hover:decoration-primary-500"
-            >🧬 A snakemake pipline-- quantify hERV, transgenes and genome from 10x scRNAseq</span>
+            >🛠️ Generate and validate ERV gtf that matches the latest reference genome</span>
             <span class="mt-[0.1rem] text-xs text-neutral-500 dark:text-neutral-400">
               
-                Mar 25, 2025
+                Mar 24, 2025
               
             </span>
           </span>

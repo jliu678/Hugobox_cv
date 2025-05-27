@@ -41,7 +41,7 @@
   
     
   
-  <meta name="description" content="Infectious agents prefer to deposit into certain alveoli. Aerosolized drugs with similar deposition pattern may deliver superior efficacy by directly targeting affected lung tissues" />
+  <meta name="description" content="ERV gtf annotation is needed to quantify ERV from sequencing data. But the ERV gtf compatible with the latest mouse genome GRCm39 is not publicly available. Here I generated and validated the ERV gtf based on GRCm39 using RepeatMasker and customized scripts." />
 
   
   <link rel="alternate" hreflang="en-us" href="http://localhost:1313/post/01a.repeatmasker/" />
@@ -187,17 +187,17 @@
   
   <meta property="og:site_name" content="Jiyuan Liu" />
   <meta property="og:url" content="http://localhost:1313/post/01a.repeatmasker/" />
-  <meta property="og:title" content="💨 Modeling the deposition of infectious agents suggests that aerosolized drugs offer enhanced specificity | Jiyuan Liu" />
-  <meta property="og:description" content="Infectious agents prefer to deposit into certain alveoli. Aerosolized drugs with similar deposition pattern may deliver superior efficacy by directly targeting affected lung tissues" /><meta property="og:image" content="http://localhost:1313/post/01a.repeatmasker/featured.jpg" />
+  <meta property="og:title" content="🛠️ Generate and validate ERV gtf that matches the latest reference genome | Jiyuan Liu" />
+  <meta property="og:description" content="ERV gtf annotation is needed to quantify ERV from sequencing data. But the ERV gtf compatible with the latest mouse genome GRCm39 is not publicly available. Here I generated and validated the ERV gtf based on GRCm39 using RepeatMasker and customized scripts." /><meta property="og:image" content="http://localhost:1313/post/01a.repeatmasker/featured.jpg" />
     <meta property="twitter:image" content="http://localhost:1313/post/01a.repeatmasker/featured.jpg" /><meta property="og:locale" content="en-us" />
   
     
       <meta
         property="article:published_time"
-        content="2025-03-23T00:00:00&#43;00:00"
+        content="2025-03-24T00:00:00&#43;00:00"
       />
     
-    <meta property="article:modified_time" content="2025-03-23T00:00:00&#43;00:00">
+    <meta property="article:modified_time" content="2025-03-24T00:00:00&#43;00:00">
   
 
   
@@ -207,7 +207,7 @@
   
 
 
-  <title>💨 Modeling the deposition of infectious agents suggests that aerosolized drugs offer enhanced specificity | Jiyuan Liu</title>
+  <title>🛠️ Generate and validate ERV gtf that matches the latest reference genome | Jiyuan Liu</title>
 
   
   
@@ -234,6 +234,11 @@
   
 
 
+  
+  
+  
+  
+  
   
   
   
@@ -615,140 +620,6 @@
 
 
 
-
-  
-  
-  <link type="text/css" rel="stylesheet" href="/dist/lib/katex/katex.min.505d5f829022bb7b4f24dfee0aa1141cd7bba67afe411d1240335f820960b5c3.css" integrity="sha256-UF1fgpAiu3tPJN/uCqEUHNe7pnr&#43;QR0SQDNfgglgtcM=" />
-  
-  
-  <script defer src="/dist/lib/katex/katex.min.dc84b296ec3e884de093158f760fd9d45b6c7abe58b5381557f4e138f46a58ae.js" integrity="sha256-3ISyluw&#43;iE3gkxWPdg/Z1Ftser5YtTgVV/ThOPRqWK4="></script>
-  
-  
-  
-  
-  <script defer src="/js/katex-renderer.6579ec9683211cfb952064aedf3a3baea5eeb17a061775b32b70917474637c80.js" integrity="sha256-ZXnsloMhHPuVIGSu3zo7rqXusXoGF3WzK3CRdHRjfIA="></script>
-  
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
 
 
 
@@ -1188,6 +1059,65 @@
   >🧬 A snakemake pipline-- quantify hERV, transgenes and genome from 10x scRNAseq
     </a>
               
+            </li><li class="flex flex-col open"><a
+    class="hb-sidebar-custom-link
+      sidebar-active-item bg-primary-100 font-semibold text-primary-800 dark:bg-primary-300 dark:text-primary-900"
+    href="/post/01a.repeatmasker/"
+    
+  >🛠️ Generate and validate ERV gtf that matches the latest reference genome
+    </a>
+  
+    <ul class="hb-sidebar-mobile-toc"><li>
+              <a
+                href="#github-source-code"
+                class="hb-docs-link"
+              >Github source code</a>
+            </li>
+          <li>
+              <a
+                href="#what-are-erv"
+                class="hb-docs-link"
+              >What are ERV</a>
+            </li>
+          <li>
+              <a
+                href="#why-is-erv-gtf-needed"
+                class="hb-docs-link"
+              >Why is ERV gtf needed</a>
+            </li>
+          <li>
+              <a
+                href="#why-is-erv-gtf-compatible-with-grcm39-needed"
+                class="hb-docs-link"
+              >Why is ERV gtf compatible with GRCm39 needed</a>
+            </li>
+          <li>
+              <a
+                href="#how-to-generate-and-validate-the-erv-gtf-compatible-with-grcm39"
+                class="hb-docs-link"
+              >How to generate and validate the ERV gtf compatible with GRCm39</a>
+            </li>
+          <li>
+              <a
+                href="#generate-grcm39-erv"
+                class="hb-docs-link"
+              >Generate GRCm39 ERV</a>
+            </li>
+          <li>
+              <a
+                href="#vadlidate-our-grcm39-erv"
+                class="hb-docs-link"
+              >Vadlidate our GRCm39 ERV</a>
+            </li>
+          <li>
+              <a
+                href="#conclusion"
+                class="hb-docs-link"
+              >Conclusion</a>
+            </li>
+          </ul>
+  
+              
             </li><li class="flex flex-col "><a
     class="hb-sidebar-custom-link
       text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
@@ -1211,29 +1141,6 @@
     
   >💨 Modeling the deposition of infectious agents suggests that aerosolized drugs offer enhanced specificity
     </a>
-              
-            </li><li class="flex flex-col open"><a
-    class="hb-sidebar-custom-link
-      sidebar-active-item bg-primary-100 font-semibold text-primary-800 dark:bg-primary-300 dark:text-primary-900"
-    href="/post/01a.repeatmasker/"
-    
-  >💨 Modeling the deposition of infectious agents suggests that aerosolized drugs offer enhanced specificity
-    </a>
-  
-    <ul class="hb-sidebar-mobile-toc"><li>
-              <a
-                href="#random-deposition"
-                class="hb-docs-link"
-              >Random deposition</a>
-            </li>
-          <li>
-              <a
-                href="#preferred-deposition"
-                class="hb-docs-link"
-              >Preferred deposition</a>
-            </li>
-          </ul>
-  
               
             </li><li class="flex flex-col "><a
     class="hb-sidebar-custom-link
@@ -1413,19 +1320,55 @@
 
   <div class="hb-scrollbar text-sm [hyphens:auto] sticky top-16 overflow-y-auto pr-4 pt-6 max-h-[calc(100vh-var(--navbar-height)-env(safe-area-inset-bottom))] -mr-4 rtl:-ml-4"><p class="mb-4 font-semibold tracking-tight">On this page</p><ul>
       <li class="my-2 scroll-my-6 scroll-py-6">
-        <a class="font-semibold inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#random-deposition">Random deposition</a>
+        <a class="font-semibold inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#github-source-code">Github source code</a>
       </li>
       <li class="my-2 scroll-my-6 scroll-py-6">
-        <a class="pl-4 rtl:pr-4 inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#result">Result</a>
+        <a class="font-semibold inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#what-are-erv">What are ERV</a>
       </li>
       <li class="my-2 scroll-my-6 scroll-py-6">
-        <a class="font-semibold inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#preferred-deposition">Preferred deposition</a>
+        <a class="font-semibold inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#why-is-erv-gtf-needed">Why is ERV gtf needed</a>
       </li>
       <li class="my-2 scroll-my-6 scroll-py-6">
-        <a class="pl-4 rtl:pr-4 inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#result-1">Result</a>
+        <a class="font-semibold inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#why-is-erv-gtf-compatible-with-grcm39-needed">Why is ERV gtf compatible with GRCm39 needed</a>
       </li>
       <li class="my-2 scroll-my-6 scroll-py-6">
-        <a class="pl-4 rtl:pr-4 inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#animated-visulization">Animated visulization</a>
+        <a class="font-semibold inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#how-to-generate-and-validate-the-erv-gtf-compatible-with-grcm39">How to generate and validate the ERV gtf compatible with GRCm39</a>
+      </li>
+      <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="font-semibold inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#generate-grcm39-erv">Generate GRCm39 ERV</a>
+      </li>
+      <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="pl-4 rtl:pr-4 inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#1-install-repeatmasker">1. Install RepeatMasker</a>
+      </li>
+      <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="pl-4 rtl:pr-4 inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#2-file-wrangling-and-run-repeatmasker">2. File wrangling and run RepeatMasker</a>
+      </li>
+      <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="pl-4 rtl:pr-4 inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#3-generate-gtf-file-from-repeatmasker-outputs">3. Generate GTF file from RepeatMasker outputs</a>
+      </li>
+      <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="pl-4 rtl:pr-4 inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#4-modify-gtf-for-starsolo">4. Modify GTF for STARsolo</a>
+      </li>
+      <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="pl-4 rtl:pr-4 inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#5-generate-fasta-from-gtf-for-validation">5. Generate FASTA from GTF for validation</a>
+      </li>
+      <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="font-semibold inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#vadlidate-our-grcm39-erv">Vadlidate our GRCm39 ERV</a>
+      </li>
+      <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="pl-4 rtl:pr-4 inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#1-wrange-files-of-grcm38-erv">1. Wrange files of GRCm38 ERV</a>
+      </li>
+      <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="pl-4 rtl:pr-4 inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#2-blastn-geve-as-reference-our-grcm39-erv-as-query">2. BLASTn: gEVE as reference, our GRCm39 ERV as query</a>
+      </li>
+      <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="pl-8 rtl:pr-8 inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#parrellel-computation">parrellel computation</a>
+      </li>
+      <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="pl-4 rtl:pr-4 inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#3-blastn-our-grcm39-erv-as-reference-geve-as-query">3. BLASTn: our GRCm39 ERV as reference, gEVE as query</a>
+      </li>
+      <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="font-semibold inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#conclusion">Conclusion</a>
       </li></ul>
 
   
@@ -1458,10 +1401,10 @@
 
       
 
-      <h1 class="mt-2 text-4xl font-bold tracking-tight text-slate-900 dark:text-slate-100">💨 Modeling the deposition of infectious agents suggests that aerosolized drugs offer enhanced specificity</h1>
+      <h1 class="mt-2 text-4xl font-bold tracking-tight text-slate-900 dark:text-slate-100">🛠️ Generate and validate ERV gtf that matches the latest reference genome</h1>
 
       <div class="mt-4 mb-16">
-      <div class="text-gray-500 dark:text-gray-300 text-sm flex items-center flex-wrap gap-y-2"><span class="mr-1">Mar 23, 2025</span><span class="mx-1">·</span>
+      <div class="text-gray-500 dark:text-gray-300 text-sm flex items-center flex-wrap gap-y-2"><span class="mr-1">Mar 24, 2025</span><span class="mx-1">·</span>
         
           
           
@@ -1478,7 +1421,7 @@
         
         <span class="mx-1">·</span>
         <span class="mx-1">
-          9 min read
+          11 min read
         </span>
         
         </div>
@@ -1511,10 +1454,10 @@
       
       
       
-      <div class="article-header article-container featured-image-wrapper mt-4 mb-16" style="max-width: 720px; max-height: 480px;">
+      <div class="article-header article-container featured-image-wrapper mt-4 mb-16" style="max-width: 720px; max-height: 720px;">
         <div style="position: relative">
-          <img src="/post/01a.repeatmasker/featured_hu_9c8d8a355dcd5602.webp" width="720" height="480" alt="" class="featured-image">
-          <span class="article-header-caption">Image credit: <a href="https://unsplash.com" target="_blank" rel="noopener"><strong>Andrey Soldatov on Unsplash</strong></a></span>
+          <img src="/post/01a.repeatmasker/featured_hu_4fe1142597e1d5c2.webp" width="720" height="720" alt="" class="featured-image">
+          <span class="article-header-caption">Image credit: <a href="https://unsplash.com" target="_blank" rel="noopener"><strong>Heather Green on Unsplash</strong></a></span>
         </div>
       </div>
       
@@ -1523,368 +1466,375 @@
       
 
       <div class="prose prose-slate lg:prose-xl dark:prose-invert">
-        <p>Alveolar deposition is indeed a key event in respiratory infections, including pneumonia and viral infections like COVID-19. It allows many infectious agents (like bacteria, viruses, and fungi) to establish infection and cause damage to the lungs and overall health. Aerosols of 1–5 microns in diameter are able to bypass the upper airways and reach the deep parts of the lungs, including the alveoli. It is through aerosols that respiratory diseases like COVID-19, tuberculosis, and influenza spread so effectively.</p>
-<p>I thought the small size of aerosols that deeply reach alveoli made them subject to <a href="https://en.wikipedia.org/wiki/Brownian_motion" target="_blank" rel="noopener">Brownian motion</a> and deposit in a random, erratic pattern. But the Fig 1D of <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC6910245/" target="_blank" rel="noopener">Rothchild et al.,(2019)</a> strongly challenged this idea. Specifically, the mice were infected with 2 × 10<sup>3</sup> aerosolized tuberculosis bateria (M.tb), and one day later more than 15% of the infected alveoli contained two bacteria. Considering the <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC2779834/" target="_blank" rel="noopener">36-hour douling time of M.tb</a> even in rich growth conditions, we can reasonably ignore M.tb proliferation within the first day, during which the bacteria must acclimate to the immunocompetent lung environment. The frequency, therefore, does not align with the assumption that M.tb deposits randomly in each infection niche—the region surveilled by one of the more than 7 × 10⁵ individual alveolar macrophages—at the same probability.</p>
-<p>I will demonstrate below that random niche deposition cannot recapitulate the results shown in <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC6910245/" target="_blank" rel="noopener">Fig 1D</a>, however, preferential deposition in certain niches successfully reproduces the findings. This suggests that infectious agents affect alveoli unevenly, and precision medicine should account for this variability to achieve satisfactory specificity and efficacy. Aerosolized drugs with similar deposition patterns are expected to be more advantageous compared to the same drugs delivered by other routes. Also please see <a href="https://github.com/jliu678/model_aerosol_depostion" target="_blank" rel="noopener">source codes in github</a>.</p>
-<h2 id="random-deposition">Random deposition</h2>
-<p>Assume each droplet deposit in alveolar niches independently and all niches ($N_{niche}$
- is total number of niches) have the same probability $p$
- to receive the M.tb. Thus
-
-$$
-p N_{niche} = 1
-$$
-
-
-Below R codes applied Monte Carlo simulation one million times for each scenario, traversing the parameter space where the niche population size is $N_{niche} \in [0.1, 2.4] \times 10^6$
-, and the total number of M. tuberculosis (M.tb) deposited in the alveoli is $n_{Mtb} \in [2, 4] \times 10^3$
-.</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1">#faster Monte_Carlo</span>
-</span></span><span class="line"><span class="cl"><span class="n">Monte_Carlo_1</span><span class="o">&lt;-</span> <span class="kr">function</span> <span class="p">(</span><span class="n">CFU</span><span class="p">,</span> <span class="n">nAlveoli</span><span class="p">,</span> <span class="n">nSim</span><span class="o">=</span><span class="m">1e6</span><span class="p">,</span><span class="n">extraLabel</span><span class="o">=</span><span class="s">&#34;&#34;</span><span class="p">){</span>
-</span></span><span class="line"><span class="cl">	  <span class="n">t1</span><span class="o">&lt;-</span><span class="nf">integer</span><span class="p">(</span><span class="m">3</span><span class="p">);</span>
-</span></span><span class="line"><span class="cl">	  <span class="nf">names</span><span class="p">(</span><span class="n">t1</span><span class="p">)</span><span class="o">&lt;-</span><span class="nf">c</span><span class="p">(</span><span class="s">&#34;nNicheOccupiedBy1Bug&#34;</span><span class="p">,</span><span class="s">&#34;nNicheOccupiedBy2Bug&#34;</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">	  <span class="s">&#34;nNicheOccupiedByMore&#34;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">  <span class="kr">for</span> <span class="p">(</span><span class="n">i</span> <span class="kr">in</span> <span class="m">1</span><span class="o">:</span><span class="n">nSim</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">  	<span class="n">t</span><span class="o">&lt;-</span><span class="nf">table</span><span class="p">(</span><span class="nf">sample</span><span class="p">(</span><span class="m">1L</span><span class="o">:</span> <span class="n">nAlveoli</span><span class="p">,</span> <span class="n">CFU</span><span class="p">,</span> <span class="n">replace</span><span class="o">=</span><span class="bp">T</span><span class="p">))</span>
-</span></span><span class="line"><span class="cl">  	<span class="n">t1[1]</span><span class="o">&lt;-</span><span class="n">t1[1]</span><span class="o">+</span><span class="nf">as.integer</span><span class="p">(</span><span class="nf">sum</span><span class="p">(</span><span class="n">t</span><span class="o">==</span><span class="m">1L</span><span class="p">))</span>
-</span></span><span class="line"><span class="cl">  	<span class="n">t1[2]</span><span class="o">&lt;-</span><span class="n">t1[2]</span><span class="o">+</span><span class="nf">as.integer</span><span class="p">(</span><span class="nf">sum</span><span class="p">(</span><span class="n">t</span><span class="o">==</span><span class="m">2L</span><span class="p">))</span>
-</span></span><span class="line"><span class="cl">  	<span class="n">t1[3]</span><span class="o">&lt;-</span><span class="n">t1[3]</span><span class="o">+</span><span class="nf">as.integer</span><span class="p">(</span><span class="nf">sum</span><span class="p">(</span><span class="n">t</span><span class="o">&gt;</span><span class="m">2L</span><span class="p">))</span>
-</span></span><span class="line"><span class="cl">  	<span class="p">}</span>
-</span></span><span class="line"><span class="cl">  <span class="nf">saveRDS</span><span class="p">(</span><span class="n">t</span><span class="p">,</span><span class="nf">paste0</span><span class="p">(</span><span class="s">&#34;CFU&#34;</span><span class="p">,</span> <span class="n">CFU</span><span class="p">,</span> <span class="s">&#34;,nAlveoli&#34;</span><span class="p">,</span> <span class="n">nAlveoli</span><span class="p">,</span><span class="s">&#34;.rds&#34;</span><span class="p">))</span>
+        <h2 id="github-source-code">Github source code</h2>
+<p>Please see my <a href="https://github.com/jliu678/Generate_validate_GRCm39_ERV" target="_blank" rel="noopener">github repo</a>.</p>
+<h2 id="what-are-erv">What are ERV</h2>
+<p>Endogenous Retroviruses (ERV) are ancient viral sequences embedded in the mammalian genome. The roles of hERVs in gene regulation, immunity, development and cancer are under intense research.</p>
+<h2 id="why-is-erv-gtf-needed">Why is ERV gtf needed</h2>
+<p>ERV gtf is the annotation file describes the start and end position of each of ERV in the genome. And itself or its corresponding fasta file (containing ERV sequences) is required to quantify the ERV from the RNAseq reads.</p>
+<h2 id="why-is-erv-gtf-compatible-with-grcm39-needed">Why is ERV gtf compatible with GRCm39 needed</h2>
+<p>GRCm39 is preferred to have most accurate and up-to-date quantification of genes or other features from RNAseq reads, because of the key improvements made in GRCm39 compared with GRCm38:</p>
+<ul>
+<li>Improved accuracy in assembly with updated sequencing data</li>
+<li>More corrected sequencing gaps and mis-assemblies</li>
+<li>Better representation of segmental duplications and structural variations</li>
+<li>Enhanced annotation coverage</li>
+</ul>
+<p>Moreover, ERV and genes have to be quantify simultaneously for below reasons. Therefore, using the GRCm38 and its ERV annotation instead of the GRCm39 pair results in less accurate quantification of both genes and ERVs</p>
+<ul>
+<li>properly handling multi-mapping: ERV sequences can be similar or overlap with endogenous genes. If ERVs and genes aren’t quantified together, reads may be incorrectly assigned to one while the other is completely ignored.</li>
+<li>accurately read assignment: regardless multimappings, quantifying ERV with genes ensures a good control of false positives by including a competitive pool of unmatched features.</li>
+</ul>
+<h2 id="how-to-generate-and-validate-the-erv-gtf-compatible-with-grcm39">How to generate and validate the ERV gtf compatible with GRCm39</h2>
+<p><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC4885607/" target="_blank" rel="noopener">gEVE</a> database was generates using RepeatMasker, thus we were encouraged to generate the latest ERV gtf in the same way. We hypothesized that the ERV gtf generated by us should show a good degree of conservation when compared with GRCm38 ERV gtf in <a href="http://geve.med.u-tokai.ac.jp/" target="_blank" rel="noopener">gEVE database</a>, and validated it correspondingly.</p>
+<h2 id="generate-grcm39-erv">Generate GRCm39 ERV</h2>
+<h3 id="1-install-repeatmasker">1. Install RepeatMasker</h3>
+<p>Please refer to its <a href="https://www.repeatmasker.org/RepeatMasker/" target="_blank" rel="noopener">official manuel</a></p>
+<h3 id="2-file-wrangling-and-run-repeatmasker">2. File wrangling and run RepeatMasker</h3>
+<p>Download fasta of GRCm39 (i.e. mm39), and split fasta by chromosome names by <code>faidx</code> provided by <a href="http://www.htslib.org/" target="_blank" rel="noopener">samtools</a> or <a href="https://pythonhosted.org/pyfaidx/" target="_blank" rel="noopener">pyfaidx</a>.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="cp">#!/bin/bash 
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="nv">CHRS</span><span class="o">=(</span><span class="k">$(</span>seq <span class="m">1</span> 19<span class="k">)</span> <span class="s2">&#34;X&#34;</span> <span class="s2">&#34;Y&#34;</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">mkdir mus39_split
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">for</span> chr in <span class="s2">&#34;</span><span class="si">${</span><span class="nv">CHRS</span><span class="p">[@]</span><span class="si">}</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="k">do</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">echo</span> <span class="s2">&#34;extracting chr</span><span class="si">${</span><span class="nv">chr</span><span class="si">}</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl">	faidx --regex <span class="s2">&#34;.*chr</span><span class="si">${</span><span class="nv">chr</span><span class="si">}</span><span class="s2">.*&#34;</span> Mmus39.fa -o <span class="s2">&#34;mus39_split/chr</span><span class="si">${</span><span class="nv">chr</span><span class="si">}</span><span class="s2">.fa&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="k">done</span>
+</span></span></code></pre></div><p>Then call <code>run_repeatmasker.sh</code> as below to run repeatmasker on each mouse chromosome.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nv">chroms</span><span class="o">=(</span> <span class="k">$(for</span> i in <span class="k">$(</span>seq <span class="m">1</span> 19<span class="k">)</span> X Y<span class="p">;</span> <span class="k">do</span> <span class="nb">echo</span> <span class="s2">&#34;chr</span><span class="nv">$i</span><span class="s2">&#34;</span><span class="p">;</span> <span class="k">done)</span> <span class="o">)</span>
+</span></span><span class="line"><span class="cl">bash run_repeatmasker.sh <span class="s2">&#34;</span><span class="si">${</span><span class="nv">chroms</span><span class="p">[@]</span><span class="si">}</span><span class="s2">&#34;</span>
+</span></span></code></pre></div><p>The <code>run_repeatmasker.sh</code> is below</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="cp">#!/bin/bash
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span>
+</span></span><span class="line"><span class="cl"><span class="c1"># save this file as run_repeatmasker.sh</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># for every chr in listed in input</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> chr in <span class="nv">$@</span>
+</span></span><span class="line"><span class="cl"><span class="k">do</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># ./repeatmasker/${chr} is output dir</span>
+</span></span><span class="line"><span class="cl">    mkdir ./repeatmasker/<span class="si">${</span><span class="nv">chr</span><span class="si">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="c1"># hmmer use 2 cores for each instance, 24 cores means 12 instances of hmmer</span>
+</span></span><span class="line"><span class="cl">    RepeatMasker -engine hmmer -parallel <span class="m">12</span> -species <span class="s2">&#34;Mus musculus&#34;</span><span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>      -gccalc -dir ./repeatmasker/<span class="si">${</span><span class="nv">chr</span><span class="si">}</span> -gff ./chrs/<span class="si">${</span><span class="nv">chr</span><span class="si">}</span>.fa
+</span></span><span class="line"><span class="cl"><span class="k">done</span> 
+</span></span></code></pre></div><h3 id="3-generate-gtf-file-from-repeatmasker-outputs">3. Generate GTF file from <code>RepeatMasker</code> outputs</h3>
+<p>Below is R function <code>repmask2gtf()</code> to generate GTF from <code>RepeatMasker</code> output files. We will dissect it later.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">library</span><span class="p">(</span><span class="n">data.table</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">repmask2gtf</span> <span class="o">&lt;-</span> <span class="kr">function</span> <span class="p">(</span><span class="n">name</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="n">out_name</span> <span class="o">&lt;-</span> <span class="nf">sprintf</span><span class="p">(</span><span class="s">&#34;chr%1$s/chr%1$s.fa.out&#34;</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="n">gff_name</span> <span class="o">&lt;-</span> <span class="nf">sprintf</span><span class="p">(</span><span class="s">&#34;chr%1$s/chr%1$s.fa.out.gff&#34;</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="n">gtf_name</span> <span class="o">&lt;-</span> <span class="nf">sprintf</span><span class="p">(</span><span class="s">&#34;gtfs/chr%1$s.gtf&#34;</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="n">header</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="s">&#34;bit score&#34;</span><span class="p">,</span> <span class="s">&#34;perc div.&#34;</span><span class="p">,</span> <span class="s">&#34;perc del.&#34;</span><span class="p">,</span> <span class="s">&#34;perc ins.&#34;</span><span class="p">,</span> <span class="s">&#34;chr&#34;</span><span class="p">,</span> <span class="s">&#34;begin&#34;</span><span class="p">,</span> <span class="s">&#34;end&#34;</span><span class="p">,</span> <span class="s">&#34;(left)&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">              <span class="s">&#34;side&#34;</span><span class="p">,</span> <span class="s">&#34;matching repeat&#34;</span><span class="p">,</span> <span class="s">&#34;repeat class/family&#34;</span><span class="p">,</span> <span class="s">&#34;rep begin&#34;</span><span class="p">,</span> <span class="s">&#34;rep end&#34;</span><span class="p">,</span> <span class="s">&#34;rep (left)&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">              <span class="s">&#34;ID&#34;</span><span class="p">,</span> <span class="s">&#34;inc higer score&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="n">data</span> <span class="o">&lt;-</span> <span class="nf">read.table</span><span class="p">(</span><span class="n">out_name</span><span class="p">,</span> <span class="n">skip</span> <span class="o">=</span> <span class="m">2</span><span class="p">,</span> <span class="n">header</span> <span class="o">=</span> <span class="kc">FALSE</span><span class="p">,</span> <span class="n">fill</span> <span class="o">=</span> <span class="kc">TRUE</span><span class="p">,</span> <span class="n">col.names</span> <span class="o">=</span> <span class="nf">paste0</span><span class="p">(</span><span class="s">&#34;V&#34;</span><span class="p">,</span><span class="nf">seq_len</span><span class="p">(</span><span class="m">16</span><span class="p">)))</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">names</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">&lt;-</span> <span class="n">header</span>
+</span></span><span class="line"><span class="cl">  <span class="n">gff</span> <span class="o">&lt;-</span> <span class="nf">read.table</span><span class="p">(</span><span class="n">gff_name</span><span class="p">,</span> <span class="n">skip</span><span class="o">=</span><span class="m">2</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="bp">F</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="n">gff</span> <span class="o">&lt;-</span> <span class="n">gff[</span><span class="o">!</span><span class="nf">grepl</span><span class="p">(</span><span class="s">&#34;Simple|Unknown&#34;</span><span class="p">,</span> <span class="n">data</span><span class="o">$</span><span class="n">`repeat class/family`</span><span class="p">),</span><span class="n">]</span>
+</span></span><span class="line"><span class="cl">  <span class="n">data</span> <span class="o">&lt;-</span> <span class="n">data[</span><span class="o">!</span><span class="nf">grepl</span><span class="p">(</span><span class="s">&#34;Simple|Unknown&#34;</span><span class="p">,</span> <span class="n">data</span><span class="o">$</span><span class="n">`repeat class/family`</span><span class="p">),</span><span class="n">]</span>
+</span></span><span class="line"><span class="cl">  <span class="n">threshold</span> <span class="o">&lt;-</span> <span class="m">750</span>
+</span></span><span class="line"><span class="cl">  <span class="n">gff</span> <span class="o">&lt;-</span> <span class="n">gff</span><span class="nf">[</span><span class="p">(</span><span class="n">data</span><span class="o">$</span><span class="n">`bit score`</span> <span class="o">&gt;</span> <span class="n">threshold</span><span class="p">),</span><span class="n">]</span>
+</span></span><span class="line"><span class="cl">  <span class="n">data</span> <span class="o">&lt;-</span> <span class="n">data</span><span class="nf">[</span><span class="p">(</span><span class="n">data</span><span class="o">$</span><span class="n">`bit score`</span> <span class="o">&gt;</span> <span class="n">threshold</span><span class="p">),</span><span class="n">]</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">if</span><span class="p">(</span><span class="nf">nrow</span><span class="p">(</span><span class="n">gff</span><span class="p">)</span> <span class="o">==</span> <span class="m">0</span> <span class="o">||</span> <span class="nf">nrow</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">==</span> <span class="m">0</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">cat</span><span class="p">(</span><span class="s">&#39;No Repeatmasker annotation after filtering for&#39;</span><span class="p">,</span><span class="n">name</span><span class="p">,</span><span class="s">&#39;\n&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="kr">return</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl">  <span class="p">}</span>
+</span></span><span class="line"><span class="cl">  <span class="n">seqname</span> <span class="o">&lt;-</span> <span class="n">data</span><span class="o">$</span><span class="n">chr</span>
+</span></span><span class="line"><span class="cl">  <span class="n">source</span> <span class="o">&lt;-</span> <span class="nf">rep</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&#34;RepeatMasker&#34;</span><span class="p">),</span> <span class="n">each</span><span class="o">=</span><span class="nf">length</span><span class="p">(</span><span class="n">seqname</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">  <span class="n">feature</span> <span class="o">&lt;-</span> <span class="nf">rep</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&#34;mRNA&#34;</span><span class="p">),</span> <span class="n">each</span><span class="o">=</span><span class="nf">length</span><span class="p">(</span><span class="n">seqname</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">  <span class="n">start</span> <span class="o">&lt;-</span> <span class="n">data</span><span class="o">$</span><span class="n">begin</span>
+</span></span><span class="line"><span class="cl">  <span class="n">end</span> <span class="o">&lt;-</span> <span class="n">data</span><span class="o">$</span><span class="n">end</span>
+</span></span><span class="line"><span class="cl">  <span class="n">score</span> <span class="o">&lt;-</span> <span class="n">data</span><span class="o">$</span><span class="n">`perc div.`</span>
+</span></span><span class="line"><span class="cl">  <span class="n">strand</span> <span class="o">&lt;-</span> <span class="n">gff</span><span class="o">$</span><span class="n">V7</span>
+</span></span><span class="line"><span class="cl">  <span class="n">frame</span> <span class="o">&lt;-</span> <span class="nf">rep</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&#34;.&#34;</span><span class="p">),</span> <span class="n">each</span><span class="o">=</span><span class="nf">length</span><span class="p">(</span><span class="n">seqname</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">  <span class="n">gene_id</span> <span class="o">&lt;-</span> <span class="nf">sapply</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="nf">length</span><span class="p">(</span><span class="n">seqname</span><span class="p">),</span> <span class="kr">function</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="nf">paste0</span><span class="p">(</span><span class="s">&#34;gene_id \&#34;RepMasker&#34;</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="s">&#34;\&#34;&#34;</span><span class="p">,</span> <span class="n">collapse</span><span class="o">=</span><span class="s">&#39;&#39;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">  <span class="n">gene_name</span> <span class="o">&lt;-</span> <span class="nf">mapply</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="kr">function</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">)</span> <span class="nf">paste0</span><span class="p">(</span><span class="s">&#34;gene_name \&#34;&#34;</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="s">&#34;:&#34;</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="s">&#34;:&#34;</span><span class="p">,</span> <span class="n">z</span><span class="p">,</span> <span class="s">&#34;:&#34;</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="s">&#34;\&#34;&#34;</span><span class="p">,</span> <span class="n">collapse</span><span class="o">=</span><span class="s">&#39;&#39;</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">    <span class="m">1</span><span class="o">:</span><span class="nf">length</span><span class="p">(</span><span class="n">seqname</span><span class="p">),</span> 
+</span></span><span class="line"><span class="cl">    <span class="n">data</span><span class="o">$</span><span class="n">chr</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">    <span class="n">data</span><span class="o">$</span><span class="n">`repeat class/family`</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">    <span class="n">data</span><span class="o">$</span><span class="n">`matching repeat`</span>
+</span></span><span class="line"><span class="cl">    <span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="n">ID</span> <span class="o">&lt;-</span> <span class="nf">sapply</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="m">1</span><span class="o">:</span><span class="nf">length</span><span class="p">(</span><span class="n">seqname</span><span class="p">),</span> 
+</span></span><span class="line"><span class="cl">    <span class="kr">function</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="nf">paste0</span><span class="p">(</span><span class="s">&#34;ID \&#34;RepMasker&#34;</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="s">&#34;\&#34;&#34;</span><span class="p">,</span> <span class="n">collapse</span><span class="o">=</span><span class="s">&#39;&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="n">attr</span> <span class="o">&lt;-</span> <span class="nf">mapply</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="kr">function</span><span class="p">(</span><span class="n">id</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="nf">paste0</span><span class="p">(</span><span class="n">id</span><span class="p">,</span> <span class="s">&#34;; &#34;</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="s">&#34;; &#34;</span><span class="p">,</span> <span class="n">y</span><span class="p">),</span>
+</span></span><span class="line"><span class="cl">    <span class="n">ID</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">    <span class="n">gene_id</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">    <span class="n">gene_name</span>
+</span></span><span class="line"><span class="cl">    <span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">gtf</span> <span class="o">&lt;-</span> <span class="nf">data.table</span><span class="p">(</span><span class="n">seqname</span><span class="o">=</span><span class="n">seqname</span><span class="p">,</span><span class="n">source</span><span class="o">=</span><span class="n">source</span><span class="p">,</span><span class="n">feature</span><span class="o">=</span><span class="n">feature</span><span class="p">,</span><span class="n">start</span><span class="o">=</span><span class="n">start</span><span class="p">,</span><span class="n">end</span><span class="o">=</span><span class="n">end</span><span class="p">,</span><span class="n">score</span><span class="o">=</span><span class="n">score</span><span class="p">,</span><span class="n">strand</span><span class="o">=</span><span class="n">strand</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">frame</span><span class="o">=</span><span class="n">frame</span><span class="p">,</span><span class="n">attribute</span><span class="o">=</span><span class="n">attr</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">write.table</span><span class="p">(</span><span class="n">gtf</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="n">gtf_name</span><span class="p">,</span> <span class="n">quote</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s">&#39;\t&#39;</span><span class="p">,</span> <span class="n">col.names</span><span class="o">=</span><span class="bp">F</span><span class="p">,</span> <span class="n">row.names</span><span class="o">=</span><span class="bp">F</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="kr">for</span> <span class="p">(</span><span class="n">CFU</span> <span class="kr">in</span> <span class="nf">seq.int</span><span class="p">(</span><span class="m">2e3</span><span class="p">,</span><span class="m">4e3</span><span class="p">,</span><span class="m">1e2</span><span class="p">))</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">  <span class="kr">for</span> <span class="p">(</span><span class="n">nAlveoli</span> <span class="kr">in</span> <span class="nf">seq.int</span><span class="p">(</span><span class="m">1e5</span><span class="p">,</span><span class="m">2.4e6</span><span class="p">,</span><span class="m">1e5</span><span class="p">)){</span>
-</span></span><span class="line"><span class="cl">    <span class="n">tm</span><span class="o">&lt;-</span><span class="nf">proc.time</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">    <span class="nf">Monte_Carlo_1</span><span class="p">(</span><span class="n">CFU</span><span class="p">,</span><span class="n">nAlveoli</span><span class="p">,</span><span class="n">extraLabel</span><span class="o">=</span><span class="s">&#34;_1&#34;</span><span class="p">,)</span>
-</span></span><span class="line"><span class="cl">    <span class="nf">proc.time</span><span class="p">()</span><span class="o">-</span><span class="n">tm</span> 
+</span></span></code></pre></div><p>The below lines get the names of <code>.out</code> and <code>.out.gff</code> files output by <code>repeatmasker</code>, and define the name of the GTF to return.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl">  <span class="n">out_name</span> <span class="o">&lt;-</span> <span class="nf">sprintf</span><span class="p">(</span><span class="s">&#34;chr%1$s/chr%1$s.fa.out&#34;</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="n">gff_name</span> <span class="o">&lt;-</span> <span class="nf">sprintf</span><span class="p">(</span><span class="s">&#34;chr%1$s/chr%1$s.fa.out.gff&#34;</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="n">gtf_name</span> <span class="o">&lt;-</span> <span class="nf">sprintf</span><span class="p">(</span><span class="s">&#34;gtfs/chr%1$s.gtf&#34;</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+</span></span></code></pre></div><p>The next few lines simply reads the files that are generated by <code>RepeatMasker</code>. Note that we are using the <code>-gff</code> setting in RepeatMasker so that it generates a <code>.out.gff</code> file, which besides <code>.out</code> file contains information required for GTF. We&rsquo;re skipping the first two lines of the .out and .gff files because they are just headers. I define a header for the data read from <code>.out.gff</code> file.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl">  <span class="c1"># make sure we&#39;re reading 16 columns, because the last column is an optional one </span>
+</span></span><span class="line"><span class="cl">  <span class="c1"># and some rows many not have them </span>
+</span></span><span class="line"><span class="cl">  <span class="n">data</span> <span class="o">&lt;-</span> <span class="nf">read.table</span><span class="p">(</span><span class="n">out_name</span><span class="p">,</span> <span class="n">skip</span> <span class="o">=</span> <span class="m">2</span><span class="p">,</span> <span class="n">header</span> <span class="o">=</span> <span class="kc">FALSE</span><span class="p">,</span> <span class="n">fill</span> <span class="o">=</span> <span class="kc">TRUE</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                     <span class="n">col.names</span> <span class="o">=</span> <span class="nf">paste0</span><span class="p">(</span><span class="s">&#34;V&#34;</span><span class="p">,</span><span class="nf">seq_len</span><span class="p">(</span><span class="m">16</span><span class="p">)))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">  <span class="nf">names</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="s">&#34;bit score&#34;</span><span class="p">,</span> <span class="s">&#34;perc div.&#34;</span><span class="p">,</span> <span class="s">&#34;perc del.&#34;</span><span class="p">,</span> <span class="s">&#34;perc ins.&#34;</span><span class="p">,</span> <span class="s">&#34;chr&#34;</span><span class="p">,</span> <span class="s">&#34;begin&#34;</span><span class="p">,</span> <span class="s">&#34;end&#34;</span><span class="p">,</span> <span class="s">&#34;(left)&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">              <span class="s">&#34;side&#34;</span><span class="p">,</span> <span class="s">&#34;matching repeat&#34;</span><span class="p">,</span> <span class="s">&#34;repeat class/family&#34;</span><span class="p">,</span> <span class="s">&#34;rep begin&#34;</span><span class="p">,</span> <span class="s">&#34;rep end&#34;</span><span class="p">,</span> <span class="s">&#34;rep (left)&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">              <span class="s">&#34;ID&#34;</span><span class="p">,</span> <span class="s">&#34;inc higer score&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">  <span class="n">gff</span> <span class="o">&lt;-</span> <span class="nf">read.table</span><span class="p">(</span><span class="n">gff_name</span><span class="p">,</span> <span class="n">skip</span><span class="o">=</span><span class="m">2</span><span class="p">,</span> <span class="n">header</span><span class="o">=</span><span class="bp">F</span><span class="p">)</span>
+</span></span></code></pre></div><p>Next, we&rsquo;re filtering the ERV output by RepeatMasker to only keep the sequences more likely to be genetically significant</p>
+<ul>
+<li>many of the identified sequences overlap and often the classification that best represents the true origin of the sequence has the highest score. So we are filtering for that by having a threshold for the <code>bit score</code>.</li>
+<li>the <code>.out.gff</code> file is ordered the same way as the <code>.out</code> file, so can also filter based on the <code>Simple/Unknown</code> classification in <code>.out</code> file. Simple repeats tend to score higher than ERV or LINE.</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl">  <span class="n">gff</span> <span class="o">&lt;-</span> <span class="n">gff[</span><span class="o">!</span><span class="nf">grepl</span><span class="p">(</span><span class="s">&#34;Simple|Unknown&#34;</span><span class="p">,</span> <span class="n">data</span><span class="o">$</span><span class="n">`repeat class/family`</span><span class="p">),</span><span class="n">]</span>
+</span></span><span class="line"><span class="cl">  <span class="n">data</span> <span class="o">&lt;-</span> <span class="n">data[</span><span class="o">!</span><span class="nf">grepl</span><span class="p">(</span><span class="s">&#34;Simple|Unknown&#34;</span><span class="p">,</span> <span class="n">data</span><span class="o">$</span><span class="n">`repeat class/family`</span><span class="p">),</span><span class="n">]</span>
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">  <span class="kr">if</span><span class="p">(</span><span class="nf">length</span><span class="p">(</span><span class="n">gff</span><span class="p">)</span> <span class="o">==</span> <span class="m">0</span> <span class="o">||</span> <span class="nf">length</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">==</span> <span class="m">0</span><span class="p">)</span> <span class="p">{</span><span class="kr">return</span><span class="p">()}</span>
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">  <span class="n">threshold</span> <span class="o">&lt;-</span> <span class="m">750</span>
+</span></span><span class="line"><span class="cl">  <span class="n">gff</span> <span class="o">&lt;-</span> <span class="n">gff</span><span class="nf">[</span><span class="p">(</span><span class="n">data</span><span class="o">$</span><span class="n">`bit score`</span> <span class="o">&gt;</span> <span class="n">threshold</span><span class="p">),</span><span class="n">]</span>
+</span></span><span class="line"><span class="cl">  <span class="n">data</span> <span class="o">&lt;-</span> <span class="n">data</span><span class="nf">[</span><span class="p">(</span><span class="n">data</span><span class="o">$</span><span class="n">`bit score`</span> <span class="o">&gt;</span> <span class="n">threshold</span><span class="p">),</span><span class="n">]</span>
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">  <span class="kr">if</span><span class="p">(</span><span class="nf">length</span><span class="p">(</span><span class="n">gff</span><span class="p">)</span> <span class="o">==</span> <span class="m">0</span> <span class="o">||</span> <span class="nf">length</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">==</span> <span class="m">0</span><span class="p">)</span> <span class="p">{</span><span class="kr">return</span><span class="p">()}</span>
+</span></span></code></pre></div><p>Then, we generate each column for the GTF. A major issue is that <code>AGAT</code>, the tool we use to turn GTF files into FASTA files for validating our ERV GTF, requires that each sequence has an ID and be marked as <strong>mRNA</strong>.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl">  <span class="n">seqname</span> <span class="o">&lt;-</span> <span class="n">data</span><span class="o">$</span><span class="n">chr</span>
+</span></span><span class="line"><span class="cl">  <span class="n">source</span> <span class="o">&lt;-</span> <span class="nf">rep</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&#34;RepeatMasker&#34;</span><span class="p">),</span> <span class="n">each</span><span class="o">=</span><span class="nf">length</span><span class="p">(</span><span class="n">seqname</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">  <span class="n">feature</span> <span class="o">&lt;-</span> <span class="nf">rep</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&#34;mRNA&#34;</span><span class="p">),</span> <span class="n">each</span><span class="o">=</span><span class="nf">length</span><span class="p">(</span><span class="n">seqname</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">  <span class="n">start</span> <span class="o">&lt;-</span> <span class="n">data</span><span class="o">$</span><span class="n">begin</span>
+</span></span><span class="line"><span class="cl">  <span class="n">end</span> <span class="o">&lt;-</span> <span class="n">data</span><span class="o">$</span><span class="n">end</span>
+</span></span><span class="line"><span class="cl">  <span class="n">score</span> <span class="o">&lt;-</span> <span class="n">data</span><span class="o">$</span><span class="n">`perc div.`</span>
+</span></span><span class="line"><span class="cl">  <span class="n">strand</span> <span class="o">&lt;-</span> <span class="n">gff</span><span class="o">$</span><span class="n">V7</span>
+</span></span><span class="line"><span class="cl">  <span class="n">frame</span> <span class="o">&lt;-</span> <span class="nf">rep</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="s">&#34;.&#34;</span><span class="p">),</span> <span class="n">each</span><span class="o">=</span><span class="nf">length</span><span class="p">(</span><span class="n">seqname</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">  <span class="n">gene_id</span> <span class="o">&lt;-</span> <span class="nf">sapply</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="nf">length</span><span class="p">(</span><span class="n">seqname</span><span class="p">),</span> 
+</span></span><span class="line"><span class="cl">                    <span class="kr">function</span><span class="p">(</span><span class="n">x</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">                      <span class="nf">paste0</span><span class="p">(</span><span class="s">&#34;gene_id \&#34;RepMasker&#34;</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">                             <span class="n">x</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">                             <span class="s">&#34;\&#34;&#34;</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">                             <span class="n">collapse</span><span class="o">=</span><span class="s">&#39;&#39;</span><span class="p">)}</span>
+</span></span><span class="line"><span class="cl">                    <span class="p">)</span>
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">  <span class="n">gene_name</span> <span class="o">&lt;-</span> <span class="nf">mapply</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="kr">function</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">      <span class="nf">paste0</span><span class="p">(</span><span class="s">&#34;gene_name \&#34;&#34;</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">             <span class="n">x</span><span class="p">,</span> <span class="s">&#34;:&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">             <span class="n">y</span><span class="p">,</span> <span class="s">&#34;:&#34;</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">             <span class="n">z</span><span class="p">,</span> <span class="s">&#34;:&#34;</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">             <span class="n">i</span><span class="p">,</span> <span class="s">&#34;\&#34;&#34;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">             <span class="n">collapse</span><span class="o">=</span><span class="s">&#39;&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">},</span>
+</span></span><span class="line"><span class="cl">    <span class="m">1</span><span class="o">:</span><span class="nf">length</span><span class="p">(</span><span class="n">seqname</span><span class="p">),</span> 
+</span></span><span class="line"><span class="cl">    <span class="n">data</span><span class="o">$</span><span class="n">chr</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">data</span><span class="o">$</span><span class="n">`repeat class/family`</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">    <span class="n">data</span><span class="o">$</span><span class="n">`matching repeat`</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">  <span class="n">ID</span> <span class="o">&lt;-</span> <span class="nf">sapply</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="m">1</span><span class="o">:</span><span class="nf">length</span><span class="p">(</span><span class="n">seqname</span><span class="p">),</span> 
+</span></span><span class="line"><span class="cl">    <span class="kr">function</span><span class="p">(</span><span class="n">x</span><span class="p">){</span>
+</span></span><span class="line"><span class="cl">      <span class="nf">paste0</span><span class="p">(</span><span class="s">&#34;ID \&#34;RepMasker&#34;</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="s">&#34;\&#34;&#34;</span><span class="p">,</span> <span class="n">collapse</span><span class="o">=</span><span class="s">&#39;&#39;</span><span class="p">)}</span>
+</span></span><span class="line"><span class="cl">    <span class="p">)</span>
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">  <span class="n">attr</span> <span class="o">&lt;-</span> <span class="nf">mapply</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="kr">function</span><span class="p">(</span><span class="n">id</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="nf">paste0</span><span class="p">(</span><span class="n">id</span><span class="p">,</span> <span class="s">&#34;; &#34;</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="s">&#34;; &#34;</span><span class="p">,</span> <span class="n">y</span><span class="p">),</span> 
+</span></span><span class="line"><span class="cl">    <span class="n">ID</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">gene_id</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">    <span class="n">gene_name</span><span class="p">)</span>
+</span></span></code></pre></div><p>Last, output the GTF</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl">  <span class="n">gtf</span> <span class="o">&lt;-</span> <span class="nf">data.table</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="n">seqname</span><span class="o">=</span><span class="n">seqname</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">source</span><span class="o">=</span><span class="n">source</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">feature</span><span class="o">=</span><span class="n">feature</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">start</span><span class="o">=</span><span class="n">start</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">end</span><span class="o">=</span><span class="n">end</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">score</span><span class="o">=</span><span class="n">score</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">strand</span><span class="o">=</span><span class="n">strand</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">frame</span><span class="o">=</span><span class="n">frame</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="n">attribute</span><span class="o">=</span><span class="n">attr</span>
+</span></span><span class="line"><span class="cl">  <span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">write.table</span><span class="p">(</span><span class="n">gtf</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="n">gtf_name</span><span class="p">,</span> <span class="n">quote</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s">&#39;\t&#39;</span><span class="p">,</span> <span class="n">col.names</span><span class="o">=</span><span class="bp">F</span><span class="p">,</span> <span class="n">row.names</span><span class="o">=</span><span class="bp">F</span><span class="p">)</span>
+</span></span></code></pre></div><p>A loop below to call the above <code>repmask2gtf()</code> to generate the GTF for all the files that are in the current dir.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="kr">for</span> <span class="p">(</span><span class="n">chr</span> <span class="kr">in</span> <span class="nf">list.dirs</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="s">&#34;.&#34;</span><span class="p">,</span> <span class="n">full.names</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">,</span> <span class="n">recursive</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">)){</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">if</span> <span class="p">(</span><span class="nf">grepl</span><span class="p">(</span><span class="s">&#34;chr&#34;</span><span class="p">,</span> <span class="n">chr</span><span class="p">,</span> <span class="n">fixed</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">)){</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">print</span><span class="p">(</span><span class="nf">paste0</span><span class="p">(</span><span class="s">&#34;generating GTF for &#34;</span><span class="p">,</span> <span class="nf">gsub</span><span class="p">(</span><span class="s">&#34;./chr&#34;</span><span class="p">,</span> <span class="s">&#34;&#34;</span><span class="p">,</span> <span class="n">chr</span><span class="p">)))</span>
+</span></span><span class="line"><span class="cl">    <span class="kr">if</span> <span class="p">(</span><span class="o">!</span><span class="nf">file.exists</span><span class="p">(</span><span class="nf">sprintf</span><span class="p">(</span><span class="s">&#34;gtfs/chr%1$s.gtf&#34;</span><span class="p">,</span> <span class="nf">gsub</span><span class="p">(</span><span class="s">&#34;./chr&#34;</span><span class="p">,</span> <span class="s">&#34;&#34;</span><span class="p">,</span> <span class="n">chr</span><span class="p">)))){</span>
+</span></span><span class="line"><span class="cl">      <span class="nf">repmask2gtf</span><span class="p">(</span><span class="nf">gsub</span><span class="p">(</span><span class="s">&#34;./chr&#34;</span><span class="p">,</span> <span class="s">&#34;&#34;</span><span class="p">,</span> <span class="n">chr</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span><span class="kr">else</span><span class="p">{</span>
+</span></span><span class="line"><span class="cl">      <span class="nf">cat</span><span class="p">(</span><span class="nf">sprintf</span><span class="p">(</span><span class="s">&#34;gtfs/chr%1$s.gtf&#34;</span><span class="p">,</span> <span class="nf">gsub</span><span class="p">(</span><span class="s">&#34;./chr&#34;</span><span class="p">,</span> <span class="s">&#34;&#34;</span><span class="p">,</span> <span class="n">chr</span><span class="p">)),</span> <span class="s">&#39;already exist\n&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="p">}</span>
 </span></span><span class="line"><span class="cl">  <span class="p">}</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div><h3 id="result">Result</h3>
-<p>As a result, in all one million simulations, at least 85% of the niches contain a single M.tb. And the means of simulation under representitive scenarios are depicted below. <strong>Contrary to the paper reported, random depostion can only result in less than 5% niches with two M.tb but larger than 95% niches with one M.tb</strong>
-<figure class="ma0 w-75"><img src="/uploads/model_aerosol_depostion_random%20deposition.png">
-</figure>
-</p>
-<h2 id="preferred-deposition">Preferred deposition</h2>
-<p>Seek a function $f$
- describing the probability that a pathogen will be deposited into each niche, such that the likelihood of the observation reported by the paper will be maximized, i.e.
-
-$$
-\underset{f(x)}{\text{arg max}} \, L(f(x) \mid d_0)
-$$
-
-
-where $x$
- is the whole set of niches pathogens can be deposited into;  $f(x)$
- is the probability density function of $x$
-, i.e. $f(x_i)$
- is the probability that a pathogen will be deposited into the niche $x_i$
-; $d_0$
- is the distribution of pathogens in the niches reported by the paper; $L(f(x) \mid d_0)$
- is the likelihood of $f(x)$
- given $d_0$
-.</p>
-<p>Approximate $d_0$
- by $d'$
- from $\underset{d' \in \mathbb{R}^2}{\arg\min} \| d' - {d_o} \|, \quad {d_o} \in \mathbb{R}^5 $
-. Before enough data is available to enable a rigorous theoretical derivation, it is assumed that each droplet deposit in alveolar niches independently and
-
-$$
-\begin{equation}
-f(x_i) =
-\begin{cases} 
-P_1, & \forall i \in [1, N_{P1}] \\
-P_2, & \forall i \in (N_{P1}, N_{\text{niche}}]
-\end{cases}
-\end{equation}
-$$
-
-
-where niches were categorized into two classes and $P_i$
- is the probability of being deposited of the niches belonging to <em>i-th</em> category. Please note adding one class will increase the computation complexity by a factor of 𝑂(𝑛) due to the added dimension. $N_{Pi}$
- is the number of niches belonging to <em>i-th</em> category. $N_{\text{niche}}$
- is the total number of niches.</p>
-<p>A matrix $N$
- below represents k-th possible scenarios that comply with $d_{0}$
-, equation $(1)$
- and the total number of M. tuberculosis (M.tb) deposited in the alveoli, given by $n_{Mtb} \in [2, 4] \times 10^3$
-.</p>
-<p>
-$$
-N_k =
-\begin{bmatrix}
-N_{11} & N_{12} \\
-N_{21} & N_{22} \\
-\end{bmatrix}
-$$
-
-
-Where $N_{ij}$
- represents the number of niches that were deposited by $i$
- (an integer) M.tb, and each M.tb is deposited with a probability of $P_j$
-. Thus, the probability of $N_k$
- given $N_k, d_{0}, P_1, P_2, N_{P1}, N_{\text{niche}},n_{\text{Mtb}}$
- is</p>
-
-$$
-\begin{gather*}
-p(N_k \mid d_{0}, P_1, P_2, N_{P1}, N_{\text{niche}}, n_{\text{Mtb}}) =  P_1^{N_{11}+2N_{21}} \times P_2^{N_{12}+2N_{22}} \\
-\binom{N_{\text{niche}}}{N_{P1}} \binom{N_{P1}}{N_{11}} \binom{N_{P1}-N_{11}}{N_{21}} \binom{N_{P2}}{N_{12}} \binom{N_{P2}-N_{12}}{N_{22}} \times  \\
-\binom{n_{\text{Mtb}}}{N_{11}+N_{12}} \times \prod_{j=0}^{\frac{n_{\text{Mtb}}^{N_2.}}{2}} \binom{n_{\text{Mtb}}^{N_2.}-2j}{2}
-\end{gather*}
-$$
-
-
-<p>Where $n_{\text{Mtb}}^{N_2.}=n_{\text{Mtb}}-N_{11}-N_{12}$
- is the number of M.tb deposited into niches that eventually have two M.tb at the same niche. The above formula can be reformulated to clearly reflect its dependency on the independent variables, enabling a more efficient loop design. Specifically, below parts depend on $N_k, d_{0}, P_1, P_2, N_{P1}, N_{\text{niche}},n_{\text{Mtb}}$
-:</p>
-
-$$
-\begin{equation}
-\binom{N_{P1}}{N_{11}} \binom{N_{P1}-N_{11}}{N_{21}} \binom{N_{P2}}{N_{12}} \binom{N_{P2}-N_{12}}{N_{22}}
-\end{equation}
-$$
-
-
-<p>Below depends on $d_{0}, P_1, P_2, N_{P1}, N_{\text{niche}},n_{\text{Mtb}}$
-:
-
-$$
-\begin{equation}
-P_1^{N_{11}+2N_{21}} P_2^{N_{12}+2N_{22}} \binom{N_{\text{niche}}}{N_{P1}}
-\end{equation}
-$$
-
-</p>
-<p>Below depends on $d_{0}, N_{\text{niche}},n_{\text{Mtb}}$
-:
-
-$$
-\begin{equation}
-\binom{n_{\text{Mtb}}}{N_{11}+N_{12}} \times \prod_{j=0}^{\frac{n_{\text{Mtb}}^{N_2.}}{2}} \binom{n_{\text{Mtb}}^{N_2.}-2j}{2}
-\end{equation}
-$$
-
-</p>
-<p>Equation (4) can be algebraically derived into below to simplify the calculation significantly:
-
-$$
-\begin{equation}
-\binom{n_{\text{Mtb}}}{N_{11}+N_{12}} \times {(n_{\text{Mtb}}^{N_2.})!} \prod_{j=1}^{\frac{n_{\text{Mtb}}^{N_2.}}{2}} (2j-1)
-\end{equation}
-$$
-
-</p>
-<p>Now the probability of $N_k$
- given $N_k, d_{0}, P_1, P_2, N_{P1}, N_{\text{niche}},n_{\text{Mtb}}$
- can be rewriten into:
-
-$$
-\begin{equation}
-p(N_k \mid d_{0}, P_1, P_2, N_{P1}, N_{\text{niche}}, n_{\text{Mtb}}) =  e^{\ln(2) + \ln(3) + \ln(5)}
-\end{equation}
-$$
-
- Note the values of $(2),(3),(5)$
- exceed the limits that are acceptable by R or Python, but their product $(2)(3)(5) \in (0, 1)$
-. And $e^{\ln(x)}$
- transformation in equation (6) makes $(2)(3)(5)$
- computable.</p>
-<p>Last, the probability of $P_1, P_2, N_{P1}, N_{\text{niche}}$
- given $d_{0},n_{\text{Mtb}}$
- can be caculated as:
-
-$$
-\begin{equation}
-L(f(x) \mid d_{0},n_{\text{Mtb}}) \approx L(f(x) \mid d',n_{\text{Mtb}}) = \sum_{N_k}^{} e^{\ln(2) + \ln(3) + \ln(5)}
-\end{equation}
-$$
-
-</p>
-<p>Below are R codes to compute equation (7). First, the combinations and permutations are approximated using the Gamma function, developed by the Indian mathematician Srinivasa Ramanujan (1887–1920), which otherwise exceed the default capabilities of R and Python functions.</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1">#necessary functions</span>
-</span></span><span class="line"><span class="cl"><span class="n">ramanujan</span> <span class="o">&lt;-</span> <span class="kr">function</span><span class="p">(</span><span class="n">n</span><span class="p">){</span>
-</span></span><span class="line"><span class="cl">  <span class="n">n</span><span class="o">*</span><span class="nf">log</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">-</span> <span class="n">n</span> <span class="o">+</span> <span class="nf">log</span><span class="p">(</span><span class="n">n</span><span class="o">*</span><span class="p">(</span><span class="m">1</span> <span class="o">+</span> <span class="m">4</span><span class="o">*</span><span class="n">n</span><span class="o">*</span><span class="p">(</span><span class="m">1+2</span><span class="o">*</span><span class="n">n</span><span class="p">)))</span><span class="o">/</span><span class="m">6</span> <span class="o">+</span> <span class="nf">log</span><span class="p">(</span><span class="kc">pi</span><span class="p">)</span><span class="o">/</span><span class="m">2</span>
+</span></span></code></pre></div><h3 id="4-modify-gtf-for-starsolo">4. Modify GTF for STARsolo</h3>
+<p>Modify GTF for a couple of reasons:</p>
+<ul>
+<li>STAR does not accept that we&rsquo;re using <em>mRNA</em> instead of <em>exons</em></li>
+<li>The <em>gene id</em>, which are <em>RepeatMasker</em> + <em>a number</em>, may not work when we concat all chromosomes together due to  duplicated IDs.</li>
+<li>STAR also does not need a <em>ID</em> besides <em>gene id</em>, so we&rsquo;ll remove that as well.</li>
+</ul>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">change_feature_gtf</span> <span class="o">&lt;-</span> <span class="kr">function</span><span class="p">(</span><span class="n">gtf_tab</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="n">gtf_tab</span><span class="o">$</span><span class="n">V3</span> <span class="o">&lt;-</span> <span class="nf">rep</span><span class="p">(</span><span class="s">&#34;exon&#34;</span><span class="p">,</span> <span class="nf">nrow</span><span class="p">(</span><span class="n">gtf_tab</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">  <span class="n">gtf_tab</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="n">logCmbn</span><span class="o">&lt;-</span> <span class="kr">function</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">k</span><span class="p">){</span>
-</span></span><span class="line"><span class="cl">  <span class="nf">ramanujan</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">-</span> <span class="nf">ramanujan</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="o">-</span> <span class="nf">ramanujan</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="n">k</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">rm_id_gtf</span> <span class="o">&lt;-</span> <span class="kr">function</span><span class="p">(</span><span class="n">gtf_tab</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="n">gtf_tab</span><span class="o">$</span><span class="n">V9</span> <span class="o">&lt;-</span> <span class="nf">lapply</span><span class="p">(</span>
+</span></span><span class="line"><span class="cl">    <span class="n">gtf_tab</span><span class="o">$</span><span class="n">V9</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">    <span class="kr">function</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="nf">gsub</span><span class="p">(</span><span class="s">&#34;(ID \&#34;[A-Za-z0-9]*\&#34;; )&#34;</span><span class="p">,</span> <span class="s">&#34;&#34;</span><span class="p">,</span> <span class="n">x</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">  <span class="n">gtf_tab</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="n">logPermute</span><span class="o">&lt;-</span> <span class="kr">function</span><span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">k</span><span class="p">){</span>
-</span></span><span class="line"><span class="cl">  <span class="nf">ramanujan</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">-</span> <span class="nf">ramanujan</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="n">k</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">rename_gtf</span> <span class="o">&lt;-</span> <span class="kr">function</span><span class="p">(</span><span class="n">gtf_tab</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="n">gtf_tab</span><span class="o">$</span><span class="n">V9</span> <span class="o">&lt;-</span> <span class="nf">lapply</span><span class="p">(</span><span class="n">gtf_tab</span><span class="o">$</span><span class="n">V9</span><span class="p">,</span> <span class="kr">function</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="n">new_id</span> <span class="o">&lt;-</span> <span class="nf">sprintf</span><span class="p">(</span><span class="s">&#34;gene_id \&#34;RepMasker_%s\&#34;; &#34;</span><span class="p">,</span> <span class="n">uuid</span><span class="o">::</span><span class="nf">UUIDgenerate</span><span class="p">())</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">gsub</span><span class="p">(</span><span class="s">&#34;(gene_id \&#34;[A-Za-z0-9]*\&#34;; )&#34;</span><span class="p">,</span> <span class="n">new_id</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="p">})</span>
+</span></span><span class="line"><span class="cl">  <span class="n">gtf_tab</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div><p>Below pre-computation to speed up:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># N is a matrix whose element Nij is the number of niches with Pj (the</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># probability that a pathogen will be deposit into the niche) and occupied</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># by i (an integer number, any of 1:1:3) pathogens</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># N=[N11 N12</span>
-</span></span><span class="line"><span class="cl"><span class="c1">#   N21 N22</span>
-</span></span><span class="line"><span class="cl"><span class="c1">#   N31 N32]</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># for N used in downstream, dim(N) is c(2,2) </span>
-</span></span><span class="line"><span class="cl"><span class="c1"># N=[N11 N12</span>
-</span></span><span class="line"><span class="cl"><span class="c1">#   N21 N22]</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># CFU should be able to be calculated from N, but for speed we directly input CFU</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1">#** k=the portion of mtb that goes to a niche of one, two or three-mtb occupied niche**</span>
-</span></span><span class="line"><span class="cl"><span class="c1">#** as reported in Fig1D **</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># k&lt;-round(c(1:3)*c(81.25,15.625,3.125)/c(c(1:3)%*%c(81.25,15.625,3.125)),3)</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># k&lt;-round(c(1:2)*c(83,17)/c(c(1:2)%*%c(83,17)),3)</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="n">pre_computed</span><span class="o">&lt;-</span><span class="kr">function</span><span class="p">(</span><span class="n">k</span><span class="o">=</span><span class="nf">round</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">2</span><span class="p">)</span><span class="o">*</span><span class="nf">c</span><span class="p">(</span><span class="m">83</span><span class="p">,</span><span class="m">17</span><span class="p">)</span><span class="o">/</span><span class="nf">c</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">2</span><span class="p">)</span><span class="o">%*%</span><span class="nf">c</span><span class="p">(</span><span class="m">83</span><span class="p">,</span><span class="m">17</span><span class="p">)),</span><span class="m">3</span><span class="p">),</span>
-</span></span><span class="line"><span class="cl">               <span class="n">CFU</span><span class="o">=</span><span class="m">3e3L</span><span class="p">){</span>
-</span></span><span class="line"><span class="cl">  <span class="c1">#** k*CFU is the number of mtb that  goes to a niche of one, two or three-mtb occupied niche**</span>
-</span></span><span class="line"><span class="cl">  <span class="c1">#** SUMni is the number of niches that are occupied by one, two or three-mtb **</span>
-</span></span><span class="line"><span class="cl">  <span class="n">SUMni</span><span class="o">&lt;-</span><span class="nf">as.integer</span><span class="p">(</span><span class="nf">round</span><span class="p">(</span><span class="m">1</span><span class="o">/</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="nf">length</span><span class="p">(</span><span class="n">k</span><span class="o">*</span><span class="n">CFU</span><span class="p">))</span><span class="o">*</span><span class="n">k</span><span class="o">*</span><span class="n">CFU</span><span class="p">))</span>
-</span></span><span class="line"><span class="cl">  
-</span></span><span class="line"><span class="cl">  <span class="c1">#** below pre-compute matrices or vectors to select N matrices that obeys P matrix **</span>
-</span></span><span class="line"><span class="cl">  <span class="c1">#** Ln1 is argument of f1(). **</span>
-</span></span><span class="line"><span class="cl">  <span class="c1">#** Ln1 is a 4 X I matrix, I is the number of all possible N constrained by CFU and paper&#39;s Fig1D **</span>
-</span></span><span class="line"><span class="cl">  <span class="c1">#**     Rows 1 to 4 of Ln1 is possible values of {N11}, {N12}, {N21}, {N22} respectively **</span>
-</span></span><span class="line"><span class="cl">  <span class="c1">#** </span>
-</span></span><span class="line"><span class="cl">  
-</span></span><span class="line"><span class="cl">  <span class="n">Ln0</span><span class="o">&lt;-</span><span class="n">reshape2</span><span class="o">::</span><span class="nf">melt</span><span class="p">(</span><span class="nf">matrix</span><span class="p">(</span><span class="n">nrow</span> <span class="o">=</span> <span class="n">SUMni[2]</span><span class="m">+1</span><span class="p">,</span> <span class="n">ncol</span> <span class="o">=</span>  <span class="n">SUMni[1]</span><span class="m">+1</span><span class="p">))</span><span class="n">[</span><span class="p">,</span><span class="nf">c</span><span class="p">(</span><span class="s">&#34;Var2&#34;</span><span class="p">,</span><span class="s">&#34;Var1&#34;</span><span class="p">)</span><span class="n">]</span><span class="m">-1L</span>
-</span></span><span class="line"><span class="cl">  <span class="n">Ln1</span><span class="o">&lt;-</span><span class="nf">cbind</span><span class="p">(</span><span class="n">Ln0[</span><span class="p">,</span><span class="m">1</span><span class="n">]</span><span class="p">,</span><span class="n">SUMni[1]</span><span class="o">-</span><span class="n">Ln0[</span><span class="p">,</span><span class="m">1</span><span class="n">]</span><span class="p">,</span><span class="n">Ln0[</span><span class="p">,</span><span class="m">2</span><span class="n">]</span><span class="p">,</span><span class="n">SUMni[2]</span><span class="o">-</span><span class="n">Ln0[</span><span class="p">,</span><span class="m">2</span><span class="n">]</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">  <span class="n">Ln1</span><span class="o">&lt;-</span><span class="nf">t</span><span class="p">(</span><span class="n">Ln1</span><span class="p">)</span><span class="c1">#0.13s/run</span>
-</span></span><span class="line"><span class="cl">  
-</span></span><span class="line"><span class="cl">  <span class="c1">#** LsA is argument of f1(). **</span>
-</span></span><span class="line"><span class="cl">  <span class="c1">#** LsA= Ln1[1,] + Ln1[3,], i.e. N11+N21 the total number of niches that have p1 chance to be occupied**</span>
-</span></span><span class="line"><span class="cl">  <span class="n">LsA</span><span class="o">&lt;-</span><span class="n">Ln1[1</span><span class="p">,</span><span class="n">]</span> <span class="o">+</span> <span class="n">Ln1[3</span><span class="p">,</span><span class="n">]</span>
-</span></span><span class="line"><span class="cl">  
-</span></span><span class="line"><span class="cl">  <span class="c1">#** LsD is argument of f1(). **</span>
-</span></span><span class="line"><span class="cl">  <span class="c1">#** LsD= Ln1[2,] + Ln1[4,], i.e. N12+N22 the total number of niches that have p2 chance to be occupied**</span>
-</span></span><span class="line"><span class="cl">  <span class="n">LsD</span><span class="o">&lt;-</span> <span class="nf">sum</span><span class="p">(</span><span class="n">SUMni</span><span class="p">)</span><span class="o">-</span><span class="n">LsA</span>
-</span></span><span class="line"><span class="cl">  <span class="c1"># identical(Ln1[2,] + Ln1[4,],LsD)</span>
-</span></span><span class="line"><span class="cl">  
-</span></span><span class="line"><span class="cl">  <span class="c1">#logCirCle3 component,Sumini1, and Sumini2=CFU-Sumini1 </span>
-</span></span><span class="line"><span class="cl">  <span class="n">Sumini1full</span><span class="o">&lt;-</span><span class="n">LsA</span><span class="o">+</span><span class="p">(</span><span class="m">0L</span><span class="o">:</span><span class="n">SUMni[2]</span><span class="p">)</span> 
-</span></span><span class="line"><span class="cl">  
-</span></span><span class="line"><span class="cl">  <span class="c1">#logCircle2 is independent of N P, and is the same for different N P as long as CFU remains the same</span>
-</span></span><span class="line"><span class="cl">  <span class="n">logCircle2</span><span class="o">&lt;-</span> <span class="nf">logCmbn</span><span class="p">(</span><span class="n">CFU</span><span class="p">,</span><span class="n">SUMni[1]</span><span class="p">)</span><span class="o">+</span>
-</span></span><span class="line"><span class="cl">    <span class="nf">sum</span><span class="p">(</span><span class="nf">log</span><span class="p">(</span><span class="nf">seq.int</span><span class="p">(</span><span class="n">CFU</span><span class="o">-</span><span class="n">SUMni[1]</span><span class="m">-1L</span><span class="p">,</span><span class="m">1L</span><span class="p">,</span><span class="n">by</span> <span class="o">=</span> <span class="m">-2L</span><span class="p">)))</span><span class="o">+</span><span class="nf">logPermute</span><span class="p">(</span><span class="n">SUMni[2]</span><span class="p">,</span><span class="n">SUMni[2]</span><span class="m">-1</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">  
-</span></span><span class="line"><span class="cl">  <span class="nf">list</span><span class="p">(</span><span class="n">Ln1</span><span class="p">,</span><span class="n">LsA</span><span class="p">,</span><span class="n">LsD</span><span class="p">,</span><span class="n">Sumini1full</span><span class="p">,</span><span class="n">logCircle2</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">mod_gtf</span> <span class="o">&lt;-</span> <span class="kr">function</span><span class="p">(</span><span class="n">chr_name</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="n">gtf</span> <span class="o">&lt;-</span> <span class="nf">read.table</span><span class="p">(</span><span class="n">chr_name</span><span class="p">,</span> <span class="n">header</span> <span class="o">=</span> <span class="kc">FALSE</span><span class="p">,</span> <span class="n">sep</span> <span class="o">=</span> <span class="s">&#34;\t&#34;</span><span class="p">,</span> <span class="n">quote</span> <span class="o">=</span> <span class="s">&#34;&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="n">gtf</span> <span class="o">&lt;-</span> <span class="nf">change_feature_gtf</span><span class="p">(</span><span class="n">gtf</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="n">gtf</span> <span class="o">&lt;-</span> <span class="nf">rm_id_gtf</span><span class="p">(</span><span class="n">gtf</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="n">gtf</span> <span class="o">&lt;-</span> <span class="nf">rename_gtf</span><span class="p">(</span><span class="n">gtf</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="n">gtf</span> <span class="o">&lt;-</span> <span class="nf">as.data.frame</span><span class="p">(</span><span class="nf">lapply</span><span class="p">(</span><span class="n">gtf</span><span class="p">,</span><span class="n">unlist</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">write.table</span><span class="p">(</span><span class="n">gtf</span><span class="p">,</span> <span class="n">file</span><span class="o">=</span><span class="nf">gsub</span><span class="p">(</span><span class="s">&#34;./gtfs/&#34;</span><span class="p">,</span> <span class="s">&#34;./gtfs2/&#34;</span><span class="p">,</span> <span class="n">chr_name</span><span class="p">),</span> <span class="n">quote</span><span class="o">=</span><span class="kc">FALSE</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s">&#39;\t&#39;</span><span class="p">,</span> <span class="n">col.names</span><span class="o">=</span><span class="bp">F</span><span class="p">,</span> <span class="n">row.names</span><span class="o">=</span><span class="bp">F</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div><p>Once we defined $f(x)$
- (the matrix P in below R codes), equation (7) is calculated by:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1">#given CFU,seek a matrix P (which describes f(x) in the text) to maximize f1(P) which calculates equation (7) in the text</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># P =[nP1,np2</span>
-</span></span><span class="line"><span class="cl"><span class="c1">#     P1 ,p2]</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># rowsum(P)=[nAlveoli;]</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># P[1,] %*% P[2,]=1</span>
-</span></span><span class="line"><span class="cl"><span class="n">f1</span><span class="o">&lt;-</span> <span class="kr">function</span><span class="p">(</span><span class="n">Prow1</span><span class="p">,</span><span class="n">logProw2</span><span class="p">,</span><span class="n">CFU</span><span class="p">,</span><span class="n">LsA</span><span class="p">,</span><span class="n">LsD</span><span class="p">,</span><span class="n">Ln1</span><span class="p">,</span><span class="n">Sumini1full</span><span class="p">,</span><span class="n">logCircle2</span><span class="p">){</span>
-</span></span><span class="line"><span class="cl">  <span class="c1"># f1 gets the probability given a fixed P;</span>
-</span></span><span class="line"><span class="cl">  
-</span></span><span class="line"><span class="cl">  <span class="c1"># 1. generate all possible N compatible with P and nAlveoli/pathogen distribution</span>
-</span></span><span class="line"><span class="cl">  <span class="c1"># in the paper</span>
-</span></span><span class="line"><span class="cl">  <span class="n">l</span><span class="o">&lt;-</span> <span class="p">(</span><span class="n">LsA</span><span class="o">&lt;=</span><span class="n">Prow1[1]</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">LsD</span><span class="o">&lt;=</span><span class="n">Prow1[2]</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">  <span class="n">Ln</span><span class="o">&lt;-</span><span class="n">Ln1[</span><span class="p">,</span><span class="n">l]</span>
-</span></span><span class="line"><span class="cl">  <span class="n">Sumini1</span><span class="o">&lt;-</span><span class="n">Sumini1full[l]</span>
-</span></span><span class="line"><span class="cl">  
-</span></span><span class="line"><span class="cl">  <span class="c1"># 2. get logCircle3 of each N</span>
-</span></span><span class="line"><span class="cl">  <span class="n">logCircle3</span><span class="o">&lt;-</span><span class="n">logProw2[1]</span><span class="o">*</span><span class="n">Sumini1</span><span class="o">+</span><span class="n">logProw2[2]</span><span class="o">*</span><span class="p">(</span><span class="n">CFU</span><span class="o">-</span><span class="n">Sumini1</span><span class="p">)</span><span class="o">+</span><span class="nf">logCmbn</span><span class="p">(</span><span class="nf">sum</span><span class="p">(</span><span class="n">Prow1</span><span class="p">),</span><span class="n">Prow1[1]</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">  
-</span></span><span class="line"><span class="cl">  <span class="c1"># 3. logCircle1 of each N</span>
-</span></span><span class="line"><span class="cl">  <span class="n">logCircle1</span><span class="o">&lt;-</span><span class="nf">getlogCircle1</span><span class="p">(</span><span class="n">Ln</span><span class="p">,</span><span class="n">Prow1</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">  
-</span></span><span class="line"><span class="cl">  <span class="nf">sum</span><span class="p">(</span><span class="nf">exp</span><span class="p">(</span><span class="n">logCircle2</span><span class="o">+</span><span class="n">logCircle3</span><span class="o">+</span><span class="n">logCircle1</span><span class="p">))</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div><p>And the <code>getlogCircle1()</code> is written to be more efficient than data.table using 16 threads:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">getlogCircle1</span><span class="o">&lt;-</span><span class="kr">function</span><span class="p">(</span><span class="n">Ln</span><span class="p">,</span><span class="n">Prow1</span><span class="p">){</span>
-</span></span><span class="line"><span class="cl">  <span class="n">lLn</span><span class="o">&lt;-</span><span class="nf">length</span><span class="p">(</span><span class="n">Ln</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">  <span class="n">Ln2sbstr</span><span class="o">&lt;-</span><span class="n">Ln</span>
-</span></span><span class="line"><span class="cl">  <span class="n">Ln2sbstr[3</span><span class="o">:</span><span class="m">4</span><span class="p">,</span><span class="n">]</span><span class="o">&lt;-</span><span class="m">0L</span>
-</span></span><span class="line"><span class="cl">  <span class="n">Ln2sbstr</span><span class="o">&lt;-</span><span class="nf">c</span><span class="p">(</span><span class="m">0L</span><span class="p">,</span><span class="m">0L</span><span class="p">,</span><span class="n">Ln2sbstr[</span><span class="o">-</span><span class="p">((</span><span class="n">lLn</span><span class="m">-1</span><span class="p">)</span><span class="o">:</span><span class="n">lLn</span><span class="p">)</span><span class="n">]</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">  <span class="c1">#all components of logCircle1</span>
-</span></span><span class="line"><span class="cl">  <span class="n">alllogCircle1components</span><span class="o">&lt;-</span><span class="nf">logCmbn</span><span class="p">(</span><span class="n">Prow1</span><span class="o">-</span><span class="n">Ln2sbstr</span><span class="p">,</span><span class="n">Ln</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">  <span class="c1">#get logCircle1 of each N</span>
-</span></span><span class="line"><span class="cl">  <span class="c1">#speed on mac: aggregation&lt;data.table&lt;built matrix+colsums</span>
-</span></span><span class="line"><span class="cl">  <span class="nf">colSums</span><span class="p">(</span><span class="nf">matrix</span><span class="p">(</span><span class="n">alllogCircle1components</span><span class="p">,</span><span class="n">nrow</span><span class="o">=</span><span class="m">4</span><span class="p">),</span><span class="n">na.rm</span> <span class="o">=</span> <span class="bp">T</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div><p>Stochastic gradient descent is used to seek the $f(x)$
- with max likelihood, traversing the total number of M. tuberculosis (M.tb) deposited in the alveoli $n_{Mtb} \in [2, 4] \times 10^3$
-:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">getdP</span><span class="o">&lt;-</span> <span class="kr">function</span><span class="p">(</span><span class="n">relP</span><span class="p">,</span><span class="n">P11</span><span class="p">,</span><span class="n">nNiches</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">  
-</span></span><span class="line"><span class="cl">  <span class="n">Prow1</span><span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="n">P11</span><span class="p">,</span><span class="n">nNiches</span><span class="o">-</span><span class="n">P11</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">  <span class="n">crP</span><span class="o">&lt;-</span><span class="nf">f1</span><span class="p">(</span><span class="n">Prow1</span><span class="p">,</span><span class="nf">log</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="n">relP</span><span class="p">)</span><span class="o">/</span><span class="nf">c</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="n">relP</span><span class="p">)</span><span class="o">%*%</span><span class="n">Prow1</span><span class="p">)),</span><span class="n">CFU</span><span class="p">,</span><span class="n">LsA</span><span class="p">,</span><span class="n">LsD</span><span class="p">,</span><span class="n">Ln1</span><span class="p">,</span><span class="n">Sumini1full</span><span class="p">,</span><span class="n">logCircle2</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">  
-</span></span><span class="line"><span class="cl">  <span class="n">Prow1d</span><span class="o">&lt;-</span> <span class="nf">c</span><span class="p">(</span><span class="n">P11</span><span class="m">+100L</span><span class="p">,</span><span class="n">nNiches</span><span class="o">-</span><span class="n">P11</span><span class="m">-100L</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">  <span class="n">dP11</span><span class="o">&lt;-</span><span class="nf">f1</span><span class="p">(</span><span class="n">Prow1d</span><span class="p">,</span><span class="nf">log</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="n">relP</span><span class="p">)</span><span class="o">/</span><span class="nf">c</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="n">relP</span><span class="p">)</span><span class="o">%*%</span><span class="n">Prow1d</span><span class="p">)),</span><span class="n">CFU</span><span class="p">,</span><span class="n">LsA</span><span class="p">,</span><span class="n">LsD</span><span class="p">,</span><span class="n">Ln1</span><span class="p">,</span><span class="n">Sumini1full</span><span class="p">,</span><span class="n">logCircle2</span><span class="p">)</span><span class="o">/</span><span class="n">crP</span><span class="m">-1</span>
-</span></span><span class="line"><span class="cl">  
-</span></span><span class="line"><span class="cl">  <span class="n">relPd</span><span class="o">&lt;-</span><span class="n">relP</span><span class="m">+0.1</span>
-</span></span><span class="line"><span class="cl">  <span class="n">drelP</span><span class="o">&lt;-</span><span class="nf">f1</span><span class="p">(</span><span class="n">Prow1</span><span class="p">,</span><span class="nf">log</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="n">relPd</span><span class="p">)</span><span class="o">/</span><span class="nf">c</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="n">relPd</span><span class="p">)</span><span class="o">%*%</span><span class="n">Prow1</span><span class="p">)),</span><span class="n">CFU</span><span class="p">,</span><span class="n">LsA</span><span class="p">,</span><span class="n">LsD</span><span class="p">,</span><span class="n">Ln1</span><span class="p">,</span><span class="n">Sumini1full</span><span class="p">,</span><span class="n">logCircle2</span><span class="p">)</span><span class="o">/</span><span class="n">crP</span><span class="m">-1</span>
-</span></span><span class="line"><span class="cl">  
-</span></span><span class="line"><span class="cl">  <span class="nf">list</span><span class="p">(</span><span class="n">P11</span><span class="o">=</span><span class="n">dP11</span><span class="p">,</span><span class="n">relP</span><span class="o">=</span><span class="n">drelP</span><span class="p">,</span><span class="n">crP</span><span class="o">=</span><span class="n">crP</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="n">GD</span><span class="o">&lt;-</span><span class="kr">function</span><span class="p">(</span><span class="n">relP</span><span class="o">=</span><span class="m">10</span><span class="p">,</span><span class="n">P11</span><span class="o">=</span><span class="m">2e5L</span><span class="p">,</span><span class="n">nNiches</span><span class="o">=</span><span class="m">1e6L</span><span class="p">,</span><span class="n">nItr</span><span class="o">=</span><span class="m">1e3</span><span class="p">,</span><span class="n">mrelP</span><span class="o">=</span><span class="m">0.5</span><span class="p">,</span><span class="n">mP11</span><span class="o">=</span><span class="m">0.5</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">             <span class="n">k</span><span class="o">=</span><span class="nf">round</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">2</span><span class="p">)</span><span class="o">*</span><span class="nf">c</span><span class="p">(</span><span class="m">83</span><span class="p">,</span><span class="m">17</span><span class="p">)</span><span class="o">/</span><span class="nf">c</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="m">2</span><span class="p">)</span><span class="o">%*%</span><span class="nf">c</span><span class="p">(</span><span class="m">83</span><span class="p">,</span><span class="m">17</span><span class="p">)),</span><span class="m">3</span><span class="p">),</span>
-</span></span><span class="line"><span class="cl">             <span class="n">CFU</span><span class="o">=</span><span class="m">3e3L</span><span class="p">){</span>
-</span></span><span class="line"><span class="cl">  <span class="c1">#1&gt;mP11&gt;0 the percentage of last dP11 contribute to new dP11</span>
-</span></span><span class="line"><span class="cl">  <span class="c1">#1&gt;mrelP&gt;0 the percentage of last drelP contribute to new drelP  </span>
-</span></span><span class="line"><span class="cl">  
-</span></span><span class="line"><span class="cl">  <span class="n">precomputed</span><span class="o">&lt;-</span><span class="nf">pre_computed</span><span class="p">(</span><span class="n">k</span><span class="p">,</span><span class="n">CFU</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">  <span class="n">precomputed_names</span><span class="o">&lt;-</span><span class="nf">c</span><span class="p">(</span><span class="s">&#39;Ln1&#39;</span><span class="p">,</span><span class="s">&#39;LsA&#39;</span><span class="p">,</span><span class="s">&#39;LsD&#39;</span><span class="p">,</span><span class="s">&#39;Sumini1full&#39;</span><span class="p">,</span><span class="s">&#39;logCircle2&#39;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">  <span class="kr">for</span> <span class="p">(</span><span class="n">i</span> <span class="kr">in</span> <span class="p">(</span><span class="m">1</span><span class="o">:</span><span class="nf">length</span><span class="p">(</span><span class="n">precomputed</span><span class="p">))){</span>
-</span></span><span class="line"><span class="cl">    <span class="nf">assign</span><span class="p">(</span><span class="n">precomputed_names[i]</span><span class="p">,</span><span class="n">precomputed[i]</span><span class="p">)</span>
+</span></span></code></pre></div><p>A <code>for</code> loop below to apply <code>mod_gtf()</code> to every GTF file</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="kr">for</span> <span class="p">(</span><span class="n">chr</span> <span class="kr">in</span> <span class="nf">list.files</span><span class="p">(</span><span class="n">path</span><span class="o">=</span><span class="s">&#34;./gtfs&#34;</span><span class="p">,</span> <span class="n">full.names</span><span class="o">=</span><span class="bp">T</span><span class="p">,</span> <span class="n">recursive</span><span class="o">=</span><span class="bp">F</span><span class="p">))</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="kr">if</span> <span class="p">(</span><span class="o">!</span><span class="nf">file.exists</span><span class="p">(</span><span class="nf">gsub</span><span class="p">(</span><span class="s">&#34;./gtfs/&#34;</span><span class="p">,</span> <span class="s">&#34;./gtfs2/&#34;</span><span class="p">,</span> <span class="n">chr</span><span class="p">))){</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">print</span><span class="p">(</span><span class="nf">paste0</span><span class="p">(</span><span class="s">&#34;generating new gtfs for: &#34;</span><span class="p">,</span> <span class="n">chr</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">    <span class="nf">mod_gtf</span><span class="p">(</span><span class="n">chr</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl">  <span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">  <span class="n">m</span><span class="o">&lt;-</span><span class="nf">matrix</span><span class="p">(</span><span class="n">ncol</span> <span class="o">=</span> <span class="m">5</span><span class="p">,</span> <span class="n">nrow</span><span class="o">=</span> <span class="n">nItr</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">  <span class="nf">colnames</span><span class="p">(</span><span class="n">m</span><span class="p">)</span><span class="o">&lt;-</span><span class="nf">c</span><span class="p">(</span><span class="s">&#34;relP&#34;</span><span class="p">,</span><span class="s">&#34;P11&#34;</span><span class="p">,</span><span class="s">&#34;P&#34;</span><span class="p">,</span> <span class="s">&#34;drelP&#34;</span><span class="p">,</span><span class="s">&#34;dP11&#34;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">  <span class="n">dP</span><span class="o">&lt;-</span><span class="nf">getdP</span><span class="p">(</span><span class="n">relP</span><span class="p">,</span><span class="n">P11</span><span class="p">,</span><span class="n">nNiches</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">  <span class="kr">if</span> <span class="p">(</span><span class="nf">is.na</span><span class="p">(</span><span class="n">dP</span><span class="o">$</span><span class="n">P11</span><span class="p">))</span> <span class="p">{</span><span class="nf">stop</span><span class="p">(</span><span class="s">&#34;current P is 0, try set a better initializaiton&#34;</span><span class="p">)}</span>
-</span></span><span class="line"><span class="cl">  <span class="kr">if</span> <span class="p">(</span><span class="nf">abs</span><span class="p">(</span><span class="n">P11</span><span class="o">*</span><span class="n">dP</span><span class="o">$</span><span class="n">P11</span><span class="p">)</span><span class="o">&lt;=</span><span class="m">1000</span> <span class="o">&amp;&amp;</span> <span class="nf">abs</span><span class="p">(</span><span class="n">P11</span><span class="o">*</span><span class="n">dP</span><span class="o">$</span><span class="n">P11</span><span class="p">)</span><span class="o">&gt;=</span><span class="m">100</span><span class="p">){</span>
-</span></span><span class="line"><span class="cl">    <span class="n">dP11</span><span class="o">&lt;-</span><span class="n">P11</span><span class="o">*</span><span class="n">dP</span><span class="o">$</span><span class="n">P11</span><span class="p">}</span>
-</span></span><span class="line"><span class="cl">  <span class="kr">else</span> <span class="kr">if</span> <span class="p">(</span><span class="nf">abs</span><span class="p">(</span><span class="n">P11</span><span class="o">*</span><span class="n">dP</span><span class="o">$</span><span class="n">P11</span><span class="p">)</span><span class="o">&gt;</span><span class="m">1000</span><span class="p">)</span> <span class="p">{</span><span class="n">dP11</span><span class="o">&lt;-</span><span class="nf">sign</span><span class="p">(</span><span class="n">dP</span><span class="o">$</span><span class="n">P11</span><span class="p">)</span><span class="o">*</span><span class="m">1000L</span><span class="p">}</span>
-</span></span><span class="line"><span class="cl">  <span class="kr">else</span> <span class="p">{</span><span class="n">dP11</span><span class="o">&lt;-</span><span class="nf">sign</span><span class="p">(</span><span class="n">dP</span><span class="o">$</span><span class="n">P11</span><span class="p">)</span><span class="o">*</span><span class="m">100L</span><span class="p">}</span>
-</span></span><span class="line"><span class="cl">  
-</span></span><span class="line"><span class="cl">  <span class="kr">if</span> <span class="p">(</span><span class="nf">abs</span><span class="p">(</span><span class="n">relP</span><span class="o">*</span><span class="n">dP</span><span class="o">$</span><span class="n">relP</span><span class="p">)</span><span class="o">&lt;=</span><span class="m">1</span> <span class="o">&amp;&amp;</span> <span class="nf">abs</span><span class="p">(</span><span class="n">relP</span><span class="o">*</span><span class="n">dP</span><span class="o">$</span><span class="n">relP</span><span class="p">)</span><span class="o">&gt;=</span><span class="m">0.1</span><span class="p">){</span>
-</span></span><span class="line"><span class="cl">    <span class="n">drelP</span><span class="o">&lt;-</span><span class="n">relP</span><span class="o">*</span><span class="n">dP</span><span class="o">$</span><span class="n">relP</span><span class="p">}</span>
-</span></span><span class="line"><span class="cl">  <span class="kr">else</span> <span class="kr">if</span> <span class="p">(</span><span class="nf">abs</span><span class="p">(</span><span class="n">relP</span><span class="o">*</span><span class="n">dP</span><span class="o">$</span><span class="n">relP</span><span class="p">)</span><span class="o">&gt;</span><span class="m">1</span><span class="p">)</span> <span class="p">{</span><span class="n">drelP</span><span class="o">&lt;-</span>  <span class="nf">sign</span><span class="p">(</span><span class="n">dP</span><span class="o">$</span><span class="n">relP</span><span class="p">)}</span>
-</span></span><span class="line"><span class="cl">  <span class="kr">else</span> <span class="p">{</span><span class="n">drelP</span><span class="o">&lt;-</span>  <span class="nf">sign</span><span class="p">(</span><span class="n">dP</span><span class="o">$</span><span class="n">relP</span><span class="p">)</span><span class="o">*</span><span class="m">0.1</span><span class="p">}</span>
-</span></span><span class="line"><span class="cl">  
-</span></span><span class="line"><span class="cl">  <span class="n">m[1</span><span class="p">,</span><span class="n">]</span><span class="o">&lt;-</span><span class="nf">c</span><span class="p">(</span><span class="n">relP</span><span class="p">,</span><span class="n">P11</span><span class="p">,</span><span class="n">dP</span><span class="o">$</span><span class="n">crP</span><span class="p">,</span><span class="n">drelP</span><span class="p">,</span><span class="n">dP11</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">  <span class="n">relP</span><span class="o">&lt;-</span><span class="n">relP</span><span class="o">+</span><span class="n">drelP</span>
-</span></span><span class="line"><span class="cl">  <span class="n">P11</span><span class="o">&lt;-</span><span class="nf">round</span><span class="p">(</span><span class="n">P11</span><span class="o">+</span><span class="n">dP11</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">  
-</span></span><span class="line"><span class="cl">  <span class="kr">for</span> <span class="p">(</span><span class="n">i</span> <span class="kr">in</span> <span class="m">2</span><span class="o">:</span><span class="n">nItr</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">    <span class="n">tm</span><span class="o">&lt;-</span><span class="nf">proc.time</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">    <span class="n">dP</span><span class="o">&lt;-</span><span class="nf">getdP</span><span class="p">(</span><span class="n">relP</span><span class="p">,</span><span class="n">P11</span><span class="p">,</span><span class="n">nNiches</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">    <span class="kr">if</span> <span class="p">(</span><span class="nf">abs</span><span class="p">(</span><span class="n">P11</span><span class="o">*</span><span class="n">dP</span><span class="o">$</span><span class="n">P11</span><span class="p">)</span><span class="o">&lt;=</span><span class="m">1000</span> <span class="o">&amp;&amp;</span> <span class="nf">abs</span><span class="p">(</span><span class="n">P11</span><span class="o">*</span><span class="n">dP</span><span class="o">$</span><span class="n">P11</span><span class="p">)</span><span class="o">&gt;=</span><span class="m">100</span><span class="p">){</span>
-</span></span><span class="line"><span class="cl">      <span class="n">dP11</span><span class="o">&lt;-</span><span class="n">mP11</span><span class="o">*</span><span class="n">dP11</span><span class="o">+</span><span class="p">(</span><span class="m">1</span><span class="o">-</span><span class="n">mP11</span><span class="p">)</span><span class="o">*</span><span class="n">P11</span><span class="o">*</span><span class="n">dP</span><span class="o">$</span><span class="n">P11</span><span class="p">}</span>
-</span></span><span class="line"><span class="cl">    <span class="kr">else</span> <span class="kr">if</span> <span class="p">(</span><span class="nf">abs</span><span class="p">(</span><span class="n">P11</span><span class="o">*</span><span class="n">dP</span><span class="o">$</span><span class="n">P11</span><span class="p">)</span><span class="o">&gt;</span><span class="m">1000</span><span class="p">)</span> <span class="p">{</span><span class="n">dP11</span><span class="o">&lt;-</span><span class="n">mP11</span><span class="o">*</span><span class="n">dP11</span><span class="o">+</span><span class="p">(</span><span class="m">1</span><span class="o">-</span><span class="n">mP11</span><span class="p">)</span><span class="o">*</span><span class="nf">sign</span><span class="p">(</span><span class="n">dP</span><span class="o">$</span><span class="n">P11</span><span class="p">)</span><span class="o">*</span><span class="m">1000L</span><span class="p">}</span>
-</span></span><span class="line"><span class="cl">    <span class="kr">else</span> <span class="p">{</span><span class="n">dP11</span><span class="o">&lt;-</span><span class="n">mP11</span><span class="o">*</span><span class="n">dP11</span><span class="o">+</span><span class="p">(</span><span class="m">1</span><span class="o">-</span><span class="n">mP11</span><span class="p">)</span><span class="o">*</span><span class="nf">sign</span><span class="p">(</span><span class="n">dP</span><span class="o">$</span><span class="n">P11</span><span class="p">)</span><span class="o">*</span><span class="m">100L</span><span class="p">}</span>
-</span></span><span class="line"><span class="cl">    
-</span></span><span class="line"><span class="cl">    <span class="kr">if</span> <span class="p">(</span><span class="nf">abs</span><span class="p">(</span><span class="n">relP</span><span class="o">*</span><span class="n">dP</span><span class="o">$</span><span class="n">relP</span><span class="p">)</span><span class="o">&lt;=</span><span class="m">1</span> <span class="o">&amp;&amp;</span> <span class="nf">abs</span><span class="p">(</span><span class="n">relP</span><span class="o">*</span><span class="n">dP</span><span class="o">$</span><span class="n">relP</span><span class="p">)</span><span class="o">&gt;=</span><span class="m">0.1</span><span class="p">){</span>
-</span></span><span class="line"><span class="cl">      <span class="n">drelP</span><span class="o">&lt;-</span><span class="n">mrelP</span><span class="o">*</span><span class="n">drelP</span><span class="o">+</span><span class="p">(</span><span class="m">1</span><span class="o">-</span><span class="n">mrelP</span><span class="p">)</span><span class="o">*</span><span class="n">relP</span><span class="o">*</span><span class="n">dP</span><span class="o">$</span><span class="n">relP</span><span class="p">}</span>
-</span></span><span class="line"><span class="cl">    <span class="kr">else</span> <span class="kr">if</span> <span class="p">(</span><span class="nf">abs</span><span class="p">(</span><span class="n">relP</span><span class="o">*</span><span class="n">dP</span><span class="o">$</span><span class="n">relP</span><span class="p">)</span><span class="o">&gt;</span><span class="m">1</span><span class="p">)</span> <span class="p">{</span><span class="n">drelP</span><span class="o">&lt;-</span><span class="n">mrelP</span><span class="o">*</span><span class="n">drelP</span><span class="o">+</span><span class="p">(</span><span class="m">1</span><span class="o">-</span><span class="n">mrelP</span><span class="p">)</span><span class="o">*</span><span class="nf">sign</span><span class="p">(</span><span class="n">dP</span><span class="o">$</span><span class="n">relP</span><span class="p">)}</span>
-</span></span><span class="line"><span class="cl">    <span class="kr">else</span> <span class="p">{</span><span class="n">drelP</span><span class="o">&lt;-</span> <span class="n">mrelP</span><span class="o">*</span><span class="n">drelP</span><span class="o">+</span><span class="p">(</span><span class="m">1</span><span class="o">-</span><span class="n">mrelP</span><span class="p">)</span><span class="o">*</span><span class="nf">sign</span><span class="p">(</span><span class="n">dP</span><span class="o">$</span><span class="n">relP</span><span class="p">)</span><span class="o">*</span><span class="m">0.1</span><span class="p">}</span>
-</span></span><span class="line"><span class="cl">    
-</span></span><span class="line"><span class="cl">    <span class="n">m[i</span><span class="p">,</span><span class="n">]</span><span class="o">&lt;-</span><span class="nf">c</span><span class="p">(</span><span class="n">relP</span><span class="p">,</span><span class="n">P11</span><span class="p">,</span><span class="n">dP</span><span class="o">$</span><span class="n">crP</span><span class="p">,</span><span class="n">drelP</span><span class="p">,</span><span class="n">dP11</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">    
-</span></span><span class="line"><span class="cl">    <span class="n">relP</span><span class="o">&lt;-</span><span class="n">relP</span><span class="o">+</span><span class="n">drelP</span>
-</span></span><span class="line"><span class="cl">    <span class="n">P11</span><span class="o">&lt;-</span><span class="nf">round</span><span class="p">(</span><span class="n">P11</span><span class="o">+</span><span class="n">dP11</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">    <span class="nf">cat</span><span class="p">(</span><span class="s">&#34;iteration&#34;</span><span class="p">,</span><span class="n">i</span><span class="p">,</span><span class="s">&#34;done&#34;</span><span class="p">,(</span><span class="nf">proc.time</span><span class="p">()</span><span class="o">-</span><span class="n">tm</span><span class="p">)</span><span class="n">[3]</span><span class="p">,</span><span class="s">&#34;s\n&#34;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">  <span class="p">}</span>
-</span></span><span class="line"><span class="cl">  <span class="kr">return</span><span class="p">(</span><span class="n">m</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span></code></pre></div><h3 id="result-1">Result</h3>
-<p>As a result, Monte Carlo simulation using the $f(x)$
- of max likelihood gives a <strong>nealy same result</strong> as reported in the Fig 1D of <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC6910245/" target="_blank" rel="noopener">Rothchild et al.,(2019)</a>.</p>
-<figure class="ma0 w-75"><img src="/uploads/model_aerosol_depostion_prefered%20depostion.jpg">
-</figure>
-
-<h3 id="animated-visulization">Animated visulization</h3>
-<p>We can continue to predict the the number of alveolar macrophages initially infected varied with infection dose, and what infection dose can cause acute symptomatic infection. Below animation demonstrates the prediction.
-<figure class="ma0 w-75"><img src="/uploads/model_aerosol_depostion_bestModel,boostrapDynamicVis1.gif">
-</figure>
-</p>
+</span></span></code></pre></div><h3 id="5-generate-fasta-from-gtf-for-validation">5. Generate FASTA from GTF for validation</h3>
+<p>We first modify the GTF generated for STAR</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">mod_gtf_for_AGAT</span> <span class="o">&lt;-</span> <span class="kr">function</span><span class="p">(</span><span class="n">chr_name</span><span class="p">,</span><span class="n">input_dir</span><span class="o">=</span><span class="s">&#34;./gtfs/&#34;</span><span class="p">,</span><span class="n">output_dir</span><span class="o">=</span><span class="s">&#34;./gtfs2/&#34;</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="n">gtf</span> <span class="o">&lt;-</span> <span class="nf">read.table</span><span class="p">(</span><span class="n">chr_name</span><span class="p">,</span> <span class="n">header</span> <span class="o">=</span> <span class="kc">FALSE</span><span class="p">,</span> <span class="n">sep</span> <span class="o">=</span> <span class="s">&#34;\t&#34;</span><span class="p">,</span> <span class="n">quote</span> <span class="o">=</span> <span class="s">&#34;&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="n">t_uuid</span> <span class="o">&lt;-</span> <span class="n">stringr</span><span class="o">::</span><span class="nf">str_extract</span><span class="p">(</span><span class="n">string</span> <span class="o">=</span> <span class="n">gtf</span><span class="o">$</span><span class="n">V9</span><span class="p">,</span><span class="n">pattern</span> <span class="o">=</span> <span class="s">&#39;gene_id( &#34;RepMasker_.*?&#34;; )&#39;</span><span class="p">,</span><span class="n">group</span> <span class="o">=</span> <span class="m">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="n">gtf</span><span class="o">$</span><span class="n">V9</span> <span class="o">&lt;-</span> <span class="nf">paste0</span><span class="p">(</span><span class="s">&#39;ID&#39;</span><span class="p">,</span><span class="n">t_uuid</span><span class="p">,</span><span class="n">gtf</span><span class="o">$</span><span class="n">V9</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="n">gtf</span><span class="o">$</span><span class="n">V3</span> <span class="o">&lt;-</span> <span class="nf">rep</span><span class="p">(</span><span class="s">&#34;mRNA&#34;</span><span class="p">,</span> <span class="nf">nrow</span><span class="p">(</span><span class="n">gtf</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">  <span class="n">gtf</span> <span class="o">&lt;-</span> <span class="nf">as.data.frame</span><span class="p">(</span><span class="nf">lapply</span><span class="p">(</span><span class="n">gtf</span><span class="p">,</span><span class="n">unlist</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">write.table</span><span class="p">(</span><span class="n">gtf</span><span class="p">,</span><span class="n">file</span><span class="o">=</span><span class="nf">gsub</span><span class="p">(</span><span class="n">input_dir</span><span class="p">,</span> <span class="n">output_dir</span><span class="p">,</span> <span class="n">chr_name</span><span class="p">),</span><span class="n">quote</span><span class="o">=</span><span class="bp">F</span><span class="p">,</span><span class="n">sep</span><span class="o">=</span><span class="s">&#39;\t&#39;</span><span class="p">,</span><span class="n">col.names</span><span class="o">=</span><span class="bp">F</span><span class="p">,</span><span class="n">row.names</span><span class="o">=</span><span class="bp">F</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>Then convert GTF into fasta for comparing our GRCm39 ERV GTF with from GRCm38 gEVE database using <a href="https://agat.readthedocs.io/en/latest/" target="_blank" rel="noopener"><code>AGAT</code></a>installed by mamba/conda.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="cp">#!/bin/bash
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="c1"># see also in &#39;gtf2fa.sh&#39;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># CHRS=($(seq 1 19) &#34;X&#34; &#34;Y&#34;)</span>
+</span></span><span class="line"><span class="cl"><span class="nv">CHRS</span><span class="o">=(</span><span class="s2">&#34;Y&#34;</span><span class="o">)</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> chr in <span class="s2">&#34;</span><span class="si">${</span><span class="nv">CHRS</span><span class="p">[@]</span><span class="si">}</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="k">do</span>
+</span></span><span class="line"><span class="cl">  <span class="nb">echo</span> <span class="s2">&#34;extracting .fa from chr</span><span class="si">${</span><span class="nv">chr</span><span class="si">}</span><span class="s2">.gtf&#34;</span>
+</span></span><span class="line"><span class="cl">	agat_sp_extract_sequences.pl -g ./gtfs2/chr<span class="si">${</span><span class="nv">chr</span><span class="si">}</span>.gtf -t mRNA --merge 0<span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>    -f ../single_cell/mouse/GRCm39.primary_assembly.genome.fa -o ./fa/chr<span class="si">${</span><span class="nv">chr</span><span class="si">}</span>.fa
+</span></span><span class="line"><span class="cl"><span class="k">done</span>
+</span></span></code></pre></div><h2 id="vadlidate-our-grcm39-erv">Vadlidate our GRCm39 ERV</h2>
+<p>We compared ERV using RepeatMasker and its built-in Dfam 4.1 on GRCm39 and GRCm38 ERV in <a href="https://doi.org/10.1093%2Fdatabase%2Fbaw087" target="_blank" rel="noopener">gEVE</a>.</p>
+<h3 id="1-wrange-files-of-grcm38-erv">1. Wrange files of GRCm38 ERV</h3>
+<p>ERV sequences for the mouse genome assembly GRCm38 are downloaded from the <a href="http://geve.med.u-tokai.ac.jp/download/" target="_blank" rel="noopener">gEVE website</a>. They are split by chromosome names using <a href="https://pythonhosted.org/pyfaidx/" target="_blank" rel="noopener">pyfaidx</a> or <code>faidx</code> provided by <a href="http://www.htslib.org/" target="_blank" rel="noopener">samtools</a></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># download gEVE mouse annots</span>
+</span></span><span class="line"><span class="cl">wget http://geve.med.u-tokai.ac.jp/download_data/nt_fasta/Mmus38.geve.nt_v1.fa.bz2
+</span></span><span class="line"><span class="cl">bunzip Mmus38.geve.nt_v1.fa.bz2
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># extract just chromosome Y (we&#39;re going to compare this one)</span>
+</span></span><span class="line"><span class="cl">mkdir mus38_split
+</span></span><span class="line"><span class="cl">faidx --regex <span class="s2">&#34;.*chrY.*&#34;</span> Mmus38.geve.nt_v1.fa -o <span class="s2">&#34;mus38_split/chrY.fa&#34;</span>
+</span></span></code></pre></div><h3 id="2-blastn-geve-as-reference-our-grcm39-erv-as-query">2. BLASTn: gEVE as reference, our GRCm39 ERV as query</h3>
+<p>Then, a BLASTn database is created based on the extracted chromosome Y sequences from GRCm38 ERV. Make sure <a href="https://blast.ncbi.nlm.nih.gov/doc/blast-help/downloadblastdata.html" target="_blank" rel="noopener">BLAST</a> is installed on your system and is in system <strong>PATHS</strong> by adding the below to your user bashrc or else <code>makeblastdb</code> and <code>rBLAST</code> would not work. It won&rsquo;t be achieved by running <code>module load blast</code> in eristwo command line interface or rsutdio terminal</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:/apps/lib/blast/ncbi-blast-2.13.0+/bin/
+</span></span><span class="line"><span class="cl">mkdir ./blastdb/mus38_chrY
+</span></span><span class="line"><span class="cl">makeblastdb -in mus38_split/chrY.fa -title mus38_chrY <span class="se">\
+</span></span></span><span class="line"><span class="cl"><span class="se"></span>      -dbtype nucl -parse_seqids -out ./blastdb/mus38_chrY/mus38_chrY
+</span></span><span class="line"><span class="cl"><span class="c1"># the first mus38_chrY of &#34;./blastdb/mus38_chrY/mus38_chrY &#34; specify dir, the second specify database name </span>
+</span></span></code></pre></div><p>In order to compare the ERV sequence generated, we first use the BLASTn to build reference using gEVE sequences and use RepeatMasker sequences are query. We will then do the reverse and use RepeatMasker sequences as reference and gEVE sequences as query. This step simply reads the RepeatMasker sequences and the BLAST database.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">library</span><span class="p">(</span><span class="n">rBLAST</span><span class="p">)</span> <span class="c1"># make sure your default PATH includes BLAST, or else it wouldn&#39;t work</span>
+</span></span><span class="line"><span class="cl"><span class="nf">library</span><span class="p">(</span><span class="n">Biostrings</span><span class="p">)</span> <span class="c1"># read .fa files</span>
+</span></span><span class="line"><span class="cl"><span class="nf">library</span><span class="p">(</span><span class="n">data.table</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># allow us to parallelize the rBLAST operations</span>
+</span></span><span class="line"><span class="cl"><span class="nf">library</span><span class="p">(</span><span class="n">foreach</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl"><span class="nf">library</span><span class="p">(</span><span class="n">doParallel</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">reptmask_chrY</span> <span class="o">&lt;-</span> <span class="nf">readDNAStringSet</span><span class="p">(</span><span class="s">&#39;repeatmasker/chrY.fa&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">bla</span> <span class="o">&lt;-</span> <span class="nf">blast</span><span class="p">(</span><span class="n">db</span><span class="o">=</span><span class="s">&#39;./blastdb/mus38_chrY/mus38_chrY&#39;</span><span class="p">,</span> <span class="n">type</span> <span class="o">=</span> <span class="s">&#34;blastn&#34;</span><span class="p">)</span><span class="c1">#read makeblastdb-generated database into R enviorment</span>
+</span></span></code></pre></div><p>Below test if the sequences can be read and if rBLAST is working.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">reptmask_chrY[1</span><span class="p">,</span><span class="n">]</span>
+</span></span><span class="line"><span class="cl"><span class="nf">predict</span><span class="p">(</span><span class="n">bla</span><span class="p">,</span> <span class="n">reptmask_chrY[1</span><span class="p">,</span><span class="n">]</span><span class="p">,</span> <span class="n">BLAST_args</span> <span class="o">=</span> <span class="s">&#34;-perc_identity 99&#34;</span><span class="p">)</span>
+</span></span></code></pre></div><p>If it looks good, we can speed it up via multi-threading parrellel computation</p>
+<h4 id="parrellel-computation"><strong>parrellel computation</strong></h4>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="c1"># run in cluster, this may take 15~30 minutes with a good (48 core) computer</span>
+</span></span><span class="line"><span class="cl"><span class="n">reptmask_matches</span> <span class="o">&lt;-</span> <span class="nf">foreach</span><span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="m">1</span><span class="o">:</span><span class="nf">length</span><span class="p">(</span><span class="n">reptmask_chrY</span><span class="p">))</span> <span class="o">%dopar%</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">library</span><span class="p">(</span><span class="s">&#39;rBLAST&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">library</span><span class="p">(</span><span class="s">&#39;data.table&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">  <span class="n">match_i</span> <span class="o">=</span> <span class="nf">data.table</span><span class="p">(</span><span class="nf">predict</span><span class="p">(</span><span class="n">bla</span><span class="p">,</span> <span class="n">reptmask_chrY[i</span><span class="p">,</span><span class="n">]</span><span class="p">,</span> <span class="n">BLAST_args</span> <span class="o">=</span> <span class="s">&#34;-perc_identity 99&#34;</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">  <span class="n">match_i</span> 
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># change the name to something more intuitive</span>
+</span></span><span class="line"><span class="cl"><span class="nf">names</span><span class="p">(</span><span class="n">reptmask_matches</span><span class="p">)</span><span class="o">&lt;-</span> <span class="nf">gsub</span><span class="p">(</span><span class="n">pattern</span><span class="o">=</span><span class="s">&#39; .*$&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                               <span class="n">replacement</span><span class="o">=</span><span class="s">&#39;&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                               <span class="n">reptmask_chrY</span><span class="o">@</span><span class="n">ranges</span><span class="o">@</span><span class="n">NAMES</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nf">saveRDS</span><span class="p">(</span><span class="n">reptmask_matches</span><span class="p">,</span><span class="s">&#39;repeatmasker_mus38_full_named_matches.rds&#39;</span><span class="p">)</span>
+</span></span></code></pre></div><p>To analyse the matches, we first find number of sequences with matches, and also extract unique matches from the reference.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="nf">length</span><span class="p">(</span><span class="n">reptmask_matches</span><span class="nf">[lapply</span><span class="p">(</span><span class="n">reptmask_matches</span><span class="p">,</span> <span class="n">nrow</span><span class="p">)</span> <span class="o">&gt;</span> <span class="m">0</span><span class="n">]</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nf">length</span><span class="p">(</span><span class="nf">unique</span><span class="p">(</span><span class="nf">do.call</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="nf">lapply</span><span class="p">(</span><span class="n">reptmask_matches</span><span class="p">,</span> <span class="kr">function</span> <span class="p">(</span><span class="n">tbl</span><span class="p">)</span> <span class="n">tbl</span><span class="o">$</span><span class="s">&#39;SubjectID&#39;</span><span class="p">))))</span>
+</span></span></code></pre></div><p>We can also specify families and see how many matches exist between gEVE and our sequences.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">gtflist</span> <span class="o">&lt;-</span> <span class="nf">read.table</span><span class="p">(</span><span class="s">&#34;repeatmasker/chrY.gtf&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">erv_matches</span> <span class="o">&lt;-</span> <span class="n">full_matches</span><span class="nf">[grepl</span><span class="p">(</span><span class="s">&#34;ERV&#34;</span><span class="p">,</span> <span class="n">gtflist</span><span class="o">$</span><span class="n">V16</span><span class="p">)</span><span class="n">]</span>
+</span></span><span class="line"><span class="cl"><span class="nf">length</span><span class="p">(</span><span class="n">erv_matches</span><span class="nf">[lapply</span><span class="p">(</span><span class="n">erv_matches</span><span class="p">,</span> <span class="n">nrow</span><span class="p">)</span> <span class="o">&gt;</span> <span class="m">0</span><span class="n">]</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">erv_matches_list</span> <span class="o">&lt;-</span> <span class="nf">unique</span><span class="p">(</span><span class="nf">do.call</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="nf">lapply</span><span class="p">(</span><span class="n">erv_matches</span><span class="p">,</span> <span class="kr">function</span> <span class="p">(</span><span class="n">tbl</span><span class="p">)</span> <span class="n">tbl</span><span class="o">$</span><span class="s">&#39;SubjectID&#39;</span><span class="p">)))</span>
+</span></span><span class="line"><span class="cl"><span class="nf">length</span><span class="p">(</span><span class="n">erv_matches_list</span><span class="p">)</span>
+</span></span></code></pre></div><h3 id="3-blastn-our-grcm39-erv-as-reference-geve-as-query">3. BLASTn: our GRCm39 ERV as reference, gEVE as query</h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-r" data-lang="r"><span class="line"><span class="cl"><span class="n">mus38_chrY</span> <span class="o">&lt;-</span> <span class="nf">readDNAStringSet</span><span class="p">(</span><span class="s">&#39;mus38_split/chrY.fa&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">bla</span> <span class="o">&lt;-</span> <span class="nf">blast</span><span class="p">(</span><span class="n">db</span><span class="o">=</span><span class="s">&#39;./blastdb/rm_mus39_chrY/rm_mus39_chrY&#39;</span><span class="p">,</span> <span class="n">type</span> <span class="o">=</span> <span class="s">&#34;blastn&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="n">rev_reptmask_matches</span> <span class="o">&lt;-</span> <span class="nf">foreach</span><span class="p">(</span><span class="n">i</span><span class="o">=</span><span class="m">1</span><span class="o">:</span><span class="nf">length</span><span class="p">(</span><span class="n">mus38_chrY</span><span class="p">))</span> <span class="o">%dopar%</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">library</span><span class="p">(</span><span class="s">&#39;rBLAST&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">library</span><span class="p">(</span><span class="s">&#39;data.table&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">  <span class="n">match_i</span> <span class="o">=</span> <span class="nf">data.table</span><span class="p">(</span><span class="nf">predict</span><span class="p">(</span><span class="n">bla</span><span class="p">,</span> <span class="n">mus38_chrY[i</span><span class="p">,</span><span class="n">]</span><span class="p">,</span> <span class="n">BLAST_args</span> <span class="o">=</span> <span class="s">&#34;-perc_identity 99&#34;</span><span class="p">))</span> 
+</span></span><span class="line"><span class="cl">  <span class="n">match_i</span> <span class="c1">#Equivalent to finalMatrix = cbind(finalMatrix, tempMatrix)</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">#comparison</span>
+</span></span><span class="line"><span class="cl"><span class="nf">length</span><span class="p">(</span><span class="n">full_matches</span><span class="nf">[lapply</span><span class="p">(</span><span class="n">rev_reptmask_matches</span><span class="p">,</span> <span class="n">nrow</span><span class="p">)</span> <span class="o">&gt;</span> <span class="m">0</span><span class="n">]</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="nf">length</span><span class="p">(</span><span class="nf">unique</span><span class="p">(</span><span class="nf">do.call</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="nf">lapply</span><span class="p">(</span><span class="n">rev_reptmask_matches</span><span class="p">,</span> <span class="kr">function</span> <span class="p">(</span><span class="n">tbl</span><span class="p">)</span> <span class="n">tbl</span><span class="o">$</span><span class="s">&#39;SubjectID&#39;</span><span class="p">))))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">#family-specific comparison</span>
+</span></span><span class="line"><span class="cl"><span class="n">erv_matches</span> <span class="o">&lt;-</span> <span class="n">rev_reptmask_matches</span><span class="nf">[grepl</span><span class="p">(</span><span class="s">&#34;ERV&#34;</span><span class="p">,</span> <span class="n">gtflist</span><span class="o">$</span><span class="n">V16</span><span class="p">)</span><span class="n">]</span>
+</span></span><span class="line"><span class="cl"><span class="nf">length</span><span class="p">(</span><span class="n">erv_matches</span><span class="nf">[lapply</span><span class="p">(</span><span class="n">erv_matches</span><span class="p">,</span> <span class="n">nrow</span><span class="p">)</span> <span class="o">&gt;</span> <span class="m">0</span><span class="n">]</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">erv_matches_list</span> <span class="o">&lt;-</span> <span class="nf">unique</span><span class="p">(</span><span class="nf">do.call</span><span class="p">(</span><span class="n">c</span><span class="p">,</span> <span class="nf">lapply</span><span class="p">(</span><span class="n">erv_matches</span><span class="p">,</span> <span class="kr">function</span> <span class="p">(</span><span class="n">tbl</span><span class="p">)</span> <span class="n">tbl</span><span class="o">$</span><span class="s">&#39;SubjectID&#39;</span><span class="p">)))</span>
+</span></span><span class="line"><span class="cl"><span class="nf">length</span><span class="p">(</span><span class="n">erv_matches_list</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nf">stopCluster</span><span class="p">(</span><span class="n">cl</span><span class="p">)</span>
+</span></span></code></pre></div><h2 id="conclusion">Conclusion</h2>
+<p><strong>For chrY:</strong></p>
+<ol>
+<li>gEVE GRCm38 ERV has 4633 unique sequences; our GRCm39 ERV have 8841 unique sequences including 3701 unique ERV sequences</li>
+<li>gEVE sequences as BLASTn query and our GRCm39 ERV as reference:
+<ul>
+<li><strong>Out of 9043 total sequences in gEVE, 8768 has a BLASTn &gt;99% matched sequence in our GRCm39 ERV, corresponding to 4321 unique GRCm39 sequences.</strong></li>
+</ul>
+</li>
+</ol>
+<p>Thus, our GRCm39 ERV capture nearly all information in gEVE GRCm38 ERV, and add ~4000 more unique ERV sequences. We attribute this improvement to the up-to-date GRCm39 and the sensitivity settings available in the newer version of RepeatMasker. Below observation further revealed that the newly identified sequences in GRCm39 ERV predominantly belong to ERV and LINE, both of significant interest in biomedical research.</p>
+<ol start="3">
+<li>our GRCm39 ERV as BLASTn query and gEVE as reference: <strong>only 55% of GRCm39 ERV segments and 27% of GRCm39 LINE segments have matched sequences in gEVE, specifically</strong></li>
+</ol>
+<ul>
+<li>2794 (out of 5077) of our GRCm39 ERV segments have BLASTn matched sequence in gEVE (corresponding to 6134 sequences);</li>
+<li>1803 (out of 6670) of our GRCm39 LINE segments have BLASTn matched sequence in gEVE (corresponding to 1454 sequences)</li>
+</ul>
 
       </div>
 
       
-  <time class="mt-12 mb-8 block text-xs text-gray-500 ltr:text-right rtl:text-left dark:text-gray-400" datetime="2025-03-23T00:00:00.000Z">
+  <time class="mt-12 mb-8 block text-xs text-gray-500 ltr:text-right rtl:text-left dark:text-gray-400" datetime="2025-03-24T00:00:00.000Z">
     <span>Last updated on</span>
-    Mar 23, 2025</time>
+    Mar 24, 2025</time>
 
       <div class="container mx-auto prose prose-slate lg:prose-xl dark:prose-invert mt-5">
         
@@ -1896,15 +1846,15 @@ $$
 
 <div class="flex justify-center">
   
-  <a class="no-underline bg-primary-100 hover:bg-primary-300 text-primary-800 text-xs font-medium mr-2 px-2.5 py-0.5 lg:px-5 lg:py-2 rounded dark:bg-primary-900 dark:hover:bg-primary-700 dark:text-primary-300" href="/tags/modeling/">Modeling</a>
+  <a class="no-underline bg-primary-100 hover:bg-primary-300 text-primary-800 text-xs font-medium mr-2 px-2.5 py-0.5 lg:px-5 lg:py-2 rounded dark:bg-primary-900 dark:hover:bg-primary-700 dark:text-primary-300" href="/tags/erv/">ERV</a>
   
-  <a class="no-underline bg-primary-100 hover:bg-primary-300 text-primary-800 text-xs font-medium mr-2 px-2.5 py-0.5 lg:px-5 lg:py-2 rounded dark:bg-primary-900 dark:hover:bg-primary-700 dark:text-primary-300" href="/tags/infection/">Infection</a>
+  <a class="no-underline bg-primary-100 hover:bg-primary-300 text-primary-800 text-xs font-medium mr-2 px-2.5 py-0.5 lg:px-5 lg:py-2 rounded dark:bg-primary-900 dark:hover:bg-primary-700 dark:text-primary-300" href="/tags/gtf/">Gtf</a>
   
-  <a class="no-underline bg-primary-100 hover:bg-primary-300 text-primary-800 text-xs font-medium mr-2 px-2.5 py-0.5 lg:px-5 lg:py-2 rounded dark:bg-primary-900 dark:hover:bg-primary-700 dark:text-primary-300" href="/tags/aerosol/">Aerosol</a>
+  <a class="no-underline bg-primary-100 hover:bg-primary-300 text-primary-800 text-xs font-medium mr-2 px-2.5 py-0.5 lg:px-5 lg:py-2 rounded dark:bg-primary-900 dark:hover:bg-primary-700 dark:text-primary-300" href="/tags/grcm39/">GRCm39</a>
   
-  <a class="no-underline bg-primary-100 hover:bg-primary-300 text-primary-800 text-xs font-medium mr-2 px-2.5 py-0.5 lg:px-5 lg:py-2 rounded dark:bg-primary-900 dark:hover:bg-primary-700 dark:text-primary-300" href="/tags/ggaminate/">Ggaminate</a>
+  <a class="no-underline bg-primary-100 hover:bg-primary-300 text-primary-800 text-xs font-medium mr-2 px-2.5 py-0.5 lg:px-5 lg:py-2 rounded dark:bg-primary-900 dark:hover:bg-primary-700 dark:text-primary-300" href="/tags/repeatmasker/">RepeatMasker</a>
   
-  <a class="no-underline bg-primary-100 hover:bg-primary-300 text-primary-800 text-xs font-medium mr-2 px-2.5 py-0.5 lg:px-5 lg:py-2 rounded dark:bg-primary-900 dark:hover:bg-primary-700 dark:text-primary-300" href="/tags/gradient-descenct/">Gradient Descenct</a>
+  <a class="no-underline bg-primary-100 hover:bg-primary-300 text-primary-800 text-xs font-medium mr-2 px-2.5 py-0.5 lg:px-5 lg:py-2 rounded dark:bg-primary-900 dark:hover:bg-primary-700 dark:text-primary-300" href="/tags/parallel-computing/">Parallel Computing</a>
   
 </div>
 
@@ -1922,7 +1872,7 @@ $$
   <a
     target="_blank" rel="noopener"
     class="m-1 rounded-md bg-neutral-300 p-1.5 text-neutral-700 hover:bg-primary-500 hover:text-neutral-300 dark:bg-neutral-700 dark:text-neutral-300 dark:hover:bg-primary-400 dark:hover:text-neutral-800"
-    href="https://twitter.com/intent/tweet?url=http%3A%2F%2Flocalhost%3A1313%2Fpost%2F01a.repeatmasker%2F&amp;text=%F0%9F%92%A8&#43;Modeling&#43;the&#43;deposition&#43;of&#43;infectious&#43;agents&#43;suggests&#43;that&#43;aerosolized&#43;drugs&#43;offer&#43;enhanced&#43;specificity"
+    href="https://twitter.com/intent/tweet?url=http%3A%2F%2Flocalhost%3A1313%2Fpost%2F01a.repeatmasker%2F&amp;text=%F0%9F%9B%A0%EF%B8%8F&#43;Generate&#43;and&#43;validate&#43;ERV&#43;gtf&#43;that&#43;matches&#43;the&#43;latest&#43;reference&#43;genome"
     title="X"
     aria-label="X"
     id="share-link-x"
@@ -1940,7 +1890,7 @@ $$
   <a
     target="_blank" rel="noopener"
     class="m-1 rounded-md bg-neutral-300 p-1.5 text-neutral-700 hover:bg-primary-500 hover:text-neutral-300 dark:bg-neutral-700 dark:text-neutral-300 dark:hover:bg-primary-400 dark:hover:text-neutral-800"
-    href="https://www.facebook.com/sharer.php?u=http%3A%2F%2Flocalhost%3A1313%2Fpost%2F01a.repeatmasker%2F&amp;t=%F0%9F%92%A8&#43;Modeling&#43;the&#43;deposition&#43;of&#43;infectious&#43;agents&#43;suggests&#43;that&#43;aerosolized&#43;drugs&#43;offer&#43;enhanced&#43;specificity"
+    href="https://www.facebook.com/sharer.php?u=http%3A%2F%2Flocalhost%3A1313%2Fpost%2F01a.repeatmasker%2F&amp;t=%F0%9F%9B%A0%EF%B8%8F&#43;Generate&#43;and&#43;validate&#43;ERV&#43;gtf&#43;that&#43;matches&#43;the&#43;latest&#43;reference&#43;genome"
     title="Facebook"
     aria-label="Facebook"
     id="share-link-facebook"
@@ -1960,7 +1910,7 @@ $$
   <a
     target="_blank" rel="noopener"
     class="m-1 rounded-md bg-neutral-300 p-1.5 text-neutral-700 hover:bg-primary-500 hover:text-neutral-300 dark:bg-neutral-700 dark:text-neutral-300 dark:hover:bg-primary-400 dark:hover:text-neutral-800"
-    href="mailto:?subject=%F0%9F%92%A8%20Modeling%20the%20deposition%20of%20infectious%20agents%20suggests%20that%20aerosolized%20drugs%20offer%20enhanced%20specificity&amp;body=http%3A%2F%2Flocalhost%3A1313%2Fpost%2F01a.repeatmasker%2F"
+    href="mailto:?subject=%F0%9F%9B%A0%EF%B8%8F%20Generate%20and%20validate%20ERV%20gtf%20that%20matches%20the%20latest%20reference%20genome&amp;body=http%3A%2F%2Flocalhost%3A1313%2Fpost%2F01a.repeatmasker%2F"
     title="Email"
     aria-label="Email"
     id="share-link-email"
@@ -1978,7 +1928,7 @@ $$
   <a
     target="_blank" rel="noopener"
     class="m-1 rounded-md bg-neutral-300 p-1.5 text-neutral-700 hover:bg-primary-500 hover:text-neutral-300 dark:bg-neutral-700 dark:text-neutral-300 dark:hover:bg-primary-400 dark:hover:text-neutral-800"
-    href="https://www.linkedin.com/shareArticle?url=http%3A%2F%2Flocalhost%3A1313%2Fpost%2F01a.repeatmasker%2F&amp;title=%F0%9F%92%A8&#43;Modeling&#43;the&#43;deposition&#43;of&#43;infectious&#43;agents&#43;suggests&#43;that&#43;aerosolized&#43;drugs&#43;offer&#43;enhanced&#43;specificity"
+    href="https://www.linkedin.com/shareArticle?url=http%3A%2F%2Flocalhost%3A1313%2Fpost%2F01a.repeatmasker%2F&amp;title=%F0%9F%9B%A0%EF%B8%8F&#43;Generate&#43;and&#43;validate&#43;ERV&#43;gtf&#43;that&#43;matches&#43;the&#43;latest&#43;reference&#43;genome"
     title="LinkedIn"
     aria-label="LinkedIn"
     id="share-link-linkedin"
@@ -1996,7 +1946,7 @@ $$
   <a
     target="_blank" rel="noopener"
     class="m-1 rounded-md bg-neutral-300 p-1.5 text-neutral-700 hover:bg-primary-500 hover:text-neutral-300 dark:bg-neutral-700 dark:text-neutral-300 dark:hover:bg-primary-400 dark:hover:text-neutral-800"
-    href="whatsapp://send?text=%F0%9F%92%A8&#43;Modeling&#43;the&#43;deposition&#43;of&#43;infectious&#43;agents&#43;suggests&#43;that&#43;aerosolized&#43;drugs&#43;offer&#43;enhanced&#43;specificity%20http%3A%2F%2Flocalhost%3A1313%2Fpost%2F01a.repeatmasker%2F"
+    href="whatsapp://send?text=%F0%9F%9B%A0%EF%B8%8F&#43;Generate&#43;and&#43;validate&#43;ERV&#43;gtf&#43;that&#43;matches&#43;the&#43;latest&#43;reference&#43;genome%20http%3A%2F%2Flocalhost%3A1313%2Fpost%2F01a.repeatmasker%2F"
     title="WhatsApp"
     aria-label="WhatsApp"
     id="share-link-whatsapp"
@@ -2148,17 +2098,17 @@ $$
   <div class="flex flex-col md:flex-row flex-nowrap justify-between gap-5 pt-2">
     <div class="">
       
-        <a class="group flex no-underline" href="/post/00.model_aerosol_depostion/">
+        <a class="group flex no-underline" href="/post/02.snakemake_quantify-herv_10xscrnaseq/">
           <span
             class="mt-[-0.3rem] me-2 text-neutral-700 transition-transform group-hover:-translate-x-[2px] group-hover:text-primary-600 dark:text-neutral dark:group-hover:text-primary-400"
           ><span class="ltr:inline rtl:hidden">&larr;</span></span>
           <span class="flex flex-col">
             <span
               class="mt-[0.1rem] leading-6 group-hover:underline group-hover:decoration-primary-500"
-            >💨 Modeling the deposition of infectious agents suggests that aerosolized drugs offer enhanced specificity</span>
+            >🧬 A snakemake pipline-- quantify hERV, transgenes and genome from 10x scRNAseq</span>
             <span class="mt-[0.1rem] text-xs text-neutral-500 dark:text-neutral-400">
               
-                Mar 23, 2025
+                Mar 25, 2025
               
             </span>
           </span>
@@ -2167,15 +2117,15 @@ $$
     </div>
     <div class="">
       
-        <a class="group flex text-right no-underline" href="/post/99.get-started/">
+        <a class="group flex text-right no-underline" href="/post/01.bulkrnaseq_allow_herv_quantification/">
           <span class="flex flex-col">
             <span
               class="mt-[0.1rem] leading-6 group-hover:underline group-hover:decoration-primary-500"
-            >🎉 Easily create your own simple yet highly customizable blog</span
+            >🧬 Quantify hERV and transgenes from Bulk-RNAseq</span
             >
             <span class="mt-[0.1rem] text-xs text-neutral-500 dark:text-neutral-400">
               
-                Oct 27, 2023
+                Mar 24, 2025
               
             </span>
           </span>
