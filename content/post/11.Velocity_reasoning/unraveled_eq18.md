@@ -1,6 +1,6 @@
 # Equation 18 from [velocity unraveled](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1010492)
 
-## 🧬 1. Joint state and generating function
+## 🧬 1. Probability generating function (PGF)
 
 We define the state of a cell as:
 
@@ -20,21 +20,19 @@ $$G(u_u, u_s, t) = \sum_x P(x,t)(u_u + 1)^{x_u}(u_s + 1)^{x_s}$$
 
 This is a modified bivariate probability generating function, where the "+1" shift is standard in certain moment-generating setups. It lets you cleanly extract moments via derivatives of {{< math >}} $G$ {{< /math >}}.
 
-## ⚙️ 2. Expression for the "kernel" {{< math >}} $U_1$ {{< /math >}}
+## ⚙️ 2. Characteristic of ODEs derived from CME
 
-{{< math >}} 
-$$U_1(u_u, u_s, s) = \frac{u_s b}{b-\gamma}(e^{-\gamma s} + u_u - u_s) - \frac{u_s b}{b-\gamma}e^{-bs}$$ 
-{{< /math >}}
+{{< math >}} $$U_1(u_u, u_s, s) = \frac{u_s \beta}{\beta - \gamma} e^{-\gamma s} + \left(u_u - \frac{u_s \beta}{\beta - \gamma}\right) e^{-\beta s}$$ {{< /math >}}
 
 This expression arises from [solving a linear system of ODEs for the chemical master equation (CME) via generating functions](#Derive-G), and it essentially encodes how the state propagates in time. It's derived from how unspliced → spliced reactions occur over time.
 
-## 🧠 3. Log-generating function {{< math >}} $f$ {{< /math >}}
+## 🧠 3. Log-generating function {{< math >}} $f$ {{< /math >}}<a id="log-generating-function-first-introduced"></a>
+
 
 {{< math >}} 
 $$f(u_u, u_s, t) := \ln G(u_u, u_s, t) = \int_0^t \alpha(t-s) U_1(u_u, u_s, s) ds$$ 
 {{< /math >}}
-
-This integral form tells us how the log of the generating function evolves, driven by transcription rate {{< math >}} $\alpha(t-s)$ {{< /math >}} and the system dynamics encoded in {{< math >}} $U_1$ {{< /math >}}. Essentially, it's the cumulative effect of production and conversion over time.
+This integral form is derived in [later section](#Derive-log-generating-function) and it tells us how the log of the generating function evolves, driven by transcription rate {{< math >}} $\alpha(t-s)$ {{< /math >}} and the system dynamics encoded in {{< math >}} $U_1$ {{< /math >}}. Essentially, it's the cumulative effect of production and conversion over time.
 
 Then the log-GF can be written in a linear form in {{< math >}} $u_u$ {{< /math >}} and {{< math >}} $u_s$ {{< /math >}}:
 
@@ -132,212 +130,77 @@ As {{< math >}} $t \to \infty$ {{< /math >}}:
 - **Supports modeling** of noise, burstiness, and cell-to-cell heterogeneity
 
 
-# B) Chemical Master Equation Analysis<a id="Derive-G"></a>
+# B) Derive $u_u(s)$ via method of characteristics <a id="Derive-G"></a>
 
-## Model Setup
+{{< math >}} $U_1(u_u, u_s, s)$ {{< /math >}} is claimed to be {{< math >}} $u_u(s)$ {{< /math >}}, which is the solution to the ODE derived from the Chemical Master Equation (CME) for the two-species birth-death process representing unspliced (u) and spliced (s) mRNA dynamics.
 
-We consider two molecular species:
+{{< math >}} $$U_1(u_u, u_s, s) := u_u(s) = \frac{u_s \beta}{\beta - \gamma} e^{-\gamma s} + \left(u_u - \frac{u_s \beta}{\beta - \gamma}\right) e^{-\beta s}$$ {{< /math >}}
 
-- {{< math >}} $x_u(t)$ {{< /math >}}: number of unspliced RNA molecules at time {{< math >}} $t$ {{< /math >}}
-- {{< math >}} $x_s(t)$ {{< /math >}}: number of spliced RNA molecules at time {{< math >}} $t$ {{< /math >}}
+This derivation uses the method of characteristics applied to the generating function of a stochastic process governed by the Chemical Master Equation (CME). We consider a two-species birth-death process representing unspliced (u) and spliced (s) mRNA dynamics.
 
-With the following reactions:
+## Step 1: Define the Generating Function
 
-| Reaction | Rate constant | Description |
-|----------|---------------|-------------|
-| Transcription | {{< math >}} $\alpha$ {{< /math >}} | Production of {{< math >}} $x_u$ {{< /math >}} |
-| Splicing | {{< math >}} $\beta$ {{< /math >}} | {{< math >}} $x_u \to x_s$ {{< /math >}} |
-| Degradation | {{< math >}} $\gamma$ {{< /math >}} | {{< math >}} $x_s \to \emptyset$ {{< /math >}} |
+Let the joint probability distribution of unspliced and spliced mRNA at time {{< math >}} $t$ {{< /math >}} be {{< math >}} $P(x_u, x_s, t)$ {{< /math >}}. The generating function is:
 
-## Step 1: Chemical Master Equation (CME)
+{{< math >}} $$G(z_u, z_s, t) = \sum_{x_u, x_s} P(x_u, x_s, t) z_u^{x_u} z_s^{x_s}$$ {{< /math >}}
 
-Let
+We define new variables:
 
-{{< math >}} $$P(x_u, x_s, t) = \Pr[x_u(t) = x_u, x_s(t) = x_s] \qquad (1)$$ {{< /math >}}
+{{< math >}} $$z_u = u_u + 1, \quad z_s = u_s + 1$$ {{< /math >}}
 
-The CME is:
+so the generating function becomes:
 
-{{< math >}} 
-$$\begin{align}
-\frac{d}{dt}P(x_u, x_s, t) &= \alpha[P(x_u - 1, x_s, t) - P(x_u, x_s, t)] \\
-&\quad + \beta[(x_u + 1)P(x_u + 1, x_s - 1, t) - x_u P(x_u, x_s, t)] \\
-&\quad + \gamma[(x_s + 1)P(x_u, x_s + 1, t) - x_s P(x_u, x_s, t)] \qquad (2)
-\end{align}$$ 
-{{< /math >}}
+{{< math >}} $$G(u_u, u_s, t) = \sum_{x_u, x_s} P(x_u, x_s, t) (u_u + 1)^{x_u} (u_s + 1)^{x_s}$$ {{< /math >}}
 
-## Step 2: Generating Function Definition
+## Step 2: CME and Corresponding PDE
 
-Define the probability generating function (PGF) as:
+The CME for this system is governed by the reactions:
 
-{{< math >}} $$G(u_u, u_s, t) = \sum_{x_u=0}^{\infty} \sum_{x_s=0}^{\infty} P(x_u, x_s, t)(u_u + 1)^{x_u}(u_s + 1)^{x_s} \qquad (3)$$ {{< /math >}}
+- Transcription (birth of unspliced): rate {{< math >}} $\alpha$ {{< /math >}}
+- Splicing: {{< math >}} $u \xrightarrow{\beta} s$ {{< /math >}}
+- Degradation: {{< math >}} $s \xrightarrow{\gamma} \emptyset$ {{< /math >}}
 
-**Why {{< math >}} $u_u + 1$ {{< /math >}} and {{< math >}} $u_s + 1$ {{< /math >}} instead of just {{< math >}} $u_u$ {{< /math >}} and {{< math >}} $u_s$ {{< /math >}}?**
+From the CME, the PDE for {{< math >}} $G$ {{< /math >}} is below as derived in [another section](#Derive-step-3-of-B)):
 
-This is a common choice in some treatments to simplify expansions around 0, but it's not essential. You can think of {{< math >}} $u_u$ {{< /math >}} and {{< math >}} $u_s$ {{< /math >}} as shift variables.
+{{< math >}} $$\frac{\partial G}{\partial t} = \alpha u_u G + \beta(u_s - u_u)\frac{\partial G}{\partial u_u} - \gamma u_s \frac{\partial G}{\partial u_s}$$ {{< /math >}}
 
-## Step 3: Deriving PDE for {{< math >}} $G$ {{< /math >}}
+## Step 3: Method of Characteristics (turn PDE into ODEs)
 
-Apply the CME to {{< math >}} $G$ {{< /math >}} (see derivation [here](#Derive-step-3-of-B)):
+We now transform this PDE into ODEs using the method of characteristics. Let {{< math >}} $u_u(s), u_s(s), G(s)$ {{< /math >}} be functions of characteristic time {{< math >}} $s$ {{< /math >}} such that along these paths:
 
-{{< math >}} 
-$$\begin{align}
-\frac{\partial G}{\partial t} &= \alpha(u_u + 1)G - \alpha G + \beta((u_s + 1)\frac{\partial G}{\partial u_u} - (u_u + 1)\frac{\partial G}{\partial u_u}) \\
-&\quad + \gamma(-(u_s + 1)\frac{\partial G}{\partial u_s}) \qquad (4)
-\end{align}$$ 
-{{< /math >}}
+{{< math >}} $$\frac{du_u}{ds} = \beta(u_s - u_u), \quad \frac{du_s}{ds} = -\gamma u_s, \quad \frac{dG}{ds} = \alpha u_u G$$ {{< /math >}}
 
-More explicitly:
+Let's solve these:
 
-**The transcription term contributes:**
-{{< math >}} $$\alpha[(u_u + 1)G - G] = \alpha u_u G \qquad (5)$$ {{< /math >}}
+## Step 4: Solve for {{< math >}} $u_s(s)$ {{< /math >}}
 
-**The splicing term accounts for a change in {{< math >}} $x_u \to x_s$ {{< /math >}}:**
-{{< math >}} $$\beta((u_s + 1)\frac{\partial G}{\partial u_u} - (u_u + 1)\frac{\partial G}{\partial u_u}) = \beta(u_s - u_u)\frac{\partial G}{\partial u_u} \qquad (6)$$ {{< /math >}}
+{{< math >}} $$\frac{du_s}{ds} = -\gamma u_s \Rightarrow u_s(s) = u_s(0) e^{-\gamma s}$$ {{< /math >}}
 
-**The degradation term:**
-{{< math >}} $$\gamma(-(u_s + 1)\frac{\partial G}{\partial u_s}) = -\gamma(u_s + 1)\frac{\partial G}{\partial u_s} \qquad (7)$$ {{< /math >}}
+## Step 5: Solve for {{< math >}} $u_u(s)$ {{< /math >}}
 
-So the PDE is:
+Use integrating factor method:
 
-{{< math >}} $$\frac{\partial G}{\partial t} = \alpha u_u G + \beta(u_s - u_u)\frac{\partial G}{\partial u_u} - \gamma(u_s + 1)\frac{\partial G}{\partial u_s} \qquad (8)$$ {{< /math >}}
+{{< math >}} $$\frac{du_u}{ds} + \beta u_u = \beta u_s(s) = \beta u_s(0) e^{-\gamma s}$$ {{< /math >}}
 
-## Step 4: Logarithmic Transform
+Multiply both sides by {{< math >}} $e^{\beta s}$ {{< /math >}}:
 
-Define:
-
-{{< math >}} $$f(u_u, u_s, t) := \ln G(u_u, u_s, t) \qquad (9)$$ {{< /math >}}
-
-Using chain rule:
-
-{{< math >}} $$\frac{\partial f}{\partial t} = \frac{1}{G}\frac{\partial G}{\partial t} \qquad (10)$$ {{< /math >}}
-
-{{< math >}} $$\frac{\partial f}{\partial u_u} = \frac{1}{G}\frac{\partial G}{\partial u_u}, \quad \frac{\partial f}{\partial u_s} = \frac{1}{G}\frac{\partial G}{\partial u_s} \qquad (11)$$ {{< /math >}}
-
-Rewrite PDE in terms of {{< math >}} $f$ {{< /math >}}:
-
-{{< math >}} $$\frac{\partial f}{\partial t} = \alpha u_u + \beta(u_s - u_u)\frac{\partial f}{\partial u_u} - \gamma(u_s + 1)\frac{\partial f}{\partial u_s} \qquad (12)$$ {{< /math >}}
-
-## Step 5: Method of Characteristics
-
-The PDE is first-order linear and can be solved by characteristics:
-
-{{< math >}} $$\frac{du_u}{ds} = \beta(u_s - u_u), \quad \frac{du_s}{ds} = -\gamma(u_s + 1), \quad \frac{dt}{ds} = 1 \qquad (13)$$ {{< /math >}}
-
-and along characteristics,
-
-{{< math >}} $$\frac{df}{ds} = \alpha u_u \qquad (14)$$ {{< /math >}}
-
-**Boundary conditions:**
-
-{{< math >}} $$t = 0 \Rightarrow f(u_u, u_s, 0) = 0 \Rightarrow G(u_u, u_s, 0) = 1 \qquad (15)$$ {{< /math >}}
-
-## Step 6: Solve ODE for {{< math >}} $u_s$ {{< /math >}}
-
-{{< math >}} $$\frac{du_s}{ds} = -\gamma(u_s + 1) \qquad (16)$$ {{< /math >}}
-
-This is a linear ODE:
-
-{{< math >}} $$\Rightarrow \frac{d}{ds}(u_s + 1) = -\gamma(u_s + 1) \qquad (17)$$ {{< /math >}}
-
-**Solution:**
-
-{{< math >}} $$u_s(s) + 1 = Ce^{-\gamma s} \qquad (18)$$ {{< /math >}}
-
-At {{< math >}} $s = 0$ {{< /math >}}, let {{< math >}} $u_s(0) = u_{s0}$ {{< /math >}}, so:
-
-{{< math >}} $$u_s(0) + 1 = u_{s0} + 1 = C \qquad (19)$$ {{< /math >}}
-
-Thus:
-
-{{< math >}} $$u_s(s) = (u_{s0} + 1)e^{-\gamma s} - 1 \qquad (20)$$ {{< /math >}}
-
-## Step 7: Solve ODE for {{< math >}} $u_u$ {{< /math >}}
-
-{{< math >}} $$\frac{du_u}{ds} = \beta(u_s - u_u) \qquad (21)$$ {{< /math >}}
-
-Rewrite:
-
-{{< math >}} $$\frac{du_u}{ds} + \beta u_u = \beta u_s \qquad (22)$$ {{< /math >}}
-
-**Integrating factor:**
-
-{{< math >}} $$\mu(s) = e^{\beta s} \qquad (23)$$ {{< /math >}}
-
-Multiply both sides:
-
-{{< math >}} $$\frac{d}{ds}(u_u e^{\beta s}) = \beta u_s e^{\beta s} \qquad (24)$$ {{< /math >}}
-
-Integrate from 0 to {{< math >}} $s$ {{< /math >}}:
-
-{{< math >}} $$u_u(s)e^{\beta s} - u_u(0) = \beta \int_0^s u_s(\sigma)e^{\beta \sigma} d\sigma \qquad (25)$$ {{< /math >}}
-
-So:
-
-{{< math >}} $$u_u(s) = e^{-\beta s}\left(u_u(0) + \beta \int_0^s u_s(\sigma)e^{\beta \sigma} d\sigma\right) \qquad (26)$$ {{< /math >}}
-
-Substitute {{< math >}} $u_s(\sigma) = (u_{s0} + 1)e^{-\gamma \sigma} - 1$ {{< /math >}}:
-
-{{< math >}} 
-$$\begin{align}
-\int_0^s ((u_{s0} + 1)e^{-\gamma \sigma} - 1)e^{\beta \sigma} d\sigma &= (u_{s0} + 1)\int_0^s e^{(\beta - \gamma)\sigma} d\sigma - \int_0^s e^{\beta \sigma} d\sigma \qquad (27)
-\end{align}$$ 
-{{< /math >}}
-
-Calculate integrals (assuming {{< math >}} $\beta \neq \gamma$ {{< /math >}}):
-
-{{< math >}} $$\int_0^s e^{(\beta - \gamma)\sigma} d\sigma = \frac{e^{(\beta - \gamma)s} - 1}{\beta - \gamma} \qquad (28)$$ {{< /math >}}
-
-{{< math >}} $$\int_0^s e^{\beta \sigma} d\sigma = \frac{e^{\beta s} - 1}{\beta} \qquad (29)$$ {{< /math >}}
-
-Plug in:
-
-{{< math >}} 
-$$\begin{align}
-u_u(s) &= e^{-\beta s}\left(u_u(0) + \beta(u_{s0} + 1)\frac{e^{(\beta - \gamma)s} - 1}{\beta - \gamma} - \beta\frac{e^{\beta s} - 1}{\beta}\right) \qquad (30)
-\end{align}$$ 
-{{< /math >}}
-
-Simplify:
-
-{{< math >}} 
-$$\begin{align}
-u_u(s) &= e^{-\beta s}u_u(0) + (u_{s0} + 1)\frac{\beta}{\beta - \gamma}e^{-\beta s}(e^{(\beta - \gamma)s} - 1) - (e^{-\beta s}(e^{\beta s} - 1)) \\
-&= e^{-\beta s}u_u(0) + (u_{s0} + 1)\frac{\beta}{\beta - \gamma}(e^{-\gamma s} - e^{-\beta s}) - (1 - e^{-\beta s}) \qquad (31)
-\end{align}$$ 
-{{< /math >}}
-
-## Step 8: Solve for {{< math >}} $f$ {{< /math >}}
-
-Recall
-
-{{< math >}} $$\frac{df}{ds} = \alpha u_u(s), \quad f(0) = 0 \qquad (32)$$ {{< /math >}}
+{{< math >}} $$\frac{d}{ds}(u_u e^{\beta s}) = \beta u_s(0) e^{(\beta - \gamma)s}$$ {{< /math >}}
 
 Integrate:
 
-{{< math >}} $$f(s) = \alpha \int_0^s u_u(\sigma) d\sigma \qquad (33)$$ {{< /math >}}
+{{< math >}} $$u_u(s) e^{\beta s} = u_u(0) + \frac{\beta u_s(0)}{\beta - \gamma}(e^{(\beta - \gamma)s} - 1)$$ {{< /math >}}
 
-Using the expression for {{< math >}} $u_u(s)$ {{< /math >}}, integrate term by term:
+Solve for {{< math >}} $u_u(s)$ {{< /math >}}:
 
-{{< math >}} 
-$$\begin{align}
-f(s) &= \alpha \int_0^s \left[e^{-\beta \sigma}u_u(0) + (u_{s0} + 1)\frac{\beta}{\beta - \gamma}(e^{-\gamma \sigma} - e^{-\beta \sigma}) - (1 - e^{-\beta \sigma})\right] d\sigma \qquad (34)
-\end{align}$$ 
-{{< /math >}}
+{{< math >}} $$u_u(s) = u_u(0) e^{-\beta s} + \frac{\beta u_s(0)}{\beta - \gamma}(e^{-\gamma s} - e^{-\beta s})$$ {{< /math >}}
 
-## Step 9: Interpretation
+## Step 6: Define {{< math >}} $U_1(u_u, u_s, s)$ {{< /math >}}
 
-The function {{< math >}} $U_1(u_u, u_s, s)$ {{< /math >}} you asked about corresponds to the time-dependent kernel:
+We identify:
 
-{{< math >}} $$U_1(u_u, u_s, s) := u_u(s) \qquad (35)$$ {{< /math >}}
+{{< math >}} $$U_1(u_u, u_s, s) := u_u(s) = \frac{u_s \beta}{\beta - \gamma} e^{-\gamma s} + \left(u_u - \frac{u_s \beta}{\beta - \gamma}\right) e^{-\beta s}$$ {{< /math >}}
 
-This kernel describes the influence of the initial "dummy variables" {{< math >}} $u_u(0), u_{s0}$ {{< /math >}} on the system at time {{< math >}} $s$ {{< /math >}}.
-
-The generating function is then:
-
-{{< math >}} $$G(u_u, u_s, t) = \exp\left(\alpha \int_0^t U_1(u_u, u_s, s) ds\right) \qquad (36)$$ {{< /math >}}
-
-
-# B.1) Derive step 3 of B)
+# B.1) Derive PDE from CME (step 2 of B)
 
 ## Step 1: Write the CME explicitly
 <a id="Derive-step-3-of-B"></a>
@@ -700,3 +563,187 @@ Hence, we can write:
 {{< math >}} $$\sum_{x_u', x_s'} := \sum_{x_u' = 0}^{\infty} \sum_{x_s' = 0}^{\infty}$$ {{< /math >}}
 
 without affecting the value of the sum.
+
+# B.3) Solve PDE via Method of Characteristics
+
+We start with the PDE derived from the chemical master equation (CME) for a stochastic model of unspliced (u) and spliced (s) RNA:
+
+{{< math >}} $$\frac{\partial G}{\partial t} = \alpha u_u G + \beta(u_s - u_u)\frac{\partial G}{\partial u_u} - \gamma u_s \frac{\partial G}{\partial u_s}$$ {{< /math >}}
+
+This is a first-order linear PDE in 3 variables: {{< math >}} $u_u, u_s, t$ {{< /math >}}.
+
+To solve this, we apply the method of characteristics, which reduces a PDE to a system of ODEs along special curves (characteristics) in the domain {{< math >}} $(u_u, u_s, t)$ {{< /math >}}. The idea is to track how {{< math >}} $G$ {{< /math >}} changes along these curves as we change a parameter {{< math >}} $s$ {{< /math >}} (which can be thought of like an artificial time).
+
+## 📌 Step 1: Define Characteristic Curves
+
+We introduce {{< math >}} $s$ {{< /math >}} as a parameter along a characteristic curve and define:
+
+{{< math >}} $$u_u = u_u(s)$$ {{< /math >}}
+
+{{< math >}} $$u_s = u_s(s)$$ {{< /math >}}
+
+{{< math >}} $$t = t(s)$$ {{< /math >}}
+
+{{< math >}} $$G = G(u_u(s), u_s(s), t(s))$$ {{< /math >}}
+
+Then the total derivative of {{< math >}} $G$ {{< /math >}} along the curve is:
+
+{{< math >}} $$\frac{dG}{ds} = \frac{\partial G}{\partial u_u}\frac{du_u}{ds} + \frac{\partial G}{\partial u_s}\frac{du_s}{ds} + \frac{\partial G}{\partial t}\frac{dt}{ds}$$ {{< /math >}}
+
+Now, we substitute the PDE into this expression. From the PDE:
+
+{{< math >}} $$\frac{\partial G}{\partial t} = \alpha u_u G + \beta(u_s - u_u)\frac{\partial G}{\partial u_u} - \gamma u_s \frac{\partial G}{\partial u_s}$$ {{< /math >}}
+
+Plugging this into the total derivative:
+
+{{< math >}} $$\frac{dG}{ds} = \frac{\partial G}{\partial u_u}\frac{du_u}{ds} + \frac{\partial G}{\partial u_s}\frac{du_s}{ds} + \left[\alpha u_u G + \beta(u_s - u_u)\frac{\partial G}{\partial u_u} - \gamma u_s \frac{\partial G}{\partial u_s}\right]\frac{dt}{ds}$$ {{< /math >}}
+
+Now, **choose {{< math >}} $\frac{dt}{ds} = 1$ {{< /math >}}**. This simplifies the expression because now {{< math >}} $t = s$ {{< /math >}}, and we can reduce the 3-variable PDE into a system of ODEs in {{< math >}} $s$ {{< /math >}}.
+
+## ✅ Step 2: Match Terms
+
+To make the right-hand side cancel cleanly, we group terms:
+
+**Coefficient of** {{< math >}} $\frac{\partial G}{\partial u_u}$ {{< /math >}}:
+
+{{< math >}} $$\frac{du_u}{ds} + \beta(u_s - u_u)$$ {{< /math >}}
+
+**Coefficient of** {{< math >}} $\frac{\partial G}{\partial u_s}$ {{< /math >}}:
+
+{{< math >}} $$\frac{du_s}{ds} - \gamma u_s$$ {{< /math >}}
+
+To cancel the dependence on {{< math >}} $\frac{\partial G}{\partial u_u}$ {{< /math >}} and {{< math >}} $\frac{\partial G}{\partial u_s}$ {{< /math >}}, we set these to zero, yielding:
+
+{{< math >}} $$\frac{du_u}{ds} = \beta(u_s - u_u), \quad \frac{du_s}{ds} = -\gamma u_s$$ {{< /math >}}
+
+Then the remaining term becomes:
+
+{{< math >}} $$\frac{dG}{ds} = \alpha u_u G$$ {{< /math >}}
+
+Now we've reduced the PDE into this system of ODEs:
+
+{{< math >}} $$\begin{align}
+\frac{du_s}{ds} &= -\gamma u_s \\
+\frac{du_u}{ds} &= \beta(u_s - u_u) \\
+\frac{dG}{ds} &= \alpha u_u G
+\end{align}$$ {{< /math >}}
+
+These are much easier to solve analytically or numerically.
+
+# B.4) Legitimacy to choose {{< math >}} $\frac{dt}{ds} = 1$ {{< /math >}} in B.3)
+
+We choose {{< math >}} $\frac{dt}{ds} = 1$ {{< /math >}} in the method of characteristics because it simplifies the partial differential equation (PDE) to a more tractable set of ordinary differential equations (ODEs) — and this choice is completely valid and standard in this method. Let me explain why:
+
+## ✅ What Does {{< math >}} $\frac{dt}{ds} = 1$ {{< /math >}} Mean?
+
+In the method of characteristics, you introduce a new parameter {{< math >}} $s$ {{< /math >}} that traces out a path (or characteristic curve) in the space of independent variables — here, {{< math >}} $(u_u, u_s, t)$ {{< /math >}}. Along this path:
+
+{{< math >}} $$\frac{dG}{ds} = \frac{\partial G}{\partial u_u} \frac{du_u}{ds} + \frac{\partial G}{\partial u_s} \frac{du_s}{ds} + \frac{\partial G}{\partial t} \frac{dt}{ds}$$ {{< /math >}}
+
+So {{< math >}} $\frac{dt}{ds}$ {{< /math >}} tells you how "fast" you're moving in the time direction along the characteristic curve.
+
+Now, if you choose:
+
+{{< math >}} $$\frac{dt}{ds} = 1 \Rightarrow t = s$$ {{< /math >}}
+
+you're saying: "Let the parameter along the path simply equal time." This simplifies the math without changing the problem.
+
+## ✅ Why Is This Legitimate?
+
+Because in the method of characteristics, {{< math >}} $s$ {{< /math >}} is a dummy variable. You're free to choose how it relates to the original coordinates, as long as it parametrizes a valid path. The PDE solution is determined by the behavior along these characteristic curves, and the parameterization does not affect the final solution.
+
+Choosing {{< math >}} $\frac{dt}{ds} = 1$ {{< /math >}}:
+
+- simplifies the system (fewer variables)
+- allows you to think of {{< math >}} $s$ {{< /math >}} as time
+- turns the original PDE into a solvable system of ODEs
+- does not change the physics or solution of the underlying system
+
+It's not a constraint imposed by the model — it's a strategic mathematical choice to simplify the derivation.
+
+## 🚩 Alternative Choices?
+
+Yes — you could, in principle, choose something else (e.g. {{< math >}} $\frac{dt}{ds} = \gamma$ {{< /math >}}, or make {{< math >}} $s = -t$ {{< /math >}}), but then the resulting ODEs are messier. Since the method is agnostic to how you parametrize the path, you're free to choose the one that leads to the simplest math.
+
+## 🔁 In Summary
+
+Choosing {{< math >}} $\frac{dt}{ds} = 1$ {{< /math >}} is valid because:
+
+1. The method of characteristics allows any parameterization.
+2. This choice makes the equations easier to solve.
+3. The physics or stochastic model (e.g. CME) remains unchanged.
+
+# C) Derive log-generating function <a id="Derive-log-generating-function"></a>
+Below derive the log-generating function first introduced [here](#log-generating-function-first-introduced).
+
+## 1. Setup: Use the Method of Characteristics
+
+We rewrite the PDE:
+
+{{< math >}} $$\frac{\partial G}{\partial t} = \alpha u_u G + \beta(u_s - u_u)\frac{\partial G}{\partial u_u} - \gamma u_s \frac{\partial G}{\partial u_s}$$ {{< /math >}}
+
+This is a linear PDE in {{< math >}} $G(u_u, u_s, t)$ {{< /math >}}, and we apply the method of characteristics.
+
+Let {{< math >}} $s$ {{< /math >}} be the parameter along characteristic curves. Then we solve the system:
+
+{{< math >}} $$\frac{dt}{ds} = 1$$ {{< /math >}}
+
+{{< math >}} $$\frac{du_u}{ds} = \beta(u_s - u_u)$$ {{< /math >}}
+
+{{< math >}} $$\frac{du_s}{ds} = -\gamma u_s$$ {{< /math >}}
+
+{{< math >}} $$\frac{dG}{ds} = \alpha u_u G$$ {{< /math >}}
+
+## 2. Solve the ODE for {{< math >}} $u_s(s)$ {{< /math >}}
+
+{{< math >}} $$\frac{du_s}{ds} = -\gamma u_s \Rightarrow u_s(s) = u_s(0)e^{-\gamma s}$$ {{< /math >}}
+
+## 3. Plug into the ODE for {{< math >}} $u_u(s)$ {{< /math >}}
+
+{{< math >}} $$\frac{du_u}{ds} = \beta(u_s(s) - u_u(s)) = \beta(u_s(0)e^{-\gamma s} - u_u(s))$$ {{< /math >}}
+
+This is a linear non-homogeneous ODE:
+
+Let's solve using integrating factor:
+
+Integrating factor: {{< math >}} $\mu(s) = e^{\beta s}$ {{< /math >}}
+
+Multiply both sides:
+
+{{< math >}} $$e^{\beta s}\frac{du_u}{ds} + \beta e^{\beta s}u_u(s) = \beta u_s(0)e^{(\beta - \gamma)s}$$ {{< /math >}}
+
+{{< math >}} $$\frac{d}{ds}(e^{\beta s}u_u(s)) = \beta u_s(0)e^{(\beta - \gamma)s}$$ {{< /math >}}
+
+Integrate both sides:
+
+{{< math >}} $$e^{\beta s}u_u(s) = \frac{\beta u_s(0)}{\beta - \gamma}e^{(\beta - \gamma)s} + C$$ {{< /math >}}
+
+Now divide both sides:
+
+{{< math >}} $$u_u(s) = \frac{\beta u_s(0)}{\beta - \gamma}e^{-\gamma s} + Ce^{-\beta s}$$ {{< /math >}}
+
+Apply initial condition {{< math >}} $u_u(0)$ {{< /math >}} to solve for {{< math >}} $C$ {{< /math >}}:
+
+{{< math >}} $$u_u(0) = \frac{\beta u_s(0)}{\beta - \gamma} + C \Rightarrow C = u_u(0) - \frac{\beta u_s(0)}{\beta - \gamma}$$ {{< /math >}}
+
+So we now have:
+
+{{< math >}} $$u_u(s) = \frac{\beta u_s(0)}{\beta - \gamma}e^{-\gamma s} + \left(u_u(0) - \frac{\beta u_s(0)}{\beta - \gamma}\right)e^{-\beta s}$$ {{< /math >}}
+
+## 4. Define {{< math >}} $U_1(u_u, u_s, s)$ {{< /math >}}
+
+Recall that in the characteristic solution for {{< math >}} $G$ {{< /math >}}, we solve:
+
+{{< math >}} $$\frac{dG}{ds} = \alpha u_u(s)G \Rightarrow G(s) = \exp\left(\int_0^t \alpha(t-s)u_u(s)ds\right)$$ {{< /math >}}
+
+Define {{< math >}} $U_1(u_u, u_s, s) = u_u(s)$ {{< /math >}}. So:
+
+{{< math >}} $$U_1(u_u, u_s, s) = \frac{\beta u_s}{\beta - \gamma}e^{-\gamma s} + \left(u_u - \frac{\beta u_s}{\beta - \gamma}\right)e^{-\beta s}$$ {{< /math >}}
+
+This is exactly the expression you provided.
+
+## 5. Compute {{< math >}} $f(u_u, u_s, t) = \ln G$ {{< /math >}}
+
+Now integrate:
+
+{{< math >}} $$\ln G(u_u, u_s, t) = \int_0^t \alpha(t-s)U_1(u_u, u_s, s) \, ds$$ {{< /math >}}
