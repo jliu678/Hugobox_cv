@@ -151,3 +151,62 @@ Thus, each cell's expression state is treated as a draw from {{< math >}} $P(x) 
 | {{< math >}} $\frac{1}{T} \int_0^T P(x,t) dt$ {{< /math >}} | Time average — how long the system spends in {{< math >}} $x$ {{< /math >}} |
 | {{< math >}} $\lim_{t \to \infty} P(x,t)$ {{< /math >}} | Stationary distribution (if the process stabilizes over time) |
 | Ergodicity | Ensures time averages equal long-term behavior (makes interpretation valid) |
+
+
+# 🔬 What the Equation Says (Equation 38):
+
+The likelihood of observing a data point {{< math >}} $(D_{ij}^u, D_{ij}^s)$ {{< /math >}}—i.e., unspliced and spliced counts for gene {{< math >}} $j$ {{< /math >}} in cell {{< math >}} $i$ {{< /math >}}—given time {{< math >}} $t_i$ {{< /math >}} and gene parameters {{< math >}} $y_j$ {{< /math >}}, is approximated using a 2D isotropic Gaussian:
+
+{{< math >}} $$P(D_{ij}; t_i, y_j) = \frac{1}{2\pi s_j^2} \exp\left(-\frac{1}{2s_j^2} \left[(D_{ij}^u - \mu_u(t_i, y_j))^2 + (D_{ij}^s - \mu_s(t_i, y_j))^2\right]\right)$$ {{< /math >}}
+
+- {{< math >}} $\mu_u(t_i, y_j)$ {{< /math >}}, {{< math >}} $\mu_s(t_i, y_j)$ {{< /math >}} are model-predicted values of unspliced/spliced counts given time {{< math >}} $t_i$ {{< /math >}} and parameters {{< math >}} $y_j$ {{< /math >}}.
+- {{< math >}} $s_j$ {{< /math >}} is a standard deviation (same for both components), implying symmetric Gaussian noise.
+
+This kernel models the probability of data given the model, i.e., how likely the observed counts are if the model is correct.
+
+## 📐 Interpretation: Signal + Noise
+
+This equation implies:
+
+**Observed data = True signal (μu, μs) + Gaussian noise (symmetric, independent)**
+
+This is a standard assumption in signal processing:
+
+- The true values are what the model predicts.
+- Observations are noisy due to measurement error or other factors, modeled as Gaussian noise.
+
+## 🧬 But What Does the Gaussian Noise Mean Biophysically?
+
+Here's where the passage becomes insightful and critical.
+
+### ✅ In Some Regimes, Gaussian May Be Reasonable:
+
+Van Kampen's system size expansion shows that under certain conditions (e.g. high molecule counts, jump processes), random fluctuations around the deterministic average can indeed be approximately Gaussian.
+
+However, in those cases:
+
+**The variance is not constant.** It depends on time and concentration (i.e., on the state of the system).
+
+That contradicts Equation 38, which uses a fixed {{< math >}} $s_j$ {{< /math >}}.
+
+### ⚠️ So the Assumption in Eq. 38 Is Not Biophysically Precise:
+
+Equation 38 assumes:
+
+- A fixed isotropic Gaussian noise.
+- The means {{< math >}} $\mu_u, \mu_s$ {{< /math >}} are deterministic predictions.
+- The noise is not derived from a model of transcriptional dynamics—it's just tacked on.
+
+In other words, Eq. 38 is a mathematical convenience, not a mechanistically justified noise model.
+
+## 🧠 Summary:
+
+- The Gaussian kernel in Eq. 38 is a **likelihood model**: how probable observed counts are, given model predictions.
+- It treats deviations from the predicted means as random Gaussian errors.
+- This approach is rooted in signal processing, where true signals are recovered by modeling noise as Gaussian.
+- But from a biophysical standpoint, this assumption is not rigorously justified—especially since real transcriptional noise is non-Gaussian, asymmetric, and state-dependent.
+
+
+{{< math >}}
+$$L(\theta) = \left(2\pi\sigma\right) \exp\left(-\frac{1}{2n\sigma^2}\sum_{i=1}^{n}(x_i^{\text{obs}} - x(t_i;\theta))^2\right)$$
+{{< /math >}}

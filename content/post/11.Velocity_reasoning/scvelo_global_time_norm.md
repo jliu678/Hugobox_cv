@@ -1,5 +1,5 @@
 # Global Time Normalization in scVelo
-This is not described in the original scVelo paper, and newer papers identify this as a key weakness of the original scVelo implementation and propose improvements.
+This is **not described** in the original scVelo paper, and **newer papers identify this as a key weakness** of the original scVelo implementation and propose improvements.
 
 
 ## Overview
