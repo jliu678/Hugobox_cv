@@ -26,66 +26,6 @@
     </item>
     
     <item>
-      <title>Math Derivation for SAVER Imputation</title>
-      <link>http://localhost:1313/teaching/scrnaseq_impute_saver/</link>
-      <pubDate>Thu, 24 Oct 2024 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/teaching/scrnaseq_impute_saver/</guid>
-      <description>&lt;h2 id=&#34;-goal&#34;&gt;✅ Goal:&lt;/h2&gt;
- 
-$$
- \hat{\lambda}_{gc} = \frac{Y_{gc} + \hat{\alpha}_{gc}}{s_c + \hat{\beta}_{gc}} = \frac{s_c}{s_c + \hat{\beta}_{gc}} \cdot \frac{Y_{gc}}{s_c} + \frac{\hat{\beta}_{gc}}{s_c + \hat{\beta}_{gc}} \cdot \hat{\mu}_{gc} 
-$$
-
-
-&lt;p&gt;&lt;strong&gt;Gamma distribution gives:&lt;/strong&gt;&lt;/p&gt;
- 
-$$ \hat{\alpha}_{gc} = \hat{\beta}_{gc} \hat{\mu}_{gc} \quad \text{(1)} $$
-
-
-&lt;h2 id=&#34;-step-by-step-proof&#34;&gt;🔁 Step-by-Step Proof:&lt;/h2&gt;
-&lt;p&gt;We start with:&lt;/p&gt;
- 
-$$ \hat{\lambda}_{gc} = \frac{Y_{gc} + \hat{\alpha}_{gc}}{s_c + \hat{\beta}_{gc}} \quad \text{(2)} $$
-
-
-&lt;p&gt;Substitute  $\hat{\alpha}_{gc} = \hat{\beta}_{gc} \hat{\mu}_{gc}$ 
- from equation (1):&lt;/p&gt;
- 
-$$ = \frac{Y_{gc} + \hat{\beta}_{gc} \hat{\mu}_{gc}}{s_c + \hat{\beta}_{gc}} \quad \text{(3)} $$
-
-
-&lt;p&gt;Split the numerator:&lt;/p&gt;
- 
-$$ = \frac{Y_{gc}}{s_c + \hat{\beta}_{gc}} + \frac{\hat{\beta}_{gc} \hat{\mu}_{gc}}{s_c + \hat{\beta}_{gc}} \quad \text{(4)} $$
-
-
-&lt;p&gt;Now multiply and divide the first term by  $s_c$ 
-:&lt;/p&gt;
- 
-$$ = \left(\frac{s_c}{s_c + \hat{\beta}_{gc}} \cdot \frac{Y_{gc}}{s_c}\right) + \left(\frac{\hat{\beta}_{gc}}{s_c + \hat{\beta}_{gc}} \cdot \hat{\mu}_{gc}\right) \quad \text{(5)} $$
-
-
-&lt;p&gt;Which gives:&lt;/p&gt;
- 
-$$ \hat{\lambda}_{gc} = \frac{s_c}{s_c + \hat{\beta}_{gc}} \cdot \frac{Y_{gc}}{s_c} + \frac{\hat{\beta}_{gc}}{s_c + \hat{\beta}_{gc}} \cdot \hat{\mu}_{gc} \quad \text{(6)} $$
-
-
-&lt;p&gt;✅ &lt;strong&gt;Proved.&lt;/strong&gt;&lt;/p&gt;
-&lt;h2 id=&#34;-summary&#34;&gt;🔍 Summary:&lt;/h2&gt;
-&lt;p&gt;This is a weighted average of:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt; $\frac{Y_{gc}}{s_c}$ 
-: observed normalized expression&lt;/li&gt;
-&lt;li&gt; $\hat{\mu}_{gc}$ 
-: predicted expression from prior&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;With weights proportional to data confidence ( $s_c$ 
-) and prior confidence ( $\hat{\beta}_{gc}$ 
-).&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
       <title>Learn Python</title>
       <link>http://localhost:1313/teaching/python/</link>
       <pubDate>Tue, 24 Oct 2023 00:00:00 +0000</pubDate>

@@ -11,7 +11,7 @@ last_name: Liu
 
 # Status emoji
 status:
-  #icon: ☕️
+  # icon: ☕️
 
 # Is this the primary user of the site?
 superuser: true
@@ -38,7 +38,7 @@ profiles:
   #- icon: brands/instagram
   #  url: https://www.instagram.com/
   - icon: brands/github
-    url: https://github.com/jliu678
+    url: https://github.com/stars/jliu678/lists/owned-contributed-by-me
   - icon: brands/linkedin
     url: https://www.linkedin.com/in/jiyuan-liu-7608a42a6/
   - icon: academicons/google-scholar

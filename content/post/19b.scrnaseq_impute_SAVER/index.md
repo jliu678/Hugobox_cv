@@ -1,13 +1,16 @@
 ---
 title: Math Derivation for SAVER Imputation
 summary: E
-date: 2024-10-24
-type: docs
-math: False
+date: 2025-04-24
+authors:
+  - admin
 tags:
-  - Python
+  - algorithm
+  - Conjugate Priors
+  - Bayesian
+  - Marginal Distribution
 image:
-  caption: 'Embed rich media such as videos and LaTeX math'
+  caption: 'Image credit: [**Sigmund on Unsplash**](https://unsplash.com)'
 ---
 
 ## ✅ Goal:

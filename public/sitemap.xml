@@ -10,15 +10,39 @@
     <lastmod>2030-06-01T13:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
-    <loc>http://localhost:1313/tags/10x/</loc>
-    <lastmod>2025-04-12T00:00:00+00:00</lastmod>
+    <loc>http://localhost:1313/tags/algorithm/</loc>
+    <lastmod>2025-04-24T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
-    <loc>http://localhost:1313/tags/algorithm/</loc>
-    <lastmod>2025-04-12T00:00:00+00:00</lastmod>
+    <loc>http://localhost:1313/tags/bayesian/</loc>
+    <lastmod>2025-04-24T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
     <loc>http://localhost:1313/post/</loc>
+    <lastmod>2025-04-24T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+  </url><url>
+    <loc>http://localhost:1313/tags/conjugate-priors/</loc>
+    <lastmod>2025-04-24T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+  </url><url>
+    <loc>http://localhost:1313/tags/marginal-distribution/</loc>
+    <lastmod>2025-04-24T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+  </url><url>
+    <loc>http://localhost:1313/post/19b.scrnaseq_impute_saver/</loc>
+    <lastmod>2025-04-24T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+  </url><url>
+    <loc>http://localhost:1313/tags/</loc>
+    <lastmod>2025-04-24T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+  </url><url>
+    <loc>http://localhost:1313/post/19a.conjugate_prior_bayes/</loc>
+    <lastmod>2025-04-12T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+  </url><url>
+    <loc>http://localhost:1313/tags/10x/</loc>
     <lastmod>2025-04-12T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
@@ -31,10 +55,6 @@
     <changefreq>weekly</changefreq>
   </url><url>
     <loc>http://localhost:1313/tags/scrnaseq/</loc>
-    <lastmod>2025-04-12T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-  </url><url>
-    <loc>http://localhost:1313/tags/</loc>
     <lastmod>2025-04-12T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
@@ -242,10 +262,6 @@
     <lastmod>2024-10-24T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
-    <loc>http://localhost:1313/teaching/scrnaseq_impute_saver/</loc>
-    <lastmod>2024-10-24T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-  </url><url>
     <loc>http://localhost:1313/tags/mathematics/</loc>
     <lastmod>2024-10-24T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -392,9 +408,6 @@
   </url><url>
     <loc>http://localhost:1313/publication_types/paper-conference/</loc>
     <lastmod>2013-07-01T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-  </url><url>
-    <loc>http://localhost:1313/teaching/conjugate_prior_bayes/conjugate_priors_bayes/</loc>
     <changefreq>weekly</changefreq>
   </url>
 </urlset>
