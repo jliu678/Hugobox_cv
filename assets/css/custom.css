@@ -1,4 +1,15 @@
-/* .no-border img {
+
+/* .avatar {
+  background: none !important;
+  padding: 0 !important;
   border: none !important;
   box-shadow: none !important;
 } */
+
+.avatar {
+  background: none !important;
+  padding: 0 !important;
+  border: none !important;
+  box-shadow: none !important;
+  /* border-radius: 0 !important; */
+}

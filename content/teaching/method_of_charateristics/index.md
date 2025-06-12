@@ -2,8 +2,8 @@
 title: Method of characteristics
 summary: The powerful method to solve Partial Differential Equations
 date: 2024-10-24
-type: docs
-math: false
+authors:
+  - admin
 tags:
   - Mathematics
 image:

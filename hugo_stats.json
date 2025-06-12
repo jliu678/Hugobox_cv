@@ -84,7 +84,6 @@
       "aspect-video",
       "author-notes",
       "avatar",
-      "avatar-emoji",
       "avatar-wrapper",
       "bg-[length:0px_10px]",
       "bg-gradient-to-r",
@@ -603,7 +602,7 @@
       "z-30"
     ],
     "ids": [
-      "-click-here-to-become-a-sponsor-and-help-support-hugo-blox",
+      "-click-here-to-become-a-sponsor-and-help-support-hugo-bloxs-future-httpshugobloxcomsponsor",
       "-goal",
       "-step-by-step-proof",
       "-summary",
@@ -626,7 +625,7 @@
       "bias-corrections",
       "build-index",
       "callouts",
-      "chart-372689415",
+      "chart-891635274",
       "charts",
       "code",
       "conclusion",
@@ -666,6 +665,7 @@
       "m-step",
       "math",
       "math-derivation",
+      "math-derivationa-idmath-derivationa",
       "mindmaps",
       "modules",
       "moon",
