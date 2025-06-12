@@ -1,7 +1,7 @@
 ---
 title: Lecture 14 - Expectation-Maximization Algorithms | Stanford CS229 Machine Learning
 summary: Easily learn Python in 10 minutes!
-date: 2023-10-24
+date: 2024-10-24
 type: docs
 math: false
 tags:

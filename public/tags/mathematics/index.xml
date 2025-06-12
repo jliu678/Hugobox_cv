@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Mathematics | Jiyuan Liu</title>
+    <link>http://localhost:1313/tags/mathematics/</link>
+      <atom:link href="http://localhost:1313/tags/mathematics/index.xml" rel="self" type="application/rss+xml" />
+    <description>Mathematics</description>
+    <generator>Hugo Blox Builder (https://hugoblox.com)</generator><language>en-us</language><lastBuildDate>Thu, 24 Oct 2024 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>http://localhost:1313/media/icon_hu_fd2be5a69becaf9e.png</url>
+      <title>Mathematics</title>
+      <link>http://localhost:1313/tags/mathematics/</link>
+    </image>
+    
+    <item>
+      <title>Method of characteristics</title>
+      <link>http://localhost:1313/teaching/method_of_charateristics/</link>
+      <pubDate>Thu, 24 Oct 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/teaching/method_of_charateristics/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://www.youtube.com/watch?v=atvw5iseoGQ&amp;amp;list=PLF6061160B55B0203&amp;amp;index=3&amp;amp;ab_channel=commutant&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;PDE 3 | Transport equation: derivation&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.youtube.com/watch?v=NOLW6FcpQBU&amp;amp;t=458s&amp;amp;ab_channel=commutant&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;PDE 4 | Transport equation: general solution&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.youtube.com/watch?v=tNP286WZw3o&amp;amp;list=TLPQMDQwNjIwMjWMWloY2gJK3A&amp;amp;index=3&amp;amp;ab_channel=commutant&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;PDE 5 | Method of characteristics&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.youtube.com/watch?v=yMYPPOqXM2U&amp;amp;ab_channel=commutant&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;PDE 6 | Transport with decay and nonlinear transport&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://youtu.be/QE_SOeHvHq4?si=wktkgI3zOn8B17iN&amp;amp;t=253&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;The Method of Characteristics&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.youtube.com/watch?v=ec7L8wRABy4&amp;amp;ab_channel=PartialDifferentialEquations&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Method of Characteristics 1: Constant Coefficients&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.youtube.com/watch?v=3lHbafzc6a8&amp;amp;ab_channel=PartialDifferentialEquations&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Method of Characteristics 2: Variable Coefficients&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.youtube.com/watch?v=32CRwN1wiCQ&amp;amp;ab_channel=PartialDifferentialEquations&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Method of Characteristics 3: The general case&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.youtube.com/watch?v=Mg7shyC9dPM&amp;amp;t=561s&amp;amp;ab_channel=ProfessorSaadExplains&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;17. Method of Characteristics&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Separation of Variables</title>
+      <link>http://localhost:1313/teaching/method_of_seperation_of_variables/</link>
+      <pubDate>Thu, 24 Oct 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/teaching/method_of_seperation_of_variables/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://www.youtube.com/watch?v=7Y-frhf-1Zk&amp;amp;ab_channel=Dr.TreforBazett&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Separation of Variables // Differential Equations&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

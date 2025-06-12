@@ -1,13 +1,13 @@
 ---
-title: m
-summary: Easily learn Python in 10 minutes!
-date: 2023-10-24
+title: Method of characteristics
+summary: The powerful method to solve Partial Differential Equations
+date: 2024-10-24
 type: docs
 math: false
 tags:
-  - Python
+  - Mathematics
 image:
-  caption: 'Embed rich media such as videos and LaTeX math'
+  caption: 'tbd'
 ---
 
 [PDE 3 | Transport equation: derivation](https://www.youtube.com/watch?v=atvw5iseoGQ&list=PLF6061160B55B0203&index=3&ab_channel=commutant)

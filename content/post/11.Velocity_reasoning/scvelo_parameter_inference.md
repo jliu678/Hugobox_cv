@@ -714,7 +714,7 @@ In scVelo's global time normalization, we have:
 {{< math >}} $$t_{i;o} = Q^p_g \left( t_{i;g} - t_{o;g} \right)$$ {{< /math >}}
 
 Where:
-- {{< math >}} $t_{i;o}$ {{< /math >}}: normalized time for cell {{< math >}} $i$ relative to root cell {{< math >}} $o$ {{< /math >}}
+- {{< math >}} $t_{i;o}$ {{< /math >}}: normalized time for cell {{< math >}} $i$ {{< /math >}} relative to root cell {{< math >}} $o$ {{< /math >}}
 - {{< math >}} $Q^p_g$ {{< /math >}}: {{< math >}} $p$ {{< /math >}}-quantile computed for gene {{< math >}} $g$ {{< /math >}}
 - {{< math >}} $t_{i;g} - t_{o;g}$ {{< /math >}}: time shift between cell {{< math >}} $i$ {{< /math >}} and root cell {{< math >}} $o$ {{< /math >}} for gene {{< math >}} $g$ {{< /math >}}
 

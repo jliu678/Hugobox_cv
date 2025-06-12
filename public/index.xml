@@ -1758,6 +1758,124 @@ $$
     </item>
     
     <item>
+      <title>Dirichlet Distribution</title>
+      <link>http://localhost:1313/teaching/visualize_distribution/</link>
+      <pubDate>Thu, 24 Oct 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/teaching/visualize_distribution/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://observablehq.com/@herbps10/dirichlet-distribution&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Dirichlet Distribution&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Lecture 14 - Expectation-Maximization Algorithms | Stanford CS229 Machine Learning</title>
+      <link>http://localhost:1313/teaching/stanford_ml_em/</link>
+      <pubDate>Thu, 24 Oct 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/teaching/stanford_ml_em/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://www.youtube.com/watch?v=rVfZHWTwXSA&amp;amp;ab_channel=StanfordOnline&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Lecture 14 - Expectation-Maximization Algorithms | Stanford CS229: Machine Learning (Autumn 2018)&lt;/a&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;for k-means clustering, Prof. Ng picks the k according to the goal of the clustering and relevant reasoning based on domain knowledge rather than using AIC or BIC. E.g. the market has bandwidth for 4 for market campaigns rather than 100, so choose k=4 is in market segmentation.&lt;/li&gt;
+&lt;li&gt;47:22 &amp;ldquo;why it&amp;rsquo;s a maximum likelihood estimation algorithm and why we can expect it to converge&amp;rdquo;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>linear algebra</title>
+      <link>http://localhost:1313/teaching/linear_algebra/</link>
+      <pubDate>Thu, 24 Oct 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/teaching/linear_algebra/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://www.youtube.com/watch?v=Ip3X9LOh2dk&amp;amp;ab_channel=3Blue1Brown&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;The determinant | Chapter 6, Essence of linear algebra&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.youtube.com/watch?v=PFDu9oVAE-g&amp;amp;ab_channel=3Blue1Brown&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Eigenvectors and eigenvalues | Chapter 14, Essence of linear algebra&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Math Derivation for SAVER Imputation</title>
+      <link>http://localhost:1313/teaching/scrnaseq_impute_saver/</link>
+      <pubDate>Thu, 24 Oct 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/teaching/scrnaseq_impute_saver/</guid>
+      <description>&lt;h2 id=&#34;-goal&#34;&gt;✅ Goal:&lt;/h2&gt;
+ 
+$$
+ \hat{\lambda}_{gc} = \frac{Y_{gc} + \hat{\alpha}_{gc}}{s_c + \hat{\beta}_{gc}} = \frac{s_c}{s_c + \hat{\beta}_{gc}} \cdot \frac{Y_{gc}}{s_c} + \frac{\hat{\beta}_{gc}}{s_c + \hat{\beta}_{gc}} \cdot \hat{\mu}_{gc} 
+$$
+
+
+&lt;p&gt;&lt;strong&gt;Gamma distribution gives:&lt;/strong&gt;&lt;/p&gt;
+ 
+$$ \hat{\alpha}_{gc} = \hat{\beta}_{gc} \hat{\mu}_{gc} \quad \text{(1)} $$
+
+
+&lt;h2 id=&#34;-step-by-step-proof&#34;&gt;🔁 Step-by-Step Proof:&lt;/h2&gt;
+&lt;p&gt;We start with:&lt;/p&gt;
+ 
+$$ \hat{\lambda}_{gc} = \frac{Y_{gc} + \hat{\alpha}_{gc}}{s_c + \hat{\beta}_{gc}} \quad \text{(2)} $$
+
+
+&lt;p&gt;Substitute  $\hat{\alpha}_{gc} = \hat{\beta}_{gc} \hat{\mu}_{gc}$ 
+ from equation (1):&lt;/p&gt;
+ 
+$$ = \frac{Y_{gc} + \hat{\beta}_{gc} \hat{\mu}_{gc}}{s_c + \hat{\beta}_{gc}} \quad \text{(3)} $$
+
+
+&lt;p&gt;Split the numerator:&lt;/p&gt;
+ 
+$$ = \frac{Y_{gc}}{s_c + \hat{\beta}_{gc}} + \frac{\hat{\beta}_{gc} \hat{\mu}_{gc}}{s_c + \hat{\beta}_{gc}} \quad \text{(4)} $$
+
+
+&lt;p&gt;Now multiply and divide the first term by  $s_c$ 
+:&lt;/p&gt;
+ 
+$$ = \left(\frac{s_c}{s_c + \hat{\beta}_{gc}} \cdot \frac{Y_{gc}}{s_c}\right) + \left(\frac{\hat{\beta}_{gc}}{s_c + \hat{\beta}_{gc}} \cdot \hat{\mu}_{gc}\right) \quad \text{(5)} $$
+
+
+&lt;p&gt;Which gives:&lt;/p&gt;
+ 
+$$ \hat{\lambda}_{gc} = \frac{s_c}{s_c + \hat{\beta}_{gc}} \cdot \frac{Y_{gc}}{s_c} + \frac{\hat{\beta}_{gc}}{s_c + \hat{\beta}_{gc}} \cdot \hat{\mu}_{gc} \quad \text{(6)} $$
+
+
+&lt;p&gt;✅ &lt;strong&gt;Proved.&lt;/strong&gt;&lt;/p&gt;
+&lt;h2 id=&#34;-summary&#34;&gt;🔍 Summary:&lt;/h2&gt;
+&lt;p&gt;This is a weighted average of:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt; $\frac{Y_{gc}}{s_c}$ 
+: observed normalized expression&lt;/li&gt;
+&lt;li&gt; $\hat{\mu}_{gc}$ 
+: predicted expression from prior&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;With weights proportional to data confidence ( $s_c$ 
+) and prior confidence ( $\hat{\beta}_{gc}$ 
+).&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Method of characteristics</title>
+      <link>http://localhost:1313/teaching/method_of_charateristics/</link>
+      <pubDate>Thu, 24 Oct 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/teaching/method_of_charateristics/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://www.youtube.com/watch?v=atvw5iseoGQ&amp;amp;list=PLF6061160B55B0203&amp;amp;index=3&amp;amp;ab_channel=commutant&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;PDE 3 | Transport equation: derivation&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.youtube.com/watch?v=NOLW6FcpQBU&amp;amp;t=458s&amp;amp;ab_channel=commutant&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;PDE 4 | Transport equation: general solution&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.youtube.com/watch?v=tNP286WZw3o&amp;amp;list=TLPQMDQwNjIwMjWMWloY2gJK3A&amp;amp;index=3&amp;amp;ab_channel=commutant&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;PDE 5 | Method of characteristics&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.youtube.com/watch?v=yMYPPOqXM2U&amp;amp;ab_channel=commutant&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;PDE 6 | Transport with decay and nonlinear transport&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://youtu.be/QE_SOeHvHq4?si=wktkgI3zOn8B17iN&amp;amp;t=253&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;The Method of Characteristics&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.youtube.com/watch?v=ec7L8wRABy4&amp;amp;ab_channel=PartialDifferentialEquations&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Method of Characteristics 1: Constant Coefficients&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.youtube.com/watch?v=3lHbafzc6a8&amp;amp;ab_channel=PartialDifferentialEquations&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Method of Characteristics 2: Variable Coefficients&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.youtube.com/watch?v=32CRwN1wiCQ&amp;amp;ab_channel=PartialDifferentialEquations&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Method of Characteristics 3: The general case&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.youtube.com/watch?v=Mg7shyC9dPM&amp;amp;t=561s&amp;amp;ab_channel=ProfessorSaadExplains&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;17. Method of Characteristics&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>Separation of Variables</title>
+      <link>http://localhost:1313/teaching/method_of_seperation_of_variables/</link>
+      <pubDate>Thu, 24 Oct 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/teaching/method_of_seperation_of_variables/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://www.youtube.com/watch?v=7Y-frhf-1Zk&amp;amp;ab_channel=Dr.TreforBazett&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Separation of Variables // Differential Equations&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Projects</title>
       <link>http://localhost:1313/projects/</link>
       <pubDate>Sun, 19 May 2024 00:00:00 +0000</pubDate>
@@ -1872,7 +1990,9 @@ $$
       <link>http://localhost:1313/project/scikit/</link>
       <pubDate>Thu, 26 Oct 2023 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/project/scikit/</guid>
-      <description>&lt;p&gt;scikit-learn is a Python module for machine learning built on top of SciPy and is distributed under the 3-Clause BSD license.&lt;/p&gt;</description>
+      <description>&lt;p&gt;scikit-learn is a Python module for machine learning built on top of SciPy and is distributed under the 3-Clause BSD license.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.youtube.com/watch?v=Ip3X9LOh2dk&amp;amp;ab_channel=3Blue1Brown&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;The determinant | Chapter 6, Essence of linear algebra&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.youtube.com/watch?v=PFDu9oVAE-g&amp;amp;ab_channel=3Blue1Brown&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Eigenvectors and eigenvalues | Chapter 14, Essence of linear algebra&lt;/a&gt;&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -2002,7 +2122,7 @@ $$
 
 
 
-&lt;div id=&#34;chart-695784321&#34; class=&#34;chart&#34;&gt;&lt;/div&gt;
+&lt;div id=&#34;chart-148567293&#34; class=&#34;chart&#34;&gt;&lt;/div&gt;
 &lt;script&gt;
   async function fetchChartJSON() {
     console.debug(&#39;Hugo Blox fetching chart JSON...&#39;)
@@ -2020,7 +2140,7 @@ $$
 
       fetchChartJSON().then(chart =&gt; {
         console.debug(&#39;Plotting chart...&#39;)
-        window.Plotly.newPlot(&#39;chart-695784321&#39;, chart.data, chart.layout, {responsive: true});
+        window.Plotly.newPlot(&#39;chart-148567293&#39;, chart.data, chart.layout, {responsive: true});
       });
     }, 500 );
   })();
@@ -2689,6 +2809,156 @@ Parallel 4   :         des6, after des4, 1d
   &lt;span class=&#34;dark:text-neutral-300&#34;&gt;Create your slides in Markdown - click the &lt;em&gt;Slides&lt;/em&gt; button to check out the example.&lt;/span&gt;
 &lt;/div&gt;
 &lt;p&gt;Add the publication&amp;rsquo;s &lt;strong&gt;full text&lt;/strong&gt; or &lt;strong&gt;supplementary notes&lt;/strong&gt; here. You can use rich formatting such as including &lt;a href=&#34;https://docs.hugoblox.com/content/writing-markdown-latex/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;code, math, and images&lt;/a&gt;.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title></title>
+      <link>http://localhost:1313/teaching/conjugate_prior_bayes/conjugate_priors_bayes/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/teaching/conjugate_prior_bayes/conjugate_priors_bayes/</guid>
+      <description>&lt;h1 id=&#34;conjugate-priors-bypassing-marginal-distributions-in-bayesian-inference&#34;&gt;Conjugate Priors: Bypassing Marginal Distributions in Bayesian Inference&lt;/h1&gt;
+&lt;p&gt;Using conjugate priors allows you to bypass computing marginal distributions because the posterior has the same functional form as the prior, making the normalization constant analytically tractable.&lt;/p&gt;
+&lt;p&gt;Here&amp;rsquo;s the mathematical explanation:&lt;/p&gt;
+&lt;h2 id=&#34;standard-bayes-theorem&#34;&gt;Standard Bayes&amp;rsquo; Theorem&lt;/h2&gt;
+ $$P(\theta|D) = \frac{P(D|\theta)P(\theta)}{P(D)}$$ 
+
+&lt;p&gt;where the marginal likelihood is:&lt;/p&gt;
+ $$P(D) = \int P(D|\theta)P(\theta)d\theta$$ 
+
+&lt;h2 id=&#34;the-problem&#34;&gt;The Problem&lt;/h2&gt;
+&lt;p&gt;Computing  $P(D)$ 
+ often requires intractable integrals, especially in high dimensions.&lt;/p&gt;
+&lt;h2 id=&#34;conjugate-prior-solution&#34;&gt;Conjugate Prior Solution&lt;/h2&gt;
+&lt;p&gt;When the prior  $P(\theta)$ 
+ is conjugate to the likelihood  $P(D|\theta)$ 
+, we have:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Prior:&lt;/strong&gt;  $P(\theta) \propto f(\theta; \alpha_0)$ 
+ (some parametric form)&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Likelihood:&lt;/strong&gt;  $P(D|\theta) \propto g(\theta; D)$ 
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Posterior:&lt;/strong&gt;  $P(\theta|D) \propto f(\theta; \alpha_n)$ 
+ (same form as prior)&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;where  $\alpha_n = h(\alpha_0, D)$ 
+ is a simple update function.&lt;/p&gt;
+&lt;h2 id=&#34;key-insight&#34;&gt;Key Insight&lt;/h2&gt;
+&lt;p&gt;Since we know the posterior belongs to the same family as the prior, we can write:&lt;/p&gt;
+ $$P(\theta|D) = \frac{f(\theta; \alpha_n)}{Z(\alpha_n)}$$ 
+
+&lt;p&gt;where  $Z(\alpha_n)$ 
+ is the normalization constant for the known distribution family, which has a closed form.&lt;/p&gt;
+&lt;h2 id=&#34;example---beta-binomial-conjugacy&#34;&gt;Example - Beta-Binomial Conjugacy&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Prior:&lt;/strong&gt;  $P(\theta) = \text{Beta}(\alpha, \beta)$ 
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Likelihood:&lt;/strong&gt;  $P(D|\theta) = \text{Binomial}(n, \theta)$ 
+ with  $s$ 
+ successes&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Posterior:&lt;/strong&gt;  $P(\theta|D) = \text{Beta}(\alpha + s, \beta + n - s)$ 
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;We never need to compute:&lt;/p&gt;
+ $$P(D) = \int_0^1 \binom{n}{s}\theta^s(1-\theta)^{n-s} \cdot \frac{\theta^{\alpha-1}(1-\theta)^{\beta-1}}{B(\alpha,\beta)} d\theta$$ 
+
+&lt;p&gt;Instead, we directly get the posterior parameters and use the known Beta normalization.&lt;/p&gt;
+&lt;h2 id=&#34;why-conjugate-priors-are-so-powerful&#34;&gt;Why Conjugate Priors Are So Powerful&lt;/h2&gt;
+&lt;p&gt;This explains why conjugate priors are so powerful - they let us skip the hardest part of Bayesian computation. Let me break down what&amp;rsquo;s happening:&lt;/p&gt;
+&lt;h3 id=&#34;the-hard-way-without-conjugate-priors&#34;&gt;The Hard Way (Without Conjugate Priors)&lt;/h3&gt;
+&lt;p&gt;To get the posterior, we&amp;rsquo;d normally need to compute this integral:&lt;/p&gt;
+ $$P(D) = \int_0^1 \binom{n}{s}\theta^s(1-\theta)^{n-s} \cdot \frac{\theta^{\alpha-1}(1-\theta)^{\beta-1}}{B(\alpha,\beta)} d\theta$$ 
+
+&lt;p&gt;This integral combines:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt; $\binom{n}{s}\theta^s(1-\theta)^{n-s}$ 
+ (binomial likelihood)&lt;/li&gt;
+&lt;li&gt; $\frac{\theta^{\alpha-1}(1-\theta)^{\beta-1}}{B(\alpha,\beta)}$ 
+ (Beta prior)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;why-this-integral-is-nasty&#34;&gt;Why This Integral is Nasty&lt;/h3&gt;
+&lt;p&gt;Even though this particular integral has a closed form, in general such integrals:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;May not have analytical solutions&lt;/li&gt;
+&lt;li&gt;Require numerical integration (expensive, approximate)&lt;/li&gt;
+&lt;li&gt;Get exponentially harder in higher dimensions&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;the-conjugate-prior-shortcut&#34;&gt;The Conjugate Prior Shortcut&lt;/h3&gt;
+&lt;p&gt;Instead of computing that integral, we use the conjugate relationship:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Recognize the pattern:&lt;/strong&gt;
+ $$\theta^s(1-\theta)^{n-s} \times \theta^{\alpha-1}(1-\theta)^{\beta-1} = \theta^{(s+\alpha)-1}(1-\theta)^{(n-s+\beta)-1} \quad (1)$$
+&lt;/p&gt;
+&lt;p&gt;This looks like a Beta distribution with parameters  $(\alpha + s, \beta + n - s)$ 
+&lt;/p&gt;
+&lt;p&gt;We derive below in &lt;a href=&#34;#math-derivation&#34;&gt;next section&lt;/a&gt; how this leads to the marginal likelihood:&lt;/p&gt;
+ $$P(D) = \frac{B(\alpha+s, \beta+n-s)}{B(\alpha, \beta)} \binom{n}{s} \quad (2)$$ 
+
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Write the posterior directly:&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;We substitute equation (1) and (2) in Standard Bayes&amp;rsquo; Theorem to get the posterior distribution:&lt;/p&gt;
+ $$P(\theta|D) = \text{Beta}(\alpha + s, \beta + n - s) = \frac{\theta^{\alpha+s-1}(1-\theta)^{\beta+n-s-1}}{B(\alpha+s, \beta+n-s)}$$ 
+
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;But for getting the posterior distribution, we don&amp;rsquo;t even need  $P(D)$ 
+ - we just need the updated parameters!&lt;/p&gt;
+&lt;h2 id=&#34;bottom-line&#34;&gt;Bottom Line&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Without conjugacy:&lt;/strong&gt; Solve a potentially intractable integral&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;With conjugacy:&lt;/strong&gt; Simple parameter update:  $(\alpha, \beta) \rightarrow (\alpha + s, \beta + n - s)$ 
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The normalization &amp;ldquo;just works&amp;rdquo; because we&amp;rsquo;re staying within the same distributional family where normalization constants are known.&lt;/p&gt;
+&lt;h1 id=&#34;evaluating-the-marginal-likelihood-using-beta-function-properties&#34;&gt;Evaluating the Marginal Likelihood Using Beta Function Properties&lt;a id=&#34;math-derivation&#34;&gt;&lt;/a&gt;&lt;/h1&gt;
+&lt;p&gt;This transformation shows how we can evaluate the marginal likelihood integral using properties of the Beta function. Let me break down the steps:&lt;/p&gt;
+&lt;h2 id=&#34;starting-point-the-marginal-likelihood-integral&#34;&gt;Starting Point: The Marginal Likelihood Integral&lt;/h2&gt;
+ $$P(D) = \int_0^1 \binom{n}{s}\theta^s(1-\theta)^{n-s} \cdot \frac{\theta^{\alpha-1}(1-\theta)^{\beta-1}}{B(\alpha,\beta)} d\theta \quad (1)$$ 
+
+&lt;h2 id=&#34;step-1-factor-out-constants&#34;&gt;Step 1: Factor Out Constants&lt;/h2&gt;
+&lt;p&gt;The binomial coefficient  $\binom{n}{s}$ 
+ and  $\frac{1}{B(\alpha,\beta)}$ 
+ don&amp;rsquo;t depend on  $\theta$ 
+, so we can pull them outside the integral:&lt;/p&gt;
+ $$P(D) = \binom{n}{s} \cdot \frac{1}{B(\alpha,\beta)} \int_0^1 \theta^s(1-\theta)^{n-s} \cdot \theta^{\alpha-1}(1-\theta)^{\beta-1} d\theta \quad (2)$$ 
+
+&lt;h2 id=&#34;step-2-combine-the-powers&#34;&gt;Step 2: Combine the Powers&lt;/h2&gt;
+&lt;p&gt;Using the exponent rule  $x^a \cdot x^b = x^{a+b}$ 
+:&lt;/p&gt;
+ $$P(D) = \binom{n}{s} \cdot \frac{1}{B(\alpha,\beta)} \int_0^1 \theta^{s+\alpha-1}(1-\theta)^{n-s+\beta-1} d\theta \quad (3)$$ 
+
+&lt;h2 id=&#34;step-3-recognize-the-beta-function-integral&#34;&gt;Step 3: Recognize the Beta Function Integral&lt;/h2&gt;
+&lt;p&gt;The integral  $\int_0^1 \theta^{a-1}(1-\theta)^{b-1} d\theta$ 
+ is exactly the definition of the Beta function  $B(a,b)$ 
+.&lt;/p&gt;
+&lt;p&gt;In our case, we have:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt; $a = s + \alpha$ 
+&lt;/li&gt;
+&lt;li&gt; $b = n - s + \beta$ 
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;So:
+ $$\int_0^1 \theta^{s+\alpha-1}(1-\theta)^{n-s+\beta-1} d\theta = B(s+\alpha, n-s+\beta) = B(\alpha+s, \beta+n-s) \quad (4)$$ 
+&lt;/p&gt;
+&lt;h2 id=&#34;step-4-substitute-back&#34;&gt;Step 4: Substitute Back&lt;/h2&gt;
+ $$P(D) = \binom{n}{s} \cdot \frac{1}{B(\alpha,\beta)} \cdot B(\alpha+s, \beta+n-s) \quad (5)$$ 
+
+&lt;h2 id=&#34;final-result&#34;&gt;Final Result&lt;/h2&gt;
+&lt;p&gt;Rearranging:
+ $$P(D) = \frac{B(\alpha+s, \beta+n-s)}{B(\alpha,\beta)} \binom{n}{s} \quad (6)$$ 
+&lt;/p&gt;
+&lt;h2 id=&#34;key-insight-1&#34;&gt;Key Insight&lt;/h2&gt;
+&lt;p&gt;This transformation is powerful because:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;We avoided numerical integration&lt;/strong&gt; - instead of computing a potentially difficult integral, we used the known relationship between integrals and Beta functions&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Both Beta functions have closed forms&lt;/strong&gt; -  $B(a,b) = \frac{\Gamma(a)\Gamma(b)}{\Gamma(a+b)}$ 
+&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;This gives us the exact marginal likelihood&lt;/strong&gt; - no approximation needed&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;This is why conjugate priors are so computationally elegant: they transform intractable integrals into simple ratios of known functions.&lt;/p&gt;
 </description>
     </item>
     

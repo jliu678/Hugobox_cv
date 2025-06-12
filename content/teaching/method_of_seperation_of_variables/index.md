@@ -1,13 +1,13 @@
 ---
-title: m
-summary: Easily learn Python in 10 minutes!
-date: 2023-10-24
+title: Separation of Variables
+summary: The essential method to solve Partial Differential Equations
+date: 2024-10-24
 type: docs
 math: false
 tags:
-  - Python
+  - Mathematics
 image:
-  caption: 'Embed rich media such as videos and LaTeX math'
+  caption: 'tbd'
 ---
 
 [Separation of Variables // Differential Equations](https://www.youtube.com/watch?v=7Y-frhf-1Zk&ab_channel=Dr.TreforBazett)

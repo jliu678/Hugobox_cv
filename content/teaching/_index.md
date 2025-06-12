@@ -1,5 +1,5 @@
 ---
-title: Teaching
+title: learning
 summary: My courses
 type: landing
 
@@ -7,7 +7,8 @@ cascade:
   - _target:
       kind: page
     params:
-      show_breadcrumb: true
+      show_breadcrumb: True
+
 
 sections:
   - block: collection
@@ -17,6 +18,7 @@ sections:
       filters:
         folders:
           - teaching
+      limit: 0  # 🚨 Add this line
     design:
       view: article-grid
       columns: 2

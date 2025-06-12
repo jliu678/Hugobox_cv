@@ -13,7 +13,7 @@ Each gene {{< math >}} $g$ {{< /math >}} has its own characteristic timescale de
 - Splicing rate: {{< math >}} $\beta_g$ {{< /math >}}
 - Degradation rate: {{< math >}} $\gamma_g$ {{< /math >}}
 
-The raw latent time {{< math >}} $t_{c,g}$ {{< /math >}} for cell {{< math >}} $c$ and gene {{< math >}} $g$ exists in gene-specific units, making cross-gene comparisons problematic.
+The raw latent time {{< math >}} $t_{c,g}$ {{< /math >}} for cell {{< math >}} $c$ {{< /math >}}and gene {{< math >}} $g$ {{< /math >}}exists in gene-specific units, making cross-gene comparisons problematic.
 
 ## Step 1: Gene-Specific Characteristic Timescales
 

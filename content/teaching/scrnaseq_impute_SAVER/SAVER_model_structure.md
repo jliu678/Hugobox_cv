@@ -373,7 +373,7 @@ This is the probability mass function of a **Negative Binomial distribution** wi
 - **Number of failures**: {{< math >}}$r = \alpha_{gc}${{< /math >}}
 - **Success probability**: {{< math >}}$p = \frac{\beta_{gc}}{\beta_{gc} + s_c}${{< /math >}}
 
-## ✅ Conclusion
+## ✅ Summary
 
 This proves that:
 
@@ -484,7 +484,7 @@ Then we will prove that the posterior is:
 
 {{< math >}} $$\lambda | Y \sim \text{Gamma}(Y + \alpha, s + \beta)$$ {{< /math >}}
 
-## 🔢 1. Define the Distributions
+### 🔢 1. Define the Distributions
 
 **Likelihood:**
 {{< math >}} $$p(Y|\lambda) = \frac{(s\lambda)^Y e^{-s\lambda}}{Y!}$$ {{< /math >}}
@@ -506,7 +506,7 @@ Group terms:
 
 {{< math >}} $$= \frac{s^Y \beta^\alpha}{Y! \Gamma(\alpha)} \lambda^{Y+\alpha-1} e^{-(s+\beta)\lambda}$$ {{< /math >}}
 
-## Step 2: Marginal Likelihood (Evidence)
+### Step 2: Marginal Likelihood (Evidence)
 
 We want to compute the marginal probability of the observed data {{< math >}} $Y$ {{< /math >}}, by integrating out {{< math >}} $\lambda$ {{< /math >}}:
 
@@ -548,3 +548,11 @@ Cancel out constants:
 Where the general Gamma pdf is:
 
 {{< math >}} $$\text{Gamma}(\lambda|a,b) = \frac{b^a}{\Gamma(a)} \lambda^{a-1} e^{-b\lambda}$$ {{< /math >}}
+
+# Conclusion
+The above math derivation has achieved the goal of SAVER--
+- derive the posterior gamma distribution for $λ_{gc}$ given the
+observed counts $Y_{gc}$ 
+- use the posterior mean as the normalized SAVER $ \hat{\lambda}_{gc}$
+- use the variance in the posterior distribution can be thought of as a measure of uncertainty in the SAVER estimate.
+
