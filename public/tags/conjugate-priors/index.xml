@@ -7,19 +7,21 @@
     <description>Conjugate Priors</description>
     <generator>Hugo Blox Builder (https://hugoblox.com)</generator><language>en-us</language><lastBuildDate>Thu, 24 Apr 2025 00:00:00 +0000</lastBuildDate>
     <image>
-      <url>http://localhost:1313/media/icon_hu6671943710606299486.png</url>
+      <url>http://localhost:1313/media/icon_hu_fd2be5a69becaf9e.png</url>
       <title>Conjugate Priors</title>
       <link>http://localhost:1313/tags/conjugate-priors/</link>
     </image>
     
     <item>
-      <title>Math Derivation for scRNAseq Imputation (SAVER)</title>
+      <title>🧮 Math Derivation for scRNAseq Imputation (SAVER)</title>
       <link>http://localhost:1313/post/19b.scrnaseq_impute_saver/</link>
       <pubDate>Thu, 24 Apr 2025 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/post/19b.scrnaseq_impute_saver/</guid>
       <description>&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
 &lt;p&gt;Single-cell RNASeq could have a large amount of zero values, representing either missing data or no expression. Imputation approaches to deal with this issue have the risk of generating false positive or irreproducible results. Model-based imputation generate fewer false-positives compared with data smoothing based methods (MAGIC and knn-smooth), but this varied greatly depending on how well the model decribed the datasets.&lt;/p&gt;
 &lt;p&gt;&lt;a href=&#34;https://www.nature.com/articles/s41592-018-0033-z#Sec2&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;SAVER&lt;/a&gt; was the least likely to generate false or irreproducible results in &lt;a href=&#34;https://f1000research.com/articles/7-1740/v1&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;a benchmark of common imputation methods&lt;/a&gt;. It suggests the mathematical model used in SAVER could well depict the structure inherent to the scRNAseq datasets. Here we will derive the Poisson–gamma mixture model (also known as negative binomial model) and its Bayesian framework used in SAVER that leverage conjugate priors to estimate the posterior distribution of gene expression levels.&lt;/p&gt;
+&lt;h2&gt;&lt;/h2&gt;
+&lt;p&gt;more in another md file&lt;/p&gt;
 &lt;h2 id=&#34;-goal&#34;&gt;✅ Goal:&lt;/h2&gt;
  
 $$
@@ -76,7 +78,7 @@ $$ \hat{\lambda}_{gc} = \frac{s_c}{s_c + \hat{\beta}_{gc}} \cdot \frac{Y_{gc}}{s
     </item>
     
     <item>
-      <title>📊 Conjugate Priors-- Bypassing Marginals in Bayesian Inference</title>
+      <title>📊 Math derivation-- bypassing marginals in Bayesian Inference using conjugate priors</title>
       <link>http://localhost:1313/post/19a.conjugate_prior_bayes/</link>
       <pubDate>Sat, 12 Apr 2025 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/post/19a.conjugate_prior_bayes/</guid>
@@ -170,7 +172,7 @@ $$ \hat{\lambda}_{gc} = \frac{s_c}{s_c + \hat{\beta}_{gc}} \cdot \frac{Y_{gc}}{s
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;The normalization &amp;ldquo;just works&amp;rdquo; because we&amp;rsquo;re staying within the same distributional family where normalization constants are known.&lt;/p&gt;
-&lt;h2 id=&#34;math-derivationa-idmath-derivationa&#34;&gt;Math Derivation&lt;a id=&#34;math-derivation&#34;&gt;&lt;/a&gt;&lt;/h2&gt;
+&lt;h2 id=&#34;math-derivation&#34;&gt;Math Derivation&lt;a id=&#34;math-derivation&#34;&gt;&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;Below is a &lt;strong&gt;step-by-step derivation of the marginal likelihood integral for the Beta-Binomial conjugate prior relationship&lt;/strong&gt;. This shows how we can transform a potentially difficult integral into a simple ratio of Beta functions, which is the essence of why conjugate priors are so powerful in Bayesian inference.&lt;/p&gt;
 &lt;h3 id=&#34;starting-point-the-marginal-likelihood-integral&#34;&gt;Starting Point: The Marginal Likelihood Integral&lt;/h3&gt;
  $$P(D) = \int_0^1 \binom{n}{s}\theta^s(1-\theta)^{n-s} \cdot \frac{\theta^{\alpha-1}(1-\theta)^{\beta-1}}{B(\alpha,\beta)} d\theta \quad (1)$$ 
