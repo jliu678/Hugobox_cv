@@ -5,7 +5,7 @@ date: 2025-04-12
 authors:
   - admin
 tags:
-  - algorithm
+  - EM algorithm family
   - feature quantification
   - EM
   - scRNAseq

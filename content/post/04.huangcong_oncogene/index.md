@@ -5,13 +5,14 @@ date: 2025-03-27
 authors:
   - admin
 tags:
+  - Differential Expressed Genes GLM-Formula
   - algorithm
   - feature quantification
   - EM
   - scRNAseq
   - 10X
 image:
-  caption: 'Image credit: [**Andrey Soldatov on Unsplash**](https://unsplash.com)'
+  caption: 'Image credit: [**Allison Saeng on Unsplash**](https://unsplash.com)'
 ---
 
 will be composed soon!

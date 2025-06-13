@@ -5,13 +5,14 @@ date: 2025-03-29
 authors:
   - admin
 tags:
+  - scRNAseq In-Depth Biological inference
   - algorithm
   - feature quantification
   - EM
   - scRNAseq
   - 10X
 image:
-  caption: 'Image credit: [**Andrey Soldatov on Unsplash**](https://unsplash.com)'
+  caption: 'Image credit: [**Anirudh on Unsplash**](https://unsplash.com)'
 ---
 
 will be composed soon!

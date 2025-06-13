@@ -5,13 +5,13 @@ date: 2025-04-09
 authors:
   - admin
 tags:
-  - algorithm
+  - RNAseq Mathematical Foundation
   - feature quantification
   - EM
   - scRNAseq
   - 10X
 image:
-  caption: 'Image credit: [**Andrey Soldatov on Unsplash**](https://unsplash.com)'
+  caption: 'Image credit: [**Nicolás Pinilla on Unsplash**](https://unsplash.com)'
 ---
 
 will be composed soon!

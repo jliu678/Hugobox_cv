@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>ScRNAseq Workflow Algorithm | Jiyuan Liu</title>
+    <link>http://localhost:1313/tags/scrnaseq-workflow-algorithm/</link>
+      <atom:link href="http://localhost:1313/tags/scrnaseq-workflow-algorithm/index.xml" rel="self" type="application/rss+xml" />
+    <description>ScRNAseq Workflow Algorithm</description>
+    <generator>Hugo Blox Builder (https://hugoblox.com)</generator><language>en-us</language><lastBuildDate>Wed, 26 Mar 2025 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>http://localhost:1313/media/icon_hu_fd2be5a69becaf9e.png</url>
+      <title>ScRNAseq Workflow Algorithm</title>
+      <link>http://localhost:1313/tags/scrnaseq-workflow-algorithm/</link>
+    </image>
+    
+    <item>
+      <title>🧬 A snakemake pipline-- quantify hERV, transgenes and genome from well-based single-cell RNAseq</title>
+      <link>http://localhost:1313/post/03.well-based_scrnaseq_herv_quantification/</link>
+      <pubDate>Wed, 26 Mar 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/post/03.well-based_scrnaseq_herv_quantification/</guid>
+      <description>&lt;h2 id=&#34;github-source-code&#34;&gt;Github source code&lt;/h2&gt;
+&lt;p&gt;Please see &lt;a href=&#34;https://github.com/jliu678/snakemake-pipline_quantify-hERV-trangene_well-based-scRNAseq&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;github repo&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id=&#34;what-are-hervs-and-transgenes&#34;&gt;What are hERVs and transgenes&lt;/h2&gt;
+&lt;p&gt;Human Endogenous Retroviruses (hERVs) are ancient viral sequences embedded in the human genome. The roles of hERVs in gene regulation, immunity, development and cancer are under intense research. Transgenes including GFP, CRE, Luciferase, rtTA/Tet-On/Tet-Off and epitopically expressed genes are common targets to be quantified in sample from transgenic mouse models.&lt;/p&gt;
+&lt;h2 id=&#34;how-to-quantify-them-from-well-based-scrnaseq&#34;&gt;How to quantify them from Well-based scRNAseq&lt;/h2&gt;
+&lt;p&gt;The EM algorithm is well-suited for quantifying them as elucidated in &lt;a href=&#34;aaaaaaaaa&#34;&gt;my previous blog&lt;/a&gt;. Briefly, EM algorithm is advantageous in dealing with  multimaping, which is commonly seen for hERV and transgene quantification, because:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;mathematically, EM is well suitable for estimating parameters in Gaussian Mixture Models, which is similar to the model describing multimapping&lt;/li&gt;
+&lt;li&gt;biologically, EM can takes into consideration the mapping probability and mapping bias, though Starsolo dose not use bias correction&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;a href=&#34;https://github.com/alexdobin/STAR/blob/master/docs/STARsolo.md#all-parameters-that-control-starsolo-output-are-listed-again-below-with-defaults-and-short-descriptions&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Starsolo&lt;/a&gt; is particularly handy for this task because it:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;implements EM algorithm&lt;/li&gt;
+&lt;li&gt;follows CellRanger logic for cell barcode whitelisting and UMI deduplication to produce nearly identical gene counts in the same format as the CellRanger does&lt;/li&gt;
+&lt;li&gt;is the foundation of alignment in CellRanger&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;why-resembling-cellranger-helps&#34;&gt;Why resembling CellRanger helps&lt;/h2&gt;
+&lt;p&gt;The similarity of STARsolo with CellRanger is important. While CellRanger is not a gold standard, a substantial and growing body of biological interpretations is derived from data processed by it. Aligning with CellRanger enables more meaningful comparisons with such datasets. This is particularly crucial when data integration is required, as no current method can fully correct for technical artifacts without distorting true biological signals.&lt;/p&gt;
+&lt;h2 id=&#34;snakemake-workflow-management&#34;&gt;Snakemake Workflow Management&lt;/h2&gt;
+&lt;p&gt;Snakemake is used to manage a workflow as illustrated below. Briefly, I generated star index and wrangled all fastqs belonging to the same end reading and the same sample into one fastq file. The combined fastqs and star index were input to starsolo in rule &lt;code&gt;star_mapping&lt;/code&gt;. After making sure both input fastq wrangling and rule &lt;code&gt;star_mapping&lt;/code&gt; were done, I moved the input fastqs to a specified directory to safely carry out cleaning up.
+&lt;figure class=&#34;ma0 w-75&#34;&gt;&lt;img src=&#34;http://localhost:1313/post/03.well-based_scrnaseq_herv_quantification/dag.svg&#34;&gt;
+&lt;/figure&gt;
+&lt;/p&gt;
+&lt;p&gt;Compared with that for 10x scRNAseq, the Snakemake file to quantify hERV, transgenes and genome from well-based single-cell RNAseq data has more details to pay attention to. Below discussed the key unique lines of the Snakemake file for well-based single-cell RNAseq, and please see the common parts of the Snakemake files for both well-based and 10x scRNAseq data in &lt;a href=&#34;10xscrnaseq&#34;&gt;my previous blog&lt;/a&gt;.&lt;/p&gt;
+&lt;h3 id=&#34;align-and-count-genes-herv-and-transgenes&#34;&gt;Align and count genes, hERV and transgenes&lt;/h3&gt;
+&lt;p&gt;Rule &lt;code&gt;star_mapping&lt;/code&gt; calls STARsolo with a detailed configuration for single-cell RNA-seq analysis, using a customized CB/UMI structure and enabling EM-based handling of multimappers.&lt;/p&gt;
+&lt;p&gt;The soloType for seqWell(well-based scRNAseq) is &lt;code&gt;CB_UMI_Complex&lt;/code&gt; as excerpted below from &lt;a href=&#34;https://github.com/alexdobin/STAR/blob/master/docs/STARsolo.md#all-parameters-that-control-starsolo-output-are-listed-again-below-with-defaults-and-short-descriptions&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;star-solo github&lt;/a&gt;&lt;/p&gt;
+&lt;pre&gt;&lt;code&gt;- soloType input options:
+    - CB_UMI_Simple   ... (a.k.a. Droplet) one UMI and one Cell Barcode of fixed length in read2, e.g. Drop-seq and 10X Chromium.
+    - CB_UMI_Complex  ... one UMI of fixed length, but multiple Cell Barcodes of varying length, as well as adapters sequences are allowed in read2 only, e.g. inDrop.
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;Microwell-seq uses three separate barcodes with adaptors aside them rather than a single barcode. Generating their three white lists requires reading through the methods in &lt;a href=&#34;https://doi.org/10.1016/j.cell.2018.02.001&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Mapping the Mouse Cell Atlas by Microwell-Seq&lt;/a&gt;. NOTE the results only showed 5&amp;rsquo; to 3&amp;rsquo; strands, while barcodes 2 and 3 were presented on the 3&amp;rsquo; to 5&amp;rsquo; strands and reversed when being transcribed onto the beads, we have to take the complement and reverse the resultant sequence. Below successfully accomplished the three white lists step by step:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Download table S1 of paper &lt;a href=&#34;https://doi.org/10.1016/j.cell.2018.02.001&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Mapping the Mouse Cell Atlas by Microwell-Seq&lt;/a&gt; containing the sequences of well-specific barcodes. The 1st barcode is one of A1-96; the 2nd barcode is one of B1-96; the 3rd barcode is one of C1-96&lt;/li&gt;
+&lt;li&gt;Take A1 &lt;code&gt;TTTAGGGATAACAGGGTAATAAGCAGTGGTATCAACGCAGAGTACGTTTTAGGCGACTCACTACAGGG&lt;/code&gt; as example. We first remove adaptor whose sequence can be seen in the &lt;a href=&#34;https://teichlab.github.io/scg_lib_structs/methods_html/Microwell-seq.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;&amp;ldquo;Step-by-step generation of Indexed-Beads-seqA:
+&amp;quot; section of Microwell-seq github introduction&lt;/a&gt;, which is the sequences beside [barcode1] in &lt;code&gt;5&#39;-TTTAGGGATAACAGGGTAATAAGCAGTGGTATCAACGCAGAGTACGT[barcode1]CGACTCACTACAGGG -3&#39;&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;After removing adaptor the barcode inside A1 is &amp;ldquo;TTTTAGG&amp;rdquo;. That is all for A1.&lt;/li&gt;
+&lt;li&gt;But for B1-96 and C1-96 barcodes, we need remove adaptor as above and further get the reverse complementary of them. Please note the direction of sequence listed in the table S1 downloaded above and that of the adaptor in  &lt;a href=&#34;https://teichlab.github.io/scg_lib_structs/methods_html/Microwell-seq.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;&amp;ldquo;Step-by-step generation of Indexed-Beads-seqA:&amp;rdquo; section of Microwell-seq github introduction&lt;/a&gt;. Also check directions of the raw reads in &lt;a href=&#34;https://trace.ncbi.nlm.nih.gov/Traces/?view=run_browser&amp;amp;page_size=10&amp;amp;acc=SRR9843415&amp;amp;display=reads&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;sra of GSM3980130: Adult-Cervix1; Homo sapiens; RNA-Seq (SRR9843415)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;soloCBposition&lt;/code&gt; and &lt;code&gt;soloUMIposition&lt;/code&gt; of Starsolo needs input in this pattern (0_0_0_5) to know the start and end of barcodes and UMI. See &lt;a href=&#34;https://teichlab.github.io/scg_lib_structs/methods_html/Microwell-seq.html&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;&amp;ldquo;Library sequencing:&amp;rdquo; section of Microwell-seq github introduction&lt;/a&gt; and &lt;a href=&#34;https://github.com/alexdobin/STAR/blob/master/docs/STARsolo.md#complex-barcodes&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;&amp;ldquo;Complex barcodes:&amp;rdquo; section of Star-Solo github introduction&lt;/a&gt;. For example: 0_0_0_5 means the barcode starts at bp 0 and ends at bp 5.&lt;/li&gt;
+&lt;li&gt;Because there are 3 seperate barcodes, the wl option in &amp;ldquo;config.yaml&amp;rdquo; needs to specify 3 different files corresponding to the 3 barcode segments.&lt;/li&gt;
+&lt;li&gt;Importantly, in the &lt;code&gt;--readFilesIn&lt;/code&gt; option, the 1st file has to be cDNA read, and the 2nd file has to be the barcode (cell+UMI) read.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;The rest of the configurations are copied from the &lt;a href=&#34;https://github.com/alexdobin/STAR/blob/master/docs/STARsolo.md#all-parameters-that-control-starsolo-output-are-listed-again-below-with-defaults-and-short-descriptions&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;STARsolo guide on github&lt;/a&gt;. That gives&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;rule&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;star_mapping&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;nb&#34;&gt;input&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;s2&#34;&gt;&amp;#34;combined_reads/&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;{input_reads}&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;.r1.fastq.gz&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;s2&#34;&gt;&amp;#34;combined_reads/&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;{input_reads}&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;.r2.fastq.gz&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;n&#34;&gt;idx&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;expand&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;{star_index}&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;star_index&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;config&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;star_index&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]),&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;n&#34;&gt;output&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; 
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;n&#34;&gt;directory&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;&amp;#34;mapped_reads/&lt;/span&gt;&lt;span class=&#34;si&#34;&gt;{input_reads}&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;/&amp;#34;&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;n&#34;&gt;message&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;s2&#34;&gt;&amp;#34;star mapping...&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;n&#34;&gt;threads&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;24&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;n&#34;&gt;resources&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;n&#34;&gt;mem&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;64000&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;n&#34;&gt;time&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;s1&#34;&gt;&amp;#39;4:00:00&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;n&#34;&gt;shell&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;s2&#34;&gt;&amp;#34;&amp;#34;&amp;#34;STAR --genomeDir &lt;/span&gt;&lt;span class=&#34;si&#34;&gt;{input.idx}&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt; --runThreadN &lt;/span&gt;&lt;span class=&#34;si&#34;&gt;{threads}&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt; &lt;/span&gt;&lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;            --soloType CB_UMI_Complex &lt;/span&gt;&lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;            --soloCBposition 0_0_0_5 0_21_0_26 0_42_0_47 &lt;/span&gt;&lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;            --soloUMIposition 0_48_0_53 &lt;/span&gt;&lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;            --soloCBwhitelist &lt;/span&gt;&lt;span class=&#34;si&#34;&gt;{config[wl]}&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt; &lt;/span&gt;&lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;            --clipAdapterType CellRanger4 --outFilterScoreMin 10 &lt;/span&gt;&lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;            --soloCBmatchWLtype 1MM_multi &lt;/span&gt;&lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;            --soloUMIfiltering MultiGeneUMI_CR --soloUMIdedup 1MM_CR &lt;/span&gt;&lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;            --soloFeatures Gene GeneFull SJ --soloCellFilter EmptyDrops_CR &lt;/span&gt;&lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;            --soloMultiMappers EM &lt;/span&gt;&lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;            --readFilesIn &lt;/span&gt;&lt;span class=&#34;si&#34;&gt;{input[1]}&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt; &lt;/span&gt;&lt;span class=&#34;si&#34;&gt;{input[0]}&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt; --readFilesCommand &amp;#39;gunzip -c&amp;#39;&lt;/span&gt;&lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;            --outFileNamePrefix &lt;/span&gt;&lt;span class=&#34;si&#34;&gt;{output}&lt;/span&gt;&lt;span class=&#34;s2&#34;&gt;/&amp;#34;&amp;#34;&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

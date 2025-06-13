@@ -5,7 +5,7 @@ date: 2025-04-04
 authors:
   - admin
 tags:
-  - algorithm
+  - scRNAseq RNA Velocity, Math, Analysis
   - feature quantification
   - EM
   - scRNAseq

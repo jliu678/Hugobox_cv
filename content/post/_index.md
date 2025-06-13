@@ -1,4 +1,4 @@
 ---
-title: computational blog
+title: Computational Blogs
 view: article-grid
 ---

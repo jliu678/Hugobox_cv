@@ -5,7 +5,7 @@ date: 2025-04-10
 authors:
   - admin
 tags:
-  - algorithm
+  - Machine Learning, Goodness of Fit
   - feature quantification
   - EM
   - scRNAseq

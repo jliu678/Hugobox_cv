@@ -5,7 +5,7 @@ date: 2025-03-25
 authors:
   - admin
 tags:
-  - Snakemake
+  - Snakemake scRNAseq Workflow
   - EM algorithm
   - hERV
   - transgene

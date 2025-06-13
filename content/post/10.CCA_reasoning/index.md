@@ -5,7 +5,7 @@ date: 2025-04-03
 authors:
   - admin
 tags:
-  - algorithm
+  - scRNAseq Integration Mathematical Reasoning
   - feature quantification
   - EM
   - scRNAseq

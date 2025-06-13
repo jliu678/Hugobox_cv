@@ -5,7 +5,7 @@ date: 2025-04-12
 authors:
   - admin
 tags:
-  - Bayesian
+  - Bayesian Inference Math
   - Conjugate Priors
   - Marginal Distribution
   - Math derivation

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>ScRNAseq Bayesian Abundance Statistics | Jiyuan Liu</title>
+    <link>http://localhost:1313/tags/scrnaseq-bayesian-abundance-statistics/</link>
+      <atom:link href="http://localhost:1313/tags/scrnaseq-bayesian-abundance-statistics/index.xml" rel="self" type="application/rss+xml" />
+    <description>ScRNAseq Bayesian Abundance Statistics</description>
+    <generator>Hugo Blox Builder (https://hugoblox.com)</generator><language>en-us</language><lastBuildDate>Sun, 06 Apr 2025 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>http://localhost:1313/media/icon_hu_fd2be5a69becaf9e.png</url>
+      <title>ScRNAseq Bayesian Abundance Statistics</title>
+      <link>http://localhost:1313/tags/scrnaseq-bayesian-abundance-statistics/</link>
+    </image>
+    
+    <item>
+      <title>🧬 Bayesian abundance statistics in PRCC</title>
+      <link>http://localhost:1313/post/12.basian_abundance_statistics/</link>
+      <pubDate>Sun, 06 Apr 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/post/12.basian_abundance_statistics/</guid>
+      <description>&lt;p&gt;will be composed soon!&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

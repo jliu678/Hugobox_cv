@@ -58,6 +58,15 @@
     </item>
     
     <item>
+      <title>🧬 Deep Neural Network to integrate scRNAseq and spatial genomics</title>
+      <link>http://localhost:1313/post/13z.scvi_integrate_scrna_spatial/</link>
+      <pubDate>Mon, 07 Apr 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/post/13z.scvi_integrate_scrna_spatial/</guid>
+      <description>&lt;p&gt;will be composed soon!&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
       <title>🧬 Spatial genomics presentation</title>
       <link>http://localhost:1313/post/14.spatial_genomics_presentation/</link>
       <pubDate>Mon, 07 Apr 2025 00:00:00 +0000</pubDate>
@@ -103,15 +112,6 @@
     </item>
     
     <item>
-      <title>🧬 sctransfrom reasoning</title>
-      <link>http://localhost:1313/post/09.sctransform/</link>
-      <pubDate>Wed, 02 Apr 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/post/09.sctransform/</guid>
-      <description>&lt;p&gt;will be composed soon!&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
       <title>🧬 Clinical relevance evaluation in PRCC</title>
       <link>http://localhost:1313/post/08.clinical_relevance/</link>
       <pubDate>Mon, 31 Mar 2025 00:00:00 +0000</pubDate>
@@ -122,9 +122,9 @@
     
     <item>
       <title>🧬 Expressive cord diagram in PRCC</title>
-      <link>http://localhost:1313/post/07.cord_diagram/</link>
+      <link>http://localhost:1313/post/07.chord_diagram/</link>
       <pubDate>Sun, 30 Mar 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/post/07.cord_diagram/</guid>
+      <guid>http://localhost:1313/post/07.chord_diagram/</guid>
       <description>&lt;p&gt;will be composed soon!&lt;/p&gt;
 </description>
     </item>

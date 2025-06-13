@@ -5,7 +5,7 @@ date: 2025-04-05
 authors:
   - admin
 tags:
-  - algorithm
+  - Deep Learning Histological Analysis
   - feature quantification
   - EM
   - scRNAseq

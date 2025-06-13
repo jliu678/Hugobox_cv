@@ -5,10 +5,10 @@ date: 2025-03-24
 authors:
   - admin
 tags:
+  - RNAseq Algorithm Pipeline
   - hERV
   - transgene
   - feature quantification
-  - algorithm
   - Expectation-Maximization (EM)
   - EM with MAP
 image:

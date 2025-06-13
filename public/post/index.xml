@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>computational blog | Jiyuan Liu</title>
+    <title>Computational Blogs | Jiyuan Liu</title>
     <link>http://localhost:1313/post/</link>
       <atom:link href="http://localhost:1313/post/index.xml" rel="self" type="application/rss+xml" />
-    <description>computational blog</description>
+    <description>Computational Blogs</description>
     <generator>Hugo Blox Builder (https://hugoblox.com)</generator><language>en-us</language><lastBuildDate>Thu, 24 Apr 2025 00:00:00 +0000</lastBuildDate>
     <image>
       <url>http://localhost:1313/media/icon_hu_fd2be5a69becaf9e.png</url>
-      <title>computational blog</title>
+      <title>Computational Blogs</title>
       <link>http://localhost:1313/post/</link>
     </image>
     
@@ -267,6 +267,15 @@ $$ \hat{\lambda}_{gc} = \frac{s_c}{s_c + \hat{\beta}_{gc}} \cdot \frac{Y_{gc}}{s
     </item>
     
     <item>
+      <title>🧬 Deep Neural Network to integrate scRNAseq and spatial genomics</title>
+      <link>http://localhost:1313/post/13z.scvi_integrate_scrna_spatial/</link>
+      <pubDate>Mon, 07 Apr 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/post/13z.scvi_integrate_scrna_spatial/</guid>
+      <description>&lt;p&gt;will be composed soon!&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
       <title>🧬 Spatial genomics presentation</title>
       <link>http://localhost:1313/post/14.spatial_genomics_presentation/</link>
       <pubDate>Mon, 07 Apr 2025 00:00:00 +0000</pubDate>
@@ -331,9 +340,9 @@ $$ \hat{\lambda}_{gc} = \frac{s_c}{s_c + \hat{\beta}_{gc}} \cdot \frac{Y_{gc}}{s
     
     <item>
       <title>🧬 Expressive cord diagram in PRCC</title>
-      <link>http://localhost:1313/post/07.cord_diagram/</link>
+      <link>http://localhost:1313/post/07.chord_diagram/</link>
       <pubDate>Sun, 30 Mar 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/post/07.cord_diagram/</guid>
+      <guid>http://localhost:1313/post/07.chord_diagram/</guid>
       <description>&lt;p&gt;will be composed soon!&lt;/p&gt;
 </description>
     </item>
@@ -2158,7 +2167,7 @@ $$
 
 
 
-&lt;div id=&#34;chart-375691482&#34; class=&#34;chart&#34;&gt;&lt;/div&gt;
+&lt;div id=&#34;chart-127396584&#34; class=&#34;chart&#34;&gt;&lt;/div&gt;
 &lt;script&gt;
   async function fetchChartJSON() {
     console.debug(&#39;Hugo Blox fetching chart JSON...&#39;)
@@ -2176,7 +2185,7 @@ $$
 
       fetchChartJSON().then(chart =&gt; {
         console.debug(&#39;Plotting chart...&#39;)
-        window.Plotly.newPlot(&#39;chart-375691482&#39;, chart.data, chart.layout, {responsive: true});
+        window.Plotly.newPlot(&#39;chart-127396584&#39;, chart.data, chart.layout, {responsive: true});
       });
     }, 500 );
   })();

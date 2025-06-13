@@ -5,7 +5,7 @@ date: 2025-03-31
 authors:
   - admin
 tags:
-  - algorithm
+  - scRNAseq Clinical Relevance Evaluation
   - feature quantification
   - EM
   - scRNAseq

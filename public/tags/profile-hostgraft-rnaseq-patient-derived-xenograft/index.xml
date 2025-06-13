@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Profile Host&amp;Graft RNAseq, Patient-Derived Xenograft | Jiyuan Liu</title>
+    <link>http://localhost:1313/tags/profile-hostgraft-rnaseq-patient-derived-xenograft/</link>
+      <atom:link href="http://localhost:1313/tags/profile-hostgraft-rnaseq-patient-derived-xenograft/index.xml" rel="self" type="application/rss+xml" />
+    <description>Profile Host&amp;Graft RNAseq, Patient-Derived Xenograft</description>
+    <generator>Hugo Blox Builder (https://hugoblox.com)</generator><language>en-us</language><lastBuildDate>Fri, 28 Mar 2025 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>http://localhost:1313/media/icon_hu_fd2be5a69becaf9e.png</url>
+      <title>Profile Host&amp;Graft RNAseq, Patient-Derived Xenograft</title>
+      <link>http://localhost:1313/tags/profile-hostgraft-rnaseq-patient-derived-xenograft/</link>
+    </image>
+    
+    <item>
+      <title>🧬 quantify xenograft and host gene expression from the same sample</title>
+      <link>http://localhost:1313/post/05.xensoft_caki_paper/</link>
+      <pubDate>Fri, 28 Mar 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/post/05.xensoft_caki_paper/</guid>
+      <description>&lt;p&gt;will be composed soon!&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

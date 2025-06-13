@@ -5,7 +5,7 @@ date: 2025-04-06
 authors:
   - admin
 tags:
-  - algorithm
+  - scRNAseq Bayesian Abundance Statistics
   - feature quantification
   - EM
   - scRNAseq

@@ -5,8 +5,8 @@ date: 2025-04-02
 authors:
   - admin
 tags:
-  - algorithm
-  - feature quantification
+  - scRNAseq Normalization Mathematical Reasoning
+  - sctransform
   - EM
   - scRNAseq
   - 10X

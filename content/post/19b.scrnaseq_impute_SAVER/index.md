@@ -5,7 +5,7 @@ date: 2025-04-24
 authors:
   - admin
 tags:
-  - scRNAseq
+  - scRNAseq Poisson–Gamma Mixture Model
   - Imputation
   - Conjugate Priors
   - Bayesian

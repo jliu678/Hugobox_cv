@@ -5,7 +5,7 @@ date: 2025-04-07
 authors:
   - admin
 tags:
-  - algorithm
+  - Spatial Genomics Whole Pipeline
   - feature quantification
   - EM
   - scRNAseq

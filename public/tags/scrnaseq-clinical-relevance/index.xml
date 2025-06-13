@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>ScRNAseq Clinical Relevance | Jiyuan Liu</title>
+    <link>http://localhost:1313/tags/scrnaseq-clinical-relevance/</link>
+      <atom:link href="http://localhost:1313/tags/scrnaseq-clinical-relevance/index.xml" rel="self" type="application/rss+xml" />
+    <description>ScRNAseq Clinical Relevance</description>
+    <generator>Hugo Blox Builder (https://hugoblox.com)</generator><language>en-us</language><lastBuildDate>Mon, 31 Mar 2025 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>http://localhost:1313/media/icon_hu_fd2be5a69becaf9e.png</url>
+      <title>ScRNAseq Clinical Relevance</title>
+      <link>http://localhost:1313/tags/scrnaseq-clinical-relevance/</link>
+    </image>
+    
+    <item>
+      <title>🧬 Clinical relevance evaluation in PRCC</title>
+      <link>http://localhost:1313/post/08.clinical_relevance/</link>
+      <pubDate>Mon, 31 Mar 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/post/08.clinical_relevance/</guid>
+      <description>&lt;p&gt;will be composed soon!&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

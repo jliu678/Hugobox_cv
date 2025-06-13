@@ -5,7 +5,7 @@ date: 2025-04-11
 authors:
   - admin
 tags:
-  - algorithm
+  - AI Neural Network
   - feature quantification
   - EM
   - scRNAseq

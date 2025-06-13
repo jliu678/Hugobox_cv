@@ -5,13 +5,12 @@ date: 2025-03-28
 authors:
   - admin
 tags:
-  - algorithm
+  - Profile Host&Graft RNAseq, patient-derived xenograft
   - feature quantification
-  - EM
-  - scRNAseq
+  - RNAseq
   - 10X
 image:
-  caption: 'Image credit: [**Andrey Soldatov on Unsplash**](https://unsplash.com)'
+  caption: 'Image credit: [**Pranav on Unsplash**](https://unsplash.com)'
 ---
 
 will be composed soon!
