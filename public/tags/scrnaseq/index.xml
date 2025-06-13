@@ -5,12 +5,77 @@
     <link>http://localhost:1313/tags/scrnaseq/</link>
       <atom:link href="http://localhost:1313/tags/scrnaseq/index.xml" rel="self" type="application/rss+xml" />
     <description>ScRNAseq</description>
-    <generator>Hugo Blox Builder (https://hugoblox.com)</generator><language>en-us</language><lastBuildDate>Sat, 12 Apr 2025 00:00:00 +0000</lastBuildDate>
+    <generator>Hugo Blox Builder (https://hugoblox.com)</generator><language>en-us</language><lastBuildDate>Thu, 24 Apr 2025 00:00:00 +0000</lastBuildDate>
     <image>
-      <url>http://localhost:1313/media/icon_hu6671943710606299486.png</url>
+      <url>http://localhost:1313/media/icon_hu_fd2be5a69becaf9e.png</url>
       <title>ScRNAseq</title>
       <link>http://localhost:1313/tags/scrnaseq/</link>
     </image>
+    
+    <item>
+      <title>🧮 Math Derivation for scRNAseq Imputation (SAVER)</title>
+      <link>http://localhost:1313/post/19b.scrnaseq_impute_saver/</link>
+      <pubDate>Thu, 24 Apr 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/post/19b.scrnaseq_impute_saver/</guid>
+      <description>&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;Single-cell RNASeq could have a large amount of zero values, representing either missing data or no expression. Imputation approaches to deal with this issue have the risk of generating false positive or irreproducible results. Model-based imputation generate fewer false-positives compared with data smoothing based methods (MAGIC and knn-smooth), but this varied greatly depending on how well the model described the datasets.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;https://www.nature.com/articles/s41592-018-0033-z#Sec2&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;SAVER&lt;/a&gt; was the least likely to generate false or irreproducible results in &lt;a href=&#34;https://f1000research.com/articles/7-1740/v1&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;a benchmark of common imputation methods&lt;/a&gt;. It suggests the mathematical model used in SAVER could well depict the structure inherent to the scRNAseq datasets. Here we will derive the Poisson–gamma mixture model (also known as negative binomial model) and its Bayesian framework used in SAVER that leverage conjugate priors to estimate the posterior distribution of gene expression levels.&lt;/p&gt;
+&lt;h2&gt;&lt;/h2&gt;
+&lt;p&gt;more in another md file&lt;/p&gt;
+&lt;h2 id=&#34;-goal&#34;&gt;✅ Goal:&lt;/h2&gt;
+ 
+$$
+ \hat{\lambda}_{gc} = \frac{Y_{gc} + \hat{\alpha}_{gc}}{s_c + \hat{\beta}_{gc}} = \frac{s_c}{s_c + \hat{\beta}_{gc}} \cdot \frac{Y_{gc}}{s_c} + \frac{\hat{\beta}_{gc}}{s_c + \hat{\beta}_{gc}} \cdot \hat{\mu}_{gc} 
+$$
+
+
+&lt;p&gt;&lt;strong&gt;Gamma distribution gives:&lt;/strong&gt;&lt;/p&gt;
+ 
+$$ \hat{\alpha}_{gc} = \hat{\beta}_{gc} \hat{\mu}_{gc} \quad \text{(1)} $$
+
+
+&lt;h2 id=&#34;-step-by-step-proof&#34;&gt;🔁 Step-by-Step Proof:&lt;/h2&gt;
+&lt;p&gt;We start with:&lt;/p&gt;
+ 
+$$ \hat{\lambda}_{gc} = \frac{Y_{gc} + \hat{\alpha}_{gc}}{s_c + \hat{\beta}_{gc}} \quad \text{(2)} $$
+
+
+&lt;p&gt;Substitute  $\hat{\alpha}_{gc} = \hat{\beta}_{gc} \hat{\mu}_{gc}$ 
+ from equation (1):&lt;/p&gt;
+ 
+$$ = \frac{Y_{gc} + \hat{\beta}_{gc} \hat{\mu}_{gc}}{s_c + \hat{\beta}_{gc}} \quad \text{(3)} $$
+
+
+&lt;p&gt;Split the numerator:&lt;/p&gt;
+ 
+$$ = \frac{Y_{gc}}{s_c + \hat{\beta}_{gc}} + \frac{\hat{\beta}_{gc} \hat{\mu}_{gc}}{s_c + \hat{\beta}_{gc}} \quad \text{(4)} $$
+
+
+&lt;p&gt;Now multiply and divide the first term by  $s_c$ 
+:&lt;/p&gt;
+ 
+$$ = \left(\frac{s_c}{s_c + \hat{\beta}_{gc}} \cdot \frac{Y_{gc}}{s_c}\right) + \left(\frac{\hat{\beta}_{gc}}{s_c + \hat{\beta}_{gc}} \cdot \hat{\mu}_{gc}\right) \quad \text{(5)} $$
+
+
+&lt;p&gt;Which gives:&lt;/p&gt;
+ 
+$$ \hat{\lambda}_{gc} = \frac{s_c}{s_c + \hat{\beta}_{gc}} \cdot \frac{Y_{gc}}{s_c} + \frac{\hat{\beta}_{gc}}{s_c + \hat{\beta}_{gc}} \cdot \hat{\mu}_{gc} \quad \text{(6)} $$
+
+
+&lt;p&gt;✅ &lt;strong&gt;Proved.&lt;/strong&gt;&lt;/p&gt;
+&lt;h2 id=&#34;-summary&#34;&gt;🔍 Summary:&lt;/h2&gt;
+&lt;p&gt;This is a weighted average of:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt; $\frac{Y_{gc}}{s_c}$ 
+: observed normalized expression&lt;/li&gt;
+&lt;li&gt; $\hat{\mu}_{gc}$ 
+: predicted expression from prior&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;With weights proportional to data confidence ( $s_c$ 
+) and prior confidence ( $\hat{\beta}_{gc}$ 
+).&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>🧬 EM algorithm, EM with max a posterior, full Bayesian inferences (variational Bayesian) which might be used in auto-coder</title>
@@ -68,18 +133,18 @@
     
     <item>
       <title>🧬 Bayesian abundance statistics in PRCC</title>
-      <link>http://localhost:1313/post/13.yolov8/</link>
+      <link>http://localhost:1313/post/12.basian_abundance_statistics/</link>
       <pubDate>Sun, 06 Apr 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/post/13.yolov8/</guid>
+      <guid>http://localhost:1313/post/12.basian_abundance_statistics/</guid>
       <description>&lt;p&gt;will be composed soon!&lt;/p&gt;
 </description>
     </item>
     
     <item>
       <title>🧬 Yolov8</title>
-      <link>http://localhost:1313/post/12.basian_abundance_statistics/</link>
+      <link>http://localhost:1313/post/13.yolov8/</link>
       <pubDate>Sat, 05 Apr 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/post/12.basian_abundance_statistics/</guid>
+      <guid>http://localhost:1313/post/13.yolov8/</guid>
       <description>&lt;p&gt;will be composed soon!&lt;/p&gt;
 </description>
     </item>

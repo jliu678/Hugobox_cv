@@ -1,5 +1,5 @@
 ---
-title: 📊 Math derivation-- bypassing marginals in Bayesian Inference using conjugate priors 
+title: 📊 Math Derivation in Bayesian Inference-- Bypassing Marginals Using Conjugate Priors 
 summary: Conjugate priors are a powerful concept in Bayesian statistics that allow us to simplify the process of updating our beliefs about a parameter given new data.  
 date: 2025-04-12
 authors:
@@ -10,7 +10,7 @@ tags:
   - Marginal Distribution
   - Math derivation
 image:
-  caption: 'Image credit: [**Sigmund on Unsplash**](https://unsplash.com)'
+  caption: 'Image credit: [**Karan Suthar on Unsplash**](https://unsplash.com)'
 ---
 ## Introduction
 Conjugate priors are a powerful concept in Bayesian statistics that allow us to simplify the process of updating our beliefs about a parameter given new data. Using conjugate priors allows you to bypass computing marginal distributions because the posterior has the same functional form as the prior, making the normalization constant analytically tractable.

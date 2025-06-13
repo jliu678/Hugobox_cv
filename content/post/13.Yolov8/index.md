@@ -1,7 +1,7 @@
 ---
-title: 🧬 Bayesian abundance statistics in PRCC
-summary: One sample abundance statistics, bayesian vs frequentist  
-date: 2025-04-06
+title: 🧬 Yolov8
+summary: Yolov8, a deep learning tool to    
+date: 2025-04-05
 authors:
   - admin
 tags:
@@ -11,7 +11,7 @@ tags:
   - scRNAseq
   - 10X
 image:
-  caption: 'Image credit: [**Nigel Hoare on Unsplash**](https://unsplash.com)'
+  caption: 'Image credit: [**Fayette Reynolds on Unsplash**](https://unsplash.com)'
 ---
 
 will be composed soon!
