@@ -135,6 +135,78 @@ For veloVI, we consider the observed data {{< math >}} $\{(s_n, u_n)\}_{n=1}^N$ 
 
 We include a state-dependent scaling factor on the variance. For all experiments in this manuscript, we used {{< math >}} $c_k = 1$ {{< /math >}} except for the repression steady state in which {{< math >}} $c_4 = 0.1$ {{< /math >}}. This hyperparameter choice forces the variance of abundance in the repression steady state to be less than that of other transcriptional states, which reflects the notion that the repression steady state corresponds to zero transcriptional activity. Despite the assumption of zero transcriptional activity, the normal distribution here captures noise that arises during the experimental process (ambient transcripts) as well as during preprocessing (for example, KNN smoothing). Finally, in the following, let {{< math >}} $\theta$ {{< /math >}} be the set of parameters of the generative process ({{< math >}} $\alpha, \beta, \gamma, t_s$ {{< /math >}} and neural network parameters).
 
+# Multivariate Normal Distribution Described in Equation (13)
+
+The expression:
+
+{{< math >}} 
+$$z_n \sim \text{Normal}(0, I_d) \tag{13}$$
+{{< /math >}}
+
+means that the random variable {{< math >}} $z_n$ {{< /math >}} is drawn from a multivariate normal (Gaussian) distribution with:
+
+- **Mean vector** {{< math >}} $0$ {{< /math >}}: a vector of all zeros, of dimension {{< math >}} $d$ {{< /math >}}
+- **Covariance matrix** {{< math >}} $I_d$ {{< /math >}}: the {{< math >}} $d \times d$ {{< /math >}} identity matrix
+
+## 🔍 What this means:
+
+{{< math >}} $z_n \in \mathbb{R}^d$ {{< /math >}}, so it's a {{< math >}} $d$ {{< /math >}}-dimensional vector.
+
+Each component of {{< math >}} $z_n$ {{< /math >}} is independent and follows a standard normal distribution:
+
+{{< math >}} 
+$$z_n^{(i)} \sim N(0,1) \quad \text{for } i=1,\ldots,d \tag{13.1}$$
+{{< /math >}}
+
+The identity matrix {{< math >}} $I_d$ {{< /math >}} as covariance means there's no correlation between dimensions.
+
+## ✅ Common context:
+
+This type of distribution is often used in Variational Autoencoders (VAEs) or other latent variable models, where:
+
+- {{< math >}} $z_n$ {{< /math >}} is a latent (hidden) variable representing compressed features.
+- We assume a standard normal prior for simplicity and tractability.
+
+## 📌 Simple Numeric Example
+
+Let's take:
+
+**Dimension** {{< math >}} $d = 3$ {{< /math >}}
+
+So, {{< math >}} $z \sim N(0, I_3)$ {{< /math >}}, where
+
+{{< math >}} 
+$$I_3 = \begin{bmatrix} 1 & 0 & 0 \\ 0 & 1 & 0 \\ 0 & 0 & 1 \end{bmatrix} \tag{13.2}$$
+{{< /math >}}
+
+This means {{< math >}} $z = [z_1, z_2, z_3]$ {{< /math >}}, where each {{< math >}} $z_i \sim N(0,1)$ {{< /math >}}, independently.
+
+## 🎲 Sample values (drawn randomly):
+
+Suppose we draw one sample and get:
+
+{{< math >}} 
+$$z = \begin{bmatrix} 0.15 \\ -1.23 \\ 0.84 \end{bmatrix} \tag{13.3}$$
+{{< /math >}}
+
+That means:
+- {{< math >}} $z_1 = 0.15$ {{< /math >}}
+- {{< math >}} $z_2 = -1.23$ {{< /math >}}
+- {{< math >}} $z_3 = 0.84$ {{< /math >}}
+
+and each of these values came from a standard normal distribution.
+
+## 🔧 In Python (if you're curious):
+
+```python
+import numpy as np
+
+z = np.random.normal(0, 1, size=3)
+print(z)
+```
+
+This will give a different 3D sample from {{< math >}} $N(0, I_3)$ {{< /math >}} each time you run it.
+
 # veloVI inference procedure
 
 We seek the following: (1) point estimates of the transcription rate, degradation and splicing rate constants and the switching time point; (2) point estimates of the parameters of the neural networks; and (3), a posterior distribution over the latent variables, which in this case includes {{< math >}} $z$ {{< /math >}} and {{< math >}} $\pi$ {{< /math >}}. Noting that the model evidence {{< math >}} $p_\theta(u, s)$ {{< /math >}} cannot be computed in closed form, we use variational inference to approximate the posterior distribution as well as accomplish the other tasks. Following inference, velocity can be calculated as a functional of the variational posterior distribution.
@@ -186,3 +258,5 @@ To optimize {{< math >}} $\mathcal{L}_{\text{velo}}$ {{< /math >}} we use stocha
 ### Architecture 
 
 An overview of the veloVI architecture is shown in Supplementary Fig. 9.
+
+

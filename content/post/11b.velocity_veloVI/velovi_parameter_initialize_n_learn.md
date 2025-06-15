@@ -196,3 +196,97 @@ This single iteration is just one small step. The entire process repeats for man
 **Neural Network Parameters** ({{< math >}} $\phi$ {{< /math >}} - Encoder/Decoder weights/biases):
 - **Encoder:** Learns to map observed {{< math >}} $(u_n, s_n)$ {{< /math >}} data to a meaningful latent space ({{< math >}} $z_n$ {{< /math >}}) and accurate state probabilities ({{< math >}} $\pi_{ng}$ {{< /math >}}), effectively compressing the high-dimensional data into low-dimensional biological insights. It is constrained by the KL terms to avoid overfitting and ensure a regularized latent space.
 - **Decoder:** Learns to map the latent variable {{< math >}} $z_n$ {{< /math >}} to specific latent times that, in combination with the biophysical parameters, accurately reconstruct the observed RNA dynamics.
+
+
+
+## 5. Calculate KL Divergence Terms During Learning 
+
+KL divergence is a measure of how one probability distribution diverges from a second, expected probability distribution. In VAEs, it's used as a regularization term to keep the learned approximate posterior distributions close to simple, predefined prior distributions.
+
+### 1. KL for {{< math >}}$z_n${{< /math >}}: {{< math >}}$\text{KL}(q_\phi(z_1 \mid u_1, s_1) \| p(z))${{< /math >}}
+
+**What it represents:** This term measures the divergence between the approximate posterior distribution for the latent variable {{< math >}}$z_n${{< /math >}} (which is learned by your encoder network) and its prior distribution {{< math >}}$p(z)${{< /math >}}.
+
+#### Components:
+
+**{{< math >}}$q_\phi(z_1 \mid u_1, s_1)${{< /math >}} (Approximate Posterior):** This is the distribution that your encoder neural network outputs for cell 1's latent representation. As previously discussed, the encoder takes the observed unspliced and spliced RNA counts {{< math >}}$(u_1, s_1)${{< /math >}} and produces the parameters (mean {{< math >}}$\mu_{z_1}${{< /math >}} and log-variance {{< math >}}$\log\Sigma_{z_1}${{< /math >}}) of this distribution. It's typically a Gaussian distribution, so {{< math >}}$q_\phi(z_1 \mid u_1, s_1) = \mathcal{N}(\mu_{z_1}, \Sigma_{z_1})${{< /math >}}.
+
+**{{< math >}}$p(z)${{< /math >}} (Prior Distribution):** This is the simple, assumed prior distribution for the latent variable {{< math >}}$z${{< /math >}}. In VAEs, it's almost universally chosen to be a standard normal distribution: {{< math >}}$p(z) = \mathcal{N}(0, I_d)${{< /math >}}, where {{< math >}}$0${{< /math >}} is the zero vector and {{< math >}}$I_d${{< /math >}} is the identity matrix (meaning a mean of zero and unit variance for each dimension, with no covariance).
+
+**"Calculated directly from {{< math >}}$\mu_{z_1}${{< /math >}} and {{< math >}}$\log\Sigma_{z_1}${{< /math >}} outputs":** For two Gaussian distributions, the KL divergence has a well-known analytical (closed-form) solution. You don't need to sample to calculate it; you just plug in the means and variances of the two Gaussians. For {{< math >}}$q(z) = \mathcal{N}(\mu, \Sigma)${{< /math >}} and {{< math >}}$p(z) = \mathcal{N}(0, I)${{< /math >}}, the KL divergence is:
+
+{{< math >}}
+$$
+\text{KL}(\mathcal{N}(\mu, \Sigma) \| \mathcal{N}(0, I)) = \frac{1}{2} \left( \text{tr}(\Sigma) + \mu^T\mu - \log(\det(\Sigma)) - d \right) \quad (1)
+$$
+{{< /math >}}
+
+where {{< math >}}$d${{< /math >}} is the dimensionality of {{< math >}}$z${{< /math >}}. This makes it very efficient to compute.
+
+**"Penalizes deviation from a standard normal prior":**
+
+- The goal of this term is to ensure that the latent space learned by the encoder is well-behaved and regularized.
+- Without this term, the encoder could learn to map inputs to arbitrary regions of the latent space to perfectly reconstruct them, leading to a disorganized latent space where points are not clustered meaningfully and sampling new data (by sampling from {{< math >}}$p(z)${{< /math >}} and passing through the decoder) would be ineffective.
+- By forcing {{< math >}}$q_\phi(z_n \mid u_n, s_n)${{< /math >}} to be similar to a standard normal distribution, the model encourages the latent representations of different cells to be compactly distributed around the origin. This helps with generalization and ensures that the latent space is "interpretable" or at least traversable for generating new samples.
+
+### 2. {{< math >}}$\pi_{ng}${{< /math >}}: {{< math >}}$E_{q_\phi(z_1 \mid u_1, s_1)}[\sum_g \text{KL}(q_\phi(\pi_{1g} \mid z_1) \| p(\pi_{1g}))]${{< /math >}}
+
+**What it represents:** This term measures the divergence between the approximate posterior distribution for the gene kinetic state probabilities {{< math >}}$\pi_{ng}${{< /math >}} and its prior distribution {{< math >}}$p(\pi_{ng})${{< /math >}}. It's an expectation over the uncertainty in {{< math >}}$z_n${{< /math >}}.
+
+#### Components:
+
+**{{< math >}}$q_\phi(\pi_{1g} \mid z_1)${{< /math >}} (Approximate Posterior):** This is the distribution that your encoder network outputs for the kinetic state probabilities of gene {{< math >}}$g${{< /math >}} in cell 1, conditioned on the latent variable {{< math >}}$z_1${{< /math >}}. As previously discussed, the encoder (or a part of it) takes {{< math >}}$z_1${{< /math >}} as input and produces the concentration parameters for this Dirichlet distribution. It is typically a Dirichlet distribution.
+
+**{{< math >}}$p(\pi_{1g})${{< /math >}} (Prior Distribution):** This is the prior you specified in Equation (14): {{< math >}}$p(\pi_{1g}) = \text{Dirichlet}(0.25, 0.25, 0.25, 0.25)${{< /math >}}.
+
+**"Approximated using {{< math >}}$z_1^*${{< /math >}}":**
+
+- Notice the expectation {{< math >}}$E_{q_\phi(z_1 \mid u_1, s_1)}[\ldots]${{< /math >}}. This means we need to average the KL divergence for {{< math >}}$\pi_{ng}${{< /math >}} over all possible values of {{< math >}}$z_1${{< /math >}}, weighted by their probability under {{< math >}}$q_\phi(z_1 \mid u_1, s_1)${{< /math >}}.
+- In practice, this expectation is approximated using a single sample {{< math >}}$z_1^*${{< /math >}} drawn from {{< math >}}$q_\phi(z_1 \mid u_1, s_1)${{< /math >}} (using the reparameterization trick). So, for each training step, you calculate {{< math >}}$\text{KL}(q_\phi(\pi_{1g} \mid z_1^*) \| p(\pi_{1g}))${{< /math >}} where {{< math >}}$z_1^*${{< /math >}} is the specific sample used in that forward pass. Summing this over many mini-batches and epochs effectively approximates the expectation.
+
+**"Penalizes deviation of state probabilities from a uniform prior":**
+
+- Similar to the {{< math >}}$z_n${{< /math >}} KL term, this term regularizes the inferred kinetic state probabilities.
+- By pushing {{< math >}}$q_\phi(\pi_{ng} \mid z_n)${{< /math >}} towards {{< math >}}$\text{Dirichlet}(0.25, \ldots, 0.25)${{< /math >}}, it reinforces the prior belief that each gene in each cell is highly likely to be predominantly in one specific kinetic state. This prevents the model from assigning fuzzy, evenly spread probabilities across all states unless the data strongly supports it. It encourages a more decisive assignment of kinetic states.
+
+#### KL Divergence Between Dirichlet Distributions
+The term {{< math >}}$\text{KL}(q_\phi(\pi_{1g} \mid z_1) \| p(\pi_{1g}))]${{< /math >}} above is specific case of the KL divergence between two Dirichlet distributions.
+
+Generally, the KL divergence between two Dirichlet distributions, {{< math >}}$P \sim \text{Dir}(\alpha_1)${{< /math >}} and {{< math >}}$Q \sim \text{Dir}(\alpha_2)${{< /math >}}, both defined over {{< math >}}$K${{< /math >}} categories, has a known closed-form solution.
+
+Let:
+
+- {{< math >}}$P${{< /math >}} be your approximate posterior distribution, {{< math >}}$q_\phi(\pi_{1g} \mid z_1^*)${{< /math >}}, with concentration parameters {{< math >}}$\alpha_q = (\alpha_{q,1}, \ldots, \alpha_{q,K})${{< /math >}}. These are the parameters output by your encoder network (or a part of it, conditioned on {{< math >}}$z_1^*${{< /math >}}).
+- {{< math >}}$Q${{< /math >}} be your prior distribution, {{< math >}}$p(\pi_{1g})${{< /math >}}, with concentration parameters {{< math >}}$\alpha_p = (\alpha_{p,1}, \ldots, \alpha_{p,K})${{< /math >}}. In your VeloVI example, this is {{< math >}}$(0.25, 0.25, 0.25, 0.25)${{< /math >}}.
+
+The KL divergence {{< math >}}$\text{KL}(P \| Q)${{< /math >}} is given by:
+
+{{< math >}}
+$$
+\text{KL}(P \| Q) = \log \frac{\Gamma\left(\sum_{i=1}^K \alpha_{p,i}\right)}{\Gamma\left(\sum_{i=1}^K \alpha_{q,i}\right)} + \sum_{i=1}^K \left[\log\left(\frac{\Gamma(\alpha_{q,i})}{\Gamma(\alpha_{p,i})}\right) + (\alpha_{q,i} - \alpha_{p,i})\left(\psi(\alpha_{q,i}) - \psi\left(\sum_{j=1}^K \alpha_{q,j}\right)\right)\right] \quad (2)
+$$
+{{< /math >}}
+
+Where:
+
+- {{< math >}}$K${{< /math >}} is the number of categories (in your case, 4 kinetic states).
+- {{< math >}}$\Gamma(\cdot)${{< /math >}} is the Gamma function. The Gamma function is a generalization of the factorial function to real and complex numbers. For positive integers {{< math >}}$n${{< /math >}}, {{< math >}}$\Gamma(n) = (n-1)!${{< /math >}}. Most numerical libraries (like NumPy, SciPy, or PyTorch's `torch.lgamma` which computes {{< math >}}$\log(\Gamma(x))${{< /math >}} for numerical stability) have implementations for this.
+- {{< math >}}$\psi(\cdot)${{< /math >}} is the digamma function, which is the first derivative of the logarithm of the Gamma function: {{< math >}}$\psi(x) = \frac{d}{dx}\log\Gamma(x) = \frac{\Gamma'(x)}{\Gamma(x)}${{< /math >}}. This function is also commonly available in numerical libraries.
+
+#### Breaking Down the Formula Terms
+
+Let's break down the formula terms and why they are there:
+
+1. **{{< math >}}$\log\left(\frac{\Gamma\left(\sum_{i=1}^K \alpha_{p,i}\right)}{\Gamma\left(\sum_{i=1}^K \alpha_{q,i}\right)}\right)${{< /math >}}:** This term relates to the normalization constants of the two Dirichlet distributions.
+
+2. **{{< math >}}$\sum_{i=1}^K \log\left(\frac{\Gamma(\alpha_{q,i})}{\Gamma(\alpha_{p,i})}\right)${{< /math >}}:** This part sums the differences in the logarithm of the Gamma functions for each individual concentration parameter.
+
+3. **{{< math >}}$\sum_{i=1}^K (\alpha_{q,i} - \alpha_{p,i})\left(\psi(\alpha_{q,i}) - \psi\left(\sum_{j=1}^K \alpha_{q,j}\right)\right)${{< /math >}}:** This is the most complex part and involves the digamma function. The term {{< math >}}$\psi(\alpha_{q,i}) - \psi\left(\sum_{j=1}^K \alpha_{q,j}\right)${{< /math >}} is the expected value of {{< math >}}$\log(x_i)${{< /math >}} when {{< math >}}$x \sim \text{Dir}(\alpha_q)${{< /math >}}. This term essentially measures the difference in the expected log-probabilities of the categories between the two distributions.
+
+#### Practical Implementation Notes
+
+- **Log-Gamma Function:** When implementing this, it's generally more numerically stable to work with the logarithm of the Gamma function (`torch.lgamma` in PyTorch, `scipy.special.gammaln` in SciPy) rather than the Gamma function itself, to avoid potential overflow/underflow issues with very large or very small numbers.
+
+- **Digamma Function:** Similarly, use the digamma function directly (`torch.digamma` in PyTorch, `scipy.special.digamma` in SciPy).
+
+- **Automatic Differentiation:** In deep learning frameworks like PyTorch or TensorFlow, you would define this formula using their tensor operations. The framework's automatic differentiation engine would then handle the backward pass to compute gradients with respect to {{< math >}}$\alpha_{q,i}${{< /math >}} (which are outputs of your encoder network).
