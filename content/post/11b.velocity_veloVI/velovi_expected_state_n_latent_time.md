@@ -395,4 +395,185 @@ This final scalar value (e.g., 3.542) represents VeloVI's average estimated late
 | Final average | Calculated | Overall approximation | {{< math >}}$(0.9074, 0.0426, 0.0296, 0.0204)${{< /math >}} |
 
 
+# Calculate Expected Velocity for a sampled {{< math >}}$z_n${{< /math >}}
+> **Note: Posterior Velocity Distribution, i.e. the full posterior predictive velocity distribution, is just the distribution of all the expected velocity values for the sample {{< math >}}$z_n^*${{< /math >}} (drawn from {{< math >}}$q_\phi(z_n|u_n, s_n)${{< /math >}}).**
 
+---
+
+{{< math >}}
+$$\mathbb{E}_{q_\phi(\pi_{ng}|z_n)} \left[v^{(g)}(t(k_{ng})_{ng}, k_{ng})\right] \tag{1}$$
+{{< /math >}}
+
+This term represents the expected velocity for gene g in cell n, given a specific latent variable {{< math >}}$z_n${{< /math >}}, averaging over the uncertainty in its kinetic state {{< math >}}$k_{ng}${{< /math >}}.
+
+We will use the same logic as the previous expectation for latent time, as the structure is identical: we are calculating the expectation of a quantity ({{< math >}}$v^{(g)}${{< /math >}}) that depends on a discrete random variable ({{< math >}}$k_{ng}${{< /math >}}), whose probabilities are determined by the Dirichlet distribution {{< math >}}$q_\phi(\pi_{ng}|z_n)${{< /math >}}.
+
+## 1. Recall the General Expectation for a Discrete Variable
+
+If X is a discrete random variable that can take on values {{< math >}}$x_1, x_2, \ldots, x_K${{< /math >}} with corresponding probabilities {{< math >}}$P(X=x_1), P(X=x_2), \ldots, P(X=x_K)${{< /math >}}, then:
+
+{{< math >}}
+$$\mathbb{E}[X] = \sum_{i=1}^K x_i \cdot P(X=x_i) \tag{2}$$
+{{< /math >}}
+
+## 2. Applying to Our Velocity Case
+
+**The Random Variable:** Our random variable is {{< math >}}$v^{(g)}(t(k_{ng})_{ng}, k_{ng})${{< /math >}}. Its value depends on the specific kinetic state {{< math >}}$k_{ng}${{< /math >}}.
+
+**The Possible Values:** For each state {{< math >}}$k \in \{1,2,3,4\}${{< /math >}}, the value of the velocity is {{< math >}}$v^{(g)}(t_{ng}^{(k)}(z_n), k)${{< /math >}}. This velocity depends on the latent time {{< math >}}$t_{ng}^{(k)}(z_n)${{< /math >}} (which is a function of {{< math >}}$z_n${{< /math >}} and k) and the state k itself.
+
+**The Probabilities:** The probability of being in state k is {{< math >}}$P(k_{ng} = k|z_n)${{< /math >}}. As derived previously, this is given by the expected value of the k-th component of {{< math >}}$\pi_{ng}${{< /math >}} under the Dirichlet distribution:
+
+{{< math >}}
+$$P(k_{ng} = k|z_n) = \mathbb{E}_{q_\phi(\pi_{ng}|z_n)}[\pi_{ng,k}] = \frac{\alpha_{q,ng,k}(z_n)}{\sum_{j=1}^K \alpha_{q,ng,j}(z_n)} \tag{3}$$
+{{< /math >}}
+
+Putting it together, the inner expectation for velocity becomes:
+
+{{< math >}}
+$$\mathbb{E}_{q_\phi(\pi_{ng}|z_n)} \left[v^{(g)}(t(k_{ng})_{ng}, k_{ng})\right] = \sum_{k=1}^K P(k_{ng} = k|z_n) \cdot v^{(g)}(t_{ng}^{(k)}(z_n), k) \tag{4}$$
+{{< /math >}}
+
+This will result in a single scalar value for each gene and cell, given a specific {{< math >}}$z_n${{< /math >}}.
+
+## Numeric Example for Cell 1, Gene A
+
+Let's use the same example inputs from our previous discussions:
+
+**Assumed Sampled** {{< math >}}$z_1^*${{< /math >}}: {{< math >}}$(0.6558, -0.3779)${{< /math >}} (This comes from the first step in the "posterior predictive velocity distribution" process).
+
+**Learned Biophysical Parameters (θ) for Gene A:**
+- {{< math >}}$\alpha_A = 1.2${{< /math >}} (Transcription rate in Induction)
+- {{< math >}}$\beta_A = 0.2${{< /math >}} (Splicing rate)
+- {{< math >}}$\gamma_A = 0.1${{< /math >}} (Degradation rate)
+- {{< math >}}$t_A^s = 8.0${{< /math >}} (Switching time)
+
+**Encoder Output for** {{< math >}}$\pi_{1A}${{< /math >}} **(given** {{< math >}}$z_1^*${{< /math >}}**):**
+- {{< math >}}$\alpha_{q,1A}(z_1^*) = (5.0, 0.1, 0.2, 0.1)${{< /math >}}
+- Sum = 5.4
+
+This gives us the state probabilities {{< math >}}$P(k_{1A} = k|z_1^*)${{< /math >}}:
+- {{< math >}}$P(k_{1A} = 1|z_1^*) = 5.0/5.4 \approx 0.9259${{< /math >}}
+- {{< math >}}$P(k_{1A} = 2|z_1^*) = 0.1/5.4 \approx 0.0185${{< /math >}}
+- {{< math >}}$P(k_{1A} = 3|z_1^*) = 0.2/5.4 \approx 0.0370${{< /math >}}
+- {{< math >}}$P(k_{1A} = 4|z_1^*) = 0.1/5.4 \approx 0.0185${{< /math >}}
+
+**Decoder Output for** {{< math >}}$\rho_{1A}^{(k)}${{< /math >}} **(given** {{< math >}}$z_1^*${{< /math >}}**) and corresponding latent times** {{< math >}}$t_{1A}^{(k)}${{< /math >}}**:**
+- {{< math >}}$\rho_{1A}^{(1)} = 0.5 \Rightarrow t_{1A}^{(1)} = 0.5 \times 8.0 = 4.0${{< /math >}}
+- {{< math >}}$\rho_{1A}^{(2)} = 0.3 \Rightarrow t_{1A}^{(2)} = 0.3 \times 8.0 = 2.4${{< /math >}}
+- {{< math >}}$\rho_{1A}^{(3)} = 0.8 \Rightarrow t_{1A}^{(3)} = 0.8 \times 8.0 = 6.4${{< /math >}}
+- {{< math >}}$\rho_{1A}^{(4)} = 0.1 \Rightarrow t_{1A}^{(4)} = 0.1 \times 8.0 = 0.8${{< /math >}}
+
+**The Velocity Formula:**
+
+{{< math >}}
+$$v^{(g)}(t^{(k)}, k) = \beta_g \bar{u}^{(g)}(t^{(k)}, k) - \gamma_g \bar{s}^{(g)}(t^{(k)}, k) \tag{5}$$
+{{< /math >}}
+
+We need the expected unspliced ({{< math >}}$\bar{u}${{< /math >}}) and spliced ({{< math >}}$\bar{s}${{< /math >}}) counts for each state at its corresponding latent time. These are given by the kinetic equations in VeloVI.
+
+### Calculations for each state k and its corresponding {{< math >}}$t_{1A}^{(k)}${{< /math >}}:
+
+**State 1 (Induction, k=1): t=4.0**
+
+{{< math >}}
+$$\bar{u}^{(A)}(4.0, 1) = \frac{\alpha_A}{\beta_A}(1 - e^{-\beta_A t}) = \frac{1.2}{0.2}(1 - e^{-0.2 \times 4.0}) = 6(1 - e^{-0.8}) \approx 6(1 - 0.4493) = 3.3042 \tag{6}$$
+{{< /math >}}
+
+{{< math >}}
+$$\bar{s}^{(A)}(4.0, 1) = \frac{\alpha_A}{\gamma_A}\left(1 - \frac{\gamma_A}{\gamma_A - \beta_A}e^{-\beta_A t} + \frac{\beta_A}{\gamma_A - \beta_A}e^{-\gamma_A t}\right) \tag{7}$$
+{{< /math >}}
+
+{{< math >}}
+$$= \frac{1.2}{0.1}\left(1 - \frac{0.1}{0.1 - 0.2}e^{-0.8} + \frac{0.2}{0.1 - 0.2}e^{-0.4}\right) = 12(1 + e^{-0.8} - 2e^{-0.4}) \tag{8}$$
+{{< /math >}}
+
+{{< math >}}
+$$\approx 12(1 + 0.4493 - 2 \times 0.6703) = 12(1.4493 - 1.3406) \approx 1.3044 \tag{9}$$
+{{< /math >}}
+
+{{< math >}}
+$$v^{(A)}(4.0, 1) = \beta_A \bar{u}^{(A)}(4.0, 1) - \gamma_A \bar{s}^{(A)}(4.0, 1) = (0.2 \times 3.3042) - (0.1 \times 1.3044) = 0.66084 - 0.13044 = 0.5304 \tag{10}$$
+{{< /math >}}
+
+**State 2 (Repression, k=2): t=2.4**
+
+(For repression, we need the values at {{< math >}}$t_A^s = 8.0${{< /math >}} (end of induction) as initial conditions for decay.)
+
+{{< math >}}
+$$\bar{u}^{(A)}(t_A^s, 1) = 6(1 - e^{-0.2 \times 8.0}) \approx 6(1 - 0.2019) = 4.7886 \tag{11}$$
+{{< /math >}}
+
+{{< math >}}
+$$\bar{s}^{(A)}(t_A^s, 1) = 12(1 + e^{-1.6} - 2e^{-0.8}) \approx 12(1 + 0.2019 - 2 \times 0.4493) = 3.6396 \tag{12}$$
+{{< /math >}}
+
+{{< math >}}
+$$\bar{u}^{(A)}(2.4, 2) = \bar{u}^{(A)}(t_A^s, 1)e^{-\beta_A t_{1A}^{(2)}} = 4.7886 \times e^{-0.2 \times 2.4} \approx 4.7886 \times 0.6188 = 2.9634 \tag{13}$$
+{{< /math >}}
+
+{{< math >}}
+$$\bar{s}^{(A)}(2.4, 2) = \bar{s}^{(A)}(t_A^s, 1)e^{-\gamma_A t_{1A}^{(2)}} + \frac{\beta_A \bar{u}^{(A)}(t_A^s, 1)}{\gamma_A - \beta_A}(e^{-\beta_A t_{1A}^{(2)}} - e^{-\gamma_A t_{1A}^{(2)}}) \tag{14}$$
+{{< /math >}}
+
+{{< math >}}
+$$= 3.6396e^{-0.1 \times 2.4} + \frac{0.2 \times 4.7886}{0.1 - 0.2}(e^{-0.2 \times 2.4} - e^{-0.1 \times 2.4}) \tag{15}$$
+{{< /math >}}
+
+{{< math >}}
+$$\approx 3.6396 \times 0.7866 + (-9.5772)(0.6188 - 0.7866) \approx 2.8617 + 1.6072 = 4.4689 \tag{16}$$
+{{< /math >}}
+
+{{< math >}}
+$$v^{(A)}(2.4, 2) = (0.2 \times 2.9634) - (0.1 \times 4.4689) = 0.59268 - 0.44689 = 0.1458 \tag{17}$$
+{{< /math >}}
+
+**State 3 (Steady-State Induction, k=3): t=6.4**
+
+{{< math >}}
+$$\bar{u}^{(A)}(6.4, 3) = \alpha_A/\beta_A = 1.2/0.2 = 6.0 \tag{18}$$
+{{< /math >}}
+
+{{< math >}}
+$$\bar{s}^{(A)}(6.4, 3) = \alpha_A/\gamma_A = 1.2/0.1 = 12.0 \tag{19}$$
+{{< /math >}}
+
+{{< math >}}
+$$v^{(A)}(6.4, 3) = \beta_A \bar{u}^{(A)}(6.4, 3) - \gamma_A \bar{s}^{(A)}(6.4, 3) = (0.2 \times 6.0) - (0.1 \times 12.0) = 1.2 - 1.2 = 0.0 \tag{20}$$
+{{< /math >}}
+
+**State 4 (Steady-State Repression, k=4): t=0.8**
+
+{{< math >}}
+$$\bar{u}^{(A)}(0.8, 4) = 0.0 \tag{21}$$
+{{< /math >}}
+
+{{< math >}}
+$$\bar{s}^{(A)}(0.8, 4) = 0.0 \tag{22}$$
+{{< /math >}}
+
+{{< math >}}
+$$v^{(A)}(0.8, 4) = \beta_A \bar{u}^{(A)}(0.8, 4) - \gamma_A \bar{s}^{(A)}(0.8, 4) = (0.2 \times 0.0) - (0.1 \times 0.0) = 0.0 \tag{23}$$
+{{< /math >}}
+
+### Calculate the weighted sum:
+
+Now, we multiply each calculated velocity by its corresponding state probability {{< math >}}$P(k_{1A} = k|z_1^*)${{< /math >}} and sum them up:
+
+{{< math >}}
+$$\mathbb{E}_{q_\phi(\pi_{1A}|z_1^*)} \left[v^{(A)}(t(k_{1A})_{1A}, k_{1A})\right] = \tag{24}$$
+{{< /math >}}
+
+{{< math >}}
+$$(0.9259 \times 0.5304) + (0.0185 \times 0.1458) + (0.0370 \times 0.0) + (0.0185 \times 0.0) \tag{25}$$
+{{< /math >}}
+
+{{< math >}}
+$$= 0.4900 + 0.0027 + 0.0 + 0.0 \approx 0.4927 \tag{26}$$
+{{< /math >}}
+
+## Get Posterior Predictive Velocity Distribution
+
+The value **0.4927** is the expected velocity for Gene A in Cell 1, given the specific sampled latent variable {{< math >}}$z_1^* = (0.6558, -0.3779)${{< /math >}}.
+
+This value is one sample of the posterior predictive velocity. To get the full posterior predictive velocity distribution, you would repeat this entire calculation for many different samples of {{< math >}}$z_n^*${{< /math >}} (drawn from {{< math >}}$q_\phi(z_n|u_n, s_n)${{< /math >}}) and then analyze the distribution of these resulting expected velocity values.
