@@ -1,0 +1,2717 @@
+<!doctype html>
+<!-- This site was created with Hugo Blox. https://hugoblox.com -->
+<!-- Last Published: June 15, 2025 --><html lang="en-us" dir="ltr"
+      data-wc-theme-default="system">
+  
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="generator" content="Hugo Blox Builder 0.3.1" />
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+    
+    
+    
+  
+  
+
+  <meta name="author" content="Jiyuan Liu" />
+
+  
+  
+  
+    
+  
+  <meta name="description" content="VeloVI Parameter Initialization and Learning Process Illustration of the initiation and learning process for all parameters in VeloVI for our scenario of three genes (Gene A, Gene B, Gene C) in four cells (Cell 1, Cell 2, Cell 3, Cell 4).
+" />
+
+  
+  <link rel="alternate" hreflang="en-us" href="http://localhost:1313/post/11b.velocity_velovi/velovi_parameter_initialize_n_learn/" />
+
+  
+  
+  
+  
+    
+    <link rel="stylesheet" href="/css/themes/emerald.min.css" />
+  
+
+  
+  
+    
+    <link href="/dist/wc.min.css" rel="stylesheet" />
+  
+
+  
+  
+  
+
+  
+    
+    <link href="/css/custom.min.9a8c1508a999d285edca71446056519c3773544bdbe9fd11396354c75238a016.css" rel="stylesheet" />
+  
+
+  <script>
+     
+    window.hbb = {
+       defaultTheme: document.documentElement.dataset.wcThemeDefault,
+       setDarkTheme: () => {
+        document.documentElement.classList.add("dark");
+        document.documentElement.style.colorScheme = "dark";
+      },
+       setLightTheme: () => {
+        document.documentElement.classList.remove("dark");
+        document.documentElement.style.colorScheme = "light";
+      }
+    }
+
+    console.debug(`Default Hugo Blox Builder theme is ${window.hbb.defaultTheme}`);
+
+    if ("wc-color-theme" in localStorage) {
+      localStorage.getItem("wc-color-theme") === "dark" ? window.hbb.setDarkTheme() : window.hbb.setLightTheme();
+    } else {
+      window.hbb.defaultTheme === "dark" ? window.hbb.setDarkTheme() : window.hbb.setLightTheme();
+      if (window.hbb.defaultTheme === "system") {
+        window.matchMedia("(prefers-color-scheme: dark)").matches ? window.hbb.setDarkTheme() : window.hbb.setLightTheme();
+      }
+    }
+  </script>
+
+  <script>
+    
+    document.addEventListener('DOMContentLoaded', function () {
+      
+      let checkboxes = document.querySelectorAll('li input[type=\'checkbox\'][disabled]');
+      checkboxes.forEach(e => {
+        e.parentElement.parentElement.classList.add('task-list');
+      });
+
+      
+      const liNodes = document.querySelectorAll('.task-list li');
+      liNodes.forEach(nodes => {
+        let textNodes = Array.from(nodes.childNodes).filter(node => node.nodeType === 3 && node.textContent.trim().length > 1);
+        if (textNodes.length > 0) {
+          const span = document.createElement('label');
+          textNodes[0].after(span);  
+          span.appendChild(nodes.querySelector('input[type=\'checkbox\']'));
+          span.appendChild(textNodes[0]);
+        }
+      });
+    });
+  </script>
+
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+  <link rel="icon" type="image/png" href="/media/icon_hu_c54cc46c793e1f2b.png" />
+  <link rel="apple-touch-icon" type="image/png" href="/media/icon_hu_68ea7b4ed3f6b794.png" />
+
+  <link rel="canonical" href="http://localhost:1313/post/11b.velocity_velovi/velovi_parameter_initialize_n_learn/" />
+
+  
+  
+  
+  
+  
+  
+  
+  
+    
+    
+  
+  
+
+  
+  
+    
+    
+  
+  <meta property="twitter:card" content="summary" />
+  
+    <meta property="twitter:site" content="@GetResearchDev" />
+    <meta property="twitter:creator" content="@GetResearchDev" />
+  
+  <meta property="og:site_name" content="Jiyuan Liu" />
+  <meta property="og:url" content="http://localhost:1313/post/11b.velocity_velovi/velovi_parameter_initialize_n_learn/" />
+  <meta property="og:title" content="Jiyuan Liu" />
+  <meta property="og:description" content="VeloVI Parameter Initialization and Learning Process
+Illustration of the initiation and learning process for all parameters in VeloVI for our scenario of three genes (Gene A, Gene B, Gene C) in four cells (Cell 1, Cell 2, Cell 3, Cell 4)." /><meta property="og:image" content="http://localhost:1313/media/icon_hu_fd2be5a69becaf9e.png" />
+    <meta property="twitter:image" content="http://localhost:1313/media/icon_hu_fd2be5a69becaf9e.png" /><meta property="og:locale" content="en-us" />
+  
+    
+    
+  
+
+  
+
+
+
+  
+
+
+  <title>Jiyuan Liu</title>
+
+  
+  
+  
+  
+  
+    
+    
+  
+  
+  <style>
+    @font-face {
+      font-family: 'Inter var';
+      font-style: normal;
+      font-weight: 100 900;
+      font-display: swap;
+      src: url(/dist/font/Inter.var.woff2) format(woff2);
+    }
+  </style>
+
+  
+
+  
+  
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+    
+      
+      
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        
+        
+      
+    
+  
+  
+  
+  
+  
+  
+  
+  
+    
+      
+      
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        
+        
+      
+    
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+    
+      
+      
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        
+        
+      
+    
+      
+      
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        
+        
+      
+    
+      
+      
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        
+        
+      
+    
+      
+      
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        
+        
+      
+    
+  
+  
+  
+  
+  
+  
+    
+      
+      
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        
+        
+      
+    
+      
+      
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        
+        
+      
+    
+      
+      
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        
+        
+      
+    
+      
+      
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        
+        
+      
+    
+      
+      
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        
+        
+      
+    
+      
+      
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        
+        
+      
+    
+      
+      
+    
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+<link type="text/css" rel="stylesheet" href="/dist/pagefind/pagefind-ui.be766eb419317a14ec769d216e9779bfe8f3737c80e780f4ba0dafb57a41a482.css" integrity="sha256-vnZutBkxehTsdp0hbpd5v&#43;jzc3yA54D0ug2vtXpBpII=" />
+
+
+<script src="/dist/pagefind/pagefind-ui.87693d7c6f2b3b347ce359d0ede762c033419f0a32b22ce508c335a81d841f1b.js" integrity="sha256-h2k9fG8rOzR841nQ7ediwDNBnwoysizlCMM1qB2EHxs="></script>
+
+
+<script>window.hbb.pagefind = {"baseUrl":"/"};</script>
+
+<style>
+  html.dark {
+    --pagefind-ui-primary: #eeeeee;
+    --pagefind-ui-text: #eeeeee;
+    --pagefind-ui-background: #152028;
+    --pagefind-ui-border: #152028;
+    --pagefind-ui-tag: #152028;
+  }
+</style>
+
+<script>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    new PagefindUI({
+      element: "#search",
+      showSubResults: true,
+      baseUrl: window.hbb.pagefind.baseUrl,
+      bundlePath: window.hbb.pagefind.baseUrl + "pagefind/",
+    });
+  });
+  document.addEventListener('DOMContentLoaded', () => {
+    let element = document.getElementById('search');
+    let trigger = document.getElementById('search_toggle');
+
+    if (trigger) {
+      trigger.addEventListener('click', () => {
+        element.classList.toggle('hidden');
+        element.querySelector("input").value = ""
+        element.querySelector("input").focus()
+
+        if (!element.classList.contains('hidden')) {
+          let clear_trigger = document.querySelector('.pagefind-ui__search-clear');
+
+          if (clear_trigger && !clear_trigger.hasAttribute('listenerOnClick')) {
+            clear_trigger.setAttribute('listenerOnClick', 'true');
+
+            clear_trigger.addEventListener('click', () => {
+              element.classList.toggle('hidden');
+            });
+          }
+        }
+
+      });
+    }
+  });
+</script>
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link type="text/css" rel="stylesheet" href="/dist/lib/katex/katex.min.505d5f829022bb7b4f24dfee0aa1141cd7bba67afe411d1240335f820960b5c3.css" integrity="sha256-UF1fgpAiu3tPJN/uCqEUHNe7pnr&#43;QR0SQDNfgglgtcM=" />
+  
+  
+  <script defer src="/dist/lib/katex/katex.min.dc84b296ec3e884de093158f760fd9d45b6c7abe58b5381557f4e138f46a58ae.js" integrity="sha256-3ISyluw&#43;iE3gkxWPdg/Z1Ftser5YtTgVV/ThOPRqWK4="></script>
+  
+  
+  
+  
+  <script defer src="/js/katex-renderer.6579ec9683211cfb952064aedf3a3baea5eeb17a061775b32b70917474637c80.js" integrity="sha256-ZXnsloMhHPuVIGSu3zo7rqXusXoGF3WzK3CRdHRjfIA="></script>
+  
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+
+
+
+
+
+
+  
+  
+  
+  
+  
+  
+  
+  <script
+    defer
+    src="/js/hugo-blox-en.min.js"
+    integrity=""
+  ></script>
+
+  
+  
+
+
+
+
+
+
+
+
+  
+    
+      
+      <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+      
+    
+  
+
+
+
+
+</head>
+
+  <body class="dark:bg-hb-dark dark:text-white page-wrapper" id="top">
+    <div id="page-bg"></div>
+    <div class="page-header sticky top-0 z-30">
+      
+      
+      
+        
+        
+        
+          <header id="site-header" class="header">
+  <nav class="navbar px-3 flex justify-left">
+    <div class="order-0 h-100">
+      
+      <a class="navbar-brand" href="/" title="Jiyuan Liu">
+        Home
+      </a>
+    </div>
+    
+    <input id="nav-toggle" type="checkbox" class="hidden" />
+    <label
+      for="nav-toggle"
+      class="order-3 cursor-pointer flex items-center lg:hidden text-dark dark:text-white lg:order-1">
+      <svg id="show-button" class="h-6 fill-current block" viewBox="0 0 20 20">
+        <title>Open Menu</title>
+        <path d="M0 3h20v2H0V3z m0 6h20v2H0V9z m0 6h20v2H0V0z"></path>
+      </svg>
+      <svg id="hide-button" class="h-6 fill-current hidden" viewBox="0 0 20 20">
+        <title>Close Menu</title>
+        <polygon
+          points="11 9 22 9 22 11 11 11 11 22 9 22 9 11 -2 11 -2 9 9 9 9 -2 11 -2"
+          transform="rotate(45 10 10)"></polygon>
+      </svg>
+    </label>
+    
+
+    
+    
+    <ul
+      id="nav-menu"
+      class="navbar-nav order-3 hidden lg:flex w-full pb-6 lg:order-1 lg:w-auto lg:space-x-2 lg:pb-0 xl:space-x-8 justify-left
+      ">
+      
+      
+      
+      
+      
+      
+      <li class="nav-item">
+        <a
+          class="nav-link "
+          
+          href="/"
+        >Bio</a
+        >
+      </li>
+      
+      
+      
+      
+      
+      
+      <li class="nav-item">
+        <a
+          class="nav-link "
+          
+          href="/#papers"
+        >Papers</a
+        >
+      </li>
+      
+      
+      
+      
+      
+      
+      <li class="nav-item">
+        <a
+          class="nav-link "
+          
+          href="/#talks"
+        >Talks</a
+        >
+      </li>
+      
+      
+      
+      
+      
+      
+      <li class="nav-item">
+        <a
+          class="nav-link "
+          
+          href="/post"
+        >Blogs</a
+        >
+      </li>
+      
+      
+      
+      
+      
+      
+      <li class="nav-item">
+        <a
+          class="nav-link "
+          
+          href="/experience/"
+        >Experience</a
+        >
+      </li>
+      
+      
+      
+      
+      
+      
+      <li class="nav-item">
+        <a
+          class="nav-link "
+          
+          href="/projects/"
+        >Projects</a
+        >
+      </li>
+      
+      
+      
+      
+      
+      
+      <li class="nav-item">
+        <a
+          class="nav-link "
+          
+          href="/teaching/"
+        >Learning</a
+        >
+      </li>
+      
+      
+      
+    </ul>
+
+    <div class="order-1 ml-auto flex items-center md:order-2 lg:ml-0">
+
+      
+      
+      
+      <button
+        aria-label="search"
+        class="text-black hover:text-primary  inline-block px-3 text-xl dark:text-white"
+        id="search_toggle">
+        <svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 512 512" fill="currentColor"><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"/></svg>
+      </button>
+      
+
+      
+      
+      <div class="px-3 text-black hover:text-primary-700 dark:text-white dark:hover:text-primary-300
+            [&.active]:font-bold [&.active]:text-black/90 dark:[&.active]:text-white">
+        <button class="theme-toggle mt-1" accesskey="t" title="appearance">
+          <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+               fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+               stroke-linejoin="round" class="dark:hidden">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+          <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+               fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+               stroke-linejoin="round" class=" dark:block [&:not(dark)]:hidden">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+        </button>
+      </div>
+      
+
+      
+      
+
+      
+      
+    </div>
+  </nav>
+</header>
+
+
+<div id="search" class="hidden p-3"></div>
+
+
+        
+      
+    </div>
+    <div class="page-body  my-10">
+      
+
+
+
+
+
+<div class="mx-auto flex max-w-screen-xl">
+  
+
+
+
+<aside class="hb-sidebar-container max-lg:[transform:translate3d(0,-100%,0)] lg:hidden xl:block">
+  
+  <div class="px-4 pt-4 lg:hidden">
+    
+    
+  </div>
+  <div class="hb-scrollbar lg:h-[calc(100vh-var(--navbar-height))]">
+    <ul class="flex flex-col gap-1 lg:hidden">
+      
+      
+        <li class=""><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/event/"
+    
+  >Recent &amp; Upcoming Talks
+        <span data-hb-sidebar-toggle>
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-[18px] min-w-[18px] rounded-sm p-0.5 hover:bg-gray-800/5 dark:hover:bg-gray-100/5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" class="origin-center transition-transform rtl:-rotate-180"></path></svg>
+        </span>
+    </a><div class="ltr:pr-0 overflow-hidden">
+        <ul class="hb-sidebar-list"><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/event/example/"
+    
+  >Example Talk
+    </a>
+              
+            </li></ul>
+      </div></li>
+        <li class="open"><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/post/"
+    
+  >Computational Blogs
+        <span data-hb-sidebar-toggle>
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-[18px] min-w-[18px] rounded-sm p-0.5 hover:bg-gray-800/5 dark:hover:bg-gray-100/5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" class="origin-center transition-transform rtl:-rotate-180"></path></svg>
+        </span>
+    </a><div class="ltr:pr-0 overflow-hidden">
+        <ul class="hb-sidebar-list"><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/post/19b.scrnaseq_impute_saver/"
+    
+  >🧮 Math Derivation for scRNAseq Imputation (SAVER)
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/post/19c.bayes_variational_infer_elbo/"
+    
+  >🧮 Math Derivation for scRNAseq Imputation (SAVER)
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/post/19a.conjugate_prior_bayes/"
+    
+  >📊 Math Derivation in Bayesian Inference-- Bypassing Marginals Using Conjugate Priors
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/post/19.ememwithmapvariationalbayesian/"
+    
+  >🧬 EM algorithm, EM with max a posterior, full Bayesian inferences (variational Bayesian) which might be used in auto-coder
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/post/18.what_make_neural_network_powerful_popular/"
+    
+  >🧬 what makes neural network so powerful and popular
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/post/17.smooth.tests.of.goodness.of.fit/"
+    
+  >🧬 Smooth tests of goodness of Fit used in Stijn Hawinkel ’s plos one paper
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/post/16.how.good.is.negative.binominal/"
+    
+  >🧬 how good is negative binomial, why AI works for biology
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/post/15.use.seurat.for.bulk.rnaseq/"
+    
+  >🧬 Seurat to analysis large sample size of bulk RNAseq. Discuss Wixcox is better for clinical samples
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/post/13z.scvi_integrate_scrna_spatial/"
+    
+  >🧬 Deep Neural Network to integrate scRNAseq and spatial genomics
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/post/14.spatial_genomics_presentation/"
+    
+  >🧬 Spatial genomics presentation
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/post/12.basian_abundance_statistics/"
+    
+  >🧬 Bayesian abundance statistics in PRCC
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/post/13.yolov8/"
+    
+  >🧬 Yolov8
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/post/11a.velocity_unraveled/"
+    
+  >🧬 Math Derivation of CME-defined Stochastic Model of RNA Velocity
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/post/11.velocity_reasoning/"
+    
+  >🧬 Velocity reasoning and discussion
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/post/10.cca_reasoning/"
+    
+  >🧬 CCA reasoning and integration discussion
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/post/09.sctransform/"
+    
+  >🧬 sctransfrom reasoning
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/post/08.clinical_relevance/"
+    
+  >🧬 Clinical relevance evaluation in PRCC
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/post/07.chord_diagram/"
+    
+  >🧬 Expressive cord diagram in PRCC
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/post/06.noise_or_true_stem_cell/"
+    
+  >🧬 Determine whether it’s noise or true stem like cells in PRCC
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/post/05.xensoft_caki_paper/"
+    
+  >🧬 quantify xenograft and host gene expression from the same sample
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/post/04.huangcong_oncogene/"
+    
+  >🧬 counteract treatment-specific background in differential expressed gene analysis (huangcong paper)
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/post/03.well-based_scrnaseq_herv_quantification/"
+    
+  >🧬 A snakemake pipline-- quantify hERV, transgenes and genome from well-based single-cell RNAseq
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/post/02.snakemake_quantify-herv_10xscrnaseq/"
+    
+  >🧬 A snakemake pipline-- quantify hERV, transgenes and genome from 10x scRNAseq
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/post/01a.repeatmasker/"
+    
+  >🛠️ Generate and validate ERV gtf that matches the latest reference genome
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/post/01.bulkrnaseq_allow_herv_quantification/"
+    
+  >🧬 Quantify hERV and transgenes from Bulk-RNAseq
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/post/00a.seqwins/"
+    
+  >⚡ SeqWins, An R Package for Flexible Base Trimming and Comprehensive FASTQ Analysis on Windows
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/post/00.model_aerosol_depostion/"
+    
+  >💨 Modeling the deposition of infectious agents suggests that aerosolized drugs offer enhanced specificity
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/post/99.get-started/"
+    
+  >🎉 Easily create your own simple yet highly customizable blog
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/post/99.second-brain/"
+    
+  >🧠 Sharpen your thinking with a second brain
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/post/99.data-visualization/"
+    
+  >📈 Communicate your results effectively with the best data visualizations
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/post/99.teach-courses/"
+    
+  >👩🏼‍🏫 Teach academic courses
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/post/99.project-management/"
+    
+  >✅ Manage your projects
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/post/11b.velocity_velovi/velovi_derive_time-varying_alpha_model/"
+    
+  >velovi_derive_time-varying_alpha_model
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/post/11b.velocity_velovi/velovi_elbo_kl_breakdown/"
+    
+  >velovi_elbo_kl_breakdown
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/post/11b.velocity_velovi/velovi_elbo_term_with_expectation/"
+    
+  >velovi_elbo_term_with_expectation
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/post/11b.velocity_velovi/velovi_expected_state_n_latent_time/"
+    
+  >velovi_expected_state_n_latent_time
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/post/11b.velocity_velovi/velovi_model_n_inference/"
+    
+  >velovi_model_n_inference
+    </a>
+              
+            </li><li class="flex flex-col open"><a
+    class="hb-sidebar-custom-link
+      sidebar-active-item bg-primary-100 font-semibold text-primary-800 dark:bg-primary-300 dark:text-primary-900"
+    href="/post/11b.velocity_velovi/velovi_parameter_initialize_n_learn/"
+    
+  >velovi_parameter_initialize_n_learn
+    </a>
+  
+    <ul class="hb-sidebar-mobile-toc"><li>
+              <a
+                href="#1-initial-data-and-preprocessing"
+                class="hb-docs-link"
+              >1. Initial Data and Preprocessing</a>
+            </li>
+          <li>
+              <a
+                href="#2-initialization-of-all-parameters"
+                class="hb-docs-link"
+              >2. Initialization of All Parameters</a>
+            </li>
+          <li>
+              <a
+                href="#3-learning-process-one-iteration-of-optimization"
+                class="hb-docs-link"
+              >3. Learning Process (One Iteration of Optimization)</a>
+            </li>
+          <li>
+              <a
+                href="#4-conceptual-evolution-of-parameters-over-training"
+                class="hb-docs-link"
+              >4. Conceptual Evolution of Parameters Over Training</a>
+            </li>
+          <li>
+              <a
+                href="#5-calculate-kl-divergence-terms-during-learning"
+                class="hb-docs-link"
+              >5. Calculate KL Divergence Terms During Learning</a>
+            </li>
+          </ul>
+  
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/post/11b.velocity_velovi/velovi_posterior_predictive_distribution/"
+    
+  >velovi_posterior_predictive_distribution
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/post/11b.velocity_velovi/velovi_reparameterization_trick/"
+    
+  >velovi_reparameterization_trick
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/post/11b.velocity_velovi/velovi_uncertainty_calculation/"
+    
+  >velovi_uncertainty_calculation
+    </a>
+              
+            </li></ul>
+      </div></li>
+        <li class=""><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/teaching/"
+    
+  >learning
+        <span data-hb-sidebar-toggle>
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-[18px] min-w-[18px] rounded-sm p-0.5 hover:bg-gray-800/5 dark:hover:bg-gray-100/5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" class="origin-center transition-transform rtl:-rotate-180"></path></svg>
+        </span>
+    </a><div class="ltr:pr-0 overflow-hidden">
+        <ul class="hb-sidebar-list"><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/teaching/visualize_distribution/"
+    
+  >Dirichlet Distribution
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/teaching/stanford_ml_em/"
+    
+  >Lecture 14 - Expectation-Maximization Algorithms | Stanford CS229 Machine Learning
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/teaching/linear_algebra/"
+    
+  >linear algebra
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/teaching/method_of_charateristics/"
+    
+  >Method of characteristics
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/teaching/method_of_seperation_of_variables/"
+    
+  >Separation of Variables
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/teaching/js/"
+    
+  >Learn JavaScript
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/teaching/python/"
+    
+  >Learn Python
+    </a>
+              
+            </li></ul>
+      </div></li>
+        <li class=""><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/projects/"
+    
+  >Projects
+    </a></li>
+        <li class=""><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/project/"
+    
+  >Projects
+        <span data-hb-sidebar-toggle>
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-[18px] min-w-[18px] rounded-sm p-0.5 hover:bg-gray-800/5 dark:hover:bg-gray-100/5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" class="origin-center transition-transform rtl:-rotate-180"></path></svg>
+        </span>
+    </a><div class="ltr:pr-0 overflow-hidden">
+        <ul class="hb-sidebar-list"><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/project/pandas/"
+    
+  >Pandas
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/project/pytorch/"
+    
+  >PyTorch
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/project/scikit/"
+    
+  >scikit-learn
+    </a>
+              
+            </li></ul>
+      </div></li>
+        <li class=""><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/experience/"
+    
+  >Experience
+    </a></li>
+        <li class=""><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/publication/"
+    
+  >Publications
+        <span data-hb-sidebar-toggle>
+            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-[18px] min-w-[18px] rounded-sm p-0.5 hover:bg-gray-800/5 dark:hover:bg-gray-100/5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" class="origin-center transition-transform rtl:-rotate-180"></path></svg>
+        </span>
+    </a><div class="ltr:pr-0 overflow-hidden">
+        <ul class="hb-sidebar-list"><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/publication/preprint/"
+    
+  >An example preprint / working paper
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/publication/journal-article/"
+    
+  >An example journal article
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/publication/conference-paper/"
+    
+  >An example conference paper
+    </a>
+              
+            </li></ul>
+      </div></li>
+    </ul>
+
+    <div class="max-xl:hidden h-0 w-64 shrink-0"></div></div>
+
+</aside>
+  
+
+<nav class="hb-toc order-last hidden w-64 shrink-0 xl:block print:hidden px-4" aria-label="table of contents">
+  
+
+
+
+
+
+
+
+
+
+
+
+  <div class="hb-scrollbar text-sm [hyphens:auto] sticky top-16 overflow-y-auto pr-4 pt-6 max-h-[calc(100vh-var(--navbar-height)-env(safe-area-inset-bottom))] -mr-4 rtl:-ml-4"><p class="mb-4 font-semibold tracking-tight">On this page</p><ul>
+      <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="font-semibold inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#1-initial-data-and-preprocessing">1. Initial Data and Preprocessing</a>
+      </li>
+      <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="font-semibold inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#2-initialization-of-all-parameters">2. Initialization of All Parameters</a>
+      </li>
+      <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="pl-4 rtl:pr-4 inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#a-biophysical-parameters-hahahugoshortcode15s5hbhb">a. Biophysical Parameters (HAHAHUGOSHORTCODE15s5HBHB)</a>
+      </li>
+      <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="pl-4 rtl:pr-4 inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#b-variance-parameters-hahahugoshortcode15s18hbhb">b. Variance Parameters (HAHAHUGOSHORTCODE15s18HBHB)</a>
+      </li>
+      <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="pl-4 rtl:pr-4 inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#c-neural-network-parameters-hahahugoshortcode15s26hbhb">c. Neural Network Parameters (HAHAHUGOSHORTCODE15s26HBHB)</a>
+      </li>
+      <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="font-semibold inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#3-learning-process-one-iteration-of-optimization">3. Learning Process (One Iteration of Optimization)</a>
+      </li>
+      <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="pl-4 rtl:pr-4 inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#a-forward-pass-calculate-loss-hahahugoshortcode15s35hbhb">a. Forward Pass (Calculate Loss HAHAHUGOSHORTCODE15s35HBHB)</a>
+      </li>
+      <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="pl-4 rtl:pr-4 inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#b-backward-pass-backpropagation-to-compute-gradients">b. Backward Pass (Backpropagation to Compute Gradients)</a>
+      </li>
+      <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="pl-4 rtl:pr-4 inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#c-parameter-update">c. Parameter Update</a>
+      </li>
+      <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="font-semibold inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#4-conceptual-evolution-of-parameters-over-training">4. Conceptual Evolution of Parameters Over Training</a>
+      </li>
+      <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="font-semibold inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#5-calculate-kl-divergence-terms-during-learning">5. Calculate KL Divergence Terms During Learning</a>
+      </li>
+      <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="pl-4 rtl:pr-4 inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#1-kl-for-hahahugoshortcode15s171hbhb-hahahugoshortcode15s172hbhb">1. KL for HAHAHUGOSHORTCODE15s171HBHB: HAHAHUGOSHORTCODE15s172HBHB</a>
+      </li>
+      <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="pl-8 rtl:pr-8 inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#components">Components:</a>
+      </li>
+      <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="pl-4 rtl:pr-4 inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#2-hahahugoshortcode15s194hbhb-hahahugoshortcode15s195hbhb">2. HAHAHUGOSHORTCODE15s194HBHB: HAHAHUGOSHORTCODE15s195HBHB</a>
+      </li>
+      <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="pl-8 rtl:pr-8 inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#components-1">Components:</a>
+      </li>
+      <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="pl-8 rtl:pr-8 inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#kl-divergence-between-dirichlet-distributions">KL Divergence Between Dirichlet Distributions</a>
+      </li>
+      <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="pl-8 rtl:pr-8 inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#breaking-down-the-formula-terms">Breaking Down the Formula Terms</a>
+      </li>
+      <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="pl-8 rtl:pr-8 inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#practical-implementation-notes">Practical Implementation Notes</a>
+      </li></ul>
+
+  
+  
+    
+    
+  
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+  </nav>
+
+
+  <article class="w-full break-words flex min-h-[calc(100vh-var(--navbar-height))] min-w-0 justify-center pb-8 pr-[calc(env(safe-area-inset-right)-1.5rem)]">
+    <main class="w-full min-w-0 max-w-6xl px-6 pt-4 md:px-12">
+
+      
+
+      <h1 class="mt-2 text-4xl font-bold tracking-tight text-slate-900 dark:text-slate-100"></h1>
+
+      <div class="mt-4 mb-16">
+      <div class="text-gray-500 dark:text-gray-300 text-sm flex items-center flex-wrap gap-y-2">
+        
+
+        
+        <span class="mx-1">·</span>
+        <span class="mx-1">
+          14 min read
+        </span>
+        
+        </div>
+
+        <div class="mt-3">
+          
+
+
+
+
+
+        </div>
+      </div>
+
+
+
+      
+      
+      
+
+      
+      
+
+      <div class="prose prose-slate lg:prose-xl dark:prose-invert">
+        <h1 id="velovi-parameter-initialization-and-learning-process">VeloVI Parameter Initialization and Learning Process</h1>
+<p>Illustration of the initiation and learning process for all parameters in VeloVI for our scenario of three genes (Gene A, Gene B, Gene C) in four cells (Cell 1, Cell 2, Cell 3, Cell 4).</p>
+<p>This includes:</p>
+<p><strong>Biophysical Parameters</strong> ( $\theta$ 
+):  $\alpha_{g1}, \beta_g, \gamma_g, t_g^s$ 
+</p>
+<p><strong>Variance Parameters</strong> ( $\theta$ 
+):  $\sigma_{gu}, \sigma_{gs}$ 
+ (gene-specific standard deviations for unspliced and spliced RNA)</p>
+<p><strong>Neural Network Parameters</strong> ( $\phi$ 
+): Weights and biases of the encoder and decoder networks.</p>
+<h2 id="1-initial-data-and-preprocessing">1. Initial Data and Preprocessing</h2>
+<p>Our simplified min-max scaled data:</p>
+<table>
+  <thead>
+      <tr>
+          <th>Cell</th>
+          <th>Gene</th>
+          <th>Unspliced (u)</th>
+          <th>Spliced (s)</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>1</td>
+          <td>A</td>
+          <td>0.8</td>
+          <td>0.2</td>
+      </tr>
+      <tr>
+          <td>1</td>
+          <td>B</td>
+          <td>0.1</td>
+          <td>0.9</td>
+      </tr>
+      <tr>
+          <td>1</td>
+          <td>C</td>
+          <td>0.5</td>
+          <td>0.5</td>
+      </tr>
+      <tr>
+          <td>2</td>
+          <td>A</td>
+          <td>0.9</td>
+          <td>0.1</td>
+      </tr>
+      <tr>
+          <td>2</td>
+          <td>B</td>
+          <td>0.2</td>
+          <td>0.8</td>
+      </tr>
+      <tr>
+          <td>2</td>
+          <td>C</td>
+          <td>0.6</td>
+          <td>0.4</td>
+      </tr>
+      <tr>
+          <td>3</td>
+          <td>A</td>
+          <td>0.2</td>
+          <td>0.7</td>
+      </tr>
+      <tr>
+          <td>3</td>
+          <td>B</td>
+          <td>0.7</td>
+          <td>0.3</td>
+      </tr>
+      <tr>
+          <td>3</td>
+          <td>C</td>
+          <td>0.1</td>
+          <td>0.9</td>
+      </tr>
+      <tr>
+          <td>4</td>
+          <td>A</td>
+          <td>0.1</td>
+          <td>0.8</td>
+      </tr>
+      <tr>
+          <td>4</td>
+          <td>B</td>
+          <td>0.8</td>
+          <td>0.2</td>
+      </tr>
+      <tr>
+          <td>4</td>
+          <td>C</td>
+          <td>0.2</td>
+          <td>0.8</td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="2-initialization-of-all-parameters">2. Initialization of All Parameters</h2>
+<h3 id="a-biophysical-parameters-hahahugoshortcode15s5hbhb">a. Biophysical Parameters ( $\theta$ 
+)</h3>
+<p><strong> $\alpha_{g1}$ 
+ (Transcription Rate for Induction):</strong></p>
+<ul>
+<li> $\alpha_{A1} = 0.85$ 
+ (median unspliced for top 99th percentile, e.g., Cells 1, 2 for Gene A)</li>
+<li> $\alpha_{B1} = 0.75$ 
+ (median unspliced for top 99th percentile, e.g., Cells 3, 4 for Gene B)</li>
+<li> $\alpha_{C1} = 0.55$ 
+ (median unspliced for top 99th percentile, e.g., Cells 1, 2 for Gene C)</li>
+</ul>
+<p><strong> $\beta_g$ 
+ (Splicing Rate):</strong> Initialized to a small positive constant.</p>
+<ul>
+<li> $\beta_A = \beta_B = \beta_C = 0.1$ 
+</li>
+</ul>
+<p><strong> $\gamma_g$ 
+ (Degradation Rate):</strong> Initialized to a small positive constant.</p>
+<ul>
+<li> $\gamma_A = \gamma_B = \gamma_C = 0.05$ 
+</li>
+</ul>
+<p><strong> $t_g^s$ 
+ (Switching Time):</strong> Initialized to a constant value within  $[0, t_{\max}]$ 
+.</p>
+<ul>
+<li> $t_A^s = t_B^s = t_C^s = 10.0$ 
+ (assuming  $t_{\max} = 20$ 
+)</li>
+</ul>
+<h3 id="b-variance-parameters-hahahugoshortcode15s18hbhb">b. Variance Parameters ( $\theta$ 
+)</h3>
+<p>These are also part of the  $\theta$ 
+ parameters learned by the model. They are gene-specific.</p>
+<p><strong> $\sigma_{gu}, \sigma_{gs}$ 
+ (Unspliced and Spliced Standard Deviations):</strong> Typically initialized to a small, common positive constant, reflecting initial uncertainty or baseline noise.</p>
+<ul>
+<li> $\sigma_{Au} = \sigma_{Bu} = \sigma_{Cu} = 0.1$ 
+</li>
+<li> $\sigma_{As} = \sigma_{Bs} = \sigma_{Cs} = 0.1$ 
+</li>
+</ul>
+<p>(Note:  $c_k$ 
+ is a fixed scalar, not a learnable parameter, e.g.,  $c_4 = 0.1$ 
+, others  $c_k = 1.0$ 
+)</p>
+<h3 id="c-neural-network-parameters-hahahugoshortcode15s26hbhb">c. Neural Network Parameters ( $\phi$ 
+)</h3>
+<p>These are the weights and biases of all neural networks in the model.</p>
+<p><strong>Encoder Network Weights/Biases:</strong> This network takes  $(u_n, s_n)$ 
+ as input and outputs:</p>
+<ul>
+<li>Parameters for  $q_\phi(z_n | u_n, s_n)$ 
+ (e.g.,  $\mu_{z_n}, \log\Sigma_{z_n}$ 
+ for a Gaussian).</li>
+<li>Parameters for  $q_\phi(\pi_{ng} | z_n)$ 
+ (e.g., concentration parameters for a Dirichlet).</li>
+</ul>
+<p><em>Initialization:</em> Typically initialized randomly, often using methods like Xavier/Glorot or Kaiming initialization, which help with training stability. Let&rsquo;s represent this as a large set of random numbers.</p>
+<p><strong>Decoder Network</strong> ( $h_{\text{ind}}, h_{\text{rep}}$ 
+) <strong>Weights/Biases:</strong> These networks take  $z_n$ 
+ as input and output the scaled latent times  $\rho_{ng}^{(1)}$ 
+ and  $\rho_{ng}^{(3)}$ 
+.</p>
+<p><em>Initialization:</em> Also randomly initialized, similar to the encoder.</p>
+<h2 id="3-learning-process-one-iteration-of-optimization">3. Learning Process (One Iteration of Optimization)</h2>
+<p>Let&rsquo;s trace one optimization step focusing on a mini-batch of Cell 1 and Cell 3.</p>
+<h3 id="a-forward-pass-calculate-loss-hahahugoshortcode15s35hbhb">a. Forward Pass (Calculate Loss  $L_{\text{velo}}$ 
+)</h3>
+<p><strong>For Cell 1</strong> ( $u_1, s_1$ 
+):</p>
+<p><strong>Encoder Inference</strong> ( $q_\phi(z_1 | u_1, s_1)$ 
+ and  $q_\phi(\pi_{1g} | z_1)$ 
+):</p>
+<p>The encoder network (with its current  $\phi$ 
+ weights/biases) takes  $(u_{1A}, s_{1A}, u_{1B}, s_{1B}, u_{1C}, s_{1C})$ 
+ as input.</p>
+<ul>
+<li><strong>Output 1:</strong>  $\mu_{z_1}$ 
+ and  $\log\Sigma_{z_1}$ 
+ (e.g., a 10-dimensional vector for  $\mu$ 
+ and  $\log\Sigma$ 
+).</li>
+<li><strong>Output 2:</strong> For each gene  $g$ 
+, Dirichlet concentration parameters for  $\pi_{1g}$ 
+ (e.g., for Gene A,  $\text{Dirichlet}(\text{conc}_{1A,1}, \text{conc}_{1A,2}, \text{conc}_{1A,3}, \text{conc}_{1A,4})$ 
+).</li>
+</ul>
+<p><strong>Sampling Latent Variables</strong> ( $z_1^*$ 
+ and  $\pi_{1g}^*$ 
+, leading to  $k_{1g}$ 
+ and  $t_{1g}^{(k)}$ 
+):</p>
+<ul>
+<li><strong> $z_1^*$ 
+:</strong> Sample  $z_1^*$ 
+ using the reparameterization trick:  $z_1^* = \mu_{z_1} + \exp(0.5\log\Sigma_{z_1}) \odot \epsilon_z$ 
+ (where  $\epsilon_z \sim \mathcal{N}(0, I_d)$ 
+).</li>
+<li><strong> $\pi_{1g}^*$ 
+ and  $k_{1g}$ 
+:</strong> For each gene, sample  $\pi_{1g}^*$ 
+ from its Dirichlet. Then, based on  $\pi_{1g}^*$ 
+, a state  $k_{1g}$ 
+ is determined (e.g., if  $\pi_{1A}^* = [0.7, 0.1, 0.1, 0.1]$ 
+,  $k_{1A}$ 
+ is likely 1).</li>
+</ul>
+<p><strong>Latent Times:</strong> The decoder networks ( $h_{\text{ind}}, h_{\text{rep}}$ 
+), using  $z_1^*$ 
+ and their current  $\phi$ 
+ weights/biases, output  $\rho_{1g}^{(1)}$ 
+ and  $\rho_{1g}^{(3)}$ 
+.</p>
+<ul>
+<li>If  $k_{1g} = 1$ 
+, then  $(t_1)_{1g} = \rho_{1g}^{(1)} \times t_g^s$ 
+.</li>
+<li>If  $k_{1g} = 3$ 
+, then  $(t_3)_{1g} = t_g^s + (t_{\max} - t_g^s)\rho_{1g}^{(3)}$ 
+.</li>
+</ul>
+<p><em>Example for Cell 1, Gene A:</em> Assume  $z_1^*$ 
+ leads to  $k_{1A} = 1$ 
+ and  $(t_1)_{1A} = 8.0$ 
+.</p>
+<p><strong>Calculate Predicted Abundances</strong> ( $\bar{u}^{(g)}, \bar{s}^{(g)}$ 
+):</p>
+<p>Using the sampled  $k_{1g}$ 
+ and  $t_{1g}^{(k)}$ 
+, along with the current biophysical parameters ( $\alpha_{g1}, \beta_g, \gamma_g, t_g^s$ 
+), calculate  $\bar{u}^{(g)}$ 
+ and  $\bar{s}^{(g)}$ 
+ using the kinetic equations.</p>
+<p><em>Example for Cell 1, Gene A:</em> Using initial  $\alpha_{A1} = 0.85, \beta_A = 0.1, \gamma_A = 0.05, t_A^s = 10.0$ 
+ and  $t_{1A}^{(1)} = 8.0$ 
+:</p>
+<ul>
+<li> $\bar{u}^{(A)}(8.0, 1) \approx 4.68$ 
+</li>
+<li> $\bar{s}^{(A)}(8.0, 1) \approx 1.85$ 
+</li>
+</ul>
+<p>(Observed:  $u_{1A} = 0.8, s_{1A} = 0.2$ 
+. Still a large mismatch.)</p>
+<p><strong>Calculate Likelihoods</strong> (using  $\sigma_{gu}, \sigma_{gs}$ 
+):</p>
+<p>For each gene, compare observed  $(u_{ng}, s_{ng})$ 
+ to predicted  $(\bar{u}^{(g)}, \bar{s}^{(g)})$ 
+ using Normal distributions. The variance for these Normal distributions comes from the variance parameters ( $\sigma_{gu}, \sigma_{gs}$ 
+) and the state-dependent scaling  $c_k$ 
+.</p>
+<p>E.g., for Cell 1, Gene A ( $k=1$ 
+):
+ $$\text{Likelihood}_{1A} = \mathcal{N}(u_{1A} | \bar{u}^{(A)}, \sigma_{Au}^2) \times \mathcal{N}(s_{1A} | \bar{s}^{(A)}, \sigma_{As}^2)$$ 
+</p>
+<p>Using initial  $\sigma_{Au} = 0.1, \sigma_{As} = 0.1$ 
+:
+ $\mathcal{N}(0.8 | 4.68, 0.1^2) \times \mathcal{N}(0.2 | 1.85, 0.1^2)$ 
+ will yield an extremely tiny number, leading to a very large negative log-likelihood contribution.</p>
+<p>The total reconstruction term is the sum of these log-likelihoods over all genes and cells in the mini-batch.</p>
+<p><strong>Calculate KL Divergence Terms:</strong></p>
+<ul>
+<li><strong>KL for  $z_n$ 
+:</strong>  $\text{KL}(q_\phi(z_1 | u_1, s_1) \| p(z))$ 
+. This is calculated directly from the  $\mu_{z_1}$ 
+ and  $\log\Sigma_{z_1}$ 
+ outputs of the encoder network. This term penalizes deviation from a standard normal prior.</li>
+<li><strong>KL for  $\pi_{ng}$ 
+:</strong>  $\mathbb{E}_{q_\phi(z_1 | u_1, s_1)}[\sum_g \text{KL}(q_\phi(\pi_{1g} | z_1) \| p(\pi_{1g}))]$ 
+. This is approximated using  $z_1^*$ 
+. It penalizes deviation of state probabilities from a uniform prior.</li>
+</ul>
+<p><strong>Calculate Switching Time Penalty</strong> ( $L_{\text{switch}}$ 
+):</p>
+<p>This term depends on biophysical parameters ( $\alpha_{g1}, \beta_g, \gamma_g, t_g^s$ 
+) as it compares the model&rsquo;s steady-state predictions at  $t_g^s$ 
+ to the empirically derived switch points.</p>
+<p><em>Example for Gene A:</em> Initial  $u_{A3}^0 = \alpha_{A1}/\beta_A = 0.85/0.1 = 8.5$ 
+. If  $u_A^* = 0.85$ 
+, then  $(8.5 - 0.85)^2$ 
+ is a large penalty.</p>
+<p><strong>Total Loss</strong> ( $L_{\text{velo}}$ 
+): Sum all these terms (negative ELBO components + switch penalty) for Cell 1 and Cell 3. This will be a large positive number due to poor initial fit.</p>
+<h3 id="b-backward-pass-backpropagation-to-compute-gradients">b. Backward Pass (Backpropagation to Compute Gradients)</h3>
+<p>Backpropagation efficiently computes  $\frac{\partial L_{\text{velo}}}{\partial \text{parameter}}$ 
+ for every single parameter in the model ( $\theta$ 
+ and  $\phi$ 
+).</p>
+<p><strong>Start from the Loss:</strong> The process begins with  $\frac{\partial L_{\text{velo}}}{\partial L_{\text{velo}}} = 1$ 
+.</p>
+<p><strong>Gradients through Likelihoods to Predicted Means and Variances:</strong></p>
+<p>Gradients flow from  $L_{\text{velo}}$ 
+ back through the log-likelihood terms.</p>
+<ul>
+<li> $\frac{\partial L_{\text{velo}}}{\partial \bar{u}^{(g)}}, \frac{\partial L_{\text{velo}}}{\partial \bar{s}^{(g)}}$ 
+ (how much changing predictions affects loss).</li>
+<li>Crucially, gradients also flow to the variance parameters:  $\frac{\partial L_{\text{velo}}}{\partial \sigma_{gu}}, \frac{\partial L_{\text{velo}}}{\partial \sigma_{gs}}$ 
+. If the current  $\sigma_g$ 
+ values make the likelihood too sharp (if observed is far from predicted) or too flat (if observed is very close to predicted but  $\sigma_g$ 
+ is huge), these gradients will indicate how to adjust  $\sigma_g$ 
+ to better fit the data.</li>
+</ul>
+<p><strong>Gradients to Biophysical Parameters</strong> ( $\alpha_{g1}, \beta_g, \gamma_g, t_g^s$ 
+):</p>
+<p>From  $\frac{\partial L_{\text{velo}}}{\partial \bar{u}^{(g)}}, \frac{\partial L_{\text{velo}}}{\partial \bar{s}^{(g)}}$ 
+, gradients propagate back through the kinetic equations (Eq. 3, 4, 9, 10, etc.) to  $\alpha_{g1}, \beta_g, \gamma_g$ 
+.</p>
+<p>The  $L_{\text{switch}}$ 
+ term also provides direct gradients to  $\alpha_{g1}, \beta_g, \gamma_g, t_g^s$ 
+ as it explicitly depends on them.</p>
+<p><em>Example:</em>  $\frac{\partial L_{\text{velo}}}{\partial \alpha_{A1}}$ 
+ will be a large positive value, indicating  $\alpha_{A1}$ 
+ needs to decrease to reduce the high  $\bar{u}^{(A)}$ 
+ prediction for Cell 1, Gene A.</p>
+<p><strong>Gradients to Latent Times</strong> ( $t_{ng}^{(k)}$ 
+):</p>
+<p>Gradients from  $\bar{u}^{(g)}, \bar{s}^{(g)}$ 
+ also flow back to the latent times  $(t_1)_{ng}$ 
+ and  $(t_3)_{ng}$ 
+.</p>
+<p><strong>Gradients to Decoder Network Parameters</strong> ( $\phi$ 
+):</p>
+<p>From the latent times, gradients flow back through the decoder networks ( $h_{\text{ind}}, h_{\text{rep}}$ 
+) to update their internal weights and biases (part of  $\phi$ 
+). This teaches the decoder how to map  $z_n^*$ 
+ to meaningful latent times that best fit the data.</p>
+<p><strong>Gradients to Sampled Latent Variable</strong> ( $z_n^*$ 
+):</p>
+<p>Gradients from the decoder (and from the  $\text{KL}(q_\phi(\pi_{ng} | z_n) \| p(\pi_{ng}))$ 
+ term) flow back to  $z_n^*$ 
+.</p>
+<p><strong>Gradients to Encoder Network Outputs</strong> ( $\mu_{z_n}, \log\Sigma_{z_n}$ 
+):</p>
+<p>This is where the reparameterization trick is vital. The gradients from  $z_n^*$ 
+ are propagated back to  $\mu_{z_n}$ 
+ and  $\log\Sigma_{z_n}$ 
+ (the parameters defining  $q_\phi(z_n | u_n, s_n)$ 
+).</p>
+ $$\frac{\partial L_{\text{velo}}}{\partial \mu_{z_n}} = \frac{\partial L_{\text{velo}}}{\partial z_n^*} \times 1$$ 
+
+ $$\frac{\partial L_{\text{velo}}}{\partial \log\Sigma_{z_n}} = \frac{\partial L_{\text{velo}}}{\partial z_n^*} \times \frac{\partial z_n^*}{\partial \log\Sigma_{z_n}} = \frac{\partial L_{\text{velo}}}{\partial z_n^*} \times 0.5 \times \exp(0.5\log\Sigma_{z_n}) \times \epsilon_z$$ 
+
+<p>Additionally, the  $\text{KL}(q_\phi(z_n | u_n, s_n) \| p(z))$ 
+ term directly provides gradients to  $\mu_{z_n}$ 
+ and  $\log\Sigma_{z_n}$ 
+, pulling them towards 0 and  $I_d$ 
+ respectively.</p>
+<p><strong>Gradients to Encoder Network Parameters</strong> ( $\phi$ 
+):</p>
+<p>Finally, the gradients for  $\mu_{z_n}, \log\Sigma_{z_n}$ 
+ (and the Dirichlet parameters for  $\pi_{ng}$ 
+) flow back through the encoder neural network to update its internal weights and biases (part of  $\phi$ 
+). This teaches the encoder how to map raw  $(u_n, s_n)$ 
+ data to a latent space ( $z_n$ 
+) and state probabilities ( $\pi_{ng}$ 
+) that are useful for modeling.</p>
+<h3 id="c-parameter-update">c. Parameter Update</h3>
+<p>All computed gradients for the mini-batch are summed.
+The optimizer (Adam) updates all parameters using the learning rate:  $\text{Parameter}_{\text{new}} = \text{Parameter}_{\text{old}} - \text{learning\_rate} \times \frac{\partial L_{\text{velo}}}{\partial \text{Parameter}}$ 
+</p>
+<h2 id="4-conceptual-evolution-of-parameters-over-training">4. Conceptual Evolution of Parameters Over Training</h2>
+<p>This single iteration is just one small step. The entire process repeats for many mini-batches and epochs (hundreds to thousands of times). Over time, all parameters will adapt:</p>
+<p><strong>Biophysical Parameters</strong> ( $\alpha, \beta, \gamma, t_s$ 
+): Will converge to gene-specific values that accurately describe the transcription, splicing, degradation, and switching kinetics, fitting the observed data and satisfying the switch point penalty.</p>
+<ul>
+<li> $\alpha_{A1}$ 
+ will likely decrease from 0.85, as it was overpredicting.</li>
+<li> $\beta_A, \gamma_A$ 
+ will adjust to shape the kinetic curves.</li>
+<li> $t_A^s$ 
+ will shift so that  $\bar{u}^{(A)}(t_A^s, k=2)$ 
+ and  $\bar{s}^{(A)}(t_A^s, k=2)$ 
+ match  $u_A^*$ 
+ and  $s_A^*$ 
+.</li>
+</ul>
+<p><strong>Variance Parameters</strong> ( $\sigma_{gu}, \sigma_{gs}$ 
+): Will adjust to reflect the appropriate level of noise and variability for each gene. They will likely increase initially from 0.1 because current predictions are very far off, so a larger variance would lead to a higher (less negative) likelihood. As the predictions improve, they might stabilize at values reflecting the true biological and technical noise.</p>
+<p><strong>Neural Network Parameters</strong> ( $\phi$ 
+ - Encoder/Decoder weights/biases):</p>
+<ul>
+<li><strong>Encoder:</strong> Learns to map observed  $(u_n, s_n)$ 
+ data to a meaningful latent space ( $z_n$ 
+) and accurate state probabilities ( $\pi_{ng}$ 
+), effectively compressing the high-dimensional data into low-dimensional biological insights. It is constrained by the KL terms to avoid overfitting and ensure a regularized latent space.</li>
+<li><strong>Decoder:</strong> Learns to map the latent variable  $z_n$ 
+ to specific latent times that, in combination with the biophysical parameters, accurately reconstruct the observed RNA dynamics.</li>
+</ul>
+<h2 id="5-calculate-kl-divergence-terms-during-learning">5. Calculate KL Divergence Terms During Learning</h2>
+<p>KL divergence is a measure of how one probability distribution diverges from a second, expected probability distribution. In VAEs, it&rsquo;s used as a regularization term to keep the learned approximate posterior distributions close to simple, predefined prior distributions.</p>
+<h3 id="1-kl-for-hahahugoshortcode15s171hbhb-hahahugoshortcode15s172hbhb">1. KL for $z_n$
+: $\text{KL}(q_\phi(z_1 \mid u_1, s_1) \| p(z))$
+</h3>
+<p><strong>What it represents:</strong> This term measures the divergence between the approximate posterior distribution for the latent variable $z_n$
+ (which is learned by your encoder network) and its prior distribution $p(z)$
+.</p>
+<h4 id="components">Components:</h4>
+<p><strong>$q_\phi(z_1 \mid u_1, s_1)$
+ (Approximate Posterior):</strong> This is the distribution that your encoder neural network outputs for cell 1&rsquo;s latent representation. As previously discussed, the encoder takes the observed unspliced and spliced RNA counts $(u_1, s_1)$
+ and produces the parameters (mean $\mu_{z_1}$
+ and log-variance $\log\Sigma_{z_1}$
+) of this distribution. It&rsquo;s typically a Gaussian distribution, so $q_\phi(z_1 \mid u_1, s_1) = \mathcal{N}(\mu_{z_1}, \Sigma_{z_1})$
+.</p>
+<p><strong>$p(z)$
+ (Prior Distribution):</strong> This is the simple, assumed prior distribution for the latent variable $z$
+. In VAEs, it&rsquo;s almost universally chosen to be a standard normal distribution: $p(z) = \mathcal{N}(0, I_d)$
+, where $0$
+ is the zero vector and $I_d$
+ is the identity matrix (meaning a mean of zero and unit variance for each dimension, with no covariance).</p>
+<p><strong>&ldquo;Calculated directly from $\mu_{z_1}$
+ and $\log\Sigma_{z_1}$
+ outputs&rdquo;:</strong> For two Gaussian distributions, the KL divergence has a well-known analytical (closed-form) solution. You don&rsquo;t need to sample to calculate it; you just plug in the means and variances of the two Gaussians. For $q(z) = \mathcal{N}(\mu, \Sigma)$
+ and $p(z) = \mathcal{N}(0, I)$
+, the KL divergence is:</p>
+
+$$
+\text{KL}(\mathcal{N}(\mu, \Sigma) \| \mathcal{N}(0, I)) = \frac{1}{2} \left( \text{tr}(\Sigma) + \mu^T\mu - \log(\det(\Sigma)) - d \right) \quad (1)
+$$
+
+
+<p>where $d$
+ is the dimensionality of $z$
+. This makes it very efficient to compute.</p>
+<p><strong>&ldquo;Penalizes deviation from a standard normal prior&rdquo;:</strong></p>
+<ul>
+<li>The goal of this term is to ensure that the latent space learned by the encoder is well-behaved and regularized.</li>
+<li>Without this term, the encoder could learn to map inputs to arbitrary regions of the latent space to perfectly reconstruct them, leading to a disorganized latent space where points are not clustered meaningfully and sampling new data (by sampling from $p(z)$
+ and passing through the decoder) would be ineffective.</li>
+<li>By forcing $q_\phi(z_n \mid u_n, s_n)$
+ to be similar to a standard normal distribution, the model encourages the latent representations of different cells to be compactly distributed around the origin. This helps with generalization and ensures that the latent space is &ldquo;interpretable&rdquo; or at least traversable for generating new samples.</li>
+</ul>
+<h3 id="2-hahahugoshortcode15s194hbhb-hahahugoshortcode15s195hbhb">2. $\pi_{ng}$
+: $E_{q_\phi(z_1 \mid u_1, s_1)}[\sum_g \text{KL}(q_\phi(\pi_{1g} \mid z_1) \| p(\pi_{1g}))]$
+</h3>
+<p><strong>What it represents:</strong> This term measures the divergence between the approximate posterior distribution for the gene kinetic state probabilities $\pi_{ng}$
+ and its prior distribution $p(\pi_{ng})$
+. It&rsquo;s an expectation over the uncertainty in $z_n$
+.</p>
+<h4 id="components-1">Components:</h4>
+<p><strong>$q_\phi(\pi_{1g} \mid z_1)$
+ (Approximate Posterior):</strong> This is the distribution that your encoder network outputs for the kinetic state probabilities of gene $g$
+ in cell 1, conditioned on the latent variable $z_1$
+. As previously discussed, the encoder (or a part of it) takes $z_1$
+ as input and produces the concentration parameters for this Dirichlet distribution. It is typically a Dirichlet distribution.</p>
+<p><strong>$p(\pi_{1g})$
+ (Prior Distribution):</strong> This is the prior you specified in Equation (14): $p(\pi_{1g}) = \text{Dirichlet}(0.25, 0.25, 0.25, 0.25)$
+.</p>
+<p><strong>&ldquo;Approximated using $z_1^*$
+&rdquo;:</strong></p>
+<ul>
+<li>Notice the expectation $E_{q_\phi(z_1 \mid u_1, s_1)}[\ldots]$
+. This means we need to average the KL divergence for $\pi_{ng}$
+ over all possible values of $z_1$
+, weighted by their probability under $q_\phi(z_1 \mid u_1, s_1)$
+.</li>
+<li>In practice, this expectation is approximated using a single sample $z_1^*$
+ drawn from $q_\phi(z_1 \mid u_1, s_1)$
+ (using the reparameterization trick). So, for each training step, you calculate $\text{KL}(q_\phi(\pi_{1g} \mid z_1^*) \| p(\pi_{1g}))$
+ where $z_1^*$
+ is the specific sample used in that forward pass. Summing this over many mini-batches and epochs effectively approximates the expectation.</li>
+</ul>
+<p><strong>&ldquo;Penalizes deviation of state probabilities from a uniform prior&rdquo;:</strong></p>
+<ul>
+<li>Similar to the $z_n$
+ KL term, this term regularizes the inferred kinetic state probabilities.</li>
+<li>By pushing $q_\phi(\pi_{ng} \mid z_n)$
+ towards $\text{Dirichlet}(0.25, \ldots, 0.25)$
+, it reinforces the prior belief that each gene in each cell is highly likely to be predominantly in one specific kinetic state. This prevents the model from assigning fuzzy, evenly spread probabilities across all states unless the data strongly supports it. It encourages a more decisive assignment of kinetic states.</li>
+</ul>
+<h4 id="kl-divergence-between-dirichlet-distributions">KL Divergence Between Dirichlet Distributions</h4>
+<p>The term $\text{KL}(q_\phi(\pi_{1g} \mid z_1) \| p(\pi_{1g}))]$
+ above is specific case of the KL divergence between two Dirichlet distributions.</p>
+<p>Generally, the KL divergence between two Dirichlet distributions, $P \sim \text{Dir}(\alpha_1)$
+ and $Q \sim \text{Dir}(\alpha_2)$
+, both defined over $K$
+ categories, has a known closed-form solution.</p>
+<p>Let:</p>
+<ul>
+<li>$P$
+ be your approximate posterior distribution, $q_\phi(\pi_{1g} \mid z_1^*)$
+, with concentration parameters $\alpha_q = (\alpha_{q,1}, \ldots, \alpha_{q,K})$
+. These are the parameters output by your encoder network (or a part of it, conditioned on $z_1^*$
+).</li>
+<li>$Q$
+ be your prior distribution, $p(\pi_{1g})$
+, with concentration parameters $\alpha_p = (\alpha_{p,1}, \ldots, \alpha_{p,K})$
+. In your VeloVI example, this is $(0.25, 0.25, 0.25, 0.25)$
+.</li>
+</ul>
+<p>The KL divergence $\text{KL}(P \| Q)$
+ is given by:</p>
+
+$$
+\text{KL}(P \| Q) = \log \frac{\Gamma\left(\sum_{i=1}^K \alpha_{p,i}\right)}{\Gamma\left(\sum_{i=1}^K \alpha_{q,i}\right)} + \sum_{i=1}^K \left[\log\left(\frac{\Gamma(\alpha_{q,i})}{\Gamma(\alpha_{p,i})}\right) + (\alpha_{q,i} - \alpha_{p,i})\left(\psi(\alpha_{q,i}) - \psi\left(\sum_{j=1}^K \alpha_{q,j}\right)\right)\right] \quad (2)
+$$
+
+
+<p>Where:</p>
+<ul>
+<li>$K$
+ is the number of categories (in your case, 4 kinetic states).</li>
+<li>$\Gamma(\cdot)$
+ is the Gamma function. The Gamma function is a generalization of the factorial function to real and complex numbers. For positive integers $n$
+, $\Gamma(n) = (n-1)!$
+. Most numerical libraries (like NumPy, SciPy, or PyTorch&rsquo;s <code>torch.lgamma</code> which computes $\log(\Gamma(x))$
+ for numerical stability) have implementations for this.</li>
+<li>$\psi(\cdot)$
+ is the digamma function, which is the first derivative of the logarithm of the Gamma function: $\psi(x) = \frac{d}{dx}\log\Gamma(x) = \frac{\Gamma'(x)}{\Gamma(x)}$
+. This function is also commonly available in numerical libraries.</li>
+</ul>
+<h4 id="breaking-down-the-formula-terms">Breaking Down the Formula Terms</h4>
+<p>Let&rsquo;s break down the formula terms and why they are there:</p>
+<ol>
+<li>
+<p><strong>$\log\left(\frac{\Gamma\left(\sum_{i=1}^K \alpha_{p,i}\right)}{\Gamma\left(\sum_{i=1}^K \alpha_{q,i}\right)}\right)$
+:</strong> This term relates to the normalization constants of the two Dirichlet distributions.</p>
+</li>
+<li>
+<p><strong>$\sum_{i=1}^K \log\left(\frac{\Gamma(\alpha_{q,i})}{\Gamma(\alpha_{p,i})}\right)$
+:</strong> This part sums the differences in the logarithm of the Gamma functions for each individual concentration parameter.</p>
+</li>
+<li>
+<p><strong>$\sum_{i=1}^K (\alpha_{q,i} - \alpha_{p,i})\left(\psi(\alpha_{q,i}) - \psi\left(\sum_{j=1}^K \alpha_{q,j}\right)\right)$
+:</strong> This is the most complex part and involves the digamma function. The term $\psi(\alpha_{q,i}) - \psi\left(\sum_{j=1}^K \alpha_{q,j}\right)$
+ is the expected value of $\log(x_i)$
+ when $x \sim \text{Dir}(\alpha_q)$
+. This term essentially measures the difference in the expected log-probabilities of the categories between the two distributions.</p>
+</li>
+</ol>
+<h4 id="practical-implementation-notes">Practical Implementation Notes</h4>
+<ul>
+<li>
+<p><strong>Log-Gamma Function:</strong> When implementing this, it&rsquo;s generally more numerically stable to work with the logarithm of the Gamma function (<code>torch.lgamma</code> in PyTorch, <code>scipy.special.gammaln</code> in SciPy) rather than the Gamma function itself, to avoid potential overflow/underflow issues with very large or very small numbers.</p>
+</li>
+<li>
+<p><strong>Digamma Function:</strong> Similarly, use the digamma function directly (<code>torch.digamma</code> in PyTorch, <code>scipy.special.digamma</code> in SciPy).</p>
+</li>
+<li>
+<p><strong>Automatic Differentiation:</strong> In deep learning frameworks like PyTorch or TensorFlow, you would define this formula using their tensor operations. The framework&rsquo;s automatic differentiation engine would then handle the backward pass to compute gradients with respect to $\alpha_{q,i}$
+ (which are outputs of your encoder network).</p>
+</li>
+</ul>
+
+      </div>
+
+      <div class="mt-16"></div>
+
+      <div class="container mx-auto prose prose-slate lg:prose-xl dark:prose-invert mt-5">
+        
+        <div class="max-w-prose print:hidden">
+  
+  
+
+  
+
+
+  
+<section class="flex flex-row flex-wrap justify-center pt-4 text-xl">
+  
+
+  
+  
+  
+  
+  
+  
+  <a
+    target="_blank" rel="noopener"
+    class="m-1 rounded-md bg-neutral-300 p-1.5 text-neutral-700 hover:bg-primary-500 hover:text-neutral-300 dark:bg-neutral-700 dark:text-neutral-300 dark:hover:bg-primary-400 dark:hover:text-neutral-800"
+    href="https://twitter.com/intent/tweet?url=http%3A%2F%2Flocalhost%3A1313%2Fpost%2F11b.velocity_velovi%2Fvelovi_parameter_initialize_n_learn%2F&amp;text="
+    title="X"
+    aria-label="X"
+    id="share-link-x"
+  >
+    <svg style="height: 1em;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z"/></svg>
+  </a>
+  
+
+  
+  
+  
+  
+  
+  
+  <a
+    target="_blank" rel="noopener"
+    class="m-1 rounded-md bg-neutral-300 p-1.5 text-neutral-700 hover:bg-primary-500 hover:text-neutral-300 dark:bg-neutral-700 dark:text-neutral-300 dark:hover:bg-primary-400 dark:hover:text-neutral-800"
+    href="https://www.facebook.com/sharer.php?u=http%3A%2F%2Flocalhost%3A1313%2Fpost%2F11b.velocity_velovi%2Fvelovi_parameter_initialize_n_learn%2F&amp;t="
+    title="Facebook"
+    aria-label="Facebook"
+    id="share-link-facebook"
+  >
+    <svg style="height: 1em;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="currentColor" d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c5.05-.5 9-4.76 9-9.95z"/></svg>
+  </a>
+  
+
+  
+  
+  
+  
+  
+  
+    
+  
+  <a
+    target="_blank" rel="noopener"
+    class="m-1 rounded-md bg-neutral-300 p-1.5 text-neutral-700 hover:bg-primary-500 hover:text-neutral-300 dark:bg-neutral-700 dark:text-neutral-300 dark:hover:bg-primary-400 dark:hover:text-neutral-800"
+    href="mailto:?subject=&amp;body=http%3A%2F%2Flocalhost%3A1313%2Fpost%2F11b.velocity_velovi%2Fvelovi_parameter_initialize_n_learn%2F"
+    title="Email"
+    aria-label="Email"
+    id="share-link-email"
+  >
+    <svg style="height: 1em;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5" d="M16.5 12a4.5 4.5 0 1 1-9 0a4.5 4.5 0 0 1 9 0Zm0 0c0 1.657 1.007 3 2.25 3S21 13.657 21 12a9 9 0 1 0-2.636 6.364M16.5 12V8.25"/></svg>
+  </a>
+  
+
+  
+  
+  
+  
+  
+  
+  <a
+    target="_blank" rel="noopener"
+    class="m-1 rounded-md bg-neutral-300 p-1.5 text-neutral-700 hover:bg-primary-500 hover:text-neutral-300 dark:bg-neutral-700 dark:text-neutral-300 dark:hover:bg-primary-400 dark:hover:text-neutral-800"
+    href="https://www.linkedin.com/shareArticle?url=http%3A%2F%2Flocalhost%3A1313%2Fpost%2F11b.velocity_velovi%2Fvelovi_parameter_initialize_n_learn%2F&amp;title="
+    title="LinkedIn"
+    aria-label="LinkedIn"
+    id="share-link-linkedin"
+  >
+    <svg style="height: 1em;" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512"><path fill="currentColor" d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg>
+  </a>
+  
+
+  
+  
+  
+  
+  
+  
+  <a
+    target="_blank" rel="noopener"
+    class="m-1 rounded-md bg-neutral-300 p-1.5 text-neutral-700 hover:bg-primary-500 hover:text-neutral-300 dark:bg-neutral-700 dark:text-neutral-300 dark:hover:bg-primary-400 dark:hover:text-neutral-800"
+    href="whatsapp://send?text=%20http%3A%2F%2Flocalhost%3A1313%2Fpost%2F11b.velocity_velovi%2Fvelovi_parameter_initialize_n_learn%2F"
+    title="WhatsApp"
+    aria-label="WhatsApp"
+    id="share-link-whatsapp"
+  >
+    <svg style="height: 1em;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="currentColor"><path d="m187.58 144.84-32-16a8 8 0 0 0-8 .5l-14.69 9.8a40.55 40.55 0 0 1-16-16l9.8-14.69a8 8 0 0 0 .5-8l-16-32A8 8 0 0 0 104 64a40 40 0 0 0-40 40 88.1 88.1 0 0 0 88 88 40 40 0 0 0 40-40 8 8 0 0 0-4.42-7.16ZM152 176a72.08 72.08 0 0 1-72-72 24 24 0 0 1 19.29-23.54l11.48 23L101 118a8 8 0 0 0-.73 7.51 56.47 56.47 0 0 0 30.15 30.15A8 8 0 0 0 138 155l14.61-9.74 23 11.48A24 24 0 0 1 152 176ZM128 24a104 104 0 0 0-91.82 152.88l-11.35 34.05a16 16 0 0 0 20.24 20.24l34.05-11.35A104 104 0 1 0 128 24Zm0 192a87.87 87.87 0 0 1-44.06-11.81 8 8 0 0 0-6.54-.67L40 216l12.47-37.4a8 8 0 0 0-.66-6.54A88 88 0 1 1 128 216Z"/></svg>
+  </a>
+  
+</section>
+
+
+  
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+  
+  
+  
+    
+  
+  
+  
+
+<div class="flex pt-12 pb-4">
+  
+  
+  <img
+    class="mr-4 h-24 w-24 rounded-full"
+    width="96"
+    height="96"
+    alt="Jiyuan Liu"
+  src="/author/jiyuan-liu/avatar_hu_6297b4a1a274518.jpg"
+  loading="lazy"
+  />
+  
+  <div class="place-self-center">
+    <div class="text-[0.6rem] uppercase leading-3 text-neutral-500 dark:text-neutral-400">
+      Authors
+    </div>
+    <div class="font-semibold leading-6 text-neutral-800 dark:text-neutral-300">
+      <a href="http://localhost:1313/" class="no-underline">
+      Jiyuan Liu
+      </a>
+    </div>
+
+    
+    <div class="text-sm font-bold text-neutral-700 dark:text-neutral-300">
+    Postdoctoral Scientist
+    </div>
+    
+
+
+    
+
+    <div class="text-2xl sm:text-lg pt-1">
+
+      
+<div class="flex flex-wrap text-neutral-500 dark:text-neutral-300">
+  
+    
+    
+    
+    
+    <a
+      class="pr-2 transition-transform hover:scale-125 hover:text-primary-700 dark:hover:text-primary-400"
+      style="will-change:transform;"
+      href="mailto:jliu78@mgh.harvard.edu"
+      
+      aria-label="At-Symbol"
+    ><svg style="height: 1em;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5" d="M16.5 12a4.5 4.5 0 1 1-9 0a4.5 4.5 0 0 1 9 0Zm0 0c0 1.657 1.007 3 2.25 3S21 13.657 21 12a9 9 0 1 0-2.636 6.364M16.5 12V8.25"/></svg></a>
+  
+    
+    
+    
+    
+      
+    
+    <a
+      class="pr-2 transition-transform hover:scale-125 hover:text-primary-700 dark:hover:text-primary-400"
+      style="will-change:transform;"
+      href="https://github.com/stars/jliu678/lists/owned-contributed-by-me"
+      target="_blank" rel="noopener" rel="me noopener noreferrer"
+      aria-label="Brands/Github"
+    ><svg style="height: 1em;" fill="currentColor" viewBox="3 3 18 18"><path d="M12 3C7.0275 3 3 7.12937 3 12.2276C3 16.3109 5.57625 19.7597 9.15374 20.9824C9.60374 21.0631 9.77249 20.7863 9.77249 20.5441C9.77249 20.3249 9.76125 19.5982 9.76125 18.8254C7.5 19.2522 6.915 18.2602 6.735 17.7412C6.63375 17.4759 6.19499 16.6569 5.8125 16.4378C5.4975 16.2647 5.0475 15.838 5.80124 15.8264C6.51 15.8149 7.01625 16.4954 7.18499 16.7723C7.99499 18.1679 9.28875 17.7758 9.80625 17.5335C9.885 16.9337 10.1212 16.53 10.38 16.2993C8.3775 16.0687 6.285 15.2728 6.285 11.7432C6.285 10.7397 6.63375 9.9092 7.20749 9.26326C7.1175 9.03257 6.8025 8.08674 7.2975 6.81794C7.2975 6.81794 8.05125 6.57571 9.77249 7.76377C10.4925 7.55615 11.2575 7.45234 12.0225 7.45234C12.7875 7.45234 13.5525 7.55615 14.2725 7.76377C15.9937 6.56418 16.7475 6.81794 16.7475 6.81794C17.2424 8.08674 16.9275 9.03257 16.8375 9.26326C17.4113 9.9092 17.76 10.7281 17.76 11.7432C17.76 15.2843 15.6563 16.0687 13.6537 16.2993C13.98 16.5877 14.2613 17.1414 14.2613 18.0065C14.2613 19.2407 14.25 20.2326 14.25 20.5441C14.25 20.7863 14.4188 21.0746 14.8688 20.9824C16.6554 20.364 18.2079 19.1866 19.3078 17.6162C20.4077 16.0457 20.9995 14.1611 21 12.2276C21 7.12937 16.9725 3 12 3Z"></path></svg></a>
+  
+    
+    
+    
+    
+      
+    
+    <a
+      class="pr-2 transition-transform hover:scale-125 hover:text-primary-700 dark:hover:text-primary-400"
+      style="will-change:transform;"
+      href="https://www.linkedin.com/in/jiyuan-liu-7608a42a6/"
+      target="_blank" rel="noopener" rel="me noopener noreferrer"
+      aria-label="Brands/Linkedin"
+    ><svg style="height: 1em;" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512"><path fill="currentColor" d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"/></svg></a>
+  
+    
+    
+    
+    
+      
+    
+    <a
+      class="pr-2 transition-transform hover:scale-125 hover:text-primary-700 dark:hover:text-primary-400"
+      style="will-change:transform;"
+      href="https://scholar.google.com/citations?view_op=list_works&amp;hl=en&amp;hl=en&amp;user=5c1kGO4AAAAJ&amp;sortby=pubdate"
+      target="_blank" rel="noopener" rel="me noopener noreferrer"
+      aria-label="Academicons/Google-Scholar"
+    ><svg style="height: 1em;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M343.759 106.662V79.43L363.524 64h-213.89L20.476 176.274h85.656a82.339 82.339 0 0 0-.219 6.225c0 20.845 7.22 38.087 21.672 51.861c14.453 13.797 32.252 20.648 53.327 20.648c4.923 0 9.75-.368 14.438-1.024c-2.907 6.5-4.374 12.523-4.374 18.142c0 9.875 4.499 20.43 13.467 31.642c-39.234 2.67-68.061 9.732-86.437 21.163c-10.531 6.5-19 14.704-25.39 24.531c-6.391 9.9-9.578 20.515-9.578 31.962c0 9.648 2.062 18.336 6.219 26.062c4.156 7.726 9.578 14.07 16.312 18.984c6.718 4.968 14.469 9.101 23.219 12.469c8.734 3.344 17.406 5.718 26.061 7.062A167.052 167.052 0 0 0 180.555 448c13.469 0 26.953-1.734 40.547-5.187c13.562-3.485 26.28-8.642 38.171-15.493c11.86-6.805 21.515-16.086 28.922-27.718c7.39-11.68 11.094-24.805 11.094-39.336c0-11.016-2.25-21.039-6.75-30.14c-4.468-9.073-9.938-16.542-16.452-22.345c-6.501-5.813-13-11.155-19.516-15.968c-6.5-4.845-12-9.75-16.468-14.813c-4.485-5.046-6.735-10.054-6.735-14.984c0-4.921 1.734-9.672 5.216-14.265c3.455-4.61 7.674-9.048 12.61-13.306c4.937-4.25 9.875-8.968 14.796-14.133c4.922-5.147 9.141-11.827 12.61-20.008c3.485-8.18 5.203-17.445 5.203-27.757c0-13.453-2.547-24.46-7.547-33.314c-.594-1.022-1.218-1.803-1.875-3.022l56.907-46.672v17.119c-7.393.93-6.624 5.345-6.624 10.635V245.96c0 5.958 4.875 10.834 10.834 10.834h3.989c5.958 0 10.833-4.875 10.833-10.834V117.293c0-5.277.778-9.688-6.561-10.63zm-107.36 222.48c1.14.75 3.704 2.78 7.718 6.038c4.05 3.243 6.797 5.695 8.266 7.414a443.553 443.553 0 0 1 6.376 7.547c2.813 3.375 4.718 6.304 5.718 8.734c1 2.477 2.016 5.461 3.047 8.946a38.27 38.27 0 0 1 1.485 10.562c0 17.048-6.564 29.68-19.656 37.859c-13.125 8.18-28.767 12.274-46.938 12.274c-9.187 0-18.203-1.093-27.063-3.196c-8.843-2.116-17.311-5.336-25.39-9.601c-8.078-4.258-14.577-10.204-19.5-17.797c-4.938-7.64-7.407-16.415-7.407-26.25c0-10.32 2.797-19.29 8.422-26.906c5.594-7.625 12.938-13.391 22.032-17.315c9.063-3.946 18.25-6.742 27.562-8.398a157.865 157.865 0 0 1 28.438-2.555c4.47 0 7.936.25 10.405.696c.455.219 3.032 2.07 7.735 5.563c4.704 3.462 7.625 5.595 8.75 6.384zm-3.359-100.579c-7.406 8.86-17.734 13.288-30.953 13.288c-11.86 0-22.298-4.764-31.266-14.312c-9-9.523-15.422-20.328-19.344-32.43c-3.937-12.109-5.906-23.984-5.906-35.648c0-13.694 3.596-25.352 10.781-34.976c7.187-9.65 17.5-14.485 30.938-14.485c11.875 0 22.374 5.038 31.437 15.157c9.094 10.085 15.61 21.413 19.517 33.968c3.922 12.54 5.873 24.53 5.873 35.984c0 13.446-3.702 24.61-11.076 33.454z"/></svg></a>
+  
+</div>
+
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+  
+  
+    
+    
+    
+      
+      
+    
+<div class="pt-1 no-prose w-full">
+  <hr class="border-dotted border-neutral-300 dark:border-neutral-600" />
+  <div class="flex flex-col md:flex-row flex-nowrap justify-between gap-5 pt-2">
+    <div class="">
+      
+        <a class="group flex no-underline" href="/post/11b.velocity_velovi/velovi_model_n_inference/">
+          <span
+            class="mt-[-0.3rem] me-2 text-neutral-700 transition-transform group-hover:-translate-x-[2px] group-hover:text-primary-600 dark:text-neutral dark:group-hover:text-primary-400"
+          ><span class="ltr:inline rtl:hidden">&larr;</span></span>
+          <span class="flex flex-col">
+            <span
+              class="mt-[0.1rem] leading-6 group-hover:underline group-hover:decoration-primary-500"
+            ></span>
+            <span class="mt-[0.1rem] text-xs text-neutral-500 dark:text-neutral-400">
+              
+                Jan 1, 0001
+              
+            </span>
+          </span>
+        </a>
+      
+    </div>
+    <div class="">
+      
+        <a class="group flex text-right no-underline" href="/post/11b.velocity_velovi/velovi_posterior_predictive_distribution/">
+          <span class="flex flex-col">
+            <span
+              class="mt-[0.1rem] leading-6 group-hover:underline group-hover:decoration-primary-500"
+            ></span
+            >
+            <span class="mt-[0.1rem] text-xs text-neutral-500 dark:text-neutral-400">
+              
+                Jan 1, 0001
+              
+            </span>
+          </span>
+          <span
+            class="mt-[-0.3rem] ms-2 text-neutral-700 transition-transform group-hover:-translate-x-[2px] group-hover:text-primary-600 dark:text-neutral dark:group-hover:text-primary-400"
+          ><span class="ltr:inline">&rarr;</span></span>
+        </a>
+      
+    </div>
+  </div>
+</div>
+
+
+
+  
+
+
+  
+
+
+
+</div>
+
+      </div>
+
+    </main>
+  </article>
+</div>
+
+    </div>
+    <div class="page-footer">
+      <footer class="container mx-auto flex flex-col justify-items-center text-sm leading-6 mt-24 mb-4 text-slate-700 dark:text-slate-200">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+
+  
+  
+    
+  
+  
+    
+  
+
+  
+
+  
+  <p class="powered-by text-center">
+    © 2025 Me. This work is licensed under <a href="https://creativecommons.org/licenses/by-nc-nd/4.0" rel="noopener noreferrer" target="_blank">CC BY NC ND 4.0</a>
+  </p>
+  
+
+  <p class="powered-by footer-license-icons">
+    <a href="https://creativecommons.org/licenses/by-nc-nd/4.0" rel="noopener noreferrer" target="_blank" aria-label="Creative Commons">
+      <i class="fab fa-creative-commons fa-2x" aria-hidden="true"></i>
+      <i class="fab fa-creative-commons-by fa-2x" aria-hidden="true"></i>
+      
+        <i class="fab fa-creative-commons-nc fa-2x" aria-hidden="true"></i>
+      
+      
+        <i class="fab fa-creative-commons-nd fa-2x" aria-hidden="true"></i>
+      
+    </a>
+  </p>
+
+
+
+
+
+  <p class="powered-by text-center">
+    
+    
+    
+      
+      
+      
+      
+      
+      
+      Published with <a href="https://hugoblox.com/?utm_campaign=poweredby" target="_blank" rel="noopener">Hugo Blox Builder</a> — the free, <a href="https://github.com/HugoBlox/hugo-blox-builder" target="_blank" rel="noopener">open source</a> website builder that empowers creators.
+    
+  </p>
+
+</footer>
+
+    </div>
+
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+  </body>
+</html>

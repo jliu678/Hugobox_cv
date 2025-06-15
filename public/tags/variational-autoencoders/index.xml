@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Variational Autoencoders | Jiyuan Liu</title>
+    <link>http://localhost:1313/tags/variational-autoencoders/</link>
+      <atom:link href="http://localhost:1313/tags/variational-autoencoders/index.xml" rel="self" type="application/rss+xml" />
+    <description>Variational Autoencoders</description>
+    <generator>Hugo Blox Builder (https://hugoblox.com)</generator><language>en-us</language><lastBuildDate>Thu, 24 Apr 2025 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>http://localhost:1313/media/icon_hu_fd2be5a69becaf9e.png</url>
+      <title>Variational Autoencoders</title>
+      <link>http://localhost:1313/tags/variational-autoencoders/</link>
+    </image>
+    
+    <item>
+      <title>🧮 Math Derivation for ELBO/KL in Bayesian Inference and VAEs</title>
+      <link>http://localhost:1313/post/19c.bayes_variational_infer_elbo/</link>
+      <pubDate>Thu, 24 Apr 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/post/19c.bayes_variational_infer_elbo/</guid>
+      <description>&lt;h2 id=&#34;-marginal-likelihood-is-often-intractable-in-bayesian-inference&#34;&gt;🔍 Marginal likelihood is often intractable in Bayesian Inference&lt;/h2&gt;
+&lt;p&gt;In Bayesian inference, we want the posterior distribution:&lt;/p&gt;
+
+$$p(\theta \mid D) = \frac{p(D \mid \theta) \, p(\theta)}{p(D)} \tag{1}$$
+
+
+&lt;p&gt;But the denominator—the evidence or marginal likelihood—is:&lt;/p&gt;
+
+$$p(D) = \int p(D \mid \theta) \, p(\theta) \, d\theta \tag{2}$$
+
+
+&lt;p&gt;This integral is often intractable.&lt;/p&gt;
+&lt;h2 id=&#34;-variational-inference-the-workaround&#34;&gt;💡 Variational Inference: The Workaround&lt;/h2&gt;
+&lt;p&gt;We introduce a simpler variational distribution $q(\theta)$
+ to approximate $p(\theta \mid D)$
+, and we try to make $q$
+ close to the true posterior.&lt;/p&gt;
+&lt;p&gt;We measure closeness using KL divergence:&lt;/p&gt;
+
+$$\text{KL}(q(\theta) \| p(\theta \mid D)) = \int q(\theta) \log \frac{q(\theta)}{p(\theta \mid D)} d\theta \tag{3}$$
+
+
+&lt;p&gt;This is hard to compute directly because it involves $p(D)$
+, so we rearrange terms.&lt;/p&gt;
+&lt;p&gt;We can rewrite $\log p(D)$
+ as:&lt;/p&gt;
+
+$$\log p(D) = \mathbb{E}_{q(\theta)} \left[ \log \frac{p(D, \theta)}{q(\theta)} \right] + \text{KL}(q(\theta) \| p(\theta \mid D)) \tag{4}$$
+
+
+&lt;p&gt;Thus:&lt;/p&gt;
+
+$$\log p(D) = \text{ELBO}(q) + \text{KL}(q(\theta) \| p(\theta \mid D)) \tag{5}$$
+
+
+&lt;p&gt;Since the KL divergence is always ≥ 0:&lt;/p&gt;
+
+$$\text{ELBO}(q) \leq \log p(D) \tag{6}$$
+
+
+&lt;p&gt;That&amp;rsquo;s why it&amp;rsquo;s called a lower bound.&lt;/p&gt;
+&lt;h2 id=&#34;-derive-elbo-and-kl&#34;&gt;🧮 Derive ELBO and KL&lt;/h2&gt;
+&lt;p&gt;Let $q(\theta)$
+ be any distribution over $\theta$
+ such that its support covers that of $p(\theta \mid D)$
+. We&amp;rsquo;ll exploit a classic trick: insert $q(\theta)$
+ into the log marginal likelihood using expectation and apply properties of KL divergence.&lt;/p&gt;
+&lt;h3 id=&#34;step-1-start-with-log-evidence&#34;&gt;Step 1: Start with log evidence&lt;/h3&gt;
+&lt;p&gt;We take the logarithm of $p(D)$
+, and &amp;ldquo;multiply and divide&amp;rdquo; inside by $q(\theta)$
+:&lt;/p&gt;
+
+$$\log p(D) = \log \int \frac{q(\theta)}{q(\theta)} p(D \mid \theta) p(\theta) d\theta \tag{7}$$
+
+
+
+$$= \log \int q(\theta) \cdot \frac{p(D \mid \theta) p(\theta)}{q(\theta)} d\theta \tag{8}$$
+
+
+
+$$= \log \mathbb{E}_{q(\theta)} \left[ \frac{p(D \mid \theta) p(\theta)}{q(\theta)} \right] \tag{9}$$
+
+
+&lt;p&gt;This is Jensen&amp;rsquo;s inequality time.&lt;/p&gt;
+&lt;h3 id=&#34;step-2-apply-jensens-inequality&#34;&gt;Step 2: Apply Jensen&amp;rsquo;s Inequality&lt;/h3&gt;
+
+$$\log \mathbb{E}_{q(\theta)} \left[ \frac{p(D \mid \theta) p(\theta)}{q(\theta)} \right] \geq \mathbb{E}_{q(\theta)} \left[ \log \frac{p(D \mid \theta) p(\theta)}{q(\theta)} \right] \tag{10}$$
+
+
+&lt;p&gt;That gives us the ELBO:&lt;/p&gt;
+
+$$\text{ELBO}(q) = \mathbb{E}_{q(\theta)} \left[ \log \frac{p(D, \theta)}{q(\theta)} \right] \tag{11}$$
+
+
+&lt;p&gt;So:&lt;/p&gt;
+
+$$\log p(D) \geq \text{ELBO}(q) \tag{12}$$
+
+
+&lt;p&gt;But we can go further — let&amp;rsquo;s rewrite $\log p(D)$
+ exactly in terms of ELBO + KL divergence.&lt;/p&gt;
+&lt;h3 id=&#34;step-3-add-and-subtract-the-same-quantity&#34;&gt;Step 3: Add and Subtract the Same Quantity&lt;/h3&gt;
+&lt;p&gt;We now write:&lt;/p&gt;
+
+$$\log p(D) = \mathbb{E}_{q(\theta)} \left[ \log \frac{p(D, \theta)}{q(\theta)} \right] + \left( \log p(D) - \mathbb{E}_{q(\theta)} \left[ \log \frac{p(D, \theta)}{q(\theta)} \right] \right) \tag{13}$$
+
+
+&lt;p&gt;Now we observe that the term in parentheses is exactly the KL divergence between $q(\theta)$
+ and the true posterior:&lt;/p&gt;
+
+$$\text{KL}(q(\theta) \| p(\theta \mid D)) = \mathbb{E}_{q(\theta)} \left[ \log \frac{q(\theta)}{p(\theta \mid D)} \right] \tag{14}$$
+
+
+&lt;p&gt;But recall:&lt;/p&gt;
+
+$$p(\theta \mid D) = \frac{p(D, \theta)}{p(D)} \Rightarrow \log p(\theta \mid D) = \log p(D, \theta) - \log p(D) \tag{15}$$
+
+
+&lt;p&gt;Then:&lt;/p&gt;
+
+$$\log \frac{q(\theta)}{p(\theta \mid D)} = \log \frac{q(\theta)}{p(D, \theta)} + \log p(D) \tag{16}$$
+
+
+&lt;p&gt;Take expectation over $q(\theta)$
+:&lt;/p&gt;
+
+$$\text{KL}(q(\theta) \| p(\theta \mid D)) = -\mathbb{E}_{q(\theta)} \left[ \log \frac{p(D, \theta)}{q(\theta)} \right] + \log p(D) \tag{17}$$
+
+
+&lt;p&gt;Rearranged:&lt;/p&gt;
+
+$$\log p(D) = \mathbb{E}_{q(\theta)} \left[ \log \frac{p(D, \theta)}{q(\theta)} \right] + \text{KL}(q(\theta) \| p(\theta \mid D)) \tag{18}$$
+
+
+&lt;h3 id=&#34;definition-of-expectation-used-above&#34;&gt;Definition of Expectation used above&lt;/h3&gt;
+&lt;p&gt;Note the above derivations used multiple times the definition that &lt;strong&gt;expectation of a function $f(\theta)$
+ under a probability distribution $q(\theta)$
+&lt;/strong&gt; is:&lt;/p&gt;
+
+$$\mathbb{E}_{q(\theta)}[f(\theta)] = \int q(\theta) \, f(\theta) \, d\theta \tag{19}$$
+
+
+&lt;h2 id=&#34;-elbo-expression-used-in-vaes&#34;&gt;📐 ELBO Expression used in VAEs&lt;/h2&gt;
+
+$$\text{ELBO}(q) = \mathbb{E}_{q(\theta)}[\log p(D \mid \theta)] - \text{KL}(q(\theta) \| p(\theta)) \tag{20}$$
+
+
+&lt;p&gt;This is the most widely used form in variational inference and VAEs. It comes from expanding the joint $p(D, \theta)$, and interpreting the ELBO as a trade-off between reconstruction and regularization.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Interpretation:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;The first term encourages $q(\theta)$
+ to explain the data well.&lt;/li&gt;
+&lt;li&gt;The second term encourages $q(\theta)$
+ to stay close to the prior.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Its derivation start from:&lt;/p&gt;
+&lt;h3 id=&#34;1-elbokl-decomposition&#34;&gt;1. ELBO–KL decomposition:&lt;/h3&gt;
+
+$$\log p(D) = \text{ELBO}(q) + \text{KL}(q(\theta) \| p(\theta \mid D)) \tag{5}$$
+
+
+&lt;p&gt;This is always true by the definition of the Kullback-Leibler divergence and Jensen&amp;rsquo;s inequality. Rearranging:&lt;/p&gt;
+
+$$\text{ELBO}(q) = \log p(D) - \text{KL}(q(\theta) \| p(\theta \mid D)) \tag{22}$$
+
+
+&lt;h3 id=&#34;2-definition-of-elbo-via-expected-joint&#34;&gt;2. Definition of ELBO via expected joint:&lt;/h3&gt;
+&lt;p&gt;Alternatively, ELBO is often defined as:&lt;/p&gt;
+
+$$\text{ELBO}(q) = \mathbb{E}_{q(\theta)} \left[ \log \frac{p(D, \theta)}{q(\theta)} \right] = \mathbb{E}_{q(\theta)}[\log p(D, \theta)] - \mathbb{E}_{q(\theta)}[\log q(\theta)] \tag{23}$$
+
+
+&lt;p&gt;Now recall:&lt;/p&gt;
+
+$$\log p(D, \theta) = \log p(D \mid \theta) + \log p(\theta) \tag{24}$$
+
+
+&lt;p&gt;So:&lt;/p&gt;
+
+$$\text{ELBO}(q) = \mathbb{E}_{q(\theta)}[\log p(D \mid \theta)] + \mathbb{E}_{q(\theta)}[\log p(\theta)] - \mathbb{E}_{q(\theta)}[\log q(\theta)] \tag{25}$$
+
+
+&lt;p&gt;Group terms:&lt;/p&gt;
+
+$$\text{ELBO}(q) = \mathbb{E}_{q(\theta)}[\log p(D \mid \theta)] - \text{KL}(q(\theta) \| p(\theta)) \tag{20}$$
+
+
+</description>
+    </item>
+    
+  </channel>
+</rss>
