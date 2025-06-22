@@ -761,3 +761,51 @@ $$G(z_1, z_2, t) = \exp\left(k_{\text{ini}} \int_0^t \left(\frac{1}{1-b(z_1(s)-1
 {{< /math >}}
 
 **Note:** It assumes the initial condition is {{< math >}} $G_0 = 1$ {{< /math >}} (the generating function starts from 1 for all modes).
+
+# G) Generating Functions and the Chemical Master Equation (CME)
+
+Generating functions corresponding to solutions of the Chemical Master Equation (CME) can correspond to discrete nonnegative integer-valued distributions — but only under certain conditions.
+
+## Comply Under Proper Conditions
+
+When the CME is solved correctly and represents a proper stochastic process, the generating function does comply:
+
+The CME describes the probability distribution over molecular counts (nonnegative integers).
+
+If {{< math >}} $P(n,t)$ {{< /math >}} is the probability of having {{< math >}} $n$ {{< /math >}} molecules at time {{< math >}} $t$ {{< /math >}}, then the generating function is:
+
+{{< math >}} 
+$$G(z,t) = \sum_{n=0}^{\infty} P(n,t) z^n \tag{1}$$
+{{< /math >}}
+
+This is a valid probability generating function (PGF):
+
+- Coefficients {{< math >}} $P(n,t) \geq 0$ {{< /math >}}
+- {{< math >}} $\sum_n P(n,t) = 1$ {{< /math >}} (equation 2)
+- {{< math >}} $n \in \mathbb{N}_0$ {{< /math >}}
+
+✔ **So**: the inverse FFT can be used to recover {{< math >}} $P(n,t)$ {{< /math >}} from evaluations of {{< math >}} $G(z,t)$ {{< /math >}} on the unit circle.
+
+## Not Always in Practice
+
+In numerical or approximate solutions of the CME (e.g., moment closures, perturbative expansions, symbolic approximations), the generating function:
+
+- Might have non-physical coefficients (e.g., negatives)
+- Might not converge properly  
+- Might not normalize to 1
+
+So while the CME itself ensures that {{< math >}} $G(z,t)$ {{< /math >}} should correspond to a valid PMF, approximations or derivation mistakes may violate this.
+
+## Also: Generating Function Types Matter
+
+**Probability generating function (PGF)**: Used for CME, discrete + integer-valued
+
+**Moment generating function (MGF) or Laplace transform**: Also used, but not invertible by FFT in the same way
+
+## ✔ Summary
+
+| Case | Does Generating Function Correspond to a PMF? | FFT applicable? |
+|------|---------------------------------------------|-----------------|
+| Exact solution to CME | ✅ Yes | ✅ Yes |
+| Approximate CME (e.g., moment closure) | ⚠️ Not guaranteed | ❌ Maybe not |
+| Symbolic/misused generating function | ❌ No | ❌ No |
