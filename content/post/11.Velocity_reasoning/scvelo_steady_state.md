@@ -1,5 +1,5 @@
 ---
-title: scVelo math derivation
+title: Math derivation for steady-state RNA velocity model
 math: true
 date: '2025-05-28'
 ---
