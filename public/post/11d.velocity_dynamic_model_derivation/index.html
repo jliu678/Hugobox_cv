@@ -41,10 +41,10 @@
   
     
   
-  <meta name="description" content="Xenograft tumor is mixture of host cells and xenograft cells. Here I present the methode to simultaneously quantify the gene expression in both xenograft and the host cells." />
+  <meta name="description" content="The dynamic model removes that requirement of steady states to broaden RNA velocity’s applicability, but introduces new assumptions that won’t hold for every dataset. Effective use of dynamic model therefore demands a clear understanding of its strengths and limitations. In this first installment of our blog series, we’ll delve into the mathematical foundations of the dynamic model." />
 
   
-  <link rel="alternate" hreflang="en-us" href="http://localhost:1313/post/05.xensoft_caki_paper/" />
+  <link rel="alternate" hreflang="en-us" href="http://localhost:1313/post/11d.velocity_dynamic_model_derivation/" />
 
   
   
@@ -164,7 +164,7 @@
   <link rel="icon" type="image/png" href="/media/icon_hu16496738209820128384.png" />
   <link rel="apple-touch-icon" type="image/png" href="/media/icon_hu17763857046462676418.png" />
 
-  <link rel="canonical" href="http://localhost:1313/post/05.xensoft_caki_paper/" />
+  <link rel="canonical" href="http://localhost:1313/post/11d.velocity_dynamic_model_derivation/" />
 
   
   
@@ -189,18 +189,18 @@
     <meta property="twitter:creator" content="@GetResearchDev" />
   
   <meta property="og:site_name" content="Jiyuan Liu" />
-  <meta property="og:url" content="http://localhost:1313/post/05.xensoft_caki_paper/" />
-  <meta property="og:title" content="🧬 quantify xenograft and host gene expression from the same sample | Jiyuan Liu" />
-  <meta property="og:description" content="Xenograft tumor is mixture of host cells and xenograft cells. Here I present the methode to simultaneously quantify the gene expression in both xenograft and the host cells." /><meta property="og:image" content="http://localhost:1313/post/05.xensoft_caki_paper/featured.jpg" />
-    <meta property="twitter:image" content="http://localhost:1313/post/05.xensoft_caki_paper/featured.jpg" /><meta property="og:locale" content="en-us" />
+  <meta property="og:url" content="http://localhost:1313/post/11d.velocity_dynamic_model_derivation/" />
+  <meta property="og:title" content="🧬 Math derivation for Dynamic RNA velocity model | Jiyuan Liu" />
+  <meta property="og:description" content="The dynamic model removes that requirement of steady states to broaden RNA velocity’s applicability, but introduces new assumptions that won’t hold for every dataset. Effective use of dynamic model therefore demands a clear understanding of its strengths and limitations. In this first installment of our blog series, we’ll delve into the mathematical foundations of the dynamic model." /><meta property="og:image" content="http://localhost:1313/post/11d.velocity_dynamic_model_derivation/featured.png" />
+    <meta property="twitter:image" content="http://localhost:1313/post/11d.velocity_dynamic_model_derivation/featured.png" /><meta property="og:locale" content="en-us" />
   
     
       <meta
         property="article:published_time"
-        content="2025-03-28T00:00:00&#43;00:00"
+        content="2025-05-28T00:00:00&#43;00:00"
       />
     
-    <meta property="article:modified_time" content="2025-03-28T00:00:00&#43;00:00">
+    <meta property="article:modified_time" content="2025-05-28T00:00:00&#43;00:00">
   
 
   
@@ -210,7 +210,7 @@
   
 
 
-  <title>🧬 quantify xenograft and host gene expression from the same sample | Jiyuan Liu</title>
+  <title>🧬 Math derivation for Dynamic RNA velocity model | Jiyuan Liu</title>
 
   
   
@@ -689,6 +689,140 @@
 
 
 
+  
+  
+  <link type="text/css" rel="stylesheet" href="/dist/lib/katex/katex.min.505d5f829022bb7b4f24dfee0aa1141cd7bba67afe411d1240335f820960b5c3.css" integrity="sha256-UF1fgpAiu3tPJN/uCqEUHNe7pnr&#43;QR0SQDNfgglgtcM=" />
+  
+  
+  <script defer src="/dist/lib/katex/katex.min.dc84b296ec3e884de093158f760fd9d45b6c7abe58b5381557f4e138f46a58ae.js" integrity="sha256-3ISyluw&#43;iE3gkxWPdg/Z1Ftser5YtTgVV/ThOPRqWK4="></script>
+  
+  
+  
+  
+  <script defer src="/js/katex-renderer.6579ec9683211cfb952064aedf3a3baea5eeb17a061775b32b70917474637c80.js" integrity="sha256-ZXnsloMhHPuVIGSu3zo7rqXusXoGF3WzK3CRdHRjfIA="></script>
+  
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+
 
 
 
@@ -983,13 +1117,22 @@
             <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" class="h-[18px] min-w-[18px] rounded-sm p-0.5 hover:bg-gray-800/5 dark:hover:bg-gray-100/5"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" class="origin-center transition-transform rtl:-rotate-180"></path></svg>
         </span>
     </a><div class="ltr:pr-0 overflow-hidden">
-        <ul class="hb-sidebar-list"><li class="flex flex-col "><a
+        <ul class="hb-sidebar-list"><li class="flex flex-col open"><a
     class="hb-sidebar-custom-link
-      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+      sidebar-active-item bg-primary-100 font-semibold text-primary-800 dark:bg-primary-300 dark:text-primary-900"
     href="/post/11d.velocity_dynamic_model_derivation/"
     
   >🧬 Math derivation for Dynamic RNA velocity model
     </a>
+  
+    <ul class="hb-sidebar-mobile-toc"><li>
+              <a
+                href="#"
+                class="hb-docs-link"
+              ></a>
+            </li>
+          </ul>
+  
               
             </li><li class="flex flex-col "><a
     class="hb-sidebar-custom-link
@@ -1151,14 +1294,13 @@
   >🧬 Determine whether it’s noise or true stem like cells in PRCC
     </a>
               
-            </li><li class="flex flex-col open"><a
+            </li><li class="flex flex-col "><a
     class="hb-sidebar-custom-link
-      sidebar-active-item bg-primary-100 font-semibold text-primary-800 dark:bg-primary-300 dark:text-primary-900"
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
     href="/post/05.xensoft_caki_paper/"
     
   >🧬 quantify xenograft and host gene expression from the same sample
     </a>
-  
               
             </li><li class="flex flex-col "><a
     class="hb-sidebar-custom-link
@@ -1512,7 +1654,22 @@
 
 
 
-  <div class="hb-scrollbar text-sm [hyphens:auto] sticky top-16 overflow-y-auto pr-4 pt-6 max-h-[calc(100vh-var(--navbar-height)-env(safe-area-inset-bottom))] -mr-4 rtl:-ml-4">
+  <div class="hb-scrollbar text-sm [hyphens:auto] sticky top-16 overflow-y-auto pr-4 pt-6 max-h-[calc(100vh-var(--navbar-height)-env(safe-area-inset-bottom))] -mr-4 rtl:-ml-4"><p class="mb-4 font-semibold tracking-tight">On this page</p><ul>
+      <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="pl-4 rtl:pr-4 inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#symbol-definitions">Symbol definitions</a>
+      </li>
+      <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="pl-4 rtl:pr-4 inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#dynamic-solutions-for-rna-velocity-model">Dynamic Solutions for RNA Velocity Model</a>
+      </li>
+      <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="pl-8 rtl:pr-8 inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#step-1-solve-for-ut">Step 1: Solve for u(t)</a>
+      </li>
+      <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="pl-8 rtl:pr-8 inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#step-2-solve-for-st">Step 2: Solve for s(t)</a>
+      </li>
+      <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="pl-8 rtl:pr-8 inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#special-case-if-%ce%b3%ce%b2">Special case: If γ=β</a>
+      </li></ul>
 
   
   
@@ -1544,10 +1701,10 @@
 
       
 
-      <h1 class="mt-2 text-4xl font-bold tracking-tight text-slate-900 dark:text-slate-100">🧬 quantify xenograft and host gene expression from the same sample</h1>
+      <h1 class="mt-2 text-4xl font-bold tracking-tight text-slate-900 dark:text-slate-100">🧬 Math derivation for Dynamic RNA velocity model</h1>
 
       <div class="mt-4 mb-16">
-      <div class="text-gray-500 dark:text-gray-300 text-sm flex items-center flex-wrap gap-y-2"><span class="mr-1">Mar 28, 2025</span><span class="mx-1">·</span>
+      <div class="text-gray-500 dark:text-gray-300 text-sm flex items-center flex-wrap gap-y-2"><span class="mr-1">May 28, 2025</span><span class="mx-1">·</span>
         
           
           
@@ -1564,7 +1721,7 @@
         
         <span class="mx-1">·</span>
         <span class="mx-1">
-          1 min read
+          3 min read
         </span>
         
         </div>
@@ -1597,10 +1754,10 @@
       
       
       
-      <div class="article-header article-container featured-image-wrapper mt-4 mb-16" style="max-width: 640px; max-height: 640px;">
+      <div class="article-header article-container featured-image-wrapper mt-4 mb-16" style="max-width: 720px; max-height: 404px;">
         <div style="position: relative">
-          <img src="/post/05.xensoft_caki_paper/featured_hu8040518465837737813.webp" width="640" height="640" alt="" class="featured-image">
-          <span class="article-header-caption">Image credit: <a href="https://unsplash.com" target="_blank" rel="noopener"><strong>Pranav on Unsplash</strong></a></span>
+          <img src="/post/11d.velocity_dynamic_model_derivation/featured_hu16416076830064971548.webp" width="720" height="404" alt="" class="featured-image">
+          <span class="article-header-caption">Image credit: <a href="https://unsplash.com" target="_blank" rel="noopener"><strong>Logan Voss on Unsplash</strong></a></span>
         </div>
       </div>
       
@@ -1609,14 +1766,192 @@
       
 
       <div class="prose prose-slate lg:prose-xl dark:prose-invert">
-        <p>will be composed soon!</p>
+        <p>The steady‑state model’s reliance on true steady states is at odds with <a href="https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1010492" target="_blank" rel="noopener">known biophysical behavior</a>. The dynamic model removes that requirement to broaden RNA velocity’s applicability, but inevitably introduces new assumptions that won’t hold for every dataset. Effective use of dynamic model therefore demands a clear understanding of its strengths and limitations. In this first installment of our blog series, we’ll delve into the mathematical foundations of the dynamic model.</p>
+<h3 id="symbol-definitions">Symbol definitions</h3>
+<p>Please refer to the <a href="https://www.nature.com/articles/s41587-020-0591-3" target="_blank" rel="noopener">Nature Biotechnology paper</a> for the definitions of the symbols used in this derivation.</p>
+<h3 id="dynamic-solutions-for-rna-velocity-model">Dynamic Solutions for RNA Velocity Model</h3>
+<p>To derive the solution for s(t) from the given system of differential equations, we will follow a two-step process:</p>
+<ol>
+<li>Solve the first differential equation for u(t) using the initial condition u(t₀)=u₀.</li>
+<li>Substitute the expression for u(t) into the second differential equation and then solve for s(t) using the initial condition s(t₀)=s₀.</li>
+</ol>
+<h4 id="step-1-solve-for-ut">Step 1: Solve for u(t)</h4>
+<p>The first differential equation is:</p>
+  
+$$
+\frac{du(t)}{dt}=\alpha-\beta u(t)
+$$  
+
+
+<p>Rearrange it into the standard form for a first-order linear ODE:</p>
+  
+$$
+\frac{du(t)}{dt}+\beta u(t)=\alpha
+$$  
+
+
+<p>This is a linear first-order differential equation of the form $\frac{dy}{dx}+P(x)y=Q(x)$, where P(t)=β and Q(t)=α.
+The integrating factor (IF) is $e^{\int P(t)dt}=e^{\int \beta dt}=e^{\beta t}$.</p>
+<p>Multiply the entire equation by the integrating factor:</p>
+  
+$$
+e^{\beta t}\frac{du(t)}{dt}+\beta u(t)e^{\beta t}=\alpha e^{\beta t}
+$$  
+
+
+<p>The left side is the derivative of the product $(u(t)e^{\beta t})$:</p>
+  
+$$
+\frac{d}{dt}(u(t)e^{\beta t})=\alpha e^{\beta t}
+$$  
+
+
+<p>Integrate both sides with respect to t:</p>
+  
+$$
+\int \frac{d}{dt}(u(t)e^{\beta t})dt=\int \alpha e^{\beta t}dt
+$$
+$$
+u(t)e^{\beta t}=\frac{\alpha}{\beta}e^{\beta t}+C_1
+$$  
+
+
+<p>Now, solve for u(t):</p>
+  
+$$
+u(t)=\frac{\alpha}{\beta}+C_1e^{-\beta t}
+$$  
+
+
+<p>Use the initial condition u(t₀)=u₀ to find C₁:</p>
+  
+$$
+u_0=\frac{\alpha}{\beta}+C_1e^{-\beta t_0}
+$$
+$$
+C_1e^{-\beta t_0}=u_0-\frac{\alpha}{\beta}
+$$
+$$
+C_1=(u_0-\frac{\alpha}{\beta})e^{\beta t_0}
+$$  
+
+
+<p>Substitute C₁ back into the equation for u(t):</p>
+  
+$$
+u(t)=\frac{\alpha}{\beta}+(u_0-\frac{\alpha}{\beta})e^{\beta t_0}e^{-\beta t}
+$$
+$$
+u(t)=\frac{\alpha}{\beta}+(u_0-\frac{\alpha}{\beta})e^{-\beta(t-t_0)}
+$$  
+
+
+<h4 id="step-2-solve-for-st">Step 2: Solve for s(t)</h4>
+<p>Now that we have u(t), we can solve the second differential equation:</p>
+  
+$$
+\frac{ds(t)}{dt}=\beta u(t)-\gamma s(t)
+$$  
+
+
+<p>Substitute the expression for u(t):</p>
+  
+$$
+\frac{ds(t)}{dt}=\beta[\frac{\alpha}{\beta}+(u_0-\frac{\alpha}{\beta})e^{-\beta(t-t_0)}]-\gamma s(t)
+$$
+$$
+\frac{ds(t)}{dt}+\gamma s(t)=\alpha+(u_0\beta-\alpha)e^{-\beta(t-t_0)}
+$$  
+
+
+<p>This is again a linear first-order differential equation. The integrating factor is $e^{\gamma t}$.</p>
+<p>Multiply both sides by the integrating factor:</p>
+  
+$$
+\frac{d}{dt}(s(t)e^{\gamma t})=\alpha e^{\gamma t}+(u_0\beta-\alpha)e^{\gamma t}e^{-\beta(t-t_0)}
+$$  
+
+
+<p>Integrate both sides:</p>
+  
+$$
+s(t)e^{\gamma t}=\frac{\alpha}{\gamma}e^{\gamma t}+(u_0\beta-\alpha)\int e^{\gamma t}e^{-\beta(t-t_0)}dt+C_2
+$$  
+
+
+<p>Simplify the integral:</p>
+  
+$$
+s(t)e^{\gamma t}=\frac{\alpha}{\gamma}e^{\gamma t}+(u_0\beta-\alpha)e^{\beta t_0}\int e^{(\gamma-\beta)t}dt+C_2
+$$
+$$
+s(t)e^{\gamma t}=\frac{\alpha}{\gamma}e^{\gamma t}+(u_0\beta-\alpha)e^{\beta t_0}\frac{e^{(\gamma-\beta)t}}{\gamma-\beta}+C_2
+$$  
+
+
+<p>Solve for s(t):</p>
+  
+$$
+s(t)=\frac{\alpha}{\gamma}+(u_0\beta-\alpha)e^{\beta t_0}\frac{e^{-\beta t}}{\gamma-\beta}+C_2e^{-\gamma t}
+$$  
+
+
+<p>Use the initial condition s(t₀)=s₀ to find C₂:</p>
+  
+$$
+s_0=\frac{\alpha}{\gamma}+(u_0\beta-\alpha)\frac{e^{-\beta t_0+\beta t_0}}{\gamma-\beta}+C_2e^{-\gamma t_0}
+$$
+$$
+C_2e^{-\gamma t_0}=s_0-\frac{\alpha}{\gamma}-(u_0\beta-\alpha)\frac{1}{\gamma-\beta}
+$$
+$$
+C_2=[s_0-\frac{\alpha}{\gamma}-(u_0\beta-\alpha)\frac{1}{\gamma-\beta}]e^{\gamma t_0}
+$$  
+
+
+<p>The complete solution for s(t) is:</p>
+  
+$$
+s(t)=\frac{\alpha}{\gamma}+\frac{u_0\beta-\alpha}{\gamma-\beta}e^{-\beta(t-t_0)}+[s_0-\frac{\alpha}{\gamma}-\frac{u_0\beta-\alpha}{\gamma-\beta}]e^{-\gamma(t-t_0)}
+$$  
+
+
+<h4 id="special-case-if-γβ">Special case: If γ=β</h4>
+<p>If γ=β, the integral becomes:</p>
+  
+$$
+\int(βu_0-α)e^{(γ-β)t+βt_0}dt=(βu_0-α)e^{βt_0}\int dt=(βu_0-α)e^{βt_0}t
+$$  
+
+
+<p>Then,</p>
+  
+$$
+s(t)e^{γt}=\frac{α}{γ}e^{γt}+(βu_0-α)e^{βt_0}t+C_2
+$$
+$$
+s(t)=\frac{α}{γ}+(βu_0-α)te^{-γt+βt_0}+C_2e^{-γt}
+$$  
+
+
+<p>Since γ=β:</p>
+  
+$$
+s(t)=\frac{α}{γ}+(γu_0-α)te^{-γ(t-t_0)}+C_2e^{-γt}
+$$
+$$
+s(t)=\frac{α}{γ}+(γu_0-α)(t_0+τ)e^{-γτ}+C_2e^{-γ(t_0+τ)}
+$$  
+
+
+<p>This scenario is not covered by the target equation, which explicitly has a denominator (γ−β), implying γ≠β.</p>
 
       </div>
 
       
-  <time class="mt-12 mb-8 block text-xs text-gray-500 ltr:text-right rtl:text-left dark:text-gray-400" datetime="2025-03-28T00:00:00.000Z">
+  <time class="mt-12 mb-8 block text-xs text-gray-500 ltr:text-right rtl:text-left dark:text-gray-400" datetime="2025-05-28T00:00:00.000Z">
     <span>Last updated on</span>
-    Mar 28, 2025</time>
+    May 28, 2025</time>
 
       <div class="container mx-auto prose prose-slate lg:prose-xl dark:prose-invert mt-5">
         
@@ -1628,13 +1963,13 @@
 
 <div class="flex justify-center">
   
-  <a class="no-underline bg-primary-100 hover:bg-primary-300 text-primary-800 text-xs font-medium mr-2 px-2.5 py-0.5 lg:px-5 lg:py-2 rounded dark:bg-primary-900 dark:hover:bg-primary-700 dark:text-primary-300" href="/tags/profile-hostgraft-rnaseq-patient-derived-xenograft/">Profile Host&amp;Graft RNAseq, Patient-Derived Xenograft</a>
+  <a class="no-underline bg-primary-100 hover:bg-primary-300 text-primary-800 text-xs font-medium mr-2 px-2.5 py-0.5 lg:px-5 lg:py-2 rounded dark:bg-primary-900 dark:hover:bg-primary-700 dark:text-primary-300" href="/tags/scrnaseq-rna-velocity-math/">ScRNAseq RNA Velocity, Math</a>
   
-  <a class="no-underline bg-primary-100 hover:bg-primary-300 text-primary-800 text-xs font-medium mr-2 px-2.5 py-0.5 lg:px-5 lg:py-2 rounded dark:bg-primary-900 dark:hover:bg-primary-700 dark:text-primary-300" href="/tags/feature-quantification/">Feature Quantification</a>
+  <a class="no-underline bg-primary-100 hover:bg-primary-300 text-primary-800 text-xs font-medium mr-2 px-2.5 py-0.5 lg:px-5 lg:py-2 rounded dark:bg-primary-900 dark:hover:bg-primary-700 dark:text-primary-300" href="/tags/steady-state-model/">Steady-State Model</a>
   
-  <a class="no-underline bg-primary-100 hover:bg-primary-300 text-primary-800 text-xs font-medium mr-2 px-2.5 py-0.5 lg:px-5 lg:py-2 rounded dark:bg-primary-900 dark:hover:bg-primary-700 dark:text-primary-300" href="/tags/rnaseq/">RNAseq</a>
+  <a class="no-underline bg-primary-100 hover:bg-primary-300 text-primary-800 text-xs font-medium mr-2 px-2.5 py-0.5 lg:px-5 lg:py-2 rounded dark:bg-primary-900 dark:hover:bg-primary-700 dark:text-primary-300" href="/tags/scvelo/">ScVelo</a>
   
-  <a class="no-underline bg-primary-100 hover:bg-primary-300 text-primary-800 text-xs font-medium mr-2 px-2.5 py-0.5 lg:px-5 lg:py-2 rounded dark:bg-primary-900 dark:hover:bg-primary-700 dark:text-primary-300" href="/tags/10x/">10X</a>
+  <a class="no-underline bg-primary-100 hover:bg-primary-300 text-primary-800 text-xs font-medium mr-2 px-2.5 py-0.5 lg:px-5 lg:py-2 rounded dark:bg-primary-900 dark:hover:bg-primary-700 dark:text-primary-300" href="/tags/velocyto/">Velocyto</a>
   
 </div>
 
@@ -1652,7 +1987,7 @@
   <a
     target="_blank" rel="noopener"
     class="m-1 rounded-md bg-neutral-300 p-1.5 text-neutral-700 hover:bg-primary-500 hover:text-neutral-300 dark:bg-neutral-700 dark:text-neutral-300 dark:hover:bg-primary-400 dark:hover:text-neutral-800"
-    href="https://twitter.com/intent/tweet?url=http%3A%2F%2Flocalhost%3A1313%2Fpost%2F05.xensoft_caki_paper%2F&amp;text=%F0%9F%A7%AC&#43;quantify&#43;xenograft&#43;and&#43;host&#43;gene&#43;expression&#43;from&#43;the&#43;same&#43;sample"
+    href="https://twitter.com/intent/tweet?url=http%3A%2F%2Flocalhost%3A1313%2Fpost%2F11d.velocity_dynamic_model_derivation%2F&amp;text=%F0%9F%A7%AC&#43;Math&#43;derivation&#43;for&#43;Dynamic&#43;RNA&#43;velocity&#43;model"
     title="X"
     aria-label="X"
     id="share-link-x"
@@ -1670,7 +2005,7 @@
   <a
     target="_blank" rel="noopener"
     class="m-1 rounded-md bg-neutral-300 p-1.5 text-neutral-700 hover:bg-primary-500 hover:text-neutral-300 dark:bg-neutral-700 dark:text-neutral-300 dark:hover:bg-primary-400 dark:hover:text-neutral-800"
-    href="https://www.facebook.com/sharer.php?u=http%3A%2F%2Flocalhost%3A1313%2Fpost%2F05.xensoft_caki_paper%2F&amp;t=%F0%9F%A7%AC&#43;quantify&#43;xenograft&#43;and&#43;host&#43;gene&#43;expression&#43;from&#43;the&#43;same&#43;sample"
+    href="https://www.facebook.com/sharer.php?u=http%3A%2F%2Flocalhost%3A1313%2Fpost%2F11d.velocity_dynamic_model_derivation%2F&amp;t=%F0%9F%A7%AC&#43;Math&#43;derivation&#43;for&#43;Dynamic&#43;RNA&#43;velocity&#43;model"
     title="Facebook"
     aria-label="Facebook"
     id="share-link-facebook"
@@ -1690,7 +2025,7 @@
   <a
     target="_blank" rel="noopener"
     class="m-1 rounded-md bg-neutral-300 p-1.5 text-neutral-700 hover:bg-primary-500 hover:text-neutral-300 dark:bg-neutral-700 dark:text-neutral-300 dark:hover:bg-primary-400 dark:hover:text-neutral-800"
-    href="mailto:?subject=%F0%9F%A7%AC%20quantify%20xenograft%20and%20host%20gene%20expression%20from%20the%20same%20sample&amp;body=http%3A%2F%2Flocalhost%3A1313%2Fpost%2F05.xensoft_caki_paper%2F"
+    href="mailto:?subject=%F0%9F%A7%AC%20Math%20derivation%20for%20Dynamic%20RNA%20velocity%20model&amp;body=http%3A%2F%2Flocalhost%3A1313%2Fpost%2F11d.velocity_dynamic_model_derivation%2F"
     title="Email"
     aria-label="Email"
     id="share-link-email"
@@ -1708,7 +2043,7 @@
   <a
     target="_blank" rel="noopener"
     class="m-1 rounded-md bg-neutral-300 p-1.5 text-neutral-700 hover:bg-primary-500 hover:text-neutral-300 dark:bg-neutral-700 dark:text-neutral-300 dark:hover:bg-primary-400 dark:hover:text-neutral-800"
-    href="https://www.linkedin.com/shareArticle?url=http%3A%2F%2Flocalhost%3A1313%2Fpost%2F05.xensoft_caki_paper%2F&amp;title=%F0%9F%A7%AC&#43;quantify&#43;xenograft&#43;and&#43;host&#43;gene&#43;expression&#43;from&#43;the&#43;same&#43;sample"
+    href="https://www.linkedin.com/shareArticle?url=http%3A%2F%2Flocalhost%3A1313%2Fpost%2F11d.velocity_dynamic_model_derivation%2F&amp;title=%F0%9F%A7%AC&#43;Math&#43;derivation&#43;for&#43;Dynamic&#43;RNA&#43;velocity&#43;model"
     title="LinkedIn"
     aria-label="LinkedIn"
     id="share-link-linkedin"
@@ -1726,7 +2061,7 @@
   <a
     target="_blank" rel="noopener"
     class="m-1 rounded-md bg-neutral-300 p-1.5 text-neutral-700 hover:bg-primary-500 hover:text-neutral-300 dark:bg-neutral-700 dark:text-neutral-300 dark:hover:bg-primary-400 dark:hover:text-neutral-800"
-    href="whatsapp://send?text=%F0%9F%A7%AC&#43;quantify&#43;xenograft&#43;and&#43;host&#43;gene&#43;expression&#43;from&#43;the&#43;same&#43;sample%20http%3A%2F%2Flocalhost%3A1313%2Fpost%2F05.xensoft_caki_paper%2F"
+    href="whatsapp://send?text=%F0%9F%A7%AC&#43;Math&#43;derivation&#43;for&#43;Dynamic&#43;RNA&#43;velocity&#43;model%20http%3A%2F%2Flocalhost%3A1313%2Fpost%2F11d.velocity_dynamic_model_derivation%2F"
     title="WhatsApp"
     aria-label="WhatsApp"
     id="share-link-whatsapp"
@@ -1878,34 +2213,18 @@
   <div class="flex flex-col md:flex-row flex-nowrap justify-between gap-5 pt-2">
     <div class="">
       
-        <a class="group flex no-underline" href="/post/06.noise_or_true_stem_cell/">
-          <span
-            class="mt-[-0.3rem] me-2 text-neutral-700 transition-transform group-hover:-translate-x-[2px] group-hover:text-primary-600 dark:text-neutral dark:group-hover:text-primary-400"
-          ><span class="ltr:inline rtl:hidden">&larr;</span></span>
-          <span class="flex flex-col">
-            <span
-              class="mt-[0.1rem] leading-6 group-hover:underline group-hover:decoration-primary-500"
-            >🧬 Determine whether it’s noise or true stem like cells in PRCC</span>
-            <span class="mt-[0.1rem] text-xs text-neutral-500 dark:text-neutral-400">
-              
-                Mar 29, 2025
-              
-            </span>
-          </span>
-        </a>
-      
     </div>
     <div class="">
       
-        <a class="group flex text-right no-underline" href="/post/04.huangcong_oncogene/">
+        <a class="group flex text-right no-underline" href="/post/11c.velocity_steady_state/">
           <span class="flex flex-col">
             <span
               class="mt-[0.1rem] leading-6 group-hover:underline group-hover:decoration-primary-500"
-            >🧬 counteract treatment-specific background in differential expressed gene analysis (huangcong paper)</span
+            >🧬 Math derivation for steady-state RNA velocity model</span
             >
             <span class="mt-[0.1rem] text-xs text-neutral-500 dark:text-neutral-400">
               
-                Mar 27, 2025
+                May 28, 2025
               
             </span>
           </span>
