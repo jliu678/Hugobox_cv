@@ -10,11 +10,39 @@
     <lastmod>2030-06-01T13:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
-    <loc>http://localhost:1313/tags/bayesian/</loc>
+    <loc>http://localhost:1313/post/</loc>
+    <lastmod>2025-05-28T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+  </url><url>
+    <loc>http://localhost:1313/tags/scrnaseq-rna-velocity-math/</loc>
+    <lastmod>2025-05-28T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+  </url><url>
+    <loc>http://localhost:1313/tags/scvelo/</loc>
+    <lastmod>2025-05-28T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+  </url><url>
+    <loc>http://localhost:1313/tags/steady-state-model/</loc>
+    <lastmod>2025-05-28T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+  </url><url>
+    <loc>http://localhost:1313/tags/</loc>
+    <lastmod>2025-05-28T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+  </url><url>
+    <loc>http://localhost:1313/tags/velocyto/</loc>
+    <lastmod>2025-05-28T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+  </url><url>
+    <loc>http://localhost:1313/post/11c.velocity_steady_state/</loc>
+    <lastmod>2025-05-28T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+  </url><url>
+    <loc>http://localhost:1313/post/19c.bayes_variational_infer_elbo/</loc>
     <lastmod>2025-04-24T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
-    <loc>http://localhost:1313/post/</loc>
+    <loc>http://localhost:1313/tags/bayesian/</loc>
     <lastmod>2025-04-24T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
@@ -22,7 +50,15 @@
     <lastmod>2025-04-24T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
+    <loc>http://localhost:1313/tags/elbo/</loc>
+    <lastmod>2025-04-24T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+  </url><url>
     <loc>http://localhost:1313/tags/imputation/</loc>
+    <lastmod>2025-04-24T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+  </url><url>
+    <loc>http://localhost:1313/tags/kl-divergence/</loc>
     <lastmod>2025-04-24T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
@@ -30,19 +66,15 @@
     <lastmod>2025-04-24T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
+    <loc>http://localhost:1313/tags/neural-network-variational-autoencoders/</loc>
+    <lastmod>2025-04-24T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+  </url><url>
     <loc>http://localhost:1313/tags/scrnaseq-poissongamma-mixture-model/</loc>
     <lastmod>2025-04-24T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
-    <loc>http://localhost:1313/tags/</loc>
-    <lastmod>2025-04-24T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-  </url><url>
     <loc>http://localhost:1313/post/19b.scrnaseq_impute_saver/</loc>
-    <lastmod>2025-04-24T00:00:00+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-  </url><url>
-    <loc>http://localhost:1313/post/19c.bayes_variational_infer_elbo/</loc>
     <lastmod>2025-04-24T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
@@ -146,11 +178,27 @@
     <lastmod>2025-04-05T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
+    <loc>http://localhost:1313/tags/chemical-master-equation-cme/</loc>
+    <lastmod>2025-04-04T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+  </url><url>
+    <loc>http://localhost:1313/tags/method-of-characteristics/</loc>
+    <lastmod>2025-04-04T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+  </url><url>
+    <loc>http://localhost:1313/tags/partial-differential-equation-pde/</loc>
+    <lastmod>2025-04-04T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+  </url><url>
+    <loc>http://localhost:1313/tags/probability-generating-function-pgf/</loc>
+    <lastmod>2025-04-04T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+  </url><url>
     <loc>http://localhost:1313/tags/scrnaseq-rna-velocity-math-analysis/</loc>
     <lastmod>2025-04-04T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
-    <loc>http://localhost:1313/tags/scrnaseq-rna-velocity-stochastic-model/</loc>
+    <loc>http://localhost:1313/tags/scrnaseqstochastic-modeldifferential-equation/</loc>
     <lastmod>2025-04-04T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
@@ -375,6 +423,10 @@
     <changefreq>weekly</changefreq>
   </url><url>
     <loc>http://localhost:1313/teaching/linear_algebra/</loc>
+    <lastmod>2024-10-24T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+  </url><url>
+    <loc>http://localhost:1313/teaching/other/home_improvement/</loc>
     <lastmod>2024-10-24T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>

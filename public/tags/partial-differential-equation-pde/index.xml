@@ -7,7 +7,7 @@
     <description>Partial Differential Equation (PDE)</description>
     <generator>Hugo Blox Builder (https://hugoblox.com)</generator><language>en-us</language><lastBuildDate>Fri, 04 Apr 2025 00:00:00 +0000</lastBuildDate>
     <image>
-      <url>http://localhost:1313/media/icon_hu_fd2be5a69becaf9e.png</url>
+      <url>http://localhost:1313/media/icon_hu6671943710606299486.png</url>
       <title>Partial Differential Equation (PDE)</title>
       <link>http://localhost:1313/tags/partial-differential-equation-pde/</link>
     </image>
@@ -17,7 +17,8 @@
       <link>http://localhost:1313/post/11a.velocity_unraveled/</link>
       <pubDate>Fri, 04 Apr 2025 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/post/11a.velocity_unraveled/</guid>
-      <description>&lt;h2 id=&#34;overview-of-eq18-from-velocity-unraveled&#34;&gt;Overview of Eq(18) from &lt;a href=&#34;https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1010492&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;velocity unraveled&lt;/a&gt;&lt;/h2&gt;
+      <description>&lt;h2 id=&#34;overview-of-eq18-from-velocity-unraveledhttpsjournalsplosorgploscompbiolarticleid101371journalpcbi1010492&#34;&gt;Overview of Eq(18) from &lt;a href=&#34;https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1010492&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;velocity unraveled&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;The stochastic model defined by the Chemical Master Equation (CME) outperforms deterministic ODE models in capturing the inherent stochasticity of single-cell RNA sequencing (scRNA-seq) data. It is actively developed to provide a more accurate representation of feature counts and their underlying biological processes. And it has also enabled the generation of simulated data to evaluate deterministic ODE models and associated data processing methods commonly used in scRNA-seq analysis. Thus I derive the key equations from the paper &lt;a href=&#34;https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1010492&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;velocity unraveled&lt;/a&gt;, a pivotal paper demonstrating the transformative potential of stochastic approaches.&lt;/p&gt;
 &lt;h3 id=&#34;-1-probability-generating-function-pgf&#34;&gt;🧬 1. Probability generating function (PGF)&lt;/h3&gt;
 &lt;p&gt;We define the state of a cell as:&lt;/p&gt;
  
@@ -42,7 +43,7 @@ $$G(u_u, u_s, t) = \sum_x P(x,t)(u_u + 1)^{x_u}(u_s + 1)^{x_s}$$
  $$U_1(u_u, u_s, s) = \frac{u_s \beta}{\beta - \gamma} e^{-\gamma s} + \left(u_u - \frac{u_s \beta}{\beta - \gamma}\right) e^{-\beta s}$$ 
 
 &lt;p&gt;This expression arises from &lt;a href=&#34;#Derive-G&#34;&gt;solving a linear system of ODEs for the chemical master equation (CME) via generating functions&lt;/a&gt;, and it essentially encodes how the state propagates in time. It&amp;rsquo;s derived from how unspliced → spliced reactions occur over time.&lt;/p&gt;
-&lt;h3 id=&#34;-3-log-generating-function&#34;&gt;🧠 3. Log-generating function $f$&lt;a id=&#34;log-generating-function-first-introduced&#34;&gt;&lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id=&#34;-3-log-generating-function-fa-idlog-generating-function-first-introduceda&#34;&gt;🧠 3. Log-generating function $f$&lt;a id=&#34;log-generating-function-first-introduced&#34;&gt;&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt; 
 $$f(u_u, u_s, t) := \ln G(u_u, u_s, t) = \int_0^t \alpha(t-s) U_1(u_u, u_s, s) ds$$ 
 
@@ -147,7 +148,7 @@ $$ \frac{\partial^2 G}{\partial u_u^2}\bigg|_{u_u = u_s = 0} = E[x_u(x_u - 1)], 
 &lt;li&gt;&lt;strong&gt;Links stochastic biochemical kinetics&lt;/strong&gt; with observed scRNA-seq distributions&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;Supports modeling&lt;/strong&gt; of noise, burstiness, and cell-to-cell heterogeneity&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&#34;b-derive--via-method-of-characteristics&#34;&gt;B) Derive $u_u(s)$ via method of characteristics &lt;a id=&#34;Derive-G&#34;&gt;&lt;/a&gt;&lt;/h2&gt;
+&lt;h2 id=&#34;b-derive-u_us-via-method-of-characteristics-a-idderive-ga&#34;&gt;B) Derive $u_u(s)$ via method of characteristics &lt;a id=&#34;Derive-G&#34;&gt;&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt; $U_1(u_u, u_s, s)$ 
  is claimed to be  $u_u(s)$ 
 , which is the solution to the ODE derived from the Chemical Master Equation (CME) for the two-species birth-death process representing unspliced (u) and spliced (s) mRNA dynamics.&lt;/p&gt;
@@ -187,10 +188,10 @@ $$ \frac{\partial^2 G}{\partial u_u^2}\bigg|_{u_u = u_s = 0} = E[x_u(x_u - 1)], 
  $$\frac{du_u}{ds} = \beta(u_s - u_u), \quad \frac{du_s}{ds} = -\gamma u_s, \quad \frac{dG}{ds} = \alpha u_u G$$ 
 
 &lt;p&gt;Let&amp;rsquo;s solve these:&lt;/p&gt;
-&lt;h3 id=&#34;step-4-solve-for&#34;&gt;Step 4: Solve for $u_s(s)$&lt;/h3&gt;
+&lt;h3 id=&#34;step-4-solve-for-u_ss&#34;&gt;Step 4: Solve for $u_s(s)$&lt;/h3&gt;
  $$\frac{du_s}{ds} = -\gamma u_s \Rightarrow u_s(s) = u_s(0) e^{-\gamma s}$$ 
 
-&lt;h3 id=&#34;step-5-solve-for&#34;&gt;Step 5: Solve for $u_u(s)$&lt;/h3&gt;
+&lt;h3 id=&#34;step-5-solve-for-u_us&#34;&gt;Step 5: Solve for $u_u(s)$&lt;/h3&gt;
 &lt;p&gt;Use integrating factor method:&lt;/p&gt;
  $$\frac{du_u}{ds} + \beta u_u = \beta u_s(s) = \beta u_s(0) e^{-\gamma s}$$ 
 
@@ -205,7 +206,7 @@ $$ \frac{\partial^2 G}{\partial u_u^2}\bigg|_{u_u = u_s = 0} = E[x_u(x_u - 1)], 
 :&lt;/p&gt;
  $$u_u(s) = u_u(0) e^{-\beta s} + \frac{\beta u_s(0)}{\beta - \gamma}(e^{-\gamma s} - e^{-\beta s})$$ 
 
-&lt;h3 id=&#34;step-6-define&#34;&gt;Step 6: Define $U_1(u_u, u_s, s)$&lt;/h3&gt;
+&lt;h3 id=&#34;step-6-define-u_1u_u-u_s-s&#34;&gt;Step 6: Define $U_1(u_u, u_s, s)$&lt;/h3&gt;
 &lt;p&gt;We identify:&lt;/p&gt;
  $$U_1(u_u, u_s, s) := u_u(s) = \frac{u_s \beta}{\beta - \gamma} e^{-\gamma s} + \left(u_u - \frac{u_s \beta}{\beta - \gamma}\right) e^{-\beta s}$$ 
 
@@ -231,7 +232,7 @@ $$
 &lt;li&gt; $\gamma$ 
 : degradation rate of spliced RNA&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3 id=&#34;step-2-define-the-generating-function&#34;&gt;Step 2: Define the generating function $G(u_u, u_s, t)$&lt;/h3&gt;
+&lt;h3 id=&#34;step-2-define-the-generating-function-gu_u-u_s-t&#34;&gt;Step 2: Define the generating function $G(u_u, u_s, t)$&lt;/h3&gt;
 
 $$
 G(u_u, u_s, t) := \sum_{x_u=0}^{\infty} \sum_{x_s=0}^{\infty} P(x_u, x_s, t)(u_u + 1)^{x_u}(u_s + 1)^{x_s} \qquad (10)
@@ -242,7 +243,7 @@ $$
  instead of  $u_u^{x_u}$ 
  is a common shift to simplify derivatives later, but you can equivalently define with  $u_u^{x_u}$ 
 .&lt;/p&gt;
-&lt;h3 id=&#34;step-3-take-time-derivative-of&#34;&gt;Step 3: Take time derivative of $G$&lt;/h3&gt;
+&lt;h3 id=&#34;step-3-take-time-derivative-of-g&#34;&gt;Step 3: Take time derivative of $G$&lt;/h3&gt;
 &lt;p&gt;Using linearity of sums and derivatives:&lt;/p&gt;
 
 $$
@@ -444,7 +445,7 @@ $$
 $$
 
 
-&lt;h2 id=&#34;b2-why-double-sum-equivalence-holds-in-term-2-of-step4-in-b1&#34;&gt;B.2) Why Double Sum Equivalence Holds &lt;a href=&#34;#why_sum_is_equivalence&#34;&gt;in Term 2 of Step4 in B.1)&lt;/a&gt;&lt;/h2&gt;
+&lt;h2 id=&#34;b2-why-double-sum-equivalence-holds-in-term-2-of-step4-in-b1why_sum_is_equivalence&#34;&gt;B.2) Why Double Sum Equivalence Holds &lt;a href=&#34;#why_sum_is_equivalence&#34;&gt;in Term 2 of Step4 in B.1)&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;This equivalence depends on what values the indices range over and how the function being summed behaves.&lt;/p&gt;
 &lt;h3 id=&#34;1-notation&#34;&gt;1. Notation&lt;/h3&gt;
 &lt;p&gt;When we write:&lt;/p&gt;
@@ -553,10 +554,10 @@ $$
 \end{align}$$ 
 
 &lt;p&gt;These are much easier to solve analytically or numerically.&lt;/p&gt;
-&lt;h2 id=&#34;b4-legitimacy-to-choose--in-b3&#34;&gt;B.4) Legitimacy to choose $\frac{dt}{ds} = 1$ in B.3)&lt;/h2&gt;
+&lt;h2 id=&#34;b4-legitimacy-to-choose-fracdtds--1-in-b3&#34;&gt;B.4) Legitimacy to choose $\frac{dt}{ds} = 1$ in B.3)&lt;/h2&gt;
 &lt;p&gt;We choose  $\frac{dt}{ds} = 1$ 
  in the method of characteristics because it simplifies the partial differential equation (PDE) to a more tractable set of ordinary differential equations (ODEs) — and this choice is completely valid and standard in this method. Let me explain why:&lt;/p&gt;
-&lt;h3 id=&#34;what-does--mean&#34;&gt;What Does $\frac{dt}{ds} = 1$ Mean&lt;/h3&gt;
+&lt;h3 id=&#34;what-does-fracdtds--1-mean&#34;&gt;What Does $\frac{dt}{ds} = 1$ Mean&lt;/h3&gt;
 &lt;p&gt;In the method of characteristics, you introduce a new parameter  $s$ 
  that traces out a path (or characteristic curve) in the space of independent variables — here,  $(u_u, u_s, t)$ 
 . Along this path:&lt;/p&gt;
@@ -593,7 +594,7 @@ $$
 &lt;li&gt;This choice makes the equations easier to solve.&lt;/li&gt;
 &lt;li&gt;The physics or stochastic model (e.g. CME) remains unchanged.&lt;/li&gt;
 &lt;/ol&gt;
-&lt;h2 id=&#34;c-derive-log-generating-function&#34;&gt;C) Derive log-generating function &lt;a id=&#34;Derive-log-generating-function&#34;&gt;&lt;/a&gt;&lt;/h2&gt;
+&lt;h2 id=&#34;c-derive-log-generating-function-a-idderive-log-generating-functiona&#34;&gt;C) Derive log-generating function &lt;a id=&#34;Derive-log-generating-function&#34;&gt;&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;Below derive the log-generating function first introduced &lt;a href=&#34;#log-generating-function-first-introduced&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
 &lt;h3 id=&#34;1-setup-use-the-method-of-characteristics&#34;&gt;1. Setup: Use the Method of Characteristics&lt;/h3&gt;
 &lt;p&gt;We rewrite the PDE:&lt;/p&gt;
@@ -611,10 +612,10 @@ $$
 
  $$\frac{dG}{ds} = \alpha u_u G$$ 
 
-&lt;h3 id=&#34;2-solve-the-ode-for&#34;&gt;2. Solve the ODE for $u_s(s)$&lt;/h3&gt;
+&lt;h3 id=&#34;2-solve-the-ode-for-u_ss&#34;&gt;2. Solve the ODE for $u_s(s)$&lt;/h3&gt;
  $$\frac{du_s}{ds} = -\gamma u_s \Rightarrow u_s(s) = u_s(0)e^{-\gamma s}$$ 
 
-&lt;h3 id=&#34;3-plug-into-the-ode-for&#34;&gt;3. Plug into the ODE for $u_u(s)$&lt;/h3&gt;
+&lt;h3 id=&#34;3-plug-into-the-ode-for-u_us&#34;&gt;3. Plug into the ODE for $u_u(s)$&lt;/h3&gt;
  $$\frac{du_u}{ds} = \beta(u_s(s) - u_u(s)) = \beta(u_s(0)e^{-\gamma s} - u_u(s))$$ 
 
 &lt;p&gt;This is a linear non-homogeneous ODE:&lt;/p&gt;
@@ -640,7 +641,7 @@ $$
 &lt;p&gt;So we now have:&lt;/p&gt;
  $$u_u(s) = \frac{\beta u_s(0)}{\beta - \gamma}e^{-\gamma s} + \left(u_u(0) - \frac{\beta u_s(0)}{\beta - \gamma}\right)e^{-\beta s}$$ 
 
-&lt;h3 id=&#34;4-define&#34;&gt;4. Define $U_1(u_u, u_s, s)$&lt;/h3&gt;
+&lt;h3 id=&#34;4-define-u_1u_u-u_s-s&#34;&gt;4. Define $U_1(u_u, u_s, s)$&lt;/h3&gt;
 &lt;p&gt;Recall that in the characteristic solution for  $G$ 
 , we solve:&lt;/p&gt;
  $$\frac{dG}{ds} = \alpha u_u(s)G \Rightarrow G(s) = \exp\left(\int_0^t \alpha(t-s)u_u(s)ds\right)$$ 
@@ -649,7 +650,7 @@ $$
 . So:&lt;/p&gt;
  $$U_1(u_u, u_s, s) = \frac{\beta u_s}{\beta - \gamma}e^{-\gamma s} + \left(u_u - \frac{\beta u_s}{\beta - \gamma}\right)e^{-\beta s}$$ 
 
-&lt;h3 id=&#34;5-compute&#34;&gt;5. Compute $f(u_u, u_s, t) = \ln G$&lt;/h3&gt;
+&lt;h3 id=&#34;5-compute-fu_u-u_s-t--ln-g&#34;&gt;5. Compute $f(u_u, u_s, t) = \ln G$&lt;/h3&gt;
 &lt;p&gt;Now integrate:&lt;/p&gt;
  $$\ln G(u_u, u_s, t) = \int_0^t \alpha(t-s)U_1(u_u, u_s, s) \, ds$$ 
 

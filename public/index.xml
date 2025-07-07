@@ -7,7 +7,7 @@
     <description>Jiyuan Liu</description>
     <generator>Hugo Blox Builder (https://hugoblox.com)</generator><language>en-us</language><lastBuildDate>Mon, 24 Oct 2022 00:00:00 +0000</lastBuildDate>
     <image>
-      <url>http://localhost:1313/media/icon_hu_fd2be5a69becaf9e.png</url>
+      <url>http://localhost:1313/media/icon_hu6671943710606299486.png</url>
       <title>Jiyuan Liu</title>
       <link>http://localhost:1313/</link>
     </image>
@@ -30,6 +30,818 @@
 &lt;li&gt;&lt;strong&gt;Embed&lt;/strong&gt; your slides (e.g. Google Slides) or presentation video on this page using &lt;a href=&#34;https://docs.hugoblox.com/reference/markdown/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;shortcodes&lt;/a&gt;.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;Further event details, including &lt;a href=&#34;https://docs.hugoblox.com/reference/markdown/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;page elements&lt;/a&gt; such as image galleries, can be added to the body of this page.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>🧬 Math derivation for steady-state RNA velocity model</title>
+      <link>http://localhost:1313/post/11c.velocity_steady_state/</link>
+      <pubDate>Wed, 28 May 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/post/11c.velocity_steady_state/</guid>
+      <description>&lt;p&gt;The steady‑state model was the first to enable a mathematical estimation of RNA velocity, and most subsequent methods are modified versions of it or its generalization (the dynamic model in &lt;code&gt;scVelo&lt;/code&gt;; see our other blogs). It has its limitations and a solid understanding of its underlying mathematics is needed to apply the model effectively. Here, we derive the steady-state model in &lt;code&gt;scVelo&lt;/code&gt; and &lt;code&gt;velocyto&lt;/code&gt;.&lt;/p&gt;
+&lt;h3 id=&#34;a-estimating-rna-velocity-using-steady-state-ratio-in-scvelo-and-velocyto&#34;&gt;A. Estimating RNA velocity Using Steady-State Ratio in &lt;code&gt;scVelo&lt;/code&gt; and &lt;code&gt;velocyto&lt;/code&gt;&lt;/h3&gt;
+&lt;p&gt;For steady-state models in &lt;code&gt;scVelo&lt;/code&gt; and &lt;code&gt;velocyto&lt;/code&gt;, RNA velocities are computed as deviations from this steady-state ratio:&lt;/p&gt;
+ $$ \nu_i = u_i - \gamma_0 s_i  $$ 
+
+&lt;p&gt;where
+  
+$$
+\gamma_0 = \frac{\beta}{\gamma}
+$$  
+
+&lt;br&gt;
+(i.e. the expected ratio of unspliced to spliced mRNA) is estimated analytically using least squares regression. Lower and upper quantiles in phase space, that is, where mRNA levels
+reach minimum and maximum expression, respectively were assumed to be steady states and used for the estimation. Hence, the ratio can be approximated by a linear regression on these extreme quantiles.&lt;/p&gt;
+&lt;p&gt;Specifically, $ \gamma_0 $
+ is estimated as :&lt;/p&gt;
+  
+$$
+\gamma_0 = \frac{\mathbf{u}^\top \mathbf{s}}{\lVert \mathbf{s} \rVert^2}
+$$  
+
+
+&lt;p&gt;This is a least-squares fit of the form:&lt;/p&gt;
+  
+$$
+\mathbf{u} \approx \gamma_0 \cdot \mathbf{s}
+$$  
+
+
+&lt;p&gt;This means they model unspliced mRNA ($\mathbf{u}$
+) as being linearly dependent on spliced mRNA ($\mathbf{s}$
+), and solve for the slope $\gamma_0$
+.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h4 id=&#34;symbol-definition&#34;&gt;Symbol Definition&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;$\mathbf{u} = (u_1, \ldots, u_n)$
+: a vector of size-normalized unspliced mRNA counts for a single gene across a subset of cells.&lt;/li&gt;
+&lt;li&gt;$\mathbf{s} = (s_1, \ldots, s_n)$
+: a vector of corresponding spliced mRNA counts for that gene in the same subset of cells.&lt;/li&gt;
+&lt;li&gt;$\mathbf{u}^\top \mathbf{s}$
+: the dot product between unspliced and spliced vectors.&lt;/li&gt;
+&lt;li&gt;$\lVert \mathbf{s} \rVert^2 = \mathbf{s}^\top \mathbf{s}$
+: the squared norm of the spliced vector.&lt;/li&gt;
+&lt;li&gt;$\gamma_0$
+: the slope of the best-fit line through the origin relating $\mathbf{u}$
+ to $\mathbf{s}$
+, i.e., the steady-state ratio.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h3 id=&#34;b-derive-least-squares-solution-for-estimating-the-steady-state-ratio-gamma_0&#34;&gt;B. Derive Least Squares Solution for Estimating the Steady-State Ratio $\gamma_0$&lt;/h3&gt;
+&lt;p&gt;Let’s walk through the full derivation of the least squares solution for estimating the steady-state ratio $\gamma_0$
+, which minimizes the squared difference between the unspliced and spliced counts scaled by $\gamma_0$
+.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h4 id=&#34;-problem-setup&#34;&gt;🔧 Problem Setup&lt;/h4&gt;
+&lt;p&gt;Given:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;$u \in \mathbb{R}^n$
+: vector of unspliced counts across $n$
+ cells&lt;/li&gt;
+&lt;li&gt;$s \in \mathbb{R}^n$
+: vector of spliced counts across the same $n$
+ cells&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;We model the unspliced counts as linearly proportional to spliced counts:&lt;/p&gt;
+
+$$
+u \approx \gamma_0 s
+$$
+
+
+&lt;p&gt;We want to find $\gamma_0$
+ that minimizes the squared error:&lt;/p&gt;
+
+$$
+\min_{\gamma_0} \| u - \gamma_0 s \|^2
+$$
+
+
+&lt;hr&gt;
+&lt;h4 id=&#34;-expand-the-norm&#34;&gt;🧮 Expand the Norm&lt;/h4&gt;
+
+$$
+\| u - \gamma_0 s \|^2 = (u - \gamma_0 s)^\top (u - \gamma_0 s)
+$$
+
+
+&lt;p&gt;Expanding this expression:&lt;/p&gt;
+
+$$
+= u^\top u - 2\gamma_0 u^\top s + \gamma_0^2 s^\top s
+$$
+
+
+&lt;hr&gt;
+&lt;h4 id=&#34;-minimize-with-respect-to-gamma_0&#34;&gt;📉 Minimize with Respect to $\gamma_0$&lt;/h4&gt;
+&lt;p&gt;Take derivative with respect to $\gamma_0$
+ and set it to zero:&lt;/p&gt;
+
+$$
+\frac{d}{d\gamma_0} \left( \| u - \gamma_0 s \|^2 \right) = -2 u^\top s + 2\gamma_0 s^\top s = 0
+$$
+
+
+&lt;p&gt;Solve for $\gamma_0$
+:&lt;/p&gt;
+
+$$
+\gamma_0 = \frac{u^\top s}{\|s\|^2}
+$$
+
+
+&lt;p&gt;Where:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;$u^\top s$
+ is the dot product&lt;/li&gt;
+&lt;li&gt;$\|s\|^2 = s^\top s$
+ is the squared norm&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h4 id=&#34;-interpretation&#34;&gt;✅ Interpretation&lt;/h4&gt;
+&lt;p&gt;This is the slope of the best-fit line (through the origin) predicting unspliced from spliced counts. It&amp;rsquo;s equivalent to projecting $u$
+ onto $s$
+ in vector space.&lt;/p&gt;
+&lt;p&gt;In RNA velocity, this slope $\gamma_0$
+ serves as a reference ratio under the steady-state assumption:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Expected:&lt;/strong&gt;&lt;/p&gt;
+
+$$
+u = \gamma_0 s
+$$
+
+
+&lt;p&gt;Any deviation from this in other cells suggests that the gene is being upregulated or downregulated.&lt;/p&gt;
+&lt;h3 id=&#34;c-extending-the-steady-state-model-with-offset&#34;&gt;C. Extending the Steady-State Model with Offset&lt;/h3&gt;
+&lt;h4 id=&#34;-original-model-no-offset&#34;&gt;🧩 Original Model (No Offset)&lt;/h4&gt;
+&lt;p&gt;Previously, we assumed:&lt;/p&gt;
+
+$$u_i \approx \gamma_0 \cdot s_i$$
+
+
+&lt;p&gt;But this forces the regression line to go through the origin, which isn&amp;rsquo;t always biologically realistic.&lt;/p&gt;
+&lt;h4 id=&#34;-generalized-model-with-offset&#34;&gt;✅ Generalized Model (With Offset)&lt;/h4&gt;
+&lt;p&gt;Now we model:&lt;/p&gt;
+
+$$u_i \approx \gamma_0 \cdot s_i + o$$
+
+
+&lt;p&gt;Where:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;$\gamma_0$
+ is still the slope (steady-state ratio)&lt;/li&gt;
+&lt;li&gt;$o$
+ is a constant offset (intercept), modeling basal transcription&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;-least-squares-solution-with-offset&#34;&gt;🔍 Least Squares Solution with Offset&lt;/h4&gt;
+&lt;p&gt;To solve for both $\gamma_0$
+ and $o$
+, we use ordinary least squares (OLS) for linear regression.&lt;/p&gt;
+&lt;p&gt;Given data $u=(u_1,\ldots,u_n)$
+, $s=(s_1,\ldots,s_n)$
+, we estimate:&lt;/p&gt;
+
+$$\hat{u} = \gamma_0 s + o$$
+
+
+&lt;p&gt;OLS gives:&lt;/p&gt;
+&lt;h5 id=&#34;slope-steady-state-ratio&#34;&gt;Slope (Steady-State Ratio):&lt;/h5&gt;
+
+$$\gamma_0 = \frac{\text{Cov}(u,s)}{\text{Var}(s)}$$
+
+
+&lt;p&gt;Where:&lt;/p&gt;
+
+$$\text{Cov}(u,s) = \frac{1}{n}\sum_{i=1}^n (u_i-\bar{u})(s_i-\bar{s})$$
+
+
+
+$$\text{Var}(s) = \frac{1}{n}\sum_{i=1}^n (s_i-\bar{s})^2$$
+
+
+&lt;h5 id=&#34;offset&#34;&gt;Offset:&lt;/h5&gt;
+
+$$o = \bar{u} - \gamma_0\bar{s}$$
+
+
+&lt;p&gt;This centers the regression line at the mean of the data points.&lt;/p&gt;
+&lt;h3 id=&#34;d-derive-least-squares-solution-with-intercept&#34;&gt;D. Derive Least Squares Solution with Intercept&lt;/h3&gt;
+&lt;p&gt;Let&amp;rsquo;s derive the least squares solution with an intercept (offset) step by step. Our goal is to estimate both:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;$\gamma_0$
+: the slope (steady-state ratio), and&lt;/li&gt;
+&lt;li&gt;$o$
+: the offset (basal transcription level)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;given that we model:&lt;/p&gt;
+
+$$u_i = \gamma_0 s_i + o + \varepsilon_i$$
+
+
+&lt;p&gt;for each cell $i$
+, where $\varepsilon_i$
+ is the residual.&lt;/p&gt;
+&lt;h4 id=&#34;-1-problem-setup&#34;&gt;🧩 1. Problem Setup&lt;/h4&gt;
+&lt;p&gt;Let $u = [u_1, u_2, ..., u_n]^T$
+, and $s = [s_1, s_2, ..., s_n]^T$
+&lt;/p&gt;
+&lt;p&gt;We want to solve for $\gamma_0$
+ and $o$
+ that minimize the squared residuals:&lt;/p&gt;
+
+$$\min_{\gamma_0,o} \sum_{i=1}^n (u_i - \gamma_0 s_i - o)^2$$
+
+
+&lt;p&gt;This is a linear least squares regression with intercept.&lt;/p&gt;
+&lt;h4 id=&#34;-2-matrix-form&#34;&gt;🧮 2. Matrix Form&lt;/h4&gt;
+&lt;p&gt;Rewriting the model:&lt;/p&gt;
+
+$$u = \gamma_0 s + o \cdot 1 + \varepsilon$$
+
+
+&lt;p&gt;Let&amp;rsquo;s construct a design matrix $X$
+:&lt;/p&gt;
+
+$$X = \begin{bmatrix} s_1 &amp; 1 \\ s_2 &amp; 1 \\ \vdots &amp; \vdots \\ s_n &amp; 1 \end{bmatrix} \in \mathbb{R}^{n \times 2}$$
+
+
+&lt;p&gt;Then the model becomes:&lt;/p&gt;
+
+$$u = X \cdot \begin{bmatrix} \gamma_0 \\ o \end{bmatrix} + \varepsilon$$
+
+
+&lt;p&gt;The least squares solution is given by:&lt;/p&gt;
+
+$$\begin{bmatrix} \gamma_0 \\ o \end{bmatrix} = (X^T X)^{-1} X^T u$$
+
+
+&lt;p&gt;We can compute this explicitly to get formulas for $\gamma_0$
+ and $o$
+ as below.&lt;/p&gt;
+&lt;h5 id=&#34;slope&#34;&gt;Slope:&lt;/h5&gt;
+
+$$\gamma_0 = \frac{\text{Cov}(u,s)}{\text{Var}(s)} = \frac{\sum_{i=1}^n (u_i-\bar{u})(s_i-\bar{s})}{\sum_{i=1}^n (s_i-\bar{s})^2}$$
+
+
+&lt;h5 id=&#34;offset-1&#34;&gt;Offset:&lt;/h5&gt;
+
+$$o = \bar{u} - \gamma_0\bar{s}$$
+
+
+&lt;p&gt;These are the well-known results from simple linear regression that center the regression line at the mean of the data points.&lt;/p&gt;
+&lt;h4 id=&#34;-3-matrix-derivation-of-the-least-squares-solution&#34;&gt;🎯 3. Matrix Derivation of the Least Squares Solution&lt;/h4&gt;
+&lt;p&gt;Let&amp;rsquo;s explicitly derive the solution:&lt;/p&gt;
+
+$$\begin{bmatrix} \gamma_0 \\ o \end{bmatrix} = (X^\top X)^{-1} X^\top u$$
+
+
+&lt;p&gt;for the model:&lt;/p&gt;
+
+$$u = \gamma_0 s + o \cdot 1 + \varepsilon$$
+
+
+&lt;h5 id=&#34;31-define-the-design-matrix-and-vectors&#34;&gt;3.1 Define the Design Matrix and Vectors&lt;/h5&gt;
+&lt;p&gt;Let&amp;rsquo;s say we have $n$
+ samples (cells), with:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;$s \in \mathbb{R}^n$
+: spliced counts&lt;/li&gt;
+&lt;li&gt;$u \in \mathbb{R}^n$
+: unspliced counts&lt;/li&gt;
+&lt;li&gt;$1 \in \mathbb{R}^n$
+: vector of ones&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;We define the design matrix $X \in \mathbb{R}^{n \times 2}$
+:&lt;/p&gt;
+
+$$X = \begin{bmatrix} s_1 &amp; 1 \\ s_2 &amp; 1 \\ \vdots &amp; \vdots \\ s_n &amp; 1 \end{bmatrix} = [s \quad 1]$$
+
+
+&lt;p&gt;We write the model:&lt;/p&gt;
+
+$$u = X\theta + \varepsilon, \text{ with } \theta = \begin{bmatrix} \gamma_0 \\ o \end{bmatrix}$$
+
+
+&lt;p&gt;We want to minimize the residual sum of squares:&lt;/p&gt;
+
+$$\min_\theta \|u - X\theta\|^2$$
+
+
+&lt;h5 id=&#34;32-normal-equations&#34;&gt;3.2 Normal Equations&lt;/h5&gt;
+&lt;p&gt;We derive the optimal $\theta$
+ by solving the normal equations:&lt;/p&gt;
+
+$$X^\top X\theta = X^\top u$$
+
+
+&lt;p&gt;So,&lt;/p&gt;
+
+$$\theta = (X^\top X)^{-1} X^\top u$$
+
+
+&lt;p&gt;Let&amp;rsquo;s compute each term step by step.&lt;/p&gt;
+&lt;h5 id=&#34;33-compute-xtop-x&#34;&gt;3.3 Compute $X^\top X$&lt;/h5&gt;
+
+$$X^\top X = \begin{bmatrix} \sum s_i^2 &amp; \sum s_i \\ \sum s_i &amp; n \end{bmatrix}$$
+
+
+&lt;p&gt;Let&amp;rsquo;s denote:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;$S = \sum_{i=1}^n s_i$
+&lt;/li&gt;
+&lt;li&gt;$S_2 = \sum_{i=1}^n s_i^2$
+&lt;/li&gt;
+&lt;li&gt;$n$
+: number of cells&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;So:&lt;/p&gt;
+
+$$X^\top X = \begin{bmatrix} S_2 &amp; S \\ S &amp; n \end{bmatrix}$$
+
+
+&lt;h5 id=&#34;34-compute-xtop-u&#34;&gt;3.4 Compute $X^\top u$&lt;/h5&gt;
+
+$$X^\top u = \begin{bmatrix} \sum s_i u_i \\ \sum u_i \end{bmatrix}$$
+
+
+&lt;p&gt;Let&amp;rsquo;s denote:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;$U = \sum_{i=1}^n u_i$
+&lt;/li&gt;
+&lt;li&gt;$SU = \sum_{i=1}^n s_i u_i$
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;So:&lt;/p&gt;
+
+$$X^\top u = \begin{bmatrix} SU \\ U \end{bmatrix}$$
+
+
+&lt;h5 id=&#34;35-solve-theta--xtop-x-1-xtop-u&#34;&gt;3.5 Solve $\theta = (X^\top X)^{-1} X^\top u$&lt;/h5&gt;
+&lt;p&gt;The inverse of a $2\times2$
+ matrix:&lt;/p&gt;
+
+$$\begin{bmatrix} a &amp; b \\ c &amp; d \end{bmatrix}^{-1} = \frac{1}{ad-bc}\begin{bmatrix} d &amp; -b \\ -c &amp; a \end{bmatrix}$$
+
+
+&lt;p&gt;So:&lt;/p&gt;
+
+$$(X^\top X)^{-1} = \frac{1}{S_2n - S^2}\begin{bmatrix} n &amp; -S \\ -S &amp; S_2 \end{bmatrix}$$
+
+
+&lt;p&gt;Now compute:&lt;/p&gt;
+
+$$\theta = \frac{1}{S_2n - S^2}\begin{bmatrix} n &amp; -S \\ -S &amp; S_2 \end{bmatrix}\begin{bmatrix} SU \\ U \end{bmatrix}$$
+
+
+&lt;p&gt;First row:
+
+$$n\cdot SU - S\cdot U$$
+
+&lt;/p&gt;
+&lt;p&gt;Second row:
+
+$$-S\cdot SU + S_2\cdot U$$
+
+&lt;/p&gt;
+&lt;h5 id=&#34;36-final-expression&#34;&gt;3.6 Final Expression&lt;/h5&gt;
+&lt;p&gt;So we get:&lt;/p&gt;
+
+$$\gamma_0 = \frac{n\cdot \sum s_i u_i - \sum s_i \cdot \sum u_i}{n\cdot \sum s_i^2 - (\sum s_i)^2} = \frac{\text{Cov}(u,s)}{\text{Var}(s)}$$
+
+
+
+$$o = \bar{u} - \gamma_0\bar{s}$$
+
+
+&lt;p&gt;This completes the derivation of the least squares solution with intercept, showing how to arrive at the covariance and variance expressions.&lt;/p&gt;
+&lt;h3 id=&#34;why-normal-equations-in-32-in-section-d-give-the-optimal-solution&#34;&gt;Why Normal Equations in 3.2 in Section D give the optimal solution&lt;/h3&gt;
+&lt;p&gt;Let&amp;rsquo;s prove that the normal equations&lt;/p&gt;
+
+$$X^\top X\theta = X^\top u$$
+
+
+&lt;p&gt;give us the optimal solution in least squares regression.&lt;/p&gt;
+&lt;h4 id=&#34;goal-of-least-squares&#34;&gt;Goal of Least Squares&lt;/h4&gt;
+&lt;p&gt;We want to minimize the sum of squared errors (residuals):&lt;/p&gt;
+
+$$L(\theta) = \|u-X\theta\|^2 = (u-X\theta)^\top(u-X\theta)$$
+
+
+&lt;p&gt;This is a quadratic loss function. To minimize it, we take its gradient with respect to $\theta$
+, set it to zero, and solve.&lt;/p&gt;
+&lt;h4 id=&#34;step-by-step-derivation&#34;&gt;Step-by-step Derivation&lt;/h4&gt;
+&lt;p&gt;Start with:&lt;/p&gt;
+
+$$L(\theta) = (u-X\theta)^\top(u-X\theta)$$
+
+
+&lt;p&gt;Expand the product:&lt;/p&gt;
+
+$$L(\theta) = u^\top u - 2\theta^\top X^\top u + \theta^\top X^\top X\theta$$
+
+
+&lt;p&gt;Now take the gradient with respect to $\theta$
+:&lt;/p&gt;
+
+$$\nabla_\theta L = -2X^\top u + 2X^\top X\theta \tag{gradient} $$
+
+
+&lt;p&gt;Set the gradient to zero:&lt;/p&gt;
+
+$$-2X^\top u + 2X^\top X\theta = 0$$
+
+
+&lt;p&gt;Divide both sides by 2:&lt;/p&gt;
+
+$$X^\top X\theta = X^\top u$$
+
+
+&lt;p&gt;This is the normal equation. When $X^\top X$
+ is invertible (which it is in our case since $X$
+ has full column rank), we can solve for $\theta$
+:&lt;/p&gt;
+
+$$\theta = (X^\top X)^{-1}X^\top u$$
+
+
+&lt;p&gt;This solution minimizes the squared error because:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;The loss function is convex (it&amp;rsquo;s quadratic and $X^\top X$
+ is positive definite)&lt;/li&gt;
+&lt;li&gt;We found where its gradient is zero&lt;/li&gt;
+&lt;li&gt;The second derivative (Hessian) $2X^\top X$
+ is positive definite&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Therefore, this solution gives us the global minimum of the least squares problem.&lt;/p&gt;
+&lt;h4 id=&#34;derive-the-gradient-equation-above-for-the-least-squares-loss-function&#34;&gt;Derive the Gradient Equation above for the Least Squares Loss Function&lt;/h4&gt;
+&lt;p&gt;Let&amp;rsquo;s walk through how we get:&lt;/p&gt;
+
+$$\nabla_\theta L = -2X^\top u + 2X^\top X\theta$$
+
+
+&lt;h5 id=&#34;step-1-write-the-loss-function&#34;&gt;Step 1: Write the Loss Function&lt;/h5&gt;
+&lt;p&gt;The least squares loss is:&lt;/p&gt;
+
+$$L(\theta) = \|u-X\theta\|^2 = (u-X\theta)^\top(u-X\theta)$$
+
+
+&lt;h5 id=&#34;step-2-expand-the-quadratic-form&#34;&gt;Step 2: Expand the Quadratic Form&lt;/h5&gt;
+&lt;p&gt;Let&amp;rsquo;s expand this expression:&lt;/p&gt;
+
+$$L(\theta) = u^\top u - 2\theta^\top X^\top u + \theta^\top X^\top X\theta$$
+
+
+&lt;p&gt;Here&amp;rsquo;s how we get this expansion:&lt;/p&gt;
+
+$$(u-X\theta)^\top(u-X\theta) = u^\top u - 2\theta^\top X^\top u + \theta^\top X^\top X\theta$$
+
+
+&lt;p&gt;This follows from two key matrix properties:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;$(AB)^T = B^T A^T$
+&lt;/li&gt;
+&lt;li&gt;$u^\top X\theta = \theta^\top X^\top u$
+ (scalar equality)&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h5 id=&#34;step-3-take-the-gradient-with-respect-to-theta&#34;&gt;Step 3: Take the Gradient with Respect to $\theta$&lt;/h5&gt;
+&lt;p&gt;We differentiate term by term:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;First term:
+
+   $$\nabla_\theta(u^\top u) = 0$$
+   
+
+because it doesn&amp;rsquo;t depend on $\theta$
+&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Second term:
+
+   $$\nabla_\theta(-2\theta^\top X^\top u) = -2X^\top u$$
+   
+
+because it&amp;rsquo;s linear in $\theta$
+&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Third term:
+
+   $$\nabla_\theta(\theta^\top X^\top X\theta) = 2X^\top X\theta \tag{quadratic grad.}$$
+   
+
+This is a quadratic form, and its derivative is a standard result from matrix calculus.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Adding all parts together:&lt;/p&gt;
+
+$$\nabla_\theta L = -2X^\top u + 2X^\top X\theta$$
+
+
+&lt;p&gt;This gradient expression gives us the direction of steepest ascent of the loss function at any point $\theta$
+. Setting it to zero leads to the normal equations, which give us the optimal solution.&lt;/p&gt;
+&lt;h5 id=&#34;note-vector-dot-product-commutativity&#34;&gt;Note: Vector Dot Product Commutativity&lt;/h5&gt;
+&lt;p&gt;Please note the identity&lt;/p&gt;
+
+$$a^\top b = b^\top a$$
+
+
+&lt;p&gt;holds true. This is a foundational property in linear algebra, and the key point is:&lt;/p&gt;
+&lt;p&gt;Both $a^\top b$
+ and $b^\top a$
+ are scalars (i.e., single numbers), and they are equal because they compute the same dot product. Let&amp;rsquo;s break it down:&lt;/p&gt;
+&lt;p&gt;Let $a = [a_1, a_2, \ldots, a_n]^\top$
+, and $b = [b_1, b_2, \ldots, b_n]^\top$
+.&lt;/p&gt;
+&lt;p&gt;Then:&lt;/p&gt;
+
+$$a^\top b = \sum_{i=1}^n a_i b_i$$
+
+
+
+$$b^\top a = \sum_{i=1}^n b_i a_i$$
+
+
+&lt;p&gt;But since real number multiplication is commutative (i.e., $a_i b_i = b_i a_i$
+), the two sums are identical:&lt;/p&gt;
+
+$$a^\top b = b^\top a$$
+
+
+&lt;h5 id=&#34;note-on-shapes-and-intuition&#34;&gt;Note on shapes and intuition:&lt;/h5&gt;
+&lt;ul&gt;
+&lt;li&gt;$a^\top b$
+ is a $1\times1$
+ scalar (row vector × column vector)&lt;/li&gt;
+&lt;li&gt;$b^\top a$
+ is also a $1\times1$
+ scalar (same logic)&lt;/li&gt;
+&lt;li&gt;This is just the dot product: it doesn&amp;rsquo;t matter which order you take the dot product in. It&amp;rsquo;s symmetric. This property is crucial in many derivations in linear algebra and optimization, including our least squares derivation where we used $u^\top X\theta = \theta^\top X^\top u$
+.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Since they&amp;rsquo;re both just numbers, and equal by commutativity, the identity holds.&lt;/p&gt;
+&lt;h3 id=&#34;derive-quadratic-form-gradient-in-equation-quadratic-grad&#34;&gt;Derive Quadratic Form Gradient in Equation (quadratic grad.)&lt;/h3&gt;
+&lt;p&gt;Let&amp;rsquo;s prove the key gradient identity with Matrix Calculus:&lt;/p&gt;
+
+$$\nabla_\theta(\theta^\top A\theta) = (A + A^\top)\theta$$
+
+
+&lt;p&gt;And its special case when $A$
+ is symmetric:&lt;/p&gt;
+
+$$\nabla_\theta(\theta^\top A\theta) = 2A\theta$$
+
+
+&lt;h4 id=&#34;setup&#34;&gt;Setup&lt;/h4&gt;
+&lt;p&gt;Given:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;$\theta \in \mathbb{R}^p$
+ is a column vector&lt;/li&gt;
+&lt;li&gt;$A \in \mathbb{R}^{p \times p}$
+ is a constant matrix&lt;/li&gt;
+&lt;li&gt;The scalar function is $f(\theta) = \theta^\top A\theta = \sum_{i=1}^p \sum_{j=1}^p \theta_i A_{ij} \theta_j$
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;overview-of-steps&#34;&gt;Overview of Steps&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;Step 1&lt;/strong&gt;: Write in Summation Form&lt;/p&gt;
+
+$$f(\theta) = \sum_{i=1}^p \sum_{j=1}^p \theta_i A_{ij} \theta_j$$
+
+
+&lt;p&gt;&lt;strong&gt;Step 2&lt;/strong&gt;: Compute Partial Derivatives&lt;/p&gt;
+&lt;p&gt;The gradient&amp;rsquo;s k-th component is:&lt;/p&gt;
+
+$$\frac{\partial f}{\partial \theta_k} = \frac{\partial}{\partial \theta_k} \sum_{i=1}^p \sum_{j=1}^p \theta_i A_{ij} \theta_j$$
+
+
+&lt;p&gt;&lt;strong&gt;Step 3&lt;/strong&gt;: Use Product Rule&lt;/p&gt;
+&lt;p&gt;When differentiating:&lt;/p&gt;
+
+$$\frac{\partial}{\partial \theta_k}(\theta_i A_{ij} \theta_j) = A_{ij}(\delta_{ik}\theta_j + \theta_i\delta_{jk})$$
+
+
+&lt;p&gt;where $\delta_{ik}$
+ is the Kronecker delta:&lt;/p&gt;
+
+$$\delta_{ik} = \begin{cases} 1 &amp; \text{if } i=k \\ 0 &amp; \text{otherwise} \end{cases}$$
+
+
+&lt;p&gt;&lt;strong&gt;Step 4&lt;/strong&gt;: Sum Terms&lt;/p&gt;
+
+$$\frac{\partial f}{\partial \theta_k} = \sum_{j=1}^p A_{kj}\theta_j + \sum_{i=1}^p \theta_i A_{ik}$$
+
+
+&lt;p&gt;&lt;strong&gt;Step 5&lt;/strong&gt;: Express in Vector Form&lt;/p&gt;
+&lt;p&gt;This gives us:&lt;/p&gt;
+
+$$\frac{\partial f}{\partial \theta_k} = (A\theta)_k + (A^\top\theta)_k$$
+
+
+&lt;p&gt;Therefore:&lt;/p&gt;
+
+$$\nabla_\theta f = A\theta + A^\top\theta = (A + A^\top)\theta$$
+
+
+&lt;p&gt;&lt;strong&gt;Symmetric Matrix&lt;/strong&gt;: a special case&lt;/p&gt;
+&lt;p&gt;When $A = A^\top$
+, we get:&lt;/p&gt;
+
+$$\nabla_\theta(\theta^\top A\theta) = 2A\theta$$
+
+
+&lt;p&gt;This is the form we use in least squares optimization where $A = X^\top X$
+ is symmetric.&lt;/p&gt;
+&lt;h4 id=&#34;detail-proof-of-key-steps-above&#34;&gt;Detail Proof of Key Steps above&lt;/h4&gt;
+&lt;p&gt;Let&amp;rsquo;s prove that:&lt;/p&gt;
+
+$$\frac{\partial}{\partial \theta_k} \left(\sum_{i=1}^p \sum_{j=1}^p \theta_i A_{ij} \theta_j\right) = \sum_{j=1}^p A_{kj}\theta_j + \sum_{i=1}^p \theta_i A_{ik}$$
+
+
+&lt;h5 id=&#34;step-by-step-derivation-1&#34;&gt;&lt;strong&gt;Step-by-step Derivation&lt;/strong&gt;&lt;/h5&gt;
+&lt;p&gt;Start with the function:&lt;/p&gt;
+
+$$f(\theta) = \sum_{i=1}^p \sum_{j=1}^p \theta_i A_{ij} \theta_j$$
+
+
+&lt;p&gt;Take partial derivative with respect to $\theta_k$
+, using product rule for all $\theta_i$
+ and $\theta_j$
+ terms:&lt;/p&gt;
+
+$$\frac{\partial f}{\partial \theta_k} = \sum_{i=1}^p \sum_{j=1}^p A_{ij} \cdot \frac{\partial}{\partial \theta_k}(\theta_i \theta_j)$$
+
+
+&lt;p&gt;Now:&lt;/p&gt;
+
+$$\frac{\partial}{\partial \theta_k}(\theta_i \theta_j) = \delta_{ik}\theta_j + \theta_i\delta_{jk}$$
+
+
+&lt;p&gt;where $\delta_{ik}$
+ is the Kronecker delta:&lt;/p&gt;
+
+$$\delta_{ik} = \begin{cases} 1 &amp; \text{if } i=k \\ 0 &amp; \text{otherwise} \end{cases}$$
+
+
+&lt;p&gt;Therefore:&lt;/p&gt;
+
+$$\frac{\partial f}{\partial \theta_k} = \sum_{i=1}^p \sum_{j=1}^p A_{ij}(\delta_{ik}\theta_j + \theta_i\delta_{jk})$$
+
+
+&lt;p&gt;Split into two sums:&lt;/p&gt;
+&lt;p&gt;First term:
+
+$$\sum_{i=1}^p \sum_{j=1}^p A_{ij}\delta_{ik}\theta_j = \sum_{j=1}^p A_{kj}\theta_j$$
+
+&lt;/p&gt;
+&lt;p&gt;(since $\delta_{ik}=1$
+ only when $i=k$
+)&lt;/p&gt;
+&lt;p&gt;Second term:
+
+$$\sum_{i=1}^p \sum_{j=1}^p A_{ij}\theta_i\delta_{jk} = \sum_{i=1}^p A_{ik}\theta_i$$
+
+&lt;/p&gt;
+&lt;p&gt;(since $\delta_{jk}=1$
+ only when $j=k$
+)&lt;/p&gt;
+&lt;h5 id=&#34;interim-result&#34;&gt;&lt;strong&gt;Interim Result&lt;/strong&gt;&lt;/h5&gt;
+&lt;p&gt;Combining both terms:&lt;/p&gt;
+
+$$\frac{\partial f}{\partial \theta_k} = \sum_{j=1}^p A_{kj}\theta_j + \sum_{i=1}^p A_{ik}\theta_i$$
+
+
+&lt;p&gt;In vector form, this means:&lt;/p&gt;
+
+$$\nabla_\theta(\theta^\top A\theta) = A\theta + A^\top\theta = (A + A^\top)\theta$$
+
+
+&lt;h5 id=&#34;from-component-wise-to-vector-form-of-gradient&#34;&gt;&lt;strong&gt;From Component-wise to Vector Form of Gradient&lt;/strong&gt;&lt;/h5&gt;
+&lt;p&gt;For each coordinate $k \in \{1,\ldots,p\}$
+, we showed:&lt;/p&gt;
+
+$$\frac{\partial f}{\partial \theta_k} = \underbrace{\sum_{j=1}^p A_{kj}\theta_j}_{(A\theta)_k} + \underbrace{\sum_{i=1}^p A_{ik}\theta_i}_{(A^\top\theta)_k}$$
+
+
+&lt;p&gt;So each element of the gradient vector is:&lt;/p&gt;
+
+$$(\nabla_\theta f)_k = (A\theta)_k + (A^\top\theta)_k$$
+
+
+&lt;h5 id=&#34;stacking-into-vector-form&#34;&gt;&lt;strong&gt;Stacking into Vector Form&lt;/strong&gt;&lt;/h5&gt;
+&lt;p&gt;The full gradient vector is:&lt;/p&gt;
+&lt;p&gt;
+$$\nabla_\theta f = \begin{bmatrix} 
+(A\theta)_1 + (A^\top\theta)_1 \\
+(A\theta)_2 + (A^\top\theta)_2 \\
+\vdots \\
+(A\theta)_p + (A^\top\theta)_p
+\end{bmatrix} = A\theta + A^\top\theta$$
+
+
+The notation $(A\theta)_k$
+ which refers to the k-th component of the matrix-vector product $A\theta$
+. This follows because matrix-vector multiplication simply stacks the components:&lt;/p&gt;
+
+$$(A\theta)_k = \sum_j A_{kj}\theta_j$$
+
+
+&lt;p&gt;
+$$A\theta = \begin{bmatrix} 
+\sum_{j=1}^p A_{1j}\theta_j \\
+\sum_{j=1}^p A_{2j}\theta_j \\
+\vdots \\
+\sum_{j=1}^p A_{pj}\theta_j
+\end{bmatrix}$$
+
+
+Similarly, for the transpose:
+
+$$(A^\top\theta)_k = \sum_i A_{ik}\theta_i$$
+
+&lt;/p&gt;
+&lt;h5 id=&#34;final-result&#34;&gt;&lt;strong&gt;Final Result&lt;/strong&gt;&lt;/h5&gt;
+&lt;p&gt;Therefore:&lt;/p&gt;
+
+$$\nabla_\theta(\theta^\top A\theta) = A\theta + A^\top\theta = (A + A^\top)\theta$$
+
+
+&lt;h3 id=&#34;from-normal-equations-to-standard-regression-form-36-in-section-d&#34;&gt;From Normal Equations to Standard Regression Form (3.6 in Section D)&lt;/h3&gt;
+&lt;p&gt;Let&amp;rsquo;s derive how the normal equations solution:&lt;/p&gt;
+
+$$\theta = \frac{1}{nS_2-S_1^2}\begin{bmatrix} n &amp; -S_1 \\ -S_1 &amp; S_2 \end{bmatrix}\begin{bmatrix} SU \\ U \end{bmatrix}$$
+
+
+&lt;p&gt;relates to the standard regression form:&lt;/p&gt;
+
+$$\gamma_0 = \frac{\text{Cov}(u,s)}{\text{Var}(s)} = \frac{n\sum s_i u_i - \sum s_i \sum u_i}{n\sum s_i^2 - (\sum s_i)^2}$$
+
+
+&lt;p&gt;with offset:&lt;/p&gt;
+
+$$o = \bar{u} - \gamma_0\bar{s}$$
+
+
+&lt;h4 id=&#34;given-matrices-and-vectors&#34;&gt;Given Matrices and Vectors&lt;/h4&gt;
+&lt;p&gt;Let $s=[s_1,\ldots,s_n]^T$
+, $u=[u_1,\ldots,u_n]^T$
+&lt;/p&gt;
+&lt;p&gt;Model:
+
+$$u_i = \gamma_0 s_i + o + \varepsilon_i \text{ or } u = \gamma_0 s + o\cdot 1 + \varepsilon$$
+
+&lt;/p&gt;
+&lt;h4 id=&#34;matrix-form&#34;&gt;Matrix Form&lt;/h4&gt;
+&lt;p&gt;Design matrix:
+
+$$X = [s \quad 1] \in \mathbb{R}^{n\times 2}$$
+
+&lt;/p&gt;
+&lt;p&gt;Parameters:
+
+$$\theta = \begin{bmatrix} \gamma_0 \\ o \end{bmatrix}$$
+
+&lt;/p&gt;
+&lt;h4 id=&#34;computing-products&#34;&gt;Computing Products&lt;/h4&gt;
+
+$$X^T X = \begin{bmatrix} \sum s_i^2 &amp; \sum s_i \\ \sum s_i &amp; n \end{bmatrix} = \begin{bmatrix} S_2 &amp; S_1 \\ S_1 &amp; n \end{bmatrix}$$
+
+
+
+$$X^T u = \begin{bmatrix} \sum s_i u_i \\ \sum u_i \end{bmatrix} = \begin{bmatrix} SU \\ U \end{bmatrix}$$
+
+
+&lt;h4 id=&#34;solution-components&#34;&gt;Solution Components&lt;/h4&gt;
+&lt;p&gt;First row (slope):
+
+$$\gamma_0 = \frac{1}{nS_2-S_1^2}(n\cdot SU - S_1\cdot U)$$
+
+&lt;/p&gt;
+&lt;p&gt;Second row (intercept):
+
+$$o = \frac{1}{nS_2-S_1^2}(-S_1\cdot SU + S_2\cdot U)$$
+
+&lt;/p&gt;
+&lt;h4 id=&#34;statistical-interpretation&#34;&gt;Statistical Interpretation&lt;/h4&gt;
+&lt;p&gt;Define:
+
+$$\bar{s} = \frac{1}{n}\sum s_i \quad \bar{u} = \frac{1}{n}\sum u_i$$
+
+&lt;/p&gt;
+
+$$\text{Var}(s) = \frac{1}{n}\sum(s_i-\bar{s})^2 = \frac{1}{n}S_2 - \bar{s}^2$$
+
+
+
+$$\text{Cov}(u,s) = \frac{1}{n}\sum(u_i-\bar{u})(s_i-\bar{s}) = \frac{1}{n}SU - \bar{u}\bar{s}$$
+
+
+&lt;h4 id=&#34;final-result-1&#34;&gt;Final Result&lt;/h4&gt;
+&lt;p&gt;This gives us:
+
+$$\gamma_0 = \frac{\text{Cov}(u,s)}{\text{Var}(s)} \text{ and } o = \bar{u} - \gamma_0\bar{s}$$
+
+&lt;/p&gt;
 </description>
     </item>
     
@@ -217,7 +1029,7 @@ $$\text{ELBO}(q) = \mathbb{E}_{q(\theta)}[\log p(D \mid \theta)] - \text{KL}(q(\
       <description>&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
 &lt;p&gt;Single-cell RNASeq could have a large amount of zero values, representing either missing data or no expression. Imputation approaches to deal with this issue have the risk of generating false positive or irreproducible results. Model-based imputation generate fewer false-positives compared with data smoothing based methods (MAGIC and knn-smooth), but this varied greatly depending on how well the model described the datasets.&lt;/p&gt;
 &lt;p&gt;&lt;a href=&#34;https://www.nature.com/articles/s41592-018-0033-z#Sec2&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;SAVER&lt;/a&gt; was the least likely to generate false or irreproducible results in &lt;a href=&#34;https://f1000research.com/articles/7-1740/v1&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;a benchmark of common imputation methods&lt;/a&gt;. It suggests the mathematical model used in SAVER could well depict the structure inherent to the scRNAseq datasets. Here we will derive the Poisson–gamma mixture model (also known as negative binomial model) and its Bayesian framework used in SAVER that leverage conjugate priors to estimate the posterior distribution of gene expression levels.&lt;/p&gt;
-&lt;h2&gt;&lt;/h2&gt;
+&lt;h2 id=&#34;heading&#34;&gt;&lt;/h2&gt;
 &lt;p&gt;more in another md file&lt;/p&gt;
 &lt;h2 id=&#34;-goal&#34;&gt;✅ Goal:&lt;/h2&gt;
  
@@ -369,7 +1181,7 @@ $$ \hat{\lambda}_{gc} = \frac{s_c}{s_c + \hat{\beta}_{gc}} \cdot \frac{Y_{gc}}{s
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;The normalization &amp;ldquo;just works&amp;rdquo; because we&amp;rsquo;re staying within the same distributional family where normalization constants are known.&lt;/p&gt;
-&lt;h2 id=&#34;math-derivation&#34;&gt;Math Derivation&lt;a id=&#34;math-derivation&#34;&gt;&lt;/a&gt;&lt;/h2&gt;
+&lt;h2 id=&#34;math-derivationa-idmath-derivationa&#34;&gt;Math Derivation&lt;a id=&#34;math-derivation&#34;&gt;&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;Below is a &lt;strong&gt;step-by-step derivation of the marginal likelihood integral for the Beta-Binomial conjugate prior relationship&lt;/strong&gt;. This shows how we can transform a potentially difficult integral into a simple ratio of Beta functions, which is the essence of why conjugate priors are so powerful in Bayesian inference.&lt;/p&gt;
 &lt;h3 id=&#34;starting-point-the-marginal-likelihood-integral&#34;&gt;Starting Point: The Marginal Likelihood Integral&lt;/h3&gt;
  $$P(D) = \int_0^1 \binom{n}{s}\theta^s(1-\theta)^{n-s} \cdot \frac{\theta^{\alpha-1}(1-\theta)^{\beta-1}}{B(\alpha,\beta)} d\theta \quad (1)$$ 
@@ -504,7 +1316,7 @@ $$ \hat{\lambda}_{gc} = \frac{s_c}{s_c + \hat{\beta}_{gc}} \cdot \frac{Y_{gc}}{s
       <link>http://localhost:1313/post/11a.velocity_unraveled/</link>
       <pubDate>Fri, 04 Apr 2025 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/post/11a.velocity_unraveled/</guid>
-      <description>&lt;h2 id=&#34;overview-of-eq18-from-velocity-unraveled&#34;&gt;Overview of Eq(18) from &lt;a href=&#34;https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1010492&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;velocity unraveled&lt;/a&gt;&lt;/h2&gt;
+      <description>&lt;h2 id=&#34;overview-of-eq18-from-velocity-unraveledhttpsjournalsplosorgploscompbiolarticleid101371journalpcbi1010492&#34;&gt;Overview of Eq(18) from &lt;a href=&#34;https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1010492&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;velocity unraveled&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;The stochastic model defined by the Chemical Master Equation (CME) outperforms deterministic ODE models in capturing the inherent stochasticity of single-cell RNA sequencing (scRNA-seq) data. It is actively developed to provide a more accurate representation of feature counts and their underlying biological processes. And it has also enabled the generation of simulated data to evaluate deterministic ODE models and associated data processing methods commonly used in scRNA-seq analysis. Thus I derive the key equations from the paper &lt;a href=&#34;https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1010492&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;velocity unraveled&lt;/a&gt;, a pivotal paper demonstrating the transformative potential of stochastic approaches.&lt;/p&gt;
 &lt;h3 id=&#34;-1-probability-generating-function-pgf&#34;&gt;🧬 1. Probability generating function (PGF)&lt;/h3&gt;
 &lt;p&gt;We define the state of a cell as:&lt;/p&gt;
@@ -530,7 +1342,7 @@ $$G(u_u, u_s, t) = \sum_x P(x,t)(u_u + 1)^{x_u}(u_s + 1)^{x_s}$$
  $$U_1(u_u, u_s, s) = \frac{u_s \beta}{\beta - \gamma} e^{-\gamma s} + \left(u_u - \frac{u_s \beta}{\beta - \gamma}\right) e^{-\beta s}$$ 
 
 &lt;p&gt;This expression arises from &lt;a href=&#34;#Derive-G&#34;&gt;solving a linear system of ODEs for the chemical master equation (CME) via generating functions&lt;/a&gt;, and it essentially encodes how the state propagates in time. It&amp;rsquo;s derived from how unspliced → spliced reactions occur over time.&lt;/p&gt;
-&lt;h3 id=&#34;-3-log-generating-function&#34;&gt;🧠 3. Log-generating function $f$&lt;a id=&#34;log-generating-function-first-introduced&#34;&gt;&lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id=&#34;-3-log-generating-function-fa-idlog-generating-function-first-introduceda&#34;&gt;🧠 3. Log-generating function $f$&lt;a id=&#34;log-generating-function-first-introduced&#34;&gt;&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt; 
 $$f(u_u, u_s, t) := \ln G(u_u, u_s, t) = \int_0^t \alpha(t-s) U_1(u_u, u_s, s) ds$$ 
 
@@ -635,7 +1447,7 @@ $$ \frac{\partial^2 G}{\partial u_u^2}\bigg|_{u_u = u_s = 0} = E[x_u(x_u - 1)], 
 &lt;li&gt;&lt;strong&gt;Links stochastic biochemical kinetics&lt;/strong&gt; with observed scRNA-seq distributions&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;Supports modeling&lt;/strong&gt; of noise, burstiness, and cell-to-cell heterogeneity&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&#34;b-derive--via-method-of-characteristics&#34;&gt;B) Derive $u_u(s)$ via method of characteristics &lt;a id=&#34;Derive-G&#34;&gt;&lt;/a&gt;&lt;/h2&gt;
+&lt;h2 id=&#34;b-derive-u_us-via-method-of-characteristics-a-idderive-ga&#34;&gt;B) Derive $u_u(s)$ via method of characteristics &lt;a id=&#34;Derive-G&#34;&gt;&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt; $U_1(u_u, u_s, s)$ 
  is claimed to be  $u_u(s)$ 
 , which is the solution to the ODE derived from the Chemical Master Equation (CME) for the two-species birth-death process representing unspliced (u) and spliced (s) mRNA dynamics.&lt;/p&gt;
@@ -675,10 +1487,10 @@ $$ \frac{\partial^2 G}{\partial u_u^2}\bigg|_{u_u = u_s = 0} = E[x_u(x_u - 1)], 
  $$\frac{du_u}{ds} = \beta(u_s - u_u), \quad \frac{du_s}{ds} = -\gamma u_s, \quad \frac{dG}{ds} = \alpha u_u G$$ 
 
 &lt;p&gt;Let&amp;rsquo;s solve these:&lt;/p&gt;
-&lt;h3 id=&#34;step-4-solve-for&#34;&gt;Step 4: Solve for $u_s(s)$&lt;/h3&gt;
+&lt;h3 id=&#34;step-4-solve-for-u_ss&#34;&gt;Step 4: Solve for $u_s(s)$&lt;/h3&gt;
  $$\frac{du_s}{ds} = -\gamma u_s \Rightarrow u_s(s) = u_s(0) e^{-\gamma s}$$ 
 
-&lt;h3 id=&#34;step-5-solve-for&#34;&gt;Step 5: Solve for $u_u(s)$&lt;/h3&gt;
+&lt;h3 id=&#34;step-5-solve-for-u_us&#34;&gt;Step 5: Solve for $u_u(s)$&lt;/h3&gt;
 &lt;p&gt;Use integrating factor method:&lt;/p&gt;
  $$\frac{du_u}{ds} + \beta u_u = \beta u_s(s) = \beta u_s(0) e^{-\gamma s}$$ 
 
@@ -693,7 +1505,7 @@ $$ \frac{\partial^2 G}{\partial u_u^2}\bigg|_{u_u = u_s = 0} = E[x_u(x_u - 1)], 
 :&lt;/p&gt;
  $$u_u(s) = u_u(0) e^{-\beta s} + \frac{\beta u_s(0)}{\beta - \gamma}(e^{-\gamma s} - e^{-\beta s})$$ 
 
-&lt;h3 id=&#34;step-6-define&#34;&gt;Step 6: Define $U_1(u_u, u_s, s)$&lt;/h3&gt;
+&lt;h3 id=&#34;step-6-define-u_1u_u-u_s-s&#34;&gt;Step 6: Define $U_1(u_u, u_s, s)$&lt;/h3&gt;
 &lt;p&gt;We identify:&lt;/p&gt;
  $$U_1(u_u, u_s, s) := u_u(s) = \frac{u_s \beta}{\beta - \gamma} e^{-\gamma s} + \left(u_u - \frac{u_s \beta}{\beta - \gamma}\right) e^{-\beta s}$$ 
 
@@ -719,7 +1531,7 @@ $$
 &lt;li&gt; $\gamma$ 
 : degradation rate of spliced RNA&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3 id=&#34;step-2-define-the-generating-function&#34;&gt;Step 2: Define the generating function $G(u_u, u_s, t)$&lt;/h3&gt;
+&lt;h3 id=&#34;step-2-define-the-generating-function-gu_u-u_s-t&#34;&gt;Step 2: Define the generating function $G(u_u, u_s, t)$&lt;/h3&gt;
 
 $$
 G(u_u, u_s, t) := \sum_{x_u=0}^{\infty} \sum_{x_s=0}^{\infty} P(x_u, x_s, t)(u_u + 1)^{x_u}(u_s + 1)^{x_s} \qquad (10)
@@ -730,7 +1542,7 @@ $$
  instead of  $u_u^{x_u}$ 
  is a common shift to simplify derivatives later, but you can equivalently define with  $u_u^{x_u}$ 
 .&lt;/p&gt;
-&lt;h3 id=&#34;step-3-take-time-derivative-of&#34;&gt;Step 3: Take time derivative of $G$&lt;/h3&gt;
+&lt;h3 id=&#34;step-3-take-time-derivative-of-g&#34;&gt;Step 3: Take time derivative of $G$&lt;/h3&gt;
 &lt;p&gt;Using linearity of sums and derivatives:&lt;/p&gt;
 
 $$
@@ -932,7 +1744,7 @@ $$
 $$
 
 
-&lt;h2 id=&#34;b2-why-double-sum-equivalence-holds-in-term-2-of-step4-in-b1&#34;&gt;B.2) Why Double Sum Equivalence Holds &lt;a href=&#34;#why_sum_is_equivalence&#34;&gt;in Term 2 of Step4 in B.1)&lt;/a&gt;&lt;/h2&gt;
+&lt;h2 id=&#34;b2-why-double-sum-equivalence-holds-in-term-2-of-step4-in-b1why_sum_is_equivalence&#34;&gt;B.2) Why Double Sum Equivalence Holds &lt;a href=&#34;#why_sum_is_equivalence&#34;&gt;in Term 2 of Step4 in B.1)&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;This equivalence depends on what values the indices range over and how the function being summed behaves.&lt;/p&gt;
 &lt;h3 id=&#34;1-notation&#34;&gt;1. Notation&lt;/h3&gt;
 &lt;p&gt;When we write:&lt;/p&gt;
@@ -1041,10 +1853,10 @@ $$
 \end{align}$$ 
 
 &lt;p&gt;These are much easier to solve analytically or numerically.&lt;/p&gt;
-&lt;h2 id=&#34;b4-legitimacy-to-choose--in-b3&#34;&gt;B.4) Legitimacy to choose $\frac{dt}{ds} = 1$ in B.3)&lt;/h2&gt;
+&lt;h2 id=&#34;b4-legitimacy-to-choose-fracdtds--1-in-b3&#34;&gt;B.4) Legitimacy to choose $\frac{dt}{ds} = 1$ in B.3)&lt;/h2&gt;
 &lt;p&gt;We choose  $\frac{dt}{ds} = 1$ 
  in the method of characteristics because it simplifies the partial differential equation (PDE) to a more tractable set of ordinary differential equations (ODEs) — and this choice is completely valid and standard in this method. Let me explain why:&lt;/p&gt;
-&lt;h3 id=&#34;what-does--mean&#34;&gt;What Does $\frac{dt}{ds} = 1$ Mean&lt;/h3&gt;
+&lt;h3 id=&#34;what-does-fracdtds--1-mean&#34;&gt;What Does $\frac{dt}{ds} = 1$ Mean&lt;/h3&gt;
 &lt;p&gt;In the method of characteristics, you introduce a new parameter  $s$ 
  that traces out a path (or characteristic curve) in the space of independent variables — here,  $(u_u, u_s, t)$ 
 . Along this path:&lt;/p&gt;
@@ -1081,7 +1893,7 @@ $$
 &lt;li&gt;This choice makes the equations easier to solve.&lt;/li&gt;
 &lt;li&gt;The physics or stochastic model (e.g. CME) remains unchanged.&lt;/li&gt;
 &lt;/ol&gt;
-&lt;h2 id=&#34;c-derive-log-generating-function&#34;&gt;C) Derive log-generating function &lt;a id=&#34;Derive-log-generating-function&#34;&gt;&lt;/a&gt;&lt;/h2&gt;
+&lt;h2 id=&#34;c-derive-log-generating-function-a-idderive-log-generating-functiona&#34;&gt;C) Derive log-generating function &lt;a id=&#34;Derive-log-generating-function&#34;&gt;&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;Below derive the log-generating function first introduced &lt;a href=&#34;#log-generating-function-first-introduced&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
 &lt;h3 id=&#34;1-setup-use-the-method-of-characteristics&#34;&gt;1. Setup: Use the Method of Characteristics&lt;/h3&gt;
 &lt;p&gt;We rewrite the PDE:&lt;/p&gt;
@@ -1099,10 +1911,10 @@ $$
 
  $$\frac{dG}{ds} = \alpha u_u G$$ 
 
-&lt;h3 id=&#34;2-solve-the-ode-for&#34;&gt;2. Solve the ODE for $u_s(s)$&lt;/h3&gt;
+&lt;h3 id=&#34;2-solve-the-ode-for-u_ss&#34;&gt;2. Solve the ODE for $u_s(s)$&lt;/h3&gt;
  $$\frac{du_s}{ds} = -\gamma u_s \Rightarrow u_s(s) = u_s(0)e^{-\gamma s}$$ 
 
-&lt;h3 id=&#34;3-plug-into-the-ode-for&#34;&gt;3. Plug into the ODE for $u_u(s)$&lt;/h3&gt;
+&lt;h3 id=&#34;3-plug-into-the-ode-for-u_us&#34;&gt;3. Plug into the ODE for $u_u(s)$&lt;/h3&gt;
  $$\frac{du_u}{ds} = \beta(u_s(s) - u_u(s)) = \beta(u_s(0)e^{-\gamma s} - u_u(s))$$ 
 
 &lt;p&gt;This is a linear non-homogeneous ODE:&lt;/p&gt;
@@ -1128,7 +1940,7 @@ $$
 &lt;p&gt;So we now have:&lt;/p&gt;
  $$u_u(s) = \frac{\beta u_s(0)}{\beta - \gamma}e^{-\gamma s} + \left(u_u(0) - \frac{\beta u_s(0)}{\beta - \gamma}\right)e^{-\beta s}$$ 
 
-&lt;h3 id=&#34;4-define&#34;&gt;4. Define $U_1(u_u, u_s, s)$&lt;/h3&gt;
+&lt;h3 id=&#34;4-define-u_1u_u-u_s-s&#34;&gt;4. Define $U_1(u_u, u_s, s)$&lt;/h3&gt;
 &lt;p&gt;Recall that in the characteristic solution for  $G$ 
 , we solve:&lt;/p&gt;
  $$\frac{dG}{ds} = \alpha u_u(s)G \Rightarrow G(s) = \exp\left(\int_0^t \alpha(t-s)u_u(s)ds\right)$$ 
@@ -1137,7 +1949,7 @@ $$
 . So:&lt;/p&gt;
  $$U_1(u_u, u_s, s) = \frac{\beta u_s}{\beta - \gamma}e^{-\gamma s} + \left(u_u - \frac{\beta u_s}{\beta - \gamma}\right)e^{-\beta s}$$ 
 
-&lt;h3 id=&#34;5-compute&#34;&gt;5. Compute $f(u_u, u_s, t) = \ln G$&lt;/h3&gt;
+&lt;h3 id=&#34;5-compute-fu_u-u_s-t--ln-g&#34;&gt;5. Compute $f(u_u, u_s, t) = \ln G$&lt;/h3&gt;
 &lt;p&gt;Now integrate:&lt;/p&gt;
  $$\ln G(u_u, u_s, t) = \int_0^t \alpha(t-s)U_1(u_u, u_s, s) \, ds$$ 
 
@@ -2829,6 +3641,16 @@ $$
     </item>
     
     <item>
+      <title>linear algebra</title>
+      <link>http://localhost:1313/teaching/other/home_improvement/</link>
+      <pubDate>Thu, 24 Oct 2024 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/teaching/other/home_improvement/</guid>
+      <description>&lt;p&gt;&lt;a href=&#34;https://youtube.com/shorts/SEKhGQSJP18?si=mZmNS-4ib7d-lL-6&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Release bits from impact driver or drill&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a href=&#34;&#34;&gt;Our shades are cellular shades, I replaced one broken strings into metal one&lt;/a&gt;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
       <title>Method of characteristics</title>
       <link>http://localhost:1313/teaching/method_of_charateristics/</link>
       <pubDate>Thu, 24 Oct 2024 00:00:00 +0000</pubDate>
@@ -2883,7 +3705,7 @@ $$
     &lt;/li&gt;
     &lt;li&gt;&lt;a href=&#34;#crowd-funded-open-source-software&#34;&gt;Crowd-funded open-source software&lt;/a&gt;
       &lt;ul&gt;
-        &lt;li&gt;&lt;a href=&#34;#-click-here-to-become-a-sponsor-and-help-support-hugo-blox&#34;&gt;&lt;a href=&#34;https://hugoblox.com/sponsor/&#34;&gt;❤️ Click here to become a sponsor and help support Hugo Blox&amp;rsquo;s future ❤️&lt;/a&gt;&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href=&#34;#-click-here-to-become-a-sponsor-and-help-support-hugo-bloxs-future-httpshugobloxcomsponsor&#34;&gt;&lt;a href=&#34;https://hugoblox.com/sponsor/&#34;&gt;❤️ Click here to become a sponsor and help support Hugo Blox&amp;rsquo;s future ❤️&lt;/a&gt;&lt;/a&gt;&lt;/li&gt;
       &lt;/ul&gt;
     &lt;/li&gt;
     &lt;li&gt;&lt;a href=&#34;#ecosystem&#34;&gt;Ecosystem&lt;/a&gt;&lt;/li&gt;
@@ -2913,7 +3735,7 @@ $$
 &lt;/ul&gt;
 &lt;h2 id=&#34;crowd-funded-open-source-software&#34;&gt;Crowd-funded open-source software&lt;/h2&gt;
 &lt;p&gt;To help us develop this template and software sustainably under the MIT license, we ask all individuals and businesses that use it to help support its ongoing maintenance and development via sponsorship.&lt;/p&gt;
-&lt;h3 id=&#34;-click-here-to-become-a-sponsor-and-help-support-hugo-blox&#34;&gt;&lt;a href=&#34;https://hugoblox.com/sponsor/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;❤️ Click here to become a sponsor and help support Hugo Blox&amp;rsquo;s future ❤️&lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id=&#34;-click-here-to-become-a-sponsor-and-help-support-hugo-bloxs-future-httpshugobloxcomsponsor&#34;&gt;&lt;a href=&#34;https://hugoblox.com/sponsor/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;❤️ Click here to become a sponsor and help support Hugo Blox&amp;rsquo;s future ❤️&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;As a token of appreciation for sponsoring, you can &lt;strong&gt;unlock &lt;a href=&#34;https://hugoblox.com/sponsor/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;these&lt;/a&gt; awesome rewards and extra features 🦄✨&lt;/strong&gt;&lt;/p&gt;
 &lt;h2 id=&#34;ecosystem&#34;&gt;Ecosystem&lt;/h2&gt;
 &lt;ul&gt;
@@ -3101,7 +3923,7 @@ $$
 
 
 
-&lt;div id=&#34;chart-617523984&#34; class=&#34;chart&#34;&gt;&lt;/div&gt;
+&lt;div id=&#34;chart-319764528&#34; class=&#34;chart&#34;&gt;&lt;/div&gt;
 &lt;script&gt;
   async function fetchChartJSON() {
     console.debug(&#39;Hugo Blox fetching chart JSON...&#39;)
@@ -3119,7 +3941,7 @@ $$
 
       fetchChartJSON().then(chart =&gt; {
         console.debug(&#39;Plotting chart...&#39;)
-        window.Plotly.newPlot(&#39;chart-617523984&#39;, chart.data, chart.layout, {responsive: true});
+        window.Plotly.newPlot(&#39;chart-319764528&#39;, chart.data, chart.layout, {responsive: true});
       });
     }, 500 );
   })();
@@ -3309,8 +4131,12 @@ Crash --&gt; [*]
 &lt;p&gt;&lt;strong&gt;Youtube&lt;/strong&gt;:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;{{&amp;lt; youtube D2vj0WcvH5c &amp;gt;}}
 &lt;/code&gt;&lt;/pre&gt;
-&lt;div style=&#34;position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;&#34;&gt;
-      &lt;iframe allow=&#34;accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share&#34; allowfullscreen=&#34;allowfullscreen&#34; loading=&#34;eager&#34; referrerpolicy=&#34;strict-origin-when-cross-origin&#34; src=&#34;https://www.youtube.com/embed/D2vj0WcvH5c?autoplay=0&amp;amp;controls=1&amp;amp;end=0&amp;amp;loop=0&amp;amp;mute=0&amp;amp;start=0&#34; style=&#34;position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;&#34; title=&#34;YouTube video&#34;&gt;&lt;/iframe&gt;
+
+
+    
+    &lt;div style=&#34;position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;&#34;&gt;
+      &lt;iframe allow=&#34;accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share&#34; allowfullscreen=&#34;allowfullscreen&#34; loading=&#34;eager&#34; referrerpolicy=&#34;strict-origin-when-cross-origin&#34; src=&#34;https://www.youtube.com/embed/D2vj0WcvH5c?autoplay=0&amp;controls=1&amp;end=0&amp;loop=0&amp;mute=0&amp;start=0&#34; style=&#34;position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;&#34; title=&#34;YouTube video&#34;
+      &gt;&lt;/iframe&gt;
     &lt;/div&gt;
 
 &lt;p&gt;&lt;strong&gt;Bilibili&lt;/strong&gt;:&lt;/p&gt;
@@ -3424,8 +4250,12 @@ data.head()
 &lt;p&gt;On this page, you&amp;rsquo;ll find some examples of the types of technical content that can be rendered with Hugo Blox.&lt;/p&gt;
 &lt;h2 id=&#34;video&#34;&gt;Video&lt;/h2&gt;
 &lt;p&gt;Teach your course by sharing videos with your students. Choose from one of the following approaches:&lt;/p&gt;
-&lt;div style=&#34;position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;&#34;&gt;
-      &lt;iframe allow=&#34;accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share&#34; allowfullscreen=&#34;allowfullscreen&#34; loading=&#34;eager&#34; referrerpolicy=&#34;strict-origin-when-cross-origin&#34; src=&#34;https://www.youtube.com/embed/D2vj0WcvH5c?autoplay=0&amp;amp;controls=1&amp;amp;end=0&amp;amp;loop=0&amp;amp;mute=0&amp;amp;start=0&#34; style=&#34;position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;&#34; title=&#34;YouTube video&#34;&gt;&lt;/iframe&gt;
+
+
+    
+    &lt;div style=&#34;position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;&#34;&gt;
+      &lt;iframe allow=&#34;accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share&#34; allowfullscreen=&#34;allowfullscreen&#34; loading=&#34;eager&#34; referrerpolicy=&#34;strict-origin-when-cross-origin&#34; src=&#34;https://www.youtube.com/embed/D2vj0WcvH5c?autoplay=0&amp;controls=1&amp;end=0&amp;loop=0&amp;mute=0&amp;start=0&#34; style=&#34;position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;&#34; title=&#34;YouTube video&#34;
+      &gt;&lt;/iframe&gt;
     &lt;/div&gt;
 
 &lt;p&gt;&lt;strong&gt;Youtube&lt;/strong&gt;:&lt;/p&gt;
@@ -3546,8 +4376,12 @@ data.head()
 &lt;p&gt;On this page, you&amp;rsquo;ll find some examples of the types of technical content that can be rendered with Hugo Blox.&lt;/p&gt;
 &lt;h2 id=&#34;video&#34;&gt;Video&lt;/h2&gt;
 &lt;p&gt;Teach your course by sharing videos with your students. Choose from one of the following approaches:&lt;/p&gt;
-&lt;div style=&#34;position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;&#34;&gt;
-      &lt;iframe allow=&#34;accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share&#34; allowfullscreen=&#34;allowfullscreen&#34; loading=&#34;eager&#34; referrerpolicy=&#34;strict-origin-when-cross-origin&#34; src=&#34;https://www.youtube.com/embed/D2vj0WcvH5c?autoplay=0&amp;amp;controls=1&amp;amp;end=0&amp;amp;loop=0&amp;amp;mute=0&amp;amp;start=0&#34; style=&#34;position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;&#34; title=&#34;YouTube video&#34;&gt;&lt;/iframe&gt;
+
+
+    
+    &lt;div style=&#34;position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;&#34;&gt;
+      &lt;iframe allow=&#34;accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share&#34; allowfullscreen=&#34;allowfullscreen&#34; loading=&#34;eager&#34; referrerpolicy=&#34;strict-origin-when-cross-origin&#34; src=&#34;https://www.youtube.com/embed/D2vj0WcvH5c?autoplay=0&amp;controls=1&amp;end=0&amp;loop=0&amp;mute=0&amp;start=0&#34; style=&#34;position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;&#34; title=&#34;YouTube video&#34;
+      &gt;&lt;/iframe&gt;
     &lt;/div&gt;
 
 &lt;p&gt;&lt;strong&gt;Youtube&lt;/strong&gt;:&lt;/p&gt;
@@ -4380,17 +5214,17 @@ $$ = \frac{\beta(\alpha_1 - \alpha_0)(\gamma - \beta)}{(\beta - \lambda_\alpha)}
 
 &lt;p&gt;This is the third term of the ELBO for a single cell n (in your example, n=1), as seen in Equation (26) of the VeloVI model description.&lt;/p&gt;
 &lt;p&gt;Let&amp;rsquo;s dissect each part:&lt;/p&gt;
-&lt;h3 id=&#34;hahahugoshortcode17s1hbhb&#34;&gt; $z_1$ 
+&lt;h3 id=&#34;hahahugoshortcode16s1hbhb&#34;&gt; $z_1$ 
 &lt;/h3&gt;
 &lt;p&gt;This represents the low-dimensional latent variable for Cell 1. It&amp;rsquo;s a vector that summarizes the latent state of Cell 1 (e.g., its overall position in the developmental trajectory or cell cycle).&lt;/p&gt;
-&lt;h3 id=&#34;hahahugoshortcode17s2hbhb&#34;&gt; $u_1, s_1$ 
+&lt;h3 id=&#34;hahahugoshortcode16s2hbhb&#34;&gt; $u_1, s_1$ 
 &lt;/h3&gt;
 &lt;p&gt;These are the observed unspliced and spliced transcript abundances for Cell 1, across all genes. So,  $u_1$ 
  is a vector  $(u_{1A}, u_{1B}, u_{1C})$ 
  and  $s_1$ 
  is  $(s_{1A}, s_{1B}, s_{1C})$ 
  in your three-gene example.&lt;/p&gt;
-&lt;h3 id=&#34;hahahugoshortcode17s7hbhb&#34;&gt; $q_\phi(z_1|u_1,s_1)$ 
+&lt;h3 id=&#34;hahahugoshortcode16s7hbhb&#34;&gt; $q_\phi(z_1|u_1,s_1)$ 
 &lt;/h3&gt;
 &lt;p&gt;This is the approximate posterior distribution over the latent variable  $z_1$ 
 , conditioned on the observed data  $(u_1,s_1)$ 
@@ -4403,7 +5237,7 @@ $$ = \frac{\beta(\alpha_1 - \alpha_0)(\gamma - \beta)}{(\beta - \lambda_\alpha)}
 . Specifically, an &amp;ldquo;encoder&amp;rdquo; neural network takes  $(u_1,s_1)$ 
  as input and outputs the parameters (e.g., mean and variance if it&amp;rsquo;s a Gaussian) for this distribution.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3 id=&#34;hahahugoshortcode17s14hbhb&#34;&gt; $E_{q_\phi(z_1|u_1,s_1)}[\ldots]$ 
+&lt;h3 id=&#34;hahahugoshortcode16s14hbhb&#34;&gt; $E_{q_\phi(z_1|u_1,s_1)}[\ldots]$ 
 &lt;/h3&gt;
 &lt;p&gt;This denotes an expectation with respect to the distribution  $q_\phi(z_1|u_1,s_1)$ 
 .&lt;/p&gt;
@@ -4415,14 +5249,14 @@ $$ = \frac{\beta(\alpha_1 - \alpha_0)(\gamma - \beta)}{(\beta - \lambda_\alpha)}
 &lt;li&gt;The &amp;ldquo;reparameterization trick&amp;rdquo; is often used to make this sampling process differentiable, allowing gradients to flow back through the sampling process to update  $\phi$ 
 .&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3 id=&#34;hahahugoshortcode17s19hbhb&#34;&gt; $\sum_g$ 
+&lt;h3 id=&#34;hahahugoshortcode16s19hbhb&#34;&gt; $\sum_g$ 
 &lt;/h3&gt;
 &lt;p&gt;This simply means a summation over all genes g (Gene A, Gene B, Gene C in your example).&lt;/p&gt;
-&lt;h3 id=&#34;hahahugoshortcode17s20hbhb&#34;&gt; $\pi_{1g}$ 
+&lt;h3 id=&#34;hahahugoshortcode16s20hbhb&#34;&gt; $\pi_{1g}$ 
 &lt;/h3&gt;
 &lt;p&gt;This is the probability distribution over the four transcriptional states for gene g in cell 1 (i.e.,  $[\pi_{1g,k=1}, \pi_{1g,k=2}, \pi_{1g,k=3}, \pi_{1g,k=4}]$ 
 ).&lt;/p&gt;
-&lt;h3 id=&#34;hahahugoshortcode17s22hbhb&#34;&gt; $q_\phi(\pi_{1g}|z_1)$ 
+&lt;h3 id=&#34;hahahugoshortcode16s22hbhb&#34;&gt; $q_\phi(\pi_{1g}|z_1)$ 
 &lt;/h3&gt;
 &lt;p&gt;This is the approximate posterior distribution over the state assignment probabilities  $\pi_{1g}$ 
 , conditioned on the latent variable  $z_1$ 
@@ -4433,13 +5267,13 @@ $$ = \frac{\beta(\alpha_1 - \alpha_0)(\gamma - \beta)}{(\beta - \lambda_\alpha)}
 ) takes  $z_1$ 
  as input and outputs the parameters (e.g., concentration parameters for a Dirichlet distribution) for this distribution.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3 id=&#34;hahahugoshortcode17s27hbhb&#34;&gt; $p(\pi_{1g})$ 
+&lt;h3 id=&#34;hahahugoshortcode16s27hbhb&#34;&gt; $p(\pi_{1g})$ 
 &lt;/h3&gt;
 &lt;p&gt;This is the prior distribution over the state assignment probabilities  $\pi_{1g}$ 
 .&lt;/p&gt;
 &lt;p&gt;As specified in Eq. 14, it&amp;rsquo;s a uniform Dirichlet distribution:  $p(\pi_{1g}) = \text{Dirichlet}(0.25, 0.25, 0.25, 0.25)$ 
 . This means, a priori, all four states are considered equally likely for any gene in any cell.&lt;/p&gt;
-&lt;h3 id=&#34;hahahugoshortcode17s30hbhb&#34;&gt; $\text{KL}(Q \| P)$ 
+&lt;h3 id=&#34;hahahugoshortcode16s30hbhb&#34;&gt; $\text{KL}(Q \| P)$ 
 &lt;/h3&gt;
 &lt;p&gt;This is the Kullback-Leibler (KL) divergence between two probability distributions Q and P. It&amp;rsquo;s a measure of how one probability distribution Q diverges from a second, expected probability distribution P.&lt;/p&gt;
 &lt;ul&gt;
@@ -4461,7 +5295,7 @@ $$ = \frac{\beta(\alpha_1 - \alpha_0)(\gamma - \beta)}{(\beta - \lambda_\alpha)}
 &amp;rdquo; refers to the average value of a function or random variable, where the averaging is performed according to the probabilities defined by the distribution  $q_\phi(z_1|u_1,s_1)$ 
 .&lt;/p&gt;
 &lt;p&gt;Let&amp;rsquo;s break it down in the context of VeloVI:&lt;/p&gt;
-&lt;h2 id=&#34;hahahugoshortcode17s40hbhb&#34;&gt; $q_\phi(z_1|u_1,s_1)$ 
+&lt;h2 id=&#34;hahahugoshortcode16s40hbhb&#34;&gt; $q_\phi(z_1|u_1,s_1)$ 
 &lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;This is the approximate posterior distribution of the latent variable  $z_1$ 
@@ -4518,7 +5352,7 @@ $$ = \frac{\beta(\alpha_1 - \alpha_0)(\gamma - \beta)}{(\beta - \lambda_\alpha)}
 &lt;h2 id=&#34;how-is-it-calculated-in-practice-monte-carlo-approximation&#34;&gt;How is it calculated in practice (Monte Carlo Approximation)&lt;/h2&gt;
 &lt;p&gt;Since the integral (for continuous  $z_1$ 
 ) is usually intractable, this expectation is approximated using Monte Carlo sampling. The process is as follows:&lt;/p&gt;
-&lt;h3 id=&#34;1-sample-from-hahahugoshortcode17s71hbhb&#34;&gt;1. Sample from  $q_\phi(z_1|u_1,s_1)$ 
+&lt;h3 id=&#34;1-sample-from-hahahugoshortcode16s71hbhb&#34;&gt;1. Sample from  $q_\phi(z_1|u_1,s_1)$ 
 &lt;/h3&gt;
 &lt;p&gt;Draw one or more samples, say  $z_1^{(m)}$ 
  for  $m=1,\ldots,M$ 
@@ -5208,7 +6042,8 @@ $$\frac{3.9996 + 3.0844}{2} = 3.542 \tag{13}$$
 &lt;blockquote&gt;
 &lt;p&gt;&lt;strong&gt;Note: Posterior Velocity Distribution, i.e. the full posterior predictive velocity distribution, is just the distribution of all the expected velocity values for the sample $z_n^*$
  (drawn from $q_\phi(z_n|u_n, s_n)$
-).&lt;/strong&gt;&lt;/p&gt;&lt;/blockquote&gt;
+).&lt;/strong&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
 &lt;hr&gt;
 
 $$\mathbb{E}_{q_\phi(\pi_{ng}|z_n)} \left[v^{(g)}(t(k_{ng})_{ng}, k_{ng})\right] \tag{1}$$
@@ -5808,7 +6643,7 @@ $$z = \begin{bmatrix} 0.15 \\ -1.23 \\ 0.84 \end{bmatrix} \tag{13.3}$$
   &lt;/tbody&gt;
 &lt;/table&gt;
 &lt;h2 id=&#34;2-initialization-of-all-parameters&#34;&gt;2. Initialization of All Parameters&lt;/h2&gt;
-&lt;h3 id=&#34;a-biophysical-parameters-hahahugoshortcode15s5hbhb&#34;&gt;a. Biophysical Parameters ( $\theta$ 
+&lt;h3 id=&#34;a-biophysical-parameters-hahahugoshortcode17s5hbhb&#34;&gt;a. Biophysical Parameters ( $\theta$ 
 )&lt;/h3&gt;
 &lt;p&gt;&lt;strong&gt; $\alpha_{g1}$ 
  (Transcription Rate for Induction):&lt;/strong&gt;&lt;/p&gt;
@@ -5840,7 +6675,7 @@ $$z = \begin{bmatrix} 0.15 \\ -1.23 \\ 0.84 \end{bmatrix} \tag{13.3}$$
  (assuming  $t_{\max} = 20$ 
 )&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3 id=&#34;b-variance-parameters-hahahugoshortcode15s18hbhb&#34;&gt;b. Variance Parameters ( $\theta$ 
+&lt;h3 id=&#34;b-variance-parameters-hahahugoshortcode17s18hbhb&#34;&gt;b. Variance Parameters ( $\theta$ 
 )&lt;/h3&gt;
 &lt;p&gt;These are also part of the  $\theta$ 
  parameters learned by the model. They are gene-specific.&lt;/p&gt;
@@ -5856,7 +6691,7 @@ $$z = \begin{bmatrix} 0.15 \\ -1.23 \\ 0.84 \end{bmatrix} \tag{13.3}$$
  is a fixed scalar, not a learnable parameter, e.g.,  $c_4 = 0.1$ 
 , others  $c_k = 1.0$ 
 )&lt;/p&gt;
-&lt;h3 id=&#34;c-neural-network-parameters-hahahugoshortcode15s26hbhb&#34;&gt;c. Neural Network Parameters ( $\phi$ 
+&lt;h3 id=&#34;c-neural-network-parameters-hahahugoshortcode17s26hbhb&#34;&gt;c. Neural Network Parameters ( $\phi$ 
 )&lt;/h3&gt;
 &lt;p&gt;These are the weights and biases of all neural networks in the model.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Encoder Network Weights/Biases:&lt;/strong&gt; This network takes  $(u_n, s_n)$ 
@@ -5877,7 +6712,7 @@ $$z = \begin{bmatrix} 0.15 \\ -1.23 \\ 0.84 \end{bmatrix} \tag{13.3}$$
 &lt;p&gt;&lt;em&gt;Initialization:&lt;/em&gt; Also randomly initialized, similar to the encoder.&lt;/p&gt;
 &lt;h2 id=&#34;3-learning-process-one-iteration-of-optimization&#34;&gt;3. Learning Process (One Iteration of Optimization)&lt;/h2&gt;
 &lt;p&gt;Let&amp;rsquo;s trace one optimization step focusing on a mini-batch of Cell 1 and Cell 3.&lt;/p&gt;
-&lt;h3 id=&#34;a-forward-pass-calculate-loss-hahahugoshortcode15s35hbhb&#34;&gt;a. Forward Pass (Calculate Loss  $L_{\text{velo}}$ 
+&lt;h3 id=&#34;a-forward-pass-calculate-loss-hahahugoshortcode17s35hbhb&#34;&gt;a. Forward Pass (Calculate Loss  $L_{\text{velo}}$ 
 )&lt;/h3&gt;
 &lt;p&gt;&lt;strong&gt;For Cell 1&lt;/strong&gt; ( $u_1, s_1$ 
 ):&lt;/p&gt;
@@ -6101,7 +6936,7 @@ The optimizer (Adam) updates all parameters using the learning rate:  $\text{Par
 &lt;/ul&gt;
 &lt;h2 id=&#34;5-calculate-kl-divergence-terms-during-learning&#34;&gt;5. Calculate KL Divergence Terms During Learning&lt;/h2&gt;
 &lt;p&gt;KL divergence is a measure of how one probability distribution diverges from a second, expected probability distribution. In VAEs, it&amp;rsquo;s used as a regularization term to keep the learned approximate posterior distributions close to simple, predefined prior distributions.&lt;/p&gt;
-&lt;h3 id=&#34;1-kl-for-hahahugoshortcode15s171hbhb-hahahugoshortcode15s172hbhb&#34;&gt;1. KL for $z_n$
+&lt;h3 id=&#34;1-kl-for-hahahugoshortcode17s171hbhb-hahahugoshortcode17s172hbhb&#34;&gt;1. KL for $z_n$
 : $\text{KL}(q_\phi(z_1 \mid u_1, s_1) \| p(z))$
 &lt;/h3&gt;
 &lt;p&gt;&lt;strong&gt;What it represents:&lt;/strong&gt; This term measures the divergence between the approximate posterior distribution for the latent variable $z_n$
@@ -6142,7 +6977,7 @@ $$
 &lt;li&gt;By forcing $q_\phi(z_n \mid u_n, s_n)$
  to be similar to a standard normal distribution, the model encourages the latent representations of different cells to be compactly distributed around the origin. This helps with generalization and ensures that the latent space is &amp;ldquo;interpretable&amp;rdquo; or at least traversable for generating new samples.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3 id=&#34;2-hahahugoshortcode15s194hbhb-hahahugoshortcode15s195hbhb&#34;&gt;2. $\pi_{ng}$
+&lt;h3 id=&#34;2-hahahugoshortcode17s194hbhb-hahahugoshortcode17s195hbhb&#34;&gt;2. $\pi_{ng}$
 : $E_{q_\phi(z_1 \mid u_1, s_1)}[\sum_g \text{KL}(q_\phi(\pi_{1g} \mid z_1) \| p(\pi_{1g}))]$
 &lt;/h3&gt;
 &lt;p&gt;&lt;strong&gt;What it represents:&lt;/strong&gt; This term measures the divergence between the approximate posterior distribution for the gene kinetic state probabilities $\pi_{ng}$
@@ -6406,7 +7241,7 @@ $$
 &lt;li&gt;$s_{1A} = 0.2$
  (These are the inputs to our encoder)&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h4 id=&#34;learned-biophysical-parameters-hahahugoshortcode18s67hbhb-for-gene-a&#34;&gt;Learned Biophysical Parameters ($\theta$
+&lt;h4 id=&#34;learned-biophysical-parameters-hahahugoshortcode20s67hbhb-for-gene-a&#34;&gt;Learned Biophysical Parameters ($\theta$
 ) for Gene A:&lt;/h4&gt;
 &lt;p&gt;(These are fixed values after training)&lt;/p&gt;
 &lt;ul&gt;
@@ -6426,7 +7261,7 @@ $$
 &lt;p&gt;(For simplicity, let&amp;rsquo;s assume all state scaling factors $c_k = 1$
  for this example, though VeloVI uses a specific $c_4 = 0.1$
 )&lt;/p&gt;
-&lt;h4 id=&#34;learned-neural-network-parameters-hahahugoshortcode18s76hbhb-for-the-encoder-and-decoder&#34;&gt;Learned Neural Network Parameters ($\phi$
+&lt;h4 id=&#34;learned-neural-network-parameters-hahahugoshortcode20s76hbhb-for-the-encoder-and-decoder&#34;&gt;Learned Neural Network Parameters ($\phi$
 ) for the Encoder and Decoder:&lt;/h4&gt;
 &lt;p&gt;(These are the weights and biases of the networks. We don&amp;rsquo;t see the numbers directly, but we know their effect on the outputs.)&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Encoder&amp;rsquo;s Output for $z_1$
@@ -6728,7 +7563,7 @@ $$
 &lt;/ul&gt;
 &lt;p&gt;We sample a noise value from a standard normal distribution:  $\epsilon_{1,\text{dim1}} = 0.8$ 
  (a single random draw).&lt;/p&gt;
-&lt;h3 id=&#34;forward-pass-calculating-hahahugoshortcode19s58hbhb-and-its-contribution-to-loss&#34;&gt;Forward Pass (Calculating  $z_1^*$ 
+&lt;h3 id=&#34;forward-pass-calculating-hahahugoshortcode22s58hbhb-and-its-contribution-to-loss&#34;&gt;Forward Pass (Calculating  $z_1^*$ 
  and its contribution to Loss)&lt;/h3&gt;
 &lt;p&gt;&lt;strong&gt;Calculate  $z_1^*$ 
  using reparameterization&lt;/strong&gt;:
@@ -6751,13 +7586,13 @@ $$
 &lt;p&gt;(This means if  $z_{1,\text{dim1}}^*$ 
  were to increase by 1 unit, the loss would increase by 2.0 units, implying we want to decrease  $z_{1,\text{dim1}}^*$ 
  to reduce loss).&lt;/p&gt;
-&lt;h3 id=&#34;backward-pass-gradient-flow-to-hahahugoshortcode19s71hbhb-and-hahahugoshortcode19s72hbhb-parameters&#34;&gt;Backward Pass (Gradient Flow to  $\mu_{z_1}$ 
+&lt;h3 id=&#34;backward-pass-gradient-flow-to-hahahugoshortcode22s71hbhb-and-hahahugoshortcode22s72hbhb-parameters&#34;&gt;Backward Pass (Gradient Flow to  $\mu_{z_1}$ 
  and  $\Sigma_{z_1}$ 
  parameters)&lt;/h3&gt;
 &lt;p&gt;Now, we use the chain rule to propagate this gradient back to  $\mu_{z_{1,\text{dim1}}}$ 
  and  $\log \Sigma_{z_{1,\text{dim1}}}$ 
 .&lt;/p&gt;
-&lt;h4 id=&#34;1-gradient-for-hahahugoshortcode19s75hbhb&#34;&gt;1. Gradient for  $\mu_{z_{1,\text{dim1}}}$ 
+&lt;h4 id=&#34;1-gradient-for-hahahugoshortcode22s75hbhb&#34;&gt;1. Gradient for  $\mu_{z_{1,\text{dim1}}}$ 
 &lt;/h4&gt;
 &lt;p&gt;We know  $z_{1,\text{dim1}}^* = \mu_{z_{1,\text{dim1}}} + \sigma_{z_{1,\text{dim1}}} \times \epsilon_{1,\text{dim1}}$ 
 .&lt;/p&gt;
@@ -6775,7 +7610,7 @@ $$
  means that increasing  $\mu_{z_{1,\text{dim1}}}$ 
  would increase the loss. Therefore, the optimizer will decrease  $\mu_{z_{1,\text{dim1}}}$ 
  in the update step.&lt;/p&gt;
-&lt;h4 id=&#34;2-gradient-for-hahahugoshortcode19s85hbhb&#34;&gt;2. Gradient for  $\sigma_{z_{1,\text{dim1}}}$ 
+&lt;h4 id=&#34;2-gradient-for-hahahugoshortcode22s85hbhb&#34;&gt;2. Gradient for  $\sigma_{z_{1,\text{dim1}}}$ 
 &lt;/h4&gt;
 &lt;p&gt;The partial derivative of  $z_{1,\text{dim1}}^*$ 
  with respect to  $\sigma_{z_{1,\text{dim1}}}$ 
@@ -6793,7 +7628,7 @@ $$
  means increasing  $\sigma_{z_{1,\text{dim1}}}$ 
  would increase the loss. So, the optimizer will decrease  $\sigma_{z_{1,\text{dim1}}}$ 
 .&lt;/p&gt;
-&lt;h4 id=&#34;3-gradient-for-hahahugoshortcode19s95hbhb-if-encoder-outputs-log-variance&#34;&gt;3. Gradient for  $\log \Sigma_{z_{1,\text{dim1}}}$ 
+&lt;h4 id=&#34;3-gradient-for-hahahugoshortcode22s95hbhb-if-encoder-outputs-log-variance&#34;&gt;3. Gradient for  $\log \Sigma_{z_{1,\text{dim1}}}$ 
  (if encoder outputs log-variance)&lt;/h4&gt;
 &lt;p&gt;Often, neural networks output  $\log \Sigma$ 
  for numerical stability and to ensure the variance is positive. We need one more chain rule step:&lt;/p&gt;
@@ -6839,7 +7674,7 @@ $$
       <description>&lt;h1 id=&#34;velovi-intrinsic-uncertainty-quantification&#34;&gt;VeloVI Intrinsic Uncertainty Quantification&lt;/h1&gt;
 &lt;p&gt;This document explains how VeloVI quantifies the intrinsic uncertainty in the predicted velocity for a given cell. This uncertainty reflects how consistent the model&amp;rsquo;s velocity predictions are for a cell, given the inherent variability captured by the variational posterior.&lt;/p&gt;
 &lt;p&gt;Let&amp;rsquo;s break down the concepts and the formula step-by-step:&lt;/p&gt;
-&lt;h2 id=&#34;1-posterior-predictive-velocity-mean-hahahugoshortcode23s0hbhb&#34;&gt;1. Posterior Predictive Velocity Mean ($\bar{v}_n$
+&lt;h2 id=&#34;1-posterior-predictive-velocity-mean-hahahugoshortcode19s0hbhb&#34;&gt;1. Posterior Predictive Velocity Mean ($\bar{v}_n$
 )&lt;/h2&gt;
 &lt;p&gt;&lt;strong&gt;What it is:&lt;/strong&gt; $\bar{v}_n$
  is the average or mean velocity vector for cell n, taking into account the model&amp;rsquo;s uncertainty in the underlying latent variables ($z_n$
@@ -6899,7 +7734,7 @@ $$\text{Intrinsic Uncertainty} = \text{Var}_{q_\phi(v_n | u_n, s_n)}[c(v_n, \bar
 &lt;p&gt;This means we&amp;rsquo;re looking at how spread out the cosine similarity values are. If all $v_n^{(l)}$
  point in roughly the same direction as $\bar{v}_n$
 , the cosine similarities will be close to 1, and their variance will be low. If they point in wildly different directions, the cosine similarities will vary a lot, leading to high variance.&lt;/p&gt;
-&lt;h2 id=&#34;3-the-formula-for-hahahugoshortcode23s25hbhb-sample-variance&#34;&gt;3. The Formula for $\hat{\sigma}_n^2$
+&lt;h2 id=&#34;3-the-formula-for-hahahugoshortcode19s25hbhb-sample-variance&#34;&gt;3. The Formula for $\hat{\sigma}_n^2$
  (Sample Variance)&lt;/h2&gt;
 &lt;p&gt;The provided formula $\hat{\sigma}_n^2$
  is the standard sample variance applied to the set of scalar cosine similarity values.&lt;/p&gt;
@@ -6939,7 +7774,7 @@ $$\hat{\sigma}_n^2 = \frac{1}{L-1} \sum_{l=1}^{L} \left(C_l - \left(\frac{1}{L} 
 : This is the scaling factor for sample variance (using L-1 instead of L to provide an unbiased estimate of the population variance).&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&#34;interpretation-of-hahahugoshortcode23s40hbhb&#34;&gt;Interpretation of $\hat{\sigma}_n^2$
+&lt;h2 id=&#34;interpretation-of-hahahugoshortcode19s40hbhb&#34;&gt;Interpretation of $\hat{\sigma}_n^2$
 :&lt;/h2&gt;
 &lt;p&gt;&lt;strong&gt;High $\hat{\sigma}_n^2$
 :&lt;/strong&gt; Indicates high intrinsic uncertainty. The individual velocity samples $v_n^{(l)}$
@@ -6952,7 +7787,7 @@ $$\hat{\sigma}_n^2 = \frac{1}{L-1} \sum_{l=1}^{L} \left(C_l - \left(\frac{1}{L} 
 &lt;h1 id=&#34;velovi-future-cell-state-prediction-and-uncertainty-quantification&#34;&gt;VeloVI Future Cell State Prediction and Uncertainty Quantification&lt;/h1&gt;
 &lt;p&gt;This document explains how VeloVI uses the predicted velocities to predict future cell states and, crucially, how it quantifies the uncertainty in these future state predictions. This moves beyond just the uncertainty of a single cell&amp;rsquo;s velocity to the uncertainty of where a cell might move to in the future.&lt;/p&gt;
 &lt;p&gt;Let&amp;rsquo;s break down the explanation:&lt;/p&gt;
-&lt;h2 id=&#34;1-the-cell-cell-transition-matrix-hahahugoshortcode23s47hbhb&#34;&gt;1. The Cell-Cell Transition Matrix $T(v_{1:N}, s_{1:N})$
+&lt;h2 id=&#34;1-the-cell-cell-transition-matrix-hahahugoshortcode19s47hbhb&#34;&gt;1. The Cell-Cell Transition Matrix $T(v_{1:N}, s_{1:N})$
 &lt;/h2&gt;
 &lt;p&gt;&lt;strong&gt;Purpose:&lt;/strong&gt; This matrix describes the likelihood of a cell transitioning from one state to another (or from cell i to cell j). It&amp;rsquo;s a core component of RNA velocity analysis.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Inputs:&lt;/strong&gt;&lt;/p&gt;
@@ -6991,7 +7826,7 @@ $$\cos(\delta_{ij}, v_i) = \frac{\delta_{ij}^T v_i}{\|\delta_{ij}\| \|v_i\|} \qu
 &lt;p&gt;The matrix T will have dimensions N×N, where $T_{ij}$
  represents the probability of transitioning from cell i to cell j. (Or sometimes $T_{ji}$
  depending on convention).&lt;/p&gt;
-&lt;h2 id=&#34;2-predicted-future-cell-state-hahahugoshortcode23s62hbhb&#34;&gt;2. Predicted Future Cell State: $T(v_{1:N}, s_{1:N})S$
+&lt;h2 id=&#34;2-predicted-future-cell-state-hahahugoshortcode19s62hbhb&#34;&gt;2. Predicted Future Cell State: $T(v_{1:N}, s_{1:N})S$
 &lt;/h2&gt;
 &lt;p&gt;&lt;strong&gt;Concept:&lt;/strong&gt; Once we have the transition matrix T, we can use it to predict the future state of the entire cellular population.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Operation:&lt;/strong&gt; The matrix multiplication $T(v_{1:N}, s_{1:N})S$

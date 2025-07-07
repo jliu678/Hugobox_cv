@@ -7,18 +7,19 @@
     <description>Neural Network Variational Autoencoders</description>
     <generator>Hugo Blox Builder (https://hugoblox.com)</generator><language>en-us</language><lastBuildDate>Thu, 24 Apr 2025 00:00:00 +0000</lastBuildDate>
     <image>
-      <url>http://localhost:1313/media/icon_hu_fd2be5a69becaf9e.png</url>
+      <url>http://localhost:1313/media/icon_hu6671943710606299486.png</url>
       <title>Neural Network Variational Autoencoders</title>
       <link>http://localhost:1313/tags/neural-network-variational-autoencoders/</link>
     </image>
     
     <item>
-      <title>🧮 Math Derivation for ELBO/KL in Bayesian Inference and VAEs</title>
+      <title>🎓 Math Derivation for ELBO/KL in Bayesian Inference and VAEs</title>
       <link>http://localhost:1313/post/19c.bayes_variational_infer_elbo/</link>
       <pubDate>Thu, 24 Apr 2025 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/post/19c.bayes_variational_infer_elbo/</guid>
       <description>&lt;h2 id=&#34;-marginal-likelihood-is-often-intractable-in-bayesian-inference&#34;&gt;🔍 Marginal likelihood is often intractable in Bayesian Inference&lt;/h2&gt;
-&lt;p&gt;In Bayesian inference, we want the posterior distribution:&lt;/p&gt;
+&lt;p&gt;Bayesian inference and Variational Autoencoders (VAEs), a marriage of deep learning and Bayesian inference, are powerful and foundational for probabilistic modeling used in computational biology. But rely on the concept of marginal likelihood, which is often intractable to compute directly. This is because both frameworks typically involve integrating over latent variables or parameters, which can lead to high-dimensional integrals that are computationally intractable.&lt;/p&gt;
+&lt;p&gt;Specifically, in Bayesian inference, we want the posterior distribution:&lt;/p&gt;
 
 $$p(\theta \mid D) = \frac{p(D \mid \theta) \, p(\theta)}{p(D)} \tag{1}$$
 

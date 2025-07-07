@@ -7,10 +7,186 @@
     <description>Marginal Distribution</description>
     <generator>Hugo Blox Builder (https://hugoblox.com)</generator><language>en-us</language><lastBuildDate>Thu, 24 Apr 2025 00:00:00 +0000</lastBuildDate>
     <image>
-      <url>http://localhost:1313/media/icon_hu_fd2be5a69becaf9e.png</url>
+      <url>http://localhost:1313/media/icon_hu6671943710606299486.png</url>
       <title>Marginal Distribution</title>
       <link>http://localhost:1313/tags/marginal-distribution/</link>
     </image>
+    
+    <item>
+      <title>🎓 Math Derivation for ELBO/KL in Bayesian Inference and VAEs</title>
+      <link>http://localhost:1313/post/19c.bayes_variational_infer_elbo/</link>
+      <pubDate>Thu, 24 Apr 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/post/19c.bayes_variational_infer_elbo/</guid>
+      <description>&lt;h2 id=&#34;-marginal-likelihood-is-often-intractable-in-bayesian-inference&#34;&gt;🔍 Marginal likelihood is often intractable in Bayesian Inference&lt;/h2&gt;
+&lt;p&gt;Bayesian inference and Variational Autoencoders (VAEs), a marriage of deep learning and Bayesian inference, are powerful and foundational for probabilistic modeling used in computational biology. But rely on the concept of marginal likelihood, which is often intractable to compute directly. This is because both frameworks typically involve integrating over latent variables or parameters, which can lead to high-dimensional integrals that are computationally intractable.&lt;/p&gt;
+&lt;p&gt;Specifically, in Bayesian inference, we want the posterior distribution:&lt;/p&gt;
+
+$$p(\theta \mid D) = \frac{p(D \mid \theta) \, p(\theta)}{p(D)} \tag{1}$$
+
+
+&lt;p&gt;But the denominator—the evidence or marginal likelihood—is:&lt;/p&gt;
+
+$$p(D) = \int p(D \mid \theta) \, p(\theta) \, d\theta \tag{2}$$
+
+
+&lt;p&gt;This integral is often intractable.&lt;/p&gt;
+&lt;h2 id=&#34;-variational-inference-the-workaround&#34;&gt;💡 Variational Inference: The Workaround&lt;/h2&gt;
+&lt;p&gt;We introduce a simpler variational distribution $q(\theta)$
+ to approximate $p(\theta \mid D)$
+, and we try to make $q$
+ close to the true posterior.&lt;/p&gt;
+&lt;p&gt;We measure closeness using KL divergence:&lt;/p&gt;
+
+$$\text{KL}(q(\theta) \| p(\theta \mid D)) = \int q(\theta) \log \frac{q(\theta)}{p(\theta \mid D)} d\theta \tag{3}$$
+
+
+&lt;p&gt;This is hard to compute directly because it involves $p(D)$
+, so we rearrange terms.&lt;/p&gt;
+&lt;p&gt;We can rewrite $\log p(D)$
+ as:&lt;/p&gt;
+
+$$\log p(D) = \mathbb{E}_{q(\theta)} \left[ \log \frac{p(D, \theta)}{q(\theta)} \right] + \text{KL}(q(\theta) \| p(\theta \mid D)) \tag{4}$$
+
+
+&lt;p&gt;Thus:&lt;/p&gt;
+
+$$\log p(D) = \text{ELBO}(q) + \text{KL}(q(\theta) \| p(\theta \mid D)) \tag{5}$$
+
+
+&lt;p&gt;Since the KL divergence is always ≥ 0:&lt;/p&gt;
+
+$$\text{ELBO}(q) \leq \log p(D) \tag{6}$$
+
+
+&lt;p&gt;That&amp;rsquo;s why it&amp;rsquo;s called a lower bound.&lt;/p&gt;
+&lt;h2 id=&#34;-derive-elbo-and-kl&#34;&gt;🧮 Derive ELBO and KL&lt;/h2&gt;
+&lt;p&gt;Let $q(\theta)$
+ be any distribution over $\theta$
+ such that its support covers that of $p(\theta \mid D)$
+. We&amp;rsquo;ll exploit a classic trick: insert $q(\theta)$
+ into the log marginal likelihood using expectation and apply properties of KL divergence.&lt;/p&gt;
+&lt;h3 id=&#34;step-1-start-with-log-evidence&#34;&gt;Step 1: Start with log evidence&lt;/h3&gt;
+&lt;p&gt;We take the logarithm of $p(D)$
+, and &amp;ldquo;multiply and divide&amp;rdquo; inside by $q(\theta)$
+:&lt;/p&gt;
+
+$$\log p(D) = \log \int \frac{q(\theta)}{q(\theta)} p(D \mid \theta) p(\theta) d\theta \tag{7}$$
+
+
+
+$$= \log \int q(\theta) \cdot \frac{p(D \mid \theta) p(\theta)}{q(\theta)} d\theta \tag{8}$$
+
+
+
+$$= \log \mathbb{E}_{q(\theta)} \left[ \frac{p(D \mid \theta) p(\theta)}{q(\theta)} \right] \tag{9}$$
+
+
+&lt;p&gt;This is Jensen&amp;rsquo;s inequality time.&lt;/p&gt;
+&lt;h3 id=&#34;step-2-apply-jensens-inequality&#34;&gt;Step 2: Apply Jensen&amp;rsquo;s Inequality&lt;/h3&gt;
+
+$$\log \mathbb{E}_{q(\theta)} \left[ \frac{p(D \mid \theta) p(\theta)}{q(\theta)} \right] \geq \mathbb{E}_{q(\theta)} \left[ \log \frac{p(D \mid \theta) p(\theta)}{q(\theta)} \right] \tag{10}$$
+
+
+&lt;p&gt;That gives us the ELBO:&lt;/p&gt;
+
+$$\text{ELBO}(q) = \mathbb{E}_{q(\theta)} \left[ \log \frac{p(D, \theta)}{q(\theta)} \right] \tag{11}$$
+
+
+&lt;p&gt;So:&lt;/p&gt;
+
+$$\log p(D) \geq \text{ELBO}(q) \tag{12}$$
+
+
+&lt;p&gt;But we can go further — let&amp;rsquo;s rewrite $\log p(D)$
+ exactly in terms of ELBO + KL divergence.&lt;/p&gt;
+&lt;h3 id=&#34;step-3-add-and-subtract-the-same-quantity&#34;&gt;Step 3: Add and Subtract the Same Quantity&lt;/h3&gt;
+&lt;p&gt;We now write:&lt;/p&gt;
+
+$$\log p(D) = \mathbb{E}_{q(\theta)} \left[ \log \frac{p(D, \theta)}{q(\theta)} \right] + \left( \log p(D) - \mathbb{E}_{q(\theta)} \left[ \log \frac{p(D, \theta)}{q(\theta)} \right] \right) \tag{13}$$
+
+
+&lt;p&gt;Now we observe that the term in parentheses is exactly the KL divergence between $q(\theta)$
+ and the true posterior:&lt;/p&gt;
+
+$$\text{KL}(q(\theta) \| p(\theta \mid D)) = \mathbb{E}_{q(\theta)} \left[ \log \frac{q(\theta)}{p(\theta \mid D)} \right] \tag{14}$$
+
+
+&lt;p&gt;But recall:&lt;/p&gt;
+
+$$p(\theta \mid D) = \frac{p(D, \theta)}{p(D)} \Rightarrow \log p(\theta \mid D) = \log p(D, \theta) - \log p(D) \tag{15}$$
+
+
+&lt;p&gt;Then:&lt;/p&gt;
+
+$$\log \frac{q(\theta)}{p(\theta \mid D)} = \log \frac{q(\theta)}{p(D, \theta)} + \log p(D) \tag{16}$$
+
+
+&lt;p&gt;Take expectation over $q(\theta)$
+:&lt;/p&gt;
+
+$$\text{KL}(q(\theta) \| p(\theta \mid D)) = -\mathbb{E}_{q(\theta)} \left[ \log \frac{p(D, \theta)}{q(\theta)} \right] + \log p(D) \tag{17}$$
+
+
+&lt;p&gt;Rearranged:&lt;/p&gt;
+
+$$\log p(D) = \mathbb{E}_{q(\theta)} \left[ \log \frac{p(D, \theta)}{q(\theta)} \right] + \text{KL}(q(\theta) \| p(\theta \mid D)) \tag{18}$$
+
+
+&lt;h3 id=&#34;definition-of-expectation-used-above&#34;&gt;Definition of Expectation used above&lt;/h3&gt;
+&lt;p&gt;Note the above derivations used multiple times the definition that &lt;strong&gt;expectation of a function $f(\theta)$
+ under a probability distribution $q(\theta)$
+&lt;/strong&gt; is:&lt;/p&gt;
+
+$$\mathbb{E}_{q(\theta)}[f(\theta)] = \int q(\theta) \, f(\theta) \, d\theta \tag{19}$$
+
+
+&lt;h2 id=&#34;-elbo-expression-used-in-vaes&#34;&gt;📐 ELBO Expression used in VAEs&lt;/h2&gt;
+
+$$\text{ELBO}(q) = \mathbb{E}_{q(\theta)}[\log p(D \mid \theta)] - \text{KL}(q(\theta) \| p(\theta)) \tag{20}$$
+
+
+&lt;p&gt;This is the most widely used form in variational inference and VAEs. It comes from expanding the joint $p(D, \theta)$, and interpreting the ELBO as a trade-off between reconstruction and regularization.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Interpretation:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;The first term encourages $q(\theta)$
+ to explain the data well.&lt;/li&gt;
+&lt;li&gt;The second term encourages $q(\theta)$
+ to stay close to the prior.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Its derivation start from:&lt;/p&gt;
+&lt;h3 id=&#34;1-elbokl-decomposition&#34;&gt;1. ELBO–KL decomposition:&lt;/h3&gt;
+
+$$\log p(D) = \text{ELBO}(q) + \text{KL}(q(\theta) \| p(\theta \mid D)) \tag{5}$$
+
+
+&lt;p&gt;This is always true by the definition of the Kullback-Leibler divergence and Jensen&amp;rsquo;s inequality. Rearranging:&lt;/p&gt;
+
+$$\text{ELBO}(q) = \log p(D) - \text{KL}(q(\theta) \| p(\theta \mid D)) \tag{22}$$
+
+
+&lt;h3 id=&#34;2-definition-of-elbo-via-expected-joint&#34;&gt;2. Definition of ELBO via expected joint:&lt;/h3&gt;
+&lt;p&gt;Alternatively, ELBO is often defined as:&lt;/p&gt;
+
+$$\text{ELBO}(q) = \mathbb{E}_{q(\theta)} \left[ \log \frac{p(D, \theta)}{q(\theta)} \right] = \mathbb{E}_{q(\theta)}[\log p(D, \theta)] - \mathbb{E}_{q(\theta)}[\log q(\theta)] \tag{23}$$
+
+
+&lt;p&gt;Now recall:&lt;/p&gt;
+
+$$\log p(D, \theta) = \log p(D \mid \theta) + \log p(\theta) \tag{24}$$
+
+
+&lt;p&gt;So:&lt;/p&gt;
+
+$$\text{ELBO}(q) = \mathbb{E}_{q(\theta)}[\log p(D \mid \theta)] + \mathbb{E}_{q(\theta)}[\log p(\theta)] - \mathbb{E}_{q(\theta)}[\log q(\theta)] \tag{25}$$
+
+
+&lt;p&gt;Group terms:&lt;/p&gt;
+
+$$\text{ELBO}(q) = \mathbb{E}_{q(\theta)}[\log p(D \mid \theta)] - \text{KL}(q(\theta) \| p(\theta)) \tag{20}$$
+
+
+</description>
+    </item>
     
     <item>
       <title>🧮 Math Derivation for scRNAseq Imputation (SAVER)</title>
@@ -20,72 +196,7 @@
       <description>&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
 &lt;p&gt;Single-cell RNASeq could have a large amount of zero values, representing either missing data or no expression. Imputation approaches to deal with this issue have the risk of generating false positive or irreproducible results. Model-based imputation generate fewer false-positives compared with data smoothing based methods (MAGIC and knn-smooth), but this varied greatly depending on how well the model described the datasets.&lt;/p&gt;
 &lt;p&gt;&lt;a href=&#34;https://www.nature.com/articles/s41592-018-0033-z#Sec2&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;SAVER&lt;/a&gt; was the least likely to generate false or irreproducible results in &lt;a href=&#34;https://f1000research.com/articles/7-1740/v1&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;a benchmark of common imputation methods&lt;/a&gt;. It suggests the mathematical model used in SAVER could well depict the structure inherent to the scRNAseq datasets. Here we will derive the Poisson–gamma mixture model (also known as negative binomial model) and its Bayesian framework used in SAVER that leverage conjugate priors to estimate the posterior distribution of gene expression levels.&lt;/p&gt;
-&lt;h2&gt;&lt;/h2&gt;
-&lt;p&gt;more in another md file&lt;/p&gt;
-&lt;h2 id=&#34;-goal&#34;&gt;✅ Goal:&lt;/h2&gt;
- 
-$$
- \hat{\lambda}_{gc} = \frac{Y_{gc} + \hat{\alpha}_{gc}}{s_c + \hat{\beta}_{gc}} = \frac{s_c}{s_c + \hat{\beta}_{gc}} \cdot \frac{Y_{gc}}{s_c} + \frac{\hat{\beta}_{gc}}{s_c + \hat{\beta}_{gc}} \cdot \hat{\mu}_{gc} 
-$$
-
-
-&lt;p&gt;&lt;strong&gt;Gamma distribution gives:&lt;/strong&gt;&lt;/p&gt;
- 
-$$ \hat{\alpha}_{gc} = \hat{\beta}_{gc} \hat{\mu}_{gc} \quad \text{(1)} $$
-
-
-&lt;h2 id=&#34;-step-by-step-proof&#34;&gt;🔁 Step-by-Step Proof:&lt;/h2&gt;
-&lt;p&gt;We start with:&lt;/p&gt;
- 
-$$ \hat{\lambda}_{gc} = \frac{Y_{gc} + \hat{\alpha}_{gc}}{s_c + \hat{\beta}_{gc}} \quad \text{(2)} $$
-
-
-&lt;p&gt;Substitute  $\hat{\alpha}_{gc} = \hat{\beta}_{gc} \hat{\mu}_{gc}$ 
- from equation (1):&lt;/p&gt;
- 
-$$ = \frac{Y_{gc} + \hat{\beta}_{gc} \hat{\mu}_{gc}}{s_c + \hat{\beta}_{gc}} \quad \text{(3)} $$
-
-
-&lt;p&gt;Split the numerator:&lt;/p&gt;
- 
-$$ = \frac{Y_{gc}}{s_c + \hat{\beta}_{gc}} + \frac{\hat{\beta}_{gc} \hat{\mu}_{gc}}{s_c + \hat{\beta}_{gc}} \quad \text{(4)} $$
-
-
-&lt;p&gt;Now multiply and divide the first term by  $s_c$ 
-:&lt;/p&gt;
- 
-$$ = \left(\frac{s_c}{s_c + \hat{\beta}_{gc}} \cdot \frac{Y_{gc}}{s_c}\right) + \left(\frac{\hat{\beta}_{gc}}{s_c + \hat{\beta}_{gc}} \cdot \hat{\mu}_{gc}\right) \quad \text{(5)} $$
-
-
-&lt;p&gt;Which gives:&lt;/p&gt;
- 
-$$ \hat{\lambda}_{gc} = \frac{s_c}{s_c + \hat{\beta}_{gc}} \cdot \frac{Y_{gc}}{s_c} + \frac{\hat{\beta}_{gc}}{s_c + \hat{\beta}_{gc}} \cdot \hat{\mu}_{gc} \quad \text{(6)} $$
-
-
-&lt;p&gt;✅ &lt;strong&gt;Proved.&lt;/strong&gt;&lt;/p&gt;
-&lt;h2 id=&#34;-summary&#34;&gt;🔍 Summary:&lt;/h2&gt;
-&lt;p&gt;This is a weighted average of:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt; $\frac{Y_{gc}}{s_c}$ 
-: observed normalized expression&lt;/li&gt;
-&lt;li&gt; $\hat{\mu}_{gc}$ 
-: predicted expression from prior&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;With weights proportional to data confidence ( $s_c$ 
-) and prior confidence ( $\hat{\beta}_{gc}$ 
-).&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>🧮 Math Derivation for scRNAseq Imputation (SAVER)</title>
-      <link>http://localhost:1313/post/19c.bayes_variational_infer_elbo/</link>
-      <pubDate>Thu, 24 Apr 2025 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/post/19c.bayes_variational_infer_elbo/</guid>
-      <description>&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
-&lt;p&gt;Single-cell RNASeq could have a large amount of zero values, representing either missing data or no expression. Imputation approaches to deal with this issue have the risk of generating false positive or irreproducible results. Model-based imputation generate fewer false-positives compared with data smoothing based methods (MAGIC and knn-smooth), but this varied greatly depending on how well the model described the datasets.&lt;/p&gt;
-&lt;p&gt;&lt;a href=&#34;https://www.nature.com/articles/s41592-018-0033-z#Sec2&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;SAVER&lt;/a&gt; was the least likely to generate false or irreproducible results in &lt;a href=&#34;https://f1000research.com/articles/7-1740/v1&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;a benchmark of common imputation methods&lt;/a&gt;. It suggests the mathematical model used in SAVER could well depict the structure inherent to the scRNAseq datasets. Here we will derive the Poisson–gamma mixture model (also known as negative binomial model) and its Bayesian framework used in SAVER that leverage conjugate priors to estimate the posterior distribution of gene expression levels.&lt;/p&gt;
-&lt;h2&gt;&lt;/h2&gt;
+&lt;h2 id=&#34;heading&#34;&gt;&lt;/h2&gt;
 &lt;p&gt;more in another md file&lt;/p&gt;
 &lt;h2 id=&#34;-goal&#34;&gt;✅ Goal:&lt;/h2&gt;
  
@@ -237,7 +348,7 @@ $$ \hat{\lambda}_{gc} = \frac{s_c}{s_c + \hat{\beta}_{gc}} \cdot \frac{Y_{gc}}{s
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;The normalization &amp;ldquo;just works&amp;rdquo; because we&amp;rsquo;re staying within the same distributional family where normalization constants are known.&lt;/p&gt;
-&lt;h2 id=&#34;math-derivation&#34;&gt;Math Derivation&lt;a id=&#34;math-derivation&#34;&gt;&lt;/a&gt;&lt;/h2&gt;
+&lt;h2 id=&#34;math-derivationa-idmath-derivationa&#34;&gt;Math Derivation&lt;a id=&#34;math-derivation&#34;&gt;&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;Below is a &lt;strong&gt;step-by-step derivation of the marginal likelihood integral for the Beta-Binomial conjugate prior relationship&lt;/strong&gt;. This shows how we can transform a potentially difficult integral into a simple ratio of Beta functions, which is the essence of why conjugate priors are so powerful in Bayesian inference.&lt;/p&gt;
 &lt;h3 id=&#34;starting-point-the-marginal-likelihood-integral&#34;&gt;Starting Point: The Marginal Likelihood Integral&lt;/h3&gt;
  $$P(D) = \int_0^1 \binom{n}{s}\theta^s(1-\theta)^{n-s} \cdot \frac{\theta^{\alpha-1}(1-\theta)^{\beta-1}}{B(\alpha,\beta)} d\theta \quad (1)$$ 

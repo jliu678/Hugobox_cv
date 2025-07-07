@@ -7,7 +7,7 @@
     <description>Math Derivation</description>
     <generator>Hugo Blox Builder (https://hugoblox.com)</generator><language>en-us</language><lastBuildDate>Sat, 12 Apr 2025 00:00:00 +0000</lastBuildDate>
     <image>
-      <url>http://localhost:1313/media/icon_hu_fd2be5a69becaf9e.png</url>
+      <url>http://localhost:1313/media/icon_hu6671943710606299486.png</url>
       <title>Math Derivation</title>
       <link>http://localhost:1313/tags/math-derivation/</link>
     </image>
@@ -107,7 +107,7 @@
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;The normalization &amp;ldquo;just works&amp;rdquo; because we&amp;rsquo;re staying within the same distributional family where normalization constants are known.&lt;/p&gt;
-&lt;h2 id=&#34;math-derivation&#34;&gt;Math Derivation&lt;a id=&#34;math-derivation&#34;&gt;&lt;/a&gt;&lt;/h2&gt;
+&lt;h2 id=&#34;math-derivationa-idmath-derivationa&#34;&gt;Math Derivation&lt;a id=&#34;math-derivation&#34;&gt;&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;Below is a &lt;strong&gt;step-by-step derivation of the marginal likelihood integral for the Beta-Binomial conjugate prior relationship&lt;/strong&gt;. This shows how we can transform a potentially difficult integral into a simple ratio of Beta functions, which is the essence of why conjugate priors are so powerful in Bayesian inference.&lt;/p&gt;
 &lt;h3 id=&#34;starting-point-the-marginal-likelihood-integral&#34;&gt;Starting Point: The Marginal Likelihood Integral&lt;/h3&gt;
  $$P(D) = \int_0^1 \binom{n}{s}\theta^s(1-\theta)^{n-s} \cdot \frac{\theta^{\alpha-1}(1-\theta)^{\beta-1}}{B(\alpha,\beta)} d\theta \quad (1)$$ 

@@ -1,0 +1,834 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>ScVelo | Jiyuan Liu</title>
+    <link>http://localhost:1313/tags/scvelo/</link>
+      <atom:link href="http://localhost:1313/tags/scvelo/index.xml" rel="self" type="application/rss+xml" />
+    <description>ScVelo</description>
+    <generator>Hugo Blox Builder (https://hugoblox.com)</generator><language>en-us</language><lastBuildDate>Wed, 28 May 2025 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>http://localhost:1313/media/icon_hu6671943710606299486.png</url>
+      <title>ScVelo</title>
+      <link>http://localhost:1313/tags/scvelo/</link>
+    </image>
+    
+    <item>
+      <title>🧬 Math derivation for steady-state RNA velocity model</title>
+      <link>http://localhost:1313/post/11c.velocity_steady_state/</link>
+      <pubDate>Wed, 28 May 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/post/11c.velocity_steady_state/</guid>
+      <description>&lt;p&gt;The steady‑state model was the first to enable a mathematical estimation of RNA velocity, and most subsequent methods are modified versions of it or its generalization (the dynamic model in &lt;code&gt;scVelo&lt;/code&gt;; see our other blogs). It has its limitations and a solid understanding of its underlying mathematics is needed to apply the model effectively. Here, we derive the steady-state model in &lt;code&gt;scVelo&lt;/code&gt; and &lt;code&gt;velocyto&lt;/code&gt;.&lt;/p&gt;
+&lt;h1 id=&#34;a-estimating-rna-velocity-using-steady-state-ratio-in-scvelo-and-velocyto&#34;&gt;A. Estimating RNA velocity Using Steady-State Ratio in &lt;code&gt;scVelo&lt;/code&gt; and &lt;code&gt;velocyto&lt;/code&gt;&lt;/h1&gt;
+&lt;p&gt;For steady-state models in &lt;code&gt;scVelo&lt;/code&gt; and &lt;code&gt;velocyto&lt;/code&gt;, RNA velocities are computed as deviations from this steady-state ratio:&lt;/p&gt;
+ $$ \nu_i = u_i - \gamma_0 s_i  $$ 
+
+&lt;p&gt;where
+  
+$$
+\gamma_0 = \frac{\beta}{\gamma}
+$$  
+
+&lt;br&gt;
+(i.e. the expected ratio of unspliced to spliced mRNA) is estimated analytically using least squares regression. Lower and upper quantiles in phase space, that is, where mRNA levels
+reach minimum and maximum expression, respectively were assumed to be steady states and used for the estimation. Hence, the ratio can be approximated by a linear regression on these extreme quantiles.&lt;/p&gt;
+&lt;p&gt;Specifically, $ \gamma_0 $
+ is estimated as :&lt;/p&gt;
+  
+$$
+\gamma_0 = \frac{\mathbf{u}^\top \mathbf{s}}{\lVert \mathbf{s} \rVert^2}
+$$  
+
+
+&lt;p&gt;This is a least-squares fit of the form:&lt;/p&gt;
+  
+$$
+\mathbf{u} \approx \gamma_0 \cdot \mathbf{s}
+$$  
+
+
+&lt;p&gt;This means they model unspliced mRNA ($\mathbf{u}$
+) as being linearly dependent on spliced mRNA ($\mathbf{s}$
+), and solve for the slope $\gamma_0$
+.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;symbol-definition&#34;&gt;Symbol Definition&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;$\mathbf{u} = (u_1, \ldots, u_n)$
+: a vector of size-normalized unspliced mRNA counts for a single gene across a subset of cells.&lt;/li&gt;
+&lt;li&gt;$\mathbf{s} = (s_1, \ldots, s_n)$
+: a vector of corresponding spliced mRNA counts for that gene in the same subset of cells.&lt;/li&gt;
+&lt;li&gt;$\mathbf{u}^\top \mathbf{s}$
+: the dot product between unspliced and spliced vectors.&lt;/li&gt;
+&lt;li&gt;$\lVert \mathbf{s} \rVert^2 = \mathbf{s}^\top \mathbf{s}$
+: the squared norm of the spliced vector.&lt;/li&gt;
+&lt;li&gt;$\gamma_0$
+: the slope of the best-fit line through the origin relating $\mathbf{u}$
+ to $\mathbf{s}$
+, i.e., the steady-state ratio.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h1 id=&#34;b-derive-least-squares-solution-for-estimating-the-steady-state-ratio-hahahugoshortcode24s15hbhb&#34;&gt;B. Derive Least Squares Solution for Estimating the Steady-State Ratio $\gamma_0$
+&lt;/h1&gt;
+&lt;p&gt;Let’s walk through the full derivation of the least squares solution for estimating the steady-state ratio $\gamma_0$
+, which minimizes the squared difference between the unspliced and spliced counts scaled by $\gamma_0$
+.&lt;/p&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;-problem-setup&#34;&gt;🔧 Problem Setup&lt;/h2&gt;
+&lt;p&gt;Given:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;$u \in \mathbb{R}^n$
+: vector of unspliced counts across $n$
+ cells&lt;/li&gt;
+&lt;li&gt;$s \in \mathbb{R}^n$
+: vector of spliced counts across the same $n$
+ cells&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;We model the unspliced counts as linearly proportional to spliced counts:&lt;/p&gt;
+
+$$
+u \approx \gamma_0 s
+$$
+
+
+&lt;p&gt;We want to find $\gamma_0$
+ that minimizes the squared error:&lt;/p&gt;
+
+$$
+\min_{\gamma_0} \| u - \gamma_0 s \|^2
+$$
+
+
+&lt;hr&gt;
+&lt;h2 id=&#34;-expand-the-norm&#34;&gt;🧮 Expand the Norm&lt;/h2&gt;
+
+$$
+\| u - \gamma_0 s \|^2 = (u - \gamma_0 s)^\top (u - \gamma_0 s)
+$$
+
+
+&lt;p&gt;Expanding this expression:&lt;/p&gt;
+
+$$
+= u^\top u - 2\gamma_0 u^\top s + \gamma_0^2 s^\top s
+$$
+
+
+&lt;hr&gt;
+&lt;h2 id=&#34;-minimize-with-respect-to-hahahugoshortcode24s27hbhb&#34;&gt;📉 Minimize with Respect to $\gamma_0$
+&lt;/h2&gt;
+&lt;p&gt;Take derivative with respect to $\gamma_0$
+ and set it to zero:&lt;/p&gt;
+
+$$
+\frac{d}{d\gamma_0} \left( \| u - \gamma_0 s \|^2 \right) = -2 u^\top s + 2\gamma_0 s^\top s = 0
+$$
+
+
+&lt;p&gt;Solve for $\gamma_0$
+:&lt;/p&gt;
+
+$$
+\gamma_0 = \frac{u^\top s}{\|s\|^2}
+$$
+
+
+&lt;p&gt;Where:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;$u^\top s$
+ is the dot product&lt;/li&gt;
+&lt;li&gt;$\|s\|^2 = s^\top s$
+ is the squared norm&lt;/li&gt;
+&lt;/ul&gt;
+&lt;hr&gt;
+&lt;h2 id=&#34;-interpretation&#34;&gt;✅ Interpretation&lt;/h2&gt;
+&lt;p&gt;This is the slope of the best-fit line (through the origin) predicting unspliced from spliced counts. It&amp;rsquo;s equivalent to projecting $u$
+ onto $s$
+ in vector space.&lt;/p&gt;
+&lt;p&gt;In RNA velocity, this slope $\gamma_0$
+ serves as a reference ratio under the steady-state assumption:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Expected:&lt;/strong&gt;&lt;/p&gt;
+
+$$
+u = \gamma_0 s
+$$
+
+
+&lt;p&gt;Any deviation from this in other cells suggests that the gene is being upregulated or downregulated.&lt;/p&gt;
+&lt;h1 id=&#34;c-extending-the-steady-state-model-with-offset&#34;&gt;C. Extending the Steady-State Model with Offset&lt;/h1&gt;
+&lt;h2 id=&#34;-original-model-no-offset&#34;&gt;🧩 Original Model (No Offset)&lt;/h2&gt;
+&lt;p&gt;Previously, we assumed:&lt;/p&gt;
+
+$$u_i \approx \gamma_0 \cdot s_i$$
+
+
+&lt;p&gt;But this forces the regression line to go through the origin, which isn&amp;rsquo;t always biologically realistic.&lt;/p&gt;
+&lt;h2 id=&#34;-generalized-model-with-offset&#34;&gt;✅ Generalized Model (With Offset)&lt;/h2&gt;
+&lt;p&gt;Now we model:&lt;/p&gt;
+
+$$u_i \approx \gamma_0 \cdot s_i + o$$
+
+
+&lt;p&gt;Where:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;$\gamma_0$
+ is still the slope (steady-state ratio)&lt;/li&gt;
+&lt;li&gt;$o$
+ is a constant offset (intercept), modeling basal transcription&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;-least-squares-solution-with-offset&#34;&gt;🔍 Least Squares Solution with Offset&lt;/h2&gt;
+&lt;p&gt;To solve for both $\gamma_0$
+ and $o$
+, we use ordinary least squares (OLS) for linear regression.&lt;/p&gt;
+&lt;p&gt;Given data $u=(u_1,\ldots,u_n)$
+, $s=(s_1,\ldots,s_n)$
+, we estimate:&lt;/p&gt;
+
+$$\hat{u} = \gamma_0 s + o$$
+
+
+&lt;p&gt;OLS gives:&lt;/p&gt;
+&lt;h3 id=&#34;slope-steady-state-ratio&#34;&gt;Slope (Steady-State Ratio)&lt;/h3&gt;
+
+$$\gamma_0 = \frac{\text{Cov}(u,s)}{\text{Var}(s)}$$
+
+
+&lt;p&gt;Where:&lt;/p&gt;
+
+$$\text{Cov}(u,s) = \frac{1}{n}\sum_{i=1}^n (u_i-\bar{u})(s_i-\bar{s})$$
+
+
+
+$$\text{Var}(s) = \frac{1}{n}\sum_{i=1}^n (s_i-\bar{s})^2$$
+
+
+&lt;h3 id=&#34;-offset&#34;&gt;🧷 Offset&lt;/h3&gt;
+
+$$o = \bar{u} - \gamma_0\bar{s}$$
+
+
+&lt;p&gt;This centers the regression line at the mean of the data points.&lt;/p&gt;
+&lt;h1 id=&#34;d-derive-least-squares-solution-with-intercept&#34;&gt;D. Derive Least Squares Solution with Intercept&lt;/h1&gt;
+&lt;p&gt;Let&amp;rsquo;s derive the least squares solution with an intercept (offset) step by step. Our goal is to estimate both:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;$\gamma_0$
+: the slope (steady-state ratio), and&lt;/li&gt;
+&lt;li&gt;$o$
+: the offset (basal transcription level)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;given that we model:&lt;/p&gt;
+
+$$u_i = \gamma_0 s_i + o + \varepsilon_i$$
+
+
+&lt;p&gt;for each cell $i$
+, where $\varepsilon_i$
+ is the residual.&lt;/p&gt;
+&lt;h2 id=&#34;-1-problem-setup&#34;&gt;🧩 1. Problem Setup&lt;/h2&gt;
+&lt;p&gt;Let $u = [u_1, u_2, ..., u_n]^T$
+, and $s = [s_1, s_2, ..., s_n]^T$
+&lt;/p&gt;
+&lt;p&gt;We want to solve for $\gamma_0$
+ and $o$
+ that minimize the squared residuals:&lt;/p&gt;
+
+$$\min_{\gamma_0,o} \sum_{i=1}^n (u_i - \gamma_0 s_i - o)^2$$
+
+
+&lt;p&gt;This is a linear least squares regression with intercept.&lt;/p&gt;
+&lt;h2 id=&#34;-2-matrix-form&#34;&gt;🧮 2. Matrix Form&lt;/h2&gt;
+&lt;p&gt;Rewriting the model:&lt;/p&gt;
+
+$$u = \gamma_0 s + o \cdot 1 + \varepsilon$$
+
+
+&lt;p&gt;Let&amp;rsquo;s construct a design matrix $X$
+:&lt;/p&gt;
+
+$$X = \begin{bmatrix} s_1 &amp; 1 \\ s_2 &amp; 1 \\ \vdots &amp; \vdots \\ s_n &amp; 1 \end{bmatrix} \in \mathbb{R}^{n \times 2}$$
+
+
+&lt;p&gt;Then the model becomes:&lt;/p&gt;
+
+$$u = X \cdot \begin{bmatrix} \gamma_0 \\ o \end{bmatrix} + \varepsilon$$
+
+
+&lt;p&gt;The least squares solution is given by:&lt;/p&gt;
+
+$$\begin{bmatrix} \gamma_0 \\ o \end{bmatrix} = (X^T X)^{-1} X^T u$$
+
+
+&lt;p&gt;We can compute this explicitly to get formulas for $\gamma_0$
+ and $o$
+ as below.&lt;/p&gt;
+&lt;h3 id=&#34;slope&#34;&gt;Slope:&lt;/h3&gt;
+
+$$\gamma_0 = \frac{\text{Cov}(u,s)}{\text{Var}(s)} = \frac{\sum_{i=1}^n (u_i-\bar{u})(s_i-\bar{s})}{\sum_{i=1}^n (s_i-\bar{s})^2}$$
+
+
+&lt;h3 id=&#34;offset&#34;&gt;Offset:&lt;/h3&gt;
+
+$$o = \bar{u} - \gamma_0\bar{s}$$
+
+
+&lt;p&gt;These are the well-known results from simple linear regression that center the regression line at the mean of the data points.&lt;/p&gt;
+&lt;h2 id=&#34;-3-matrix-derivation-of-the-least-squares-solution&#34;&gt;🎯 3. Matrix Derivation of the Least Squares Solution&lt;/h2&gt;
+&lt;p&gt;Let&amp;rsquo;s explicitly derive the solution:&lt;/p&gt;
+
+$$\begin{bmatrix} \gamma_0 \\ o \end{bmatrix} = (X^\top X)^{-1} X^\top u$$
+
+
+&lt;p&gt;for the model:&lt;/p&gt;
+
+$$u = \gamma_0 s + o \cdot 1 + \varepsilon$$
+
+
+&lt;h3 id=&#34;31-define-the-design-matrix-and-vectors&#34;&gt;3.1 Define the Design Matrix and Vectors&lt;/h3&gt;
+&lt;p&gt;Let&amp;rsquo;s say we have $n$
+ samples (cells), with:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;$s \in \mathbb{R}^n$
+: spliced counts&lt;/li&gt;
+&lt;li&gt;$u \in \mathbb{R}^n$
+: unspliced counts&lt;/li&gt;
+&lt;li&gt;$1 \in \mathbb{R}^n$
+: vector of ones&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;We define the design matrix $X \in \mathbb{R}^{n \times 2}$
+:&lt;/p&gt;
+
+$$X = \begin{bmatrix} s_1 &amp; 1 \\ s_2 &amp; 1 \\ \vdots &amp; \vdots \\ s_n &amp; 1 \end{bmatrix} = [s \quad 1]$$
+
+
+&lt;p&gt;We write the model:&lt;/p&gt;
+
+$$u = X\theta + \varepsilon, \text{ with } \theta = \begin{bmatrix} \gamma_0 \\ o \end{bmatrix}$$
+
+
+&lt;p&gt;We want to minimize the residual sum of squares:&lt;/p&gt;
+
+$$\min_\theta \|u - X\theta\|^2$$
+
+
+&lt;h3 id=&#34;32-normal-equations&#34;&gt;3.2 Normal Equations&lt;/h3&gt;
+&lt;p&gt;We derive the optimal $\theta$
+ by solving the normal equations:&lt;/p&gt;
+
+$$X^\top X\theta = X^\top u$$
+
+
+&lt;p&gt;So,&lt;/p&gt;
+
+$$\theta = (X^\top X)^{-1} X^\top u$$
+
+
+&lt;p&gt;Let&amp;rsquo;s compute each term step by step.&lt;/p&gt;
+&lt;h3 id=&#34;33-compute-hahahugoshortcode24s83hbhb&#34;&gt;3.3 Compute $X^\top X$
+&lt;/h3&gt;
+
+$$X^\top X = \begin{bmatrix} \sum s_i^2 &amp; \sum s_i \\ \sum s_i &amp; n \end{bmatrix}$$
+
+
+&lt;p&gt;Let&amp;rsquo;s denote:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;$S = \sum_{i=1}^n s_i$
+&lt;/li&gt;
+&lt;li&gt;$S_2 = \sum_{i=1}^n s_i^2$
+&lt;/li&gt;
+&lt;li&gt;$n$
+: number of cells&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;So:&lt;/p&gt;
+
+$$X^\top X = \begin{bmatrix} S_2 &amp; S \\ S &amp; n \end{bmatrix}$$
+
+
+&lt;h3 id=&#34;34-compute-hahahugoshortcode24s89hbhb&#34;&gt;3.4 Compute $X^\top u$
+&lt;/h3&gt;
+
+$$X^\top u = \begin{bmatrix} \sum s_i u_i \\ \sum u_i \end{bmatrix}$$
+
+
+&lt;p&gt;Let&amp;rsquo;s denote:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;$U = \sum_{i=1}^n u_i$
+&lt;/li&gt;
+&lt;li&gt;$SU = \sum_{i=1}^n s_i u_i$
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;So:&lt;/p&gt;
+
+$$X^\top u = \begin{bmatrix} SU \\ U \end{bmatrix}$$
+
+
+&lt;h3 id=&#34;35-solve-hahahugoshortcode24s94hbhb&#34;&gt;3.5 Solve $\theta = (X^\top X)^{-1} X^\top u$
+&lt;/h3&gt;
+&lt;p&gt;The inverse of a $2\times2$
+ matrix:&lt;/p&gt;
+
+$$\begin{bmatrix} a &amp; b \\ c &amp; d \end{bmatrix}^{-1} = \frac{1}{ad-bc}\begin{bmatrix} d &amp; -b \\ -c &amp; a \end{bmatrix}$$
+
+
+&lt;p&gt;So:&lt;/p&gt;
+
+$$(X^\top X)^{-1} = \frac{1}{S_2n - S^2}\begin{bmatrix} n &amp; -S \\ -S &amp; S_2 \end{bmatrix}$$
+
+
+&lt;p&gt;Now compute:&lt;/p&gt;
+
+$$\theta = \frac{1}{S_2n - S^2}\begin{bmatrix} n &amp; -S \\ -S &amp; S_2 \end{bmatrix}\begin{bmatrix} SU \\ U \end{bmatrix}$$
+
+
+&lt;p&gt;First row:
+
+$$n\cdot SU - S\cdot U$$
+
+&lt;/p&gt;
+&lt;p&gt;Second row:
+
+$$-S\cdot SU + S_2\cdot U$$
+
+&lt;/p&gt;
+&lt;h3 id=&#34;36-final-expression&#34;&gt;3.6 Final Expression&lt;/h3&gt;
+&lt;p&gt;So we get:&lt;/p&gt;
+
+$$\gamma_0 = \frac{n\cdot \sum s_i u_i - \sum s_i \cdot \sum u_i}{n\cdot \sum s_i^2 - (\sum s_i)^2} = \frac{\text{Cov}(u,s)}{\text{Var}(s)}$$
+
+
+
+$$o = \bar{u} - \gamma_0\bar{s}$$
+
+
+&lt;p&gt;This completes the derivation of the least squares solution with intercept, showing how to arrive at the covariance and variance expressions.&lt;/p&gt;
+&lt;h1 id=&#34;why-normal-equations-in-32-in-section-d-give-the-optimal-solution&#34;&gt;Why Normal Equations in 3.2 in Section D give the optimal solution&lt;/h1&gt;
+&lt;p&gt;Let&amp;rsquo;s prove that the normal equations&lt;/p&gt;
+
+$$X^\top X\theta = X^\top u$$
+
+
+&lt;p&gt;give us the optimal solution in least squares regression.&lt;/p&gt;
+&lt;h2 id=&#34;-goal-of-least-squares&#34;&gt;🎯 Goal of Least Squares&lt;/h2&gt;
+&lt;p&gt;We want to minimize the sum of squared errors (residuals):&lt;/p&gt;
+
+$$L(\theta) = \|u-X\theta\|^2 = (u-X\theta)^\top(u-X\theta)$$
+
+
+&lt;p&gt;This is a quadratic loss function. To minimize it, we take its gradient with respect to $\theta$
+, set it to zero, and solve.&lt;/p&gt;
+&lt;h2 id=&#34;-step-by-step-derivation&#34;&gt;🧮 Step-by-step Derivation&lt;/h2&gt;
+&lt;p&gt;Start with:&lt;/p&gt;
+
+$$L(\theta) = (u-X\theta)^\top(u-X\theta)$$
+
+
+&lt;p&gt;Expand the product:&lt;/p&gt;
+
+$$L(\theta) = u^\top u - 2\theta^\top X^\top u + \theta^\top X^\top X\theta$$
+
+
+&lt;p&gt;Now take the gradient with respect to $\theta$
+:&lt;/p&gt;
+
+$$\nabla_\theta L = -2X^\top u + 2X^\top X\theta \tag{gradient} $$
+
+
+&lt;p&gt;Set the gradient to zero:&lt;/p&gt;
+
+$$-2X^\top u + 2X^\top X\theta = 0$$
+
+
+&lt;p&gt;Divide both sides by 2:&lt;/p&gt;
+
+$$X^\top X\theta = X^\top u$$
+
+
+&lt;p&gt;This is the normal equation. When $X^\top X$
+ is invertible (which it is in our case since $X$
+ has full column rank), we can solve for $\theta$
+:&lt;/p&gt;
+
+$$\theta = (X^\top X)^{-1}X^\top u$$
+
+
+&lt;p&gt;This solution minimizes the squared error because:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;The loss function is convex (it&amp;rsquo;s quadratic and $X^\top X$
+ is positive definite)&lt;/li&gt;
+&lt;li&gt;We found where its gradient is zero&lt;/li&gt;
+&lt;li&gt;The second derivative (Hessian) $2X^\top X$
+ is positive definite&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Therefore, this solution gives us the global minimum of the least squares problem.&lt;/p&gt;
+&lt;h2 id=&#34;derive-the-gradient-equation-above-for-the-least-squares-loss-function&#34;&gt;Derive the Gradient Equation above for the Least Squares Loss Function&lt;/h2&gt;
+&lt;p&gt;Let&amp;rsquo;s walk through how we get:&lt;/p&gt;
+
+$$\nabla_\theta L = -2X^\top u + 2X^\top X\theta$$
+
+
+&lt;h3 id=&#34;-step-1-write-the-loss-function&#34;&gt;🔧 Step 1: Write the Loss Function&lt;/h3&gt;
+&lt;p&gt;The least squares loss is:&lt;/p&gt;
+
+$$L(\theta) = \|u-X\theta\|^2 = (u-X\theta)^\top(u-X\theta)$$
+
+
+&lt;h3 id=&#34;-step-2-expand-the-quadratic-form&#34;&gt;🧮 Step 2: Expand the Quadratic Form&lt;/h3&gt;
+&lt;p&gt;Let&amp;rsquo;s expand this expression:&lt;/p&gt;
+
+$$L(\theta) = u^\top u - 2\theta^\top X^\top u + \theta^\top X^\top X\theta$$
+
+
+&lt;p&gt;Here&amp;rsquo;s how we get this expansion:&lt;/p&gt;
+
+$$(u-X\theta)^\top(u-X\theta) = u^\top u - 2\theta^\top X^\top u + \theta^\top X^\top X\theta$$
+
+
+&lt;p&gt;This follows from two key matrix properties:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;$(AB)^T = B^T A^T$
+&lt;/li&gt;
+&lt;li&gt;$u^\top X\theta = \theta^\top X^\top u$
+ (scalar equality)&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;-step-3-take-the-gradient-with-respect-to-hahahugoshortcode24s124hbhb&#34;&gt;🧮 Step 3: Take the Gradient with Respect to $\theta$
+&lt;/h3&gt;
+&lt;p&gt;We differentiate term by term:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;First term:
+
+   $$\nabla_\theta(u^\top u) = 0$$
+   
+
+because it doesn&amp;rsquo;t depend on $\theta$
+&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Second term:
+
+   $$\nabla_\theta(-2\theta^\top X^\top u) = -2X^\top u$$
+   
+
+because it&amp;rsquo;s linear in $\theta$
+&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Third term:
+
+   $$\nabla_\theta(\theta^\top X^\top X\theta) = 2X^\top X\theta \tag{quadratic grad.}$$
+   
+
+This is a quadratic form, and its derivative is a standard result from matrix calculus.&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;Adding all parts together:&lt;/p&gt;
+
+$$\nabla_\theta L = -2X^\top u + 2X^\top X\theta$$
+
+
+&lt;p&gt;This gradient expression gives us the direction of steepest ascent of the loss function at any point $\theta$
+. Setting it to zero leads to the normal equations, which give us the optimal solution.&lt;/p&gt;
+&lt;h3 id=&#34;note-vector-dot-product-commutativity&#34;&gt;Note: Vector Dot Product Commutativity&lt;/h3&gt;
+&lt;p&gt;Please note the identity&lt;/p&gt;
+
+$$a^\top b = b^\top a$$
+
+
+&lt;p&gt;holds true. This is a foundational property in linear algebra, and the key point is:&lt;/p&gt;
+&lt;p&gt;Both $a^\top b$
+ and $b^\top a$
+ are scalars (i.e., single numbers), and they are equal because they compute the same dot product. Let&amp;rsquo;s break it down:&lt;/p&gt;
+&lt;p&gt;Let $a = [a_1, a_2, \ldots, a_n]^\top$
+, and $b = [b_1, b_2, \ldots, b_n]^\top$
+.&lt;/p&gt;
+&lt;p&gt;Then:&lt;/p&gt;
+
+$$a^\top b = \sum_{i=1}^n a_i b_i$$
+
+
+
+$$b^\top a = \sum_{i=1}^n b_i a_i$$
+
+
+&lt;p&gt;But since real number multiplication is commutative (i.e., $a_i b_i = b_i a_i$
+), the two sums are identical:&lt;/p&gt;
+
+$$a^\top b = b^\top a$$
+
+
+&lt;h4 id=&#34;note-on-shapes-and-intuition&#34;&gt;Note on shapes and intuition:&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;$a^\top b$
+ is a $1\times1$
+ scalar (row vector × column vector)&lt;/li&gt;
+&lt;li&gt;$b^\top a$
+ is also a $1\times1$
+ scalar (same logic)&lt;/li&gt;
+&lt;li&gt;This is just the dot product: it doesn&amp;rsquo;t matter which order you take the dot product in. It&amp;rsquo;s symmetric. This property is crucial in many derivations in linear algebra and optimization, including our least squares derivation where we used $u^\top X\theta = \theta^\top X^\top u$
+.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Since they&amp;rsquo;re both just numbers, and equal by commutativity, the identity holds.&lt;/p&gt;
+&lt;h3 id=&#34;derive-quadratic-form-gradient-in-equation-quadratic-grad-above&#34;&gt;Derive Quadratic Form Gradient in Equation (quadratic grad.) above&lt;/h3&gt;
+&lt;p&gt;Let&amp;rsquo;s prove the key gradient identity with Matrix Calculus:&lt;/p&gt;
+
+$$\nabla_\theta(\theta^\top A\theta) = (A + A^\top)\theta$$
+
+
+&lt;p&gt;And its special case when $A$
+ is symmetric:&lt;/p&gt;
+
+$$\nabla_\theta(\theta^\top A\theta) = 2A\theta$$
+
+
+&lt;h4 id=&#34;-setup&#34;&gt;📝 Setup&lt;/h4&gt;
+&lt;p&gt;Given:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;$\theta \in \mathbb{R}^p$
+ is a column vector&lt;/li&gt;
+&lt;li&gt;$A \in \mathbb{R}^{p \times p}$
+ is a constant matrix&lt;/li&gt;
+&lt;li&gt;The scalar function is $f(\theta) = \theta^\top A\theta = \sum_{i=1}^p \sum_{j=1}^p \theta_i A_{ij} \theta_j$
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;overview-of-steps&#34;&gt;Overview of Steps&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;Step 1&lt;/strong&gt;: Write in Summation Form&lt;/p&gt;
+
+$$f(\theta) = \sum_{i=1}^p \sum_{j=1}^p \theta_i A_{ij} \theta_j$$
+
+
+&lt;p&gt;&lt;strong&gt;Step 2&lt;/strong&gt;: Compute Partial Derivatives&lt;/p&gt;
+&lt;p&gt;The gradient&amp;rsquo;s k-th component is:&lt;/p&gt;
+
+$$\frac{\partial f}{\partial \theta_k} = \frac{\partial}{\partial \theta_k} \sum_{i=1}^p \sum_{j=1}^p \theta_i A_{ij} \theta_j$$
+
+
+&lt;p&gt;&lt;strong&gt;Step 3&lt;/strong&gt;: Use Product Rule&lt;/p&gt;
+&lt;p&gt;When differentiating:&lt;/p&gt;
+
+$$\frac{\partial}{\partial \theta_k}(\theta_i A_{ij} \theta_j) = A_{ij}(\delta_{ik}\theta_j + \theta_i\delta_{jk})$$
+
+
+&lt;p&gt;where $\delta_{ik}$
+ is the Kronecker delta:&lt;/p&gt;
+
+$$\delta_{ik} = \begin{cases} 1 &amp; \text{if } i=k \\ 0 &amp; \text{otherwise} \end{cases}$$
+
+
+&lt;p&gt;&lt;strong&gt;Step 4&lt;/strong&gt;: Sum Terms&lt;/p&gt;
+
+$$\frac{\partial f}{\partial \theta_k} = \sum_{j=1}^p A_{kj}\theta_j + \sum_{i=1}^p \theta_i A_{ik}$$
+
+
+&lt;p&gt;&lt;strong&gt;Step 5&lt;/strong&gt;: Express in Vector Form&lt;/p&gt;
+&lt;p&gt;This gives us:&lt;/p&gt;
+
+$$\frac{\partial f}{\partial \theta_k} = (A\theta)_k + (A^\top\theta)_k$$
+
+
+&lt;p&gt;Therefore:&lt;/p&gt;
+
+$$\nabla_\theta f = A\theta + A^\top\theta = (A + A^\top)\theta$$
+
+
+&lt;p&gt;&lt;strong&gt;Symmetric Matrix&lt;/strong&gt;: a special case&lt;/p&gt;
+&lt;p&gt;When $A = A^\top$
+, we get:&lt;/p&gt;
+
+$$\nabla_\theta(\theta^\top A\theta) = 2A\theta$$
+
+
+&lt;p&gt;This is the form we use in least squares optimization where $A = X^\top X$
+ is symmetric.&lt;/p&gt;
+&lt;h4 id=&#34;detail-proof-of-key-steps-above&#34;&gt;Detail Proof of Key Steps above&lt;/h4&gt;
+&lt;p&gt;Let&amp;rsquo;s prove that:&lt;/p&gt;
+
+$$\frac{\partial}{\partial \theta_k} \left(\sum_{i=1}^p \sum_{j=1}^p \theta_i A_{ij} \theta_j\right) = \sum_{j=1}^p A_{kj}\theta_j + \sum_{i=1}^p \theta_i A_{ik}$$
+
+
+&lt;h5 id=&#34;step-by-step-derivation&#34;&gt;&lt;strong&gt;Step-by-step Derivation&lt;/strong&gt;&lt;/h5&gt;
+&lt;p&gt;Start with the function:&lt;/p&gt;
+
+$$f(\theta) = \sum_{i=1}^p \sum_{j=1}^p \theta_i A_{ij} \theta_j$$
+
+
+&lt;p&gt;Take partial derivative with respect to $\theta_k$
+, using product rule for all $\theta_i$
+ and $\theta_j$
+ terms:&lt;/p&gt;
+
+$$\frac{\partial f}{\partial \theta_k} = \sum_{i=1}^p \sum_{j=1}^p A_{ij} \cdot \frac{\partial}{\partial \theta_k}(\theta_i \theta_j)$$
+
+
+&lt;p&gt;Now:&lt;/p&gt;
+
+$$\frac{\partial}{\partial \theta_k}(\theta_i \theta_j) = \delta_{ik}\theta_j + \theta_i\delta_{jk}$$
+
+
+&lt;p&gt;where $\delta_{ik}$
+ is the Kronecker delta:&lt;/p&gt;
+
+$$\delta_{ik} = \begin{cases} 1 &amp; \text{if } i=k \\ 0 &amp; \text{otherwise} \end{cases}$$
+
+
+&lt;p&gt;Therefore:&lt;/p&gt;
+
+$$\frac{\partial f}{\partial \theta_k} = \sum_{i=1}^p \sum_{j=1}^p A_{ij}(\delta_{ik}\theta_j + \theta_i\delta_{jk})$$
+
+
+&lt;p&gt;Split into two sums:&lt;/p&gt;
+&lt;p&gt;First term:
+
+$$\sum_{i=1}^p \sum_{j=1}^p A_{ij}\delta_{ik}\theta_j = \sum_{j=1}^p A_{kj}\theta_j$$
+
+&lt;/p&gt;
+&lt;p&gt;(since $\delta_{ik}=1$
+ only when $i=k$
+)&lt;/p&gt;
+&lt;p&gt;Second term:
+
+$$\sum_{i=1}^p \sum_{j=1}^p A_{ij}\theta_i\delta_{jk} = \sum_{i=1}^p A_{ik}\theta_i$$
+
+&lt;/p&gt;
+&lt;p&gt;(since $\delta_{jk}=1$
+ only when $j=k$
+)&lt;/p&gt;
+&lt;h5 id=&#34;interim-result&#34;&gt;&lt;strong&gt;Interim Result&lt;/strong&gt;&lt;/h5&gt;
+&lt;p&gt;Combining both terms:&lt;/p&gt;
+
+$$\frac{\partial f}{\partial \theta_k} = \sum_{j=1}^p A_{kj}\theta_j + \sum_{i=1}^p A_{ik}\theta_i$$
+
+
+&lt;p&gt;In vector form, this means:&lt;/p&gt;
+
+$$\nabla_\theta(\theta^\top A\theta) = A\theta + A^\top\theta = (A + A^\top)\theta$$
+
+
+&lt;h5 id=&#34;from-component-wise-to-vector-form-of-gradient&#34;&gt;&lt;strong&gt;From Component-wise to Vector Form of Gradient&lt;/strong&gt;&lt;/h5&gt;
+&lt;p&gt;For each coordinate $k \in \{1,\ldots,p\}$
+, we showed:&lt;/p&gt;
+
+$$\frac{\partial f}{\partial \theta_k} = \underbrace{\sum_{j=1}^p A_{kj}\theta_j}_{(A\theta)_k} + \underbrace{\sum_{i=1}^p A_{ik}\theta_i}_{(A^\top\theta)_k}$$
+
+
+&lt;p&gt;So each element of the gradient vector is:&lt;/p&gt;
+
+$$(\nabla_\theta f)_k = (A\theta)_k + (A^\top\theta)_k$$
+
+
+&lt;h5 id=&#34;stacking-into-vector-form&#34;&gt;&lt;strong&gt;Stacking into Vector Form&lt;/strong&gt;&lt;/h5&gt;
+&lt;p&gt;The full gradient vector is:&lt;/p&gt;
+&lt;p&gt;
+$$\nabla_\theta f = \begin{bmatrix} 
+(A\theta)_1 + (A^\top\theta)_1 \\
+(A\theta)_2 + (A^\top\theta)_2 \\
+\vdots \\
+(A\theta)_p + (A^\top\theta)_p
+\end{bmatrix} = A\theta + A^\top\theta$$
+
+
+The notation $(A\theta)_k$
+ which refers to the k-th component of the matrix-vector product $A\theta$
+. This follows because matrix-vector multiplication simply stacks the components:&lt;/p&gt;
+
+$$(A\theta)_k = \sum_j A_{kj}\theta_j$$
+
+
+&lt;p&gt;
+$$A\theta = \begin{bmatrix} 
+\sum_{j=1}^p A_{1j}\theta_j \\
+\sum_{j=1}^p A_{2j}\theta_j \\
+\vdots \\
+\sum_{j=1}^p A_{pj}\theta_j
+\end{bmatrix}$$
+
+
+Similarly, for the transpose:
+
+$$(A^\top\theta)_k = \sum_i A_{ik}\theta_i$$
+
+&lt;/p&gt;
+&lt;h5 id=&#34;final-result&#34;&gt;&lt;strong&gt;Final Result&lt;/strong&gt;&lt;/h5&gt;
+&lt;p&gt;Therefore:&lt;/p&gt;
+
+$$\nabla_\theta(\theta^\top A\theta) = A\theta + A^\top\theta = (A + A^\top)\theta$$
+
+
+&lt;h1 id=&#34;from-normal-equations-to-standard-regression-form-36-in-section-d&#34;&gt;From Normal Equations to Standard Regression Form (3.6 in Section D)&lt;/h1&gt;
+&lt;p&gt;Let&amp;rsquo;s derive how the normal equations solution:&lt;/p&gt;
+
+$$\theta = \frac{1}{nS_2-S_1^2}\begin{bmatrix} n &amp; -S_1 \\ -S_1 &amp; S_2 \end{bmatrix}\begin{bmatrix} SU \\ U \end{bmatrix}$$
+
+
+&lt;p&gt;relates to the standard regression form:&lt;/p&gt;
+
+$$\gamma_0 = \frac{\text{Cov}(u,s)}{\text{Var}(s)} = \frac{n\sum s_i u_i - \sum s_i \sum u_i}{n\sum s_i^2 - (\sum s_i)^2}$$
+
+
+&lt;p&gt;with offset:&lt;/p&gt;
+
+$$o = \bar{u} - \gamma_0\bar{s}$$
+
+
+&lt;h2 id=&#34;-given-matrices-and-vectors&#34;&gt;🧮 Given Matrices and Vectors&lt;/h2&gt;
+&lt;p&gt;Let $s=[s_1,\ldots,s_n]^T$
+, $u=[u_1,\ldots,u_n]^T$
+&lt;/p&gt;
+&lt;p&gt;Model:
+
+$$u_i = \gamma_0 s_i + o + \varepsilon_i \text{ or } u = \gamma_0 s + o\cdot 1 + \varepsilon$$
+
+&lt;/p&gt;
+&lt;h2 id=&#34;-matrix-form&#34;&gt;🔧 Matrix Form&lt;/h2&gt;
+&lt;p&gt;Design matrix:
+
+$$X = [s \quad 1] \in \mathbb{R}^{n\times 2}$$
+
+&lt;/p&gt;
+&lt;p&gt;Parameters:
+
+$$\theta = \begin{bmatrix} \gamma_0 \\ o \end{bmatrix}$$
+
+&lt;/p&gt;
+&lt;h2 id=&#34;-computing-products&#34;&gt;📊 Computing Products&lt;/h2&gt;
+
+$$X^T X = \begin{bmatrix} \sum s_i^2 &amp; \sum s_i \\ \sum s_i &amp; n \end{bmatrix} = \begin{bmatrix} S_2 &amp; S_1 \\ S_1 &amp; n \end{bmatrix}$$
+
+
+
+$$X^T u = \begin{bmatrix} \sum s_i u_i \\ \sum u_i \end{bmatrix} = \begin{bmatrix} SU \\ U \end{bmatrix}$$
+
+
+&lt;h2 id=&#34;-solution-components&#34;&gt;🎯 Solution Components&lt;/h2&gt;
+&lt;p&gt;First row (slope):
+
+$$\gamma_0 = \frac{1}{nS_2-S_1^2}(n\cdot SU - S_1\cdot U)$$
+
+&lt;/p&gt;
+&lt;p&gt;Second row (intercept):
+
+$$o = \frac{1}{nS_2-S_1^2}(-S_1\cdot SU + S_2\cdot U)$$
+
+&lt;/p&gt;
+&lt;h2 id=&#34;-statistical-interpretation&#34;&gt;🔄 Statistical Interpretation&lt;/h2&gt;
+&lt;p&gt;Define:
+
+$$\bar{s} = \frac{1}{n}\sum s_i \quad \bar{u} = \frac{1}{n}\sum u_i$$
+
+&lt;/p&gt;
+
+$$\text{Var}(s) = \frac{1}{n}\sum(s_i-\bar{s})^2 = \frac{1}{n}S_2 - \bar{s}^2$$
+
+
+
+$$\text{Cov}(u,s) = \frac{1}{n}\sum(u_i-\bar{u})(s_i-\bar{s}) = \frac{1}{n}SU - \bar{u}\bar{s}$$
+
+
+&lt;h2 id=&#34;-final-result&#34;&gt;✅ Final Result&lt;/h2&gt;
+&lt;p&gt;This gives us:
+
+$$\gamma_0 = \frac{\text{Cov}(u,s)}{\text{Var}(s)} \text{ and } o = \bar{u} - \gamma_0\bar{s}$$
+
+&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

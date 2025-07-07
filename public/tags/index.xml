@@ -5,9 +5,9 @@
     <link>http://localhost:1313/tags/</link>
       <atom:link href="http://localhost:1313/tags/index.xml" rel="self" type="application/rss+xml" />
     <description>Tags</description>
-    <generator>Hugo Blox Builder (https://hugoblox.com)</generator><language>en-us</language><lastBuildDate>Thu, 24 Apr 2025 00:00:00 +0000</lastBuildDate>
+    <generator>Hugo Blox Builder (https://hugoblox.com)</generator><language>en-us</language><lastBuildDate>Wed, 28 May 2025 00:00:00 +0000</lastBuildDate>
     <image>
-      <url>http://localhost:1313/media/icon_hu_fd2be5a69becaf9e.png</url>
+      <url>http://localhost:1313/media/icon_hu6671943710606299486.png</url>
       <title>Tags</title>
       <link>http://localhost:1313/tags/</link>
     </image>
