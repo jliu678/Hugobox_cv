@@ -18,7 +18,7 @@
       <pubDate>Wed, 28 May 2025 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/post/11c.velocity_steady_state/</guid>
       <description>&lt;p&gt;The steady‑state model was the first to enable a mathematical estimation of RNA velocity, and most subsequent methods are modified versions of it or its generalization (the dynamic model in &lt;code&gt;scVelo&lt;/code&gt;; see our other blogs). It has its limitations and a solid understanding of its underlying mathematics is needed to apply the model effectively. Here, we derive the steady-state model in &lt;code&gt;scVelo&lt;/code&gt; and &lt;code&gt;velocyto&lt;/code&gt;.&lt;/p&gt;
-&lt;h1 id=&#34;a-estimating-rna-velocity-using-steady-state-ratio-in-scvelo-and-velocyto&#34;&gt;A. Estimating RNA velocity Using Steady-State Ratio in &lt;code&gt;scVelo&lt;/code&gt; and &lt;code&gt;velocyto&lt;/code&gt;&lt;/h1&gt;
+&lt;h3 id=&#34;a-estimating-rna-velocity-using-steady-state-ratio-in-scvelo-and-velocyto&#34;&gt;A. Estimating RNA velocity Using Steady-State Ratio in &lt;code&gt;scVelo&lt;/code&gt; and &lt;code&gt;velocyto&lt;/code&gt;&lt;/h3&gt;
 &lt;p&gt;For steady-state models in &lt;code&gt;scVelo&lt;/code&gt; and &lt;code&gt;velocyto&lt;/code&gt;, RNA velocities are computed as deviations from this steady-state ratio:&lt;/p&gt;
  $$ \nu_i = u_i - \gamma_0 s_i  $$ 
 
@@ -51,7 +51,7 @@ $$
 ), and solve for the slope $\gamma_0$
 .&lt;/p&gt;
 &lt;hr&gt;
-&lt;h2 id=&#34;symbol-definition&#34;&gt;Symbol Definition&lt;/h2&gt;
+&lt;h4 id=&#34;symbol-definition&#34;&gt;Symbol Definition&lt;/h4&gt;
 &lt;ul&gt;
 &lt;li&gt;$\mathbf{u} = (u_1, \ldots, u_n)$
 : a vector of size-normalized unspliced mRNA counts for a single gene across a subset of cells.&lt;/li&gt;
@@ -67,13 +67,12 @@ $$
 , i.e., the steady-state ratio.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;hr&gt;
-&lt;h1 id=&#34;b-derive-least-squares-solution-for-estimating-the-steady-state-ratio-hahahugoshortcode24s15hbhb&#34;&gt;B. Derive Least Squares Solution for Estimating the Steady-State Ratio $\gamma_0$
-&lt;/h1&gt;
+&lt;h3 id=&#34;b-derive-least-squares-solution-for-estimating-the-steady-state-ratio-gamma_0&#34;&gt;B. Derive Least Squares Solution for Estimating the Steady-State Ratio $\gamma_0$&lt;/h3&gt;
 &lt;p&gt;Let’s walk through the full derivation of the least squares solution for estimating the steady-state ratio $\gamma_0$
 , which minimizes the squared difference between the unspliced and spliced counts scaled by $\gamma_0$
 .&lt;/p&gt;
 &lt;hr&gt;
-&lt;h2 id=&#34;-problem-setup&#34;&gt;🔧 Problem Setup&lt;/h2&gt;
+&lt;h4 id=&#34;-problem-setup&#34;&gt;🔧 Problem Setup&lt;/h4&gt;
 &lt;p&gt;Given:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;$u \in \mathbb{R}^n$
@@ -99,7 +98,7 @@ $$
 
 
 &lt;hr&gt;
-&lt;h2 id=&#34;-expand-the-norm&#34;&gt;🧮 Expand the Norm&lt;/h2&gt;
+&lt;h4 id=&#34;-expand-the-norm&#34;&gt;🧮 Expand the Norm&lt;/h4&gt;
 
 $$
 \| u - \gamma_0 s \|^2 = (u - \gamma_0 s)^\top (u - \gamma_0 s)
@@ -114,8 +113,7 @@ $$
 
 
 &lt;hr&gt;
-&lt;h2 id=&#34;-minimize-with-respect-to-hahahugoshortcode24s27hbhb&#34;&gt;📉 Minimize with Respect to $\gamma_0$
-&lt;/h2&gt;
+&lt;h4 id=&#34;-minimize-with-respect-to-gamma_0&#34;&gt;📉 Minimize with Respect to $\gamma_0$&lt;/h4&gt;
 &lt;p&gt;Take derivative with respect to $\gamma_0$
  and set it to zero:&lt;/p&gt;
 
@@ -140,7 +138,7 @@ $$
  is the squared norm&lt;/li&gt;
 &lt;/ul&gt;
 &lt;hr&gt;
-&lt;h2 id=&#34;-interpretation&#34;&gt;✅ Interpretation&lt;/h2&gt;
+&lt;h4 id=&#34;-interpretation&#34;&gt;✅ Interpretation&lt;/h4&gt;
 &lt;p&gt;This is the slope of the best-fit line (through the origin) predicting unspliced from spliced counts. It&amp;rsquo;s equivalent to projecting $u$
  onto $s$
  in vector space.&lt;/p&gt;
@@ -154,15 +152,15 @@ $$
 
 
 &lt;p&gt;Any deviation from this in other cells suggests that the gene is being upregulated or downregulated.&lt;/p&gt;
-&lt;h1 id=&#34;c-extending-the-steady-state-model-with-offset&#34;&gt;C. Extending the Steady-State Model with Offset&lt;/h1&gt;
-&lt;h2 id=&#34;-original-model-no-offset&#34;&gt;🧩 Original Model (No Offset)&lt;/h2&gt;
+&lt;h3 id=&#34;c-extending-the-steady-state-model-with-offset&#34;&gt;C. Extending the Steady-State Model with Offset&lt;/h3&gt;
+&lt;h4 id=&#34;-original-model-no-offset&#34;&gt;🧩 Original Model (No Offset)&lt;/h4&gt;
 &lt;p&gt;Previously, we assumed:&lt;/p&gt;
 
 $$u_i \approx \gamma_0 \cdot s_i$$
 
 
 &lt;p&gt;But this forces the regression line to go through the origin, which isn&amp;rsquo;t always biologically realistic.&lt;/p&gt;
-&lt;h2 id=&#34;-generalized-model-with-offset&#34;&gt;✅ Generalized Model (With Offset)&lt;/h2&gt;
+&lt;h4 id=&#34;-generalized-model-with-offset&#34;&gt;✅ Generalized Model (With Offset)&lt;/h4&gt;
 &lt;p&gt;Now we model:&lt;/p&gt;
 
 $$u_i \approx \gamma_0 \cdot s_i + o$$
@@ -175,7 +173,7 @@ $$u_i \approx \gamma_0 \cdot s_i + o$$
 &lt;li&gt;$o$
  is a constant offset (intercept), modeling basal transcription&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&#34;-least-squares-solution-with-offset&#34;&gt;🔍 Least Squares Solution with Offset&lt;/h2&gt;
+&lt;h4 id=&#34;-least-squares-solution-with-offset&#34;&gt;🔍 Least Squares Solution with Offset&lt;/h4&gt;
 &lt;p&gt;To solve for both $\gamma_0$
  and $o$
 , we use ordinary least squares (OLS) for linear regression.&lt;/p&gt;
@@ -187,7 +185,7 @@ $$\hat{u} = \gamma_0 s + o$$
 
 
 &lt;p&gt;OLS gives:&lt;/p&gt;
-&lt;h3 id=&#34;slope-steady-state-ratio&#34;&gt;Slope (Steady-State Ratio)&lt;/h3&gt;
+&lt;h5 id=&#34;slope-steady-state-ratio&#34;&gt;Slope (Steady-State Ratio):&lt;/h5&gt;
 
 $$\gamma_0 = \frac{\text{Cov}(u,s)}{\text{Var}(s)}$$
 
@@ -201,13 +199,13 @@ $$\text{Cov}(u,s) = \frac{1}{n}\sum_{i=1}^n (u_i-\bar{u})(s_i-\bar{s})$$
 $$\text{Var}(s) = \frac{1}{n}\sum_{i=1}^n (s_i-\bar{s})^2$$
 
 
-&lt;h3 id=&#34;-offset&#34;&gt;🧷 Offset&lt;/h3&gt;
+&lt;h5 id=&#34;offset&#34;&gt;Offset:&lt;/h5&gt;
 
 $$o = \bar{u} - \gamma_0\bar{s}$$
 
 
 &lt;p&gt;This centers the regression line at the mean of the data points.&lt;/p&gt;
-&lt;h1 id=&#34;d-derive-least-squares-solution-with-intercept&#34;&gt;D. Derive Least Squares Solution with Intercept&lt;/h1&gt;
+&lt;h3 id=&#34;d-derive-least-squares-solution-with-intercept&#34;&gt;D. Derive Least Squares Solution with Intercept&lt;/h3&gt;
 &lt;p&gt;Let&amp;rsquo;s derive the least squares solution with an intercept (offset) step by step. Our goal is to estimate both:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;$\gamma_0$
@@ -223,7 +221,7 @@ $$u_i = \gamma_0 s_i + o + \varepsilon_i$$
 &lt;p&gt;for each cell $i$
 , where $\varepsilon_i$
  is the residual.&lt;/p&gt;
-&lt;h2 id=&#34;-1-problem-setup&#34;&gt;🧩 1. Problem Setup&lt;/h2&gt;
+&lt;h4 id=&#34;-1-problem-setup&#34;&gt;🧩 1. Problem Setup&lt;/h4&gt;
 &lt;p&gt;Let $u = [u_1, u_2, ..., u_n]^T$
 , and $s = [s_1, s_2, ..., s_n]^T$
 &lt;/p&gt;
@@ -235,7 +233,7 @@ $$\min_{\gamma_0,o} \sum_{i=1}^n (u_i - \gamma_0 s_i - o)^2$$
 
 
 &lt;p&gt;This is a linear least squares regression with intercept.&lt;/p&gt;
-&lt;h2 id=&#34;-2-matrix-form&#34;&gt;🧮 2. Matrix Form&lt;/h2&gt;
+&lt;h4 id=&#34;-2-matrix-form&#34;&gt;🧮 2. Matrix Form&lt;/h4&gt;
 &lt;p&gt;Rewriting the model:&lt;/p&gt;
 
 $$u = \gamma_0 s + o \cdot 1 + \varepsilon$$
@@ -260,18 +258,18 @@ $$\begin{bmatrix} \gamma_0 \\ o \end{bmatrix} = (X^T X)^{-1} X^T u$$
 &lt;p&gt;We can compute this explicitly to get formulas for $\gamma_0$
  and $o$
  as below.&lt;/p&gt;
-&lt;h3 id=&#34;slope&#34;&gt;Slope:&lt;/h3&gt;
+&lt;h5 id=&#34;slope&#34;&gt;Slope:&lt;/h5&gt;
 
 $$\gamma_0 = \frac{\text{Cov}(u,s)}{\text{Var}(s)} = \frac{\sum_{i=1}^n (u_i-\bar{u})(s_i-\bar{s})}{\sum_{i=1}^n (s_i-\bar{s})^2}$$
 
 
-&lt;h3 id=&#34;offset&#34;&gt;Offset:&lt;/h3&gt;
+&lt;h5 id=&#34;offset-1&#34;&gt;Offset:&lt;/h5&gt;
 
 $$o = \bar{u} - \gamma_0\bar{s}$$
 
 
 &lt;p&gt;These are the well-known results from simple linear regression that center the regression line at the mean of the data points.&lt;/p&gt;
-&lt;h2 id=&#34;-3-matrix-derivation-of-the-least-squares-solution&#34;&gt;🎯 3. Matrix Derivation of the Least Squares Solution&lt;/h2&gt;
+&lt;h4 id=&#34;-3-matrix-derivation-of-the-least-squares-solution&#34;&gt;🎯 3. Matrix Derivation of the Least Squares Solution&lt;/h4&gt;
 &lt;p&gt;Let&amp;rsquo;s explicitly derive the solution:&lt;/p&gt;
 
 $$\begin{bmatrix} \gamma_0 \\ o \end{bmatrix} = (X^\top X)^{-1} X^\top u$$
@@ -282,7 +280,7 @@ $$\begin{bmatrix} \gamma_0 \\ o \end{bmatrix} = (X^\top X)^{-1} X^\top u$$
 $$u = \gamma_0 s + o \cdot 1 + \varepsilon$$
 
 
-&lt;h3 id=&#34;31-define-the-design-matrix-and-vectors&#34;&gt;3.1 Define the Design Matrix and Vectors&lt;/h3&gt;
+&lt;h5 id=&#34;31-define-the-design-matrix-and-vectors&#34;&gt;3.1 Define the Design Matrix and Vectors&lt;/h5&gt;
 &lt;p&gt;Let&amp;rsquo;s say we have $n$
  samples (cells), with:&lt;/p&gt;
 &lt;ul&gt;
@@ -309,7 +307,7 @@ $$u = X\theta + \varepsilon, \text{ with } \theta = \begin{bmatrix} \gamma_0 \\ 
 $$\min_\theta \|u - X\theta\|^2$$
 
 
-&lt;h3 id=&#34;32-normal-equations&#34;&gt;3.2 Normal Equations&lt;/h3&gt;
+&lt;h5 id=&#34;32-normal-equations&#34;&gt;3.2 Normal Equations&lt;/h5&gt;
 &lt;p&gt;We derive the optimal $\theta$
  by solving the normal equations:&lt;/p&gt;
 
@@ -322,8 +320,7 @@ $$\theta = (X^\top X)^{-1} X^\top u$$
 
 
 &lt;p&gt;Let&amp;rsquo;s compute each term step by step.&lt;/p&gt;
-&lt;h3 id=&#34;33-compute-hahahugoshortcode24s83hbhb&#34;&gt;3.3 Compute $X^\top X$
-&lt;/h3&gt;
+&lt;h5 id=&#34;33-compute-xtop-x&#34;&gt;3.3 Compute $X^\top X$&lt;/h5&gt;
 
 $$X^\top X = \begin{bmatrix} \sum s_i^2 &amp; \sum s_i \\ \sum s_i &amp; n \end{bmatrix}$$
 
@@ -342,8 +339,7 @@ $$X^\top X = \begin{bmatrix} \sum s_i^2 &amp; \sum s_i \\ \sum s_i &amp; n \end{
 $$X^\top X = \begin{bmatrix} S_2 &amp; S \\ S &amp; n \end{bmatrix}$$
 
 
-&lt;h3 id=&#34;34-compute-hahahugoshortcode24s89hbhb&#34;&gt;3.4 Compute $X^\top u$
-&lt;/h3&gt;
+&lt;h5 id=&#34;34-compute-xtop-u&#34;&gt;3.4 Compute $X^\top u$&lt;/h5&gt;
 
 $$X^\top u = \begin{bmatrix} \sum s_i u_i \\ \sum u_i \end{bmatrix}$$
 
@@ -360,8 +356,7 @@ $$X^\top u = \begin{bmatrix} \sum s_i u_i \\ \sum u_i \end{bmatrix}$$
 $$X^\top u = \begin{bmatrix} SU \\ U \end{bmatrix}$$
 
 
-&lt;h3 id=&#34;35-solve-hahahugoshortcode24s94hbhb&#34;&gt;3.5 Solve $\theta = (X^\top X)^{-1} X^\top u$
-&lt;/h3&gt;
+&lt;h5 id=&#34;35-solve-theta--xtop-x-1-xtop-u&#34;&gt;3.5 Solve $\theta = (X^\top X)^{-1} X^\top u$&lt;/h5&gt;
 &lt;p&gt;The inverse of a $2\times2$
  matrix:&lt;/p&gt;
 
@@ -388,7 +383,7 @@ $$n\cdot SU - S\cdot U$$
 $$-S\cdot SU + S_2\cdot U$$
 
 &lt;/p&gt;
-&lt;h3 id=&#34;36-final-expression&#34;&gt;3.6 Final Expression&lt;/h3&gt;
+&lt;h5 id=&#34;36-final-expression&#34;&gt;3.6 Final Expression&lt;/h5&gt;
 &lt;p&gt;So we get:&lt;/p&gt;
 
 $$\gamma_0 = \frac{n\cdot \sum s_i u_i - \sum s_i \cdot \sum u_i}{n\cdot \sum s_i^2 - (\sum s_i)^2} = \frac{\text{Cov}(u,s)}{\text{Var}(s)}$$
@@ -399,14 +394,14 @@ $$o = \bar{u} - \gamma_0\bar{s}$$
 
 
 &lt;p&gt;This completes the derivation of the least squares solution with intercept, showing how to arrive at the covariance and variance expressions.&lt;/p&gt;
-&lt;h1 id=&#34;why-normal-equations-in-32-in-section-d-give-the-optimal-solution&#34;&gt;Why Normal Equations in 3.2 in Section D give the optimal solution&lt;/h1&gt;
+&lt;h3 id=&#34;why-normal-equations-in-32-in-section-d-give-the-optimal-solution&#34;&gt;Why Normal Equations in 3.2 in Section D give the optimal solution&lt;/h3&gt;
 &lt;p&gt;Let&amp;rsquo;s prove that the normal equations&lt;/p&gt;
 
 $$X^\top X\theta = X^\top u$$
 
 
 &lt;p&gt;give us the optimal solution in least squares regression.&lt;/p&gt;
-&lt;h2 id=&#34;-goal-of-least-squares&#34;&gt;🎯 Goal of Least Squares&lt;/h2&gt;
+&lt;h4 id=&#34;goal-of-least-squares&#34;&gt;Goal of Least Squares&lt;/h4&gt;
 &lt;p&gt;We want to minimize the sum of squared errors (residuals):&lt;/p&gt;
 
 $$L(\theta) = \|u-X\theta\|^2 = (u-X\theta)^\top(u-X\theta)$$
@@ -414,7 +409,7 @@ $$L(\theta) = \|u-X\theta\|^2 = (u-X\theta)^\top(u-X\theta)$$
 
 &lt;p&gt;This is a quadratic loss function. To minimize it, we take its gradient with respect to $\theta$
 , set it to zero, and solve.&lt;/p&gt;
-&lt;h2 id=&#34;-step-by-step-derivation&#34;&gt;🧮 Step-by-step Derivation&lt;/h2&gt;
+&lt;h4 id=&#34;step-by-step-derivation&#34;&gt;Step-by-step Derivation&lt;/h4&gt;
 &lt;p&gt;Start with:&lt;/p&gt;
 
 $$L(\theta) = (u-X\theta)^\top(u-X\theta)$$
@@ -458,19 +453,19 @@ $$\theta = (X^\top X)^{-1}X^\top u$$
  is positive definite&lt;/li&gt;
 &lt;/ol&gt;
 &lt;p&gt;Therefore, this solution gives us the global minimum of the least squares problem.&lt;/p&gt;
-&lt;h2 id=&#34;derive-the-gradient-equation-above-for-the-least-squares-loss-function&#34;&gt;Derive the Gradient Equation above for the Least Squares Loss Function&lt;/h2&gt;
+&lt;h4 id=&#34;derive-the-gradient-equation-above-for-the-least-squares-loss-function&#34;&gt;Derive the Gradient Equation above for the Least Squares Loss Function&lt;/h4&gt;
 &lt;p&gt;Let&amp;rsquo;s walk through how we get:&lt;/p&gt;
 
 $$\nabla_\theta L = -2X^\top u + 2X^\top X\theta$$
 
 
-&lt;h3 id=&#34;-step-1-write-the-loss-function&#34;&gt;🔧 Step 1: Write the Loss Function&lt;/h3&gt;
+&lt;h5 id=&#34;step-1-write-the-loss-function&#34;&gt;Step 1: Write the Loss Function&lt;/h5&gt;
 &lt;p&gt;The least squares loss is:&lt;/p&gt;
 
 $$L(\theta) = \|u-X\theta\|^2 = (u-X\theta)^\top(u-X\theta)$$
 
 
-&lt;h3 id=&#34;-step-2-expand-the-quadratic-form&#34;&gt;🧮 Step 2: Expand the Quadratic Form&lt;/h3&gt;
+&lt;h5 id=&#34;step-2-expand-the-quadratic-form&#34;&gt;Step 2: Expand the Quadratic Form&lt;/h5&gt;
 &lt;p&gt;Let&amp;rsquo;s expand this expression:&lt;/p&gt;
 
 $$L(\theta) = u^\top u - 2\theta^\top X^\top u + \theta^\top X^\top X\theta$$
@@ -488,8 +483,7 @@ $$(u-X\theta)^\top(u-X\theta) = u^\top u - 2\theta^\top X^\top u + \theta^\top X
 &lt;li&gt;$u^\top X\theta = \theta^\top X^\top u$
  (scalar equality)&lt;/li&gt;
 &lt;/ol&gt;
-&lt;h3 id=&#34;-step-3-take-the-gradient-with-respect-to-hahahugoshortcode24s124hbhb&#34;&gt;🧮 Step 3: Take the Gradient with Respect to $\theta$
-&lt;/h3&gt;
+&lt;h5 id=&#34;step-3-take-the-gradient-with-respect-to-theta&#34;&gt;Step 3: Take the Gradient with Respect to $\theta$&lt;/h5&gt;
 &lt;p&gt;We differentiate term by term:&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;
@@ -526,7 +520,7 @@ $$\nabla_\theta L = -2X^\top u + 2X^\top X\theta$$
 
 &lt;p&gt;This gradient expression gives us the direction of steepest ascent of the loss function at any point $\theta$
 . Setting it to zero leads to the normal equations, which give us the optimal solution.&lt;/p&gt;
-&lt;h3 id=&#34;note-vector-dot-product-commutativity&#34;&gt;Note: Vector Dot Product Commutativity&lt;/h3&gt;
+&lt;h5 id=&#34;note-vector-dot-product-commutativity&#34;&gt;Note: Vector Dot Product Commutativity&lt;/h5&gt;
 &lt;p&gt;Please note the identity&lt;/p&gt;
 
 $$a^\top b = b^\top a$$
@@ -554,7 +548,7 @@ $$b^\top a = \sum_{i=1}^n b_i a_i$$
 $$a^\top b = b^\top a$$
 
 
-&lt;h4 id=&#34;note-on-shapes-and-intuition&#34;&gt;Note on shapes and intuition:&lt;/h4&gt;
+&lt;h5 id=&#34;note-on-shapes-and-intuition&#34;&gt;Note on shapes and intuition:&lt;/h5&gt;
 &lt;ul&gt;
 &lt;li&gt;$a^\top b$
  is a $1\times1$
@@ -566,7 +560,7 @@ $$a^\top b = b^\top a$$
 .&lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;Since they&amp;rsquo;re both just numbers, and equal by commutativity, the identity holds.&lt;/p&gt;
-&lt;h3 id=&#34;derive-quadratic-form-gradient-in-equation-quadratic-grad-above&#34;&gt;Derive Quadratic Form Gradient in Equation (quadratic grad.) above&lt;/h3&gt;
+&lt;h3 id=&#34;derive-quadratic-form-gradient-in-equation-quadratic-grad&#34;&gt;Derive Quadratic Form Gradient in Equation (quadratic grad.)&lt;/h3&gt;
 &lt;p&gt;Let&amp;rsquo;s prove the key gradient identity with Matrix Calculus:&lt;/p&gt;
 
 $$\nabla_\theta(\theta^\top A\theta) = (A + A^\top)\theta$$
@@ -578,7 +572,7 @@ $$\nabla_\theta(\theta^\top A\theta) = (A + A^\top)\theta$$
 $$\nabla_\theta(\theta^\top A\theta) = 2A\theta$$
 
 
-&lt;h4 id=&#34;-setup&#34;&gt;📝 Setup&lt;/h4&gt;
+&lt;h4 id=&#34;setup&#34;&gt;Setup&lt;/h4&gt;
 &lt;p&gt;Given:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;$\theta \in \mathbb{R}^p$
@@ -643,7 +637,7 @@ $$\nabla_\theta(\theta^\top A\theta) = 2A\theta$$
 $$\frac{\partial}{\partial \theta_k} \left(\sum_{i=1}^p \sum_{j=1}^p \theta_i A_{ij} \theta_j\right) = \sum_{j=1}^p A_{kj}\theta_j + \sum_{i=1}^p \theta_i A_{ik}$$
 
 
-&lt;h5 id=&#34;step-by-step-derivation&#34;&gt;&lt;strong&gt;Step-by-step Derivation&lt;/strong&gt;&lt;/h5&gt;
+&lt;h5 id=&#34;step-by-step-derivation-1&#34;&gt;&lt;strong&gt;Step-by-step Derivation&lt;/strong&gt;&lt;/h5&gt;
 &lt;p&gt;Start with the function:&lt;/p&gt;
 
 $$f(\theta) = \sum_{i=1}^p \sum_{j=1}^p \theta_i A_{ij} \theta_j$$
@@ -751,7 +745,7 @@ $$(A^\top\theta)_k = \sum_i A_{ik}\theta_i$$
 $$\nabla_\theta(\theta^\top A\theta) = A\theta + A^\top\theta = (A + A^\top)\theta$$
 
 
-&lt;h1 id=&#34;from-normal-equations-to-standard-regression-form-36-in-section-d&#34;&gt;From Normal Equations to Standard Regression Form (3.6 in Section D)&lt;/h1&gt;
+&lt;h3 id=&#34;from-normal-equations-to-standard-regression-form-36-in-section-d&#34;&gt;From Normal Equations to Standard Regression Form (3.6 in Section D)&lt;/h3&gt;
 &lt;p&gt;Let&amp;rsquo;s derive how the normal equations solution:&lt;/p&gt;
 
 $$\theta = \frac{1}{nS_2-S_1^2}\begin{bmatrix} n &amp; -S_1 \\ -S_1 &amp; S_2 \end{bmatrix}\begin{bmatrix} SU \\ U \end{bmatrix}$$
@@ -767,7 +761,7 @@ $$\gamma_0 = \frac{\text{Cov}(u,s)}{\text{Var}(s)} = \frac{n\sum s_i u_i - \sum 
 $$o = \bar{u} - \gamma_0\bar{s}$$
 
 
-&lt;h2 id=&#34;-given-matrices-and-vectors&#34;&gt;🧮 Given Matrices and Vectors&lt;/h2&gt;
+&lt;h4 id=&#34;given-matrices-and-vectors&#34;&gt;Given Matrices and Vectors&lt;/h4&gt;
 &lt;p&gt;Let $s=[s_1,\ldots,s_n]^T$
 , $u=[u_1,\ldots,u_n]^T$
 &lt;/p&gt;
@@ -776,7 +770,7 @@ $$o = \bar{u} - \gamma_0\bar{s}$$
 $$u_i = \gamma_0 s_i + o + \varepsilon_i \text{ or } u = \gamma_0 s + o\cdot 1 + \varepsilon$$
 
 &lt;/p&gt;
-&lt;h2 id=&#34;-matrix-form&#34;&gt;🔧 Matrix Form&lt;/h2&gt;
+&lt;h4 id=&#34;matrix-form&#34;&gt;Matrix Form&lt;/h4&gt;
 &lt;p&gt;Design matrix:
 
 $$X = [s \quad 1] \in \mathbb{R}^{n\times 2}$$
@@ -787,7 +781,7 @@ $$X = [s \quad 1] \in \mathbb{R}^{n\times 2}$$
 $$\theta = \begin{bmatrix} \gamma_0 \\ o \end{bmatrix}$$
 
 &lt;/p&gt;
-&lt;h2 id=&#34;-computing-products&#34;&gt;📊 Computing Products&lt;/h2&gt;
+&lt;h4 id=&#34;computing-products&#34;&gt;Computing Products&lt;/h4&gt;
 
 $$X^T X = \begin{bmatrix} \sum s_i^2 &amp; \sum s_i \\ \sum s_i &amp; n \end{bmatrix} = \begin{bmatrix} S_2 &amp; S_1 \\ S_1 &amp; n \end{bmatrix}$$
 
@@ -796,7 +790,7 @@ $$X^T X = \begin{bmatrix} \sum s_i^2 &amp; \sum s_i \\ \sum s_i &amp; n \end{bma
 $$X^T u = \begin{bmatrix} \sum s_i u_i \\ \sum u_i \end{bmatrix} = \begin{bmatrix} SU \\ U \end{bmatrix}$$
 
 
-&lt;h2 id=&#34;-solution-components&#34;&gt;🎯 Solution Components&lt;/h2&gt;
+&lt;h4 id=&#34;solution-components&#34;&gt;Solution Components&lt;/h4&gt;
 &lt;p&gt;First row (slope):
 
 $$\gamma_0 = \frac{1}{nS_2-S_1^2}(n\cdot SU - S_1\cdot U)$$
@@ -807,7 +801,7 @@ $$\gamma_0 = \frac{1}{nS_2-S_1^2}(n\cdot SU - S_1\cdot U)$$
 $$o = \frac{1}{nS_2-S_1^2}(-S_1\cdot SU + S_2\cdot U)$$
 
 &lt;/p&gt;
-&lt;h2 id=&#34;-statistical-interpretation&#34;&gt;🔄 Statistical Interpretation&lt;/h2&gt;
+&lt;h4 id=&#34;statistical-interpretation&#34;&gt;Statistical Interpretation&lt;/h4&gt;
 &lt;p&gt;Define:
 
 $$\bar{s} = \frac{1}{n}\sum s_i \quad \bar{u} = \frac{1}{n}\sum u_i$$
@@ -821,7 +815,7 @@ $$\text{Var}(s) = \frac{1}{n}\sum(s_i-\bar{s})^2 = \frac{1}{n}S_2 - \bar{s}^2$$
 $$\text{Cov}(u,s) = \frac{1}{n}\sum(u_i-\bar{u})(s_i-\bar{s}) = \frac{1}{n}SU - \bar{u}\bar{s}$$
 
 
-&lt;h2 id=&#34;-final-result&#34;&gt;✅ Final Result&lt;/h2&gt;
+&lt;h4 id=&#34;final-result-1&#34;&gt;Final Result&lt;/h4&gt;
 &lt;p&gt;This gives us:
 
 $$\gamma_0 = \frac{\text{Cov}(u,s)}{\text{Var}(s)} \text{ and } o = \bar{u} - \gamma_0\bar{s}$$

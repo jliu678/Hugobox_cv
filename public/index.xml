@@ -3923,7 +3923,7 @@ $$
 
 
 
-&lt;div id=&#34;chart-319764528&#34; class=&#34;chart&#34;&gt;&lt;/div&gt;
+&lt;div id=&#34;chart-347629851&#34; class=&#34;chart&#34;&gt;&lt;/div&gt;
 &lt;script&gt;
   async function fetchChartJSON() {
     console.debug(&#39;Hugo Blox fetching chart JSON...&#39;)
@@ -3941,7 +3941,7 @@ $$
 
       fetchChartJSON().then(chart =&gt; {
         console.debug(&#39;Plotting chart...&#39;)
-        window.Plotly.newPlot(&#39;chart-319764528&#39;, chart.data, chart.layout, {responsive: true});
+        window.Plotly.newPlot(&#39;chart-347629851&#39;, chart.data, chart.layout, {responsive: true});
       });
     }, 500 );
   })();
@@ -5214,17 +5214,17 @@ $$ = \frac{\beta(\alpha_1 - \alpha_0)(\gamma - \beta)}{(\beta - \lambda_\alpha)}
 
 &lt;p&gt;This is the third term of the ELBO for a single cell n (in your example, n=1), as seen in Equation (26) of the VeloVI model description.&lt;/p&gt;
 &lt;p&gt;Let&amp;rsquo;s dissect each part:&lt;/p&gt;
-&lt;h3 id=&#34;hahahugoshortcode16s1hbhb&#34;&gt; $z_1$ 
+&lt;h3 id=&#34;hahahugoshortcode19s1hbhb&#34;&gt; $z_1$ 
 &lt;/h3&gt;
 &lt;p&gt;This represents the low-dimensional latent variable for Cell 1. It&amp;rsquo;s a vector that summarizes the latent state of Cell 1 (e.g., its overall position in the developmental trajectory or cell cycle).&lt;/p&gt;
-&lt;h3 id=&#34;hahahugoshortcode16s2hbhb&#34;&gt; $u_1, s_1$ 
+&lt;h3 id=&#34;hahahugoshortcode19s2hbhb&#34;&gt; $u_1, s_1$ 
 &lt;/h3&gt;
 &lt;p&gt;These are the observed unspliced and spliced transcript abundances for Cell 1, across all genes. So,  $u_1$ 
  is a vector  $(u_{1A}, u_{1B}, u_{1C})$ 
  and  $s_1$ 
  is  $(s_{1A}, s_{1B}, s_{1C})$ 
  in your three-gene example.&lt;/p&gt;
-&lt;h3 id=&#34;hahahugoshortcode16s7hbhb&#34;&gt; $q_\phi(z_1|u_1,s_1)$ 
+&lt;h3 id=&#34;hahahugoshortcode19s7hbhb&#34;&gt; $q_\phi(z_1|u_1,s_1)$ 
 &lt;/h3&gt;
 &lt;p&gt;This is the approximate posterior distribution over the latent variable  $z_1$ 
 , conditioned on the observed data  $(u_1,s_1)$ 
@@ -5237,7 +5237,7 @@ $$ = \frac{\beta(\alpha_1 - \alpha_0)(\gamma - \beta)}{(\beta - \lambda_\alpha)}
 . Specifically, an &amp;ldquo;encoder&amp;rdquo; neural network takes  $(u_1,s_1)$ 
  as input and outputs the parameters (e.g., mean and variance if it&amp;rsquo;s a Gaussian) for this distribution.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3 id=&#34;hahahugoshortcode16s14hbhb&#34;&gt; $E_{q_\phi(z_1|u_1,s_1)}[\ldots]$ 
+&lt;h3 id=&#34;hahahugoshortcode19s14hbhb&#34;&gt; $E_{q_\phi(z_1|u_1,s_1)}[\ldots]$ 
 &lt;/h3&gt;
 &lt;p&gt;This denotes an expectation with respect to the distribution  $q_\phi(z_1|u_1,s_1)$ 
 .&lt;/p&gt;
@@ -5249,14 +5249,14 @@ $$ = \frac{\beta(\alpha_1 - \alpha_0)(\gamma - \beta)}{(\beta - \lambda_\alpha)}
 &lt;li&gt;The &amp;ldquo;reparameterization trick&amp;rdquo; is often used to make this sampling process differentiable, allowing gradients to flow back through the sampling process to update  $\phi$ 
 .&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3 id=&#34;hahahugoshortcode16s19hbhb&#34;&gt; $\sum_g$ 
+&lt;h3 id=&#34;hahahugoshortcode19s19hbhb&#34;&gt; $\sum_g$ 
 &lt;/h3&gt;
 &lt;p&gt;This simply means a summation over all genes g (Gene A, Gene B, Gene C in your example).&lt;/p&gt;
-&lt;h3 id=&#34;hahahugoshortcode16s20hbhb&#34;&gt; $\pi_{1g}$ 
+&lt;h3 id=&#34;hahahugoshortcode19s20hbhb&#34;&gt; $\pi_{1g}$ 
 &lt;/h3&gt;
 &lt;p&gt;This is the probability distribution over the four transcriptional states for gene g in cell 1 (i.e.,  $[\pi_{1g,k=1}, \pi_{1g,k=2}, \pi_{1g,k=3}, \pi_{1g,k=4}]$ 
 ).&lt;/p&gt;
-&lt;h3 id=&#34;hahahugoshortcode16s22hbhb&#34;&gt; $q_\phi(\pi_{1g}|z_1)$ 
+&lt;h3 id=&#34;hahahugoshortcode19s22hbhb&#34;&gt; $q_\phi(\pi_{1g}|z_1)$ 
 &lt;/h3&gt;
 &lt;p&gt;This is the approximate posterior distribution over the state assignment probabilities  $\pi_{1g}$ 
 , conditioned on the latent variable  $z_1$ 
@@ -5267,13 +5267,13 @@ $$ = \frac{\beta(\alpha_1 - \alpha_0)(\gamma - \beta)}{(\beta - \lambda_\alpha)}
 ) takes  $z_1$ 
  as input and outputs the parameters (e.g., concentration parameters for a Dirichlet distribution) for this distribution.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3 id=&#34;hahahugoshortcode16s27hbhb&#34;&gt; $p(\pi_{1g})$ 
+&lt;h3 id=&#34;hahahugoshortcode19s27hbhb&#34;&gt; $p(\pi_{1g})$ 
 &lt;/h3&gt;
 &lt;p&gt;This is the prior distribution over the state assignment probabilities  $\pi_{1g}$ 
 .&lt;/p&gt;
 &lt;p&gt;As specified in Eq. 14, it&amp;rsquo;s a uniform Dirichlet distribution:  $p(\pi_{1g}) = \text{Dirichlet}(0.25, 0.25, 0.25, 0.25)$ 
 . This means, a priori, all four states are considered equally likely for any gene in any cell.&lt;/p&gt;
-&lt;h3 id=&#34;hahahugoshortcode16s30hbhb&#34;&gt; $\text{KL}(Q \| P)$ 
+&lt;h3 id=&#34;hahahugoshortcode19s30hbhb&#34;&gt; $\text{KL}(Q \| P)$ 
 &lt;/h3&gt;
 &lt;p&gt;This is the Kullback-Leibler (KL) divergence between two probability distributions Q and P. It&amp;rsquo;s a measure of how one probability distribution Q diverges from a second, expected probability distribution P.&lt;/p&gt;
 &lt;ul&gt;
@@ -5295,7 +5295,7 @@ $$ = \frac{\beta(\alpha_1 - \alpha_0)(\gamma - \beta)}{(\beta - \lambda_\alpha)}
 &amp;rdquo; refers to the average value of a function or random variable, where the averaging is performed according to the probabilities defined by the distribution  $q_\phi(z_1|u_1,s_1)$ 
 .&lt;/p&gt;
 &lt;p&gt;Let&amp;rsquo;s break it down in the context of VeloVI:&lt;/p&gt;
-&lt;h2 id=&#34;hahahugoshortcode16s40hbhb&#34;&gt; $q_\phi(z_1|u_1,s_1)$ 
+&lt;h2 id=&#34;hahahugoshortcode19s40hbhb&#34;&gt; $q_\phi(z_1|u_1,s_1)$ 
 &lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;This is the approximate posterior distribution of the latent variable  $z_1$ 
@@ -5352,7 +5352,7 @@ $$ = \frac{\beta(\alpha_1 - \alpha_0)(\gamma - \beta)}{(\beta - \lambda_\alpha)}
 &lt;h2 id=&#34;how-is-it-calculated-in-practice-monte-carlo-approximation&#34;&gt;How is it calculated in practice (Monte Carlo Approximation)&lt;/h2&gt;
 &lt;p&gt;Since the integral (for continuous  $z_1$ 
 ) is usually intractable, this expectation is approximated using Monte Carlo sampling. The process is as follows:&lt;/p&gt;
-&lt;h3 id=&#34;1-sample-from-hahahugoshortcode16s71hbhb&#34;&gt;1. Sample from  $q_\phi(z_1|u_1,s_1)$ 
+&lt;h3 id=&#34;1-sample-from-hahahugoshortcode19s71hbhb&#34;&gt;1. Sample from  $q_\phi(z_1|u_1,s_1)$ 
 &lt;/h3&gt;
 &lt;p&gt;Draw one or more samples, say  $z_1^{(m)}$ 
  for  $m=1,\ldots,M$ 
@@ -6643,7 +6643,7 @@ $$z = \begin{bmatrix} 0.15 \\ -1.23 \\ 0.84 \end{bmatrix} \tag{13.3}$$
   &lt;/tbody&gt;
 &lt;/table&gt;
 &lt;h2 id=&#34;2-initialization-of-all-parameters&#34;&gt;2. Initialization of All Parameters&lt;/h2&gt;
-&lt;h3 id=&#34;a-biophysical-parameters-hahahugoshortcode17s5hbhb&#34;&gt;a. Biophysical Parameters ( $\theta$ 
+&lt;h3 id=&#34;a-biophysical-parameters-hahahugoshortcode14s5hbhb&#34;&gt;a. Biophysical Parameters ( $\theta$ 
 )&lt;/h3&gt;
 &lt;p&gt;&lt;strong&gt; $\alpha_{g1}$ 
  (Transcription Rate for Induction):&lt;/strong&gt;&lt;/p&gt;
@@ -6675,7 +6675,7 @@ $$z = \begin{bmatrix} 0.15 \\ -1.23 \\ 0.84 \end{bmatrix} \tag{13.3}$$
  (assuming  $t_{\max} = 20$ 
 )&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3 id=&#34;b-variance-parameters-hahahugoshortcode17s18hbhb&#34;&gt;b. Variance Parameters ( $\theta$ 
+&lt;h3 id=&#34;b-variance-parameters-hahahugoshortcode14s18hbhb&#34;&gt;b. Variance Parameters ( $\theta$ 
 )&lt;/h3&gt;
 &lt;p&gt;These are also part of the  $\theta$ 
  parameters learned by the model. They are gene-specific.&lt;/p&gt;
@@ -6691,7 +6691,7 @@ $$z = \begin{bmatrix} 0.15 \\ -1.23 \\ 0.84 \end{bmatrix} \tag{13.3}$$
  is a fixed scalar, not a learnable parameter, e.g.,  $c_4 = 0.1$ 
 , others  $c_k = 1.0$ 
 )&lt;/p&gt;
-&lt;h3 id=&#34;c-neural-network-parameters-hahahugoshortcode17s26hbhb&#34;&gt;c. Neural Network Parameters ( $\phi$ 
+&lt;h3 id=&#34;c-neural-network-parameters-hahahugoshortcode14s26hbhb&#34;&gt;c. Neural Network Parameters ( $\phi$ 
 )&lt;/h3&gt;
 &lt;p&gt;These are the weights and biases of all neural networks in the model.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Encoder Network Weights/Biases:&lt;/strong&gt; This network takes  $(u_n, s_n)$ 
@@ -6712,7 +6712,7 @@ $$z = \begin{bmatrix} 0.15 \\ -1.23 \\ 0.84 \end{bmatrix} \tag{13.3}$$
 &lt;p&gt;&lt;em&gt;Initialization:&lt;/em&gt; Also randomly initialized, similar to the encoder.&lt;/p&gt;
 &lt;h2 id=&#34;3-learning-process-one-iteration-of-optimization&#34;&gt;3. Learning Process (One Iteration of Optimization)&lt;/h2&gt;
 &lt;p&gt;Let&amp;rsquo;s trace one optimization step focusing on a mini-batch of Cell 1 and Cell 3.&lt;/p&gt;
-&lt;h3 id=&#34;a-forward-pass-calculate-loss-hahahugoshortcode17s35hbhb&#34;&gt;a. Forward Pass (Calculate Loss  $L_{\text{velo}}$ 
+&lt;h3 id=&#34;a-forward-pass-calculate-loss-hahahugoshortcode14s35hbhb&#34;&gt;a. Forward Pass (Calculate Loss  $L_{\text{velo}}$ 
 )&lt;/h3&gt;
 &lt;p&gt;&lt;strong&gt;For Cell 1&lt;/strong&gt; ( $u_1, s_1$ 
 ):&lt;/p&gt;
@@ -6936,7 +6936,7 @@ The optimizer (Adam) updates all parameters using the learning rate:  $\text{Par
 &lt;/ul&gt;
 &lt;h2 id=&#34;5-calculate-kl-divergence-terms-during-learning&#34;&gt;5. Calculate KL Divergence Terms During Learning&lt;/h2&gt;
 &lt;p&gt;KL divergence is a measure of how one probability distribution diverges from a second, expected probability distribution. In VAEs, it&amp;rsquo;s used as a regularization term to keep the learned approximate posterior distributions close to simple, predefined prior distributions.&lt;/p&gt;
-&lt;h3 id=&#34;1-kl-for-hahahugoshortcode17s171hbhb-hahahugoshortcode17s172hbhb&#34;&gt;1. KL for $z_n$
+&lt;h3 id=&#34;1-kl-for-hahahugoshortcode14s171hbhb-hahahugoshortcode14s172hbhb&#34;&gt;1. KL for $z_n$
 : $\text{KL}(q_\phi(z_1 \mid u_1, s_1) \| p(z))$
 &lt;/h3&gt;
 &lt;p&gt;&lt;strong&gt;What it represents:&lt;/strong&gt; This term measures the divergence between the approximate posterior distribution for the latent variable $z_n$
@@ -6977,7 +6977,7 @@ $$
 &lt;li&gt;By forcing $q_\phi(z_n \mid u_n, s_n)$
  to be similar to a standard normal distribution, the model encourages the latent representations of different cells to be compactly distributed around the origin. This helps with generalization and ensures that the latent space is &amp;ldquo;interpretable&amp;rdquo; or at least traversable for generating new samples.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3 id=&#34;2-hahahugoshortcode17s194hbhb-hahahugoshortcode17s195hbhb&#34;&gt;2. $\pi_{ng}$
+&lt;h3 id=&#34;2-hahahugoshortcode14s194hbhb-hahahugoshortcode14s195hbhb&#34;&gt;2. $\pi_{ng}$
 : $E_{q_\phi(z_1 \mid u_1, s_1)}[\sum_g \text{KL}(q_\phi(\pi_{1g} \mid z_1) \| p(\pi_{1g}))]$
 &lt;/h3&gt;
 &lt;p&gt;&lt;strong&gt;What it represents:&lt;/strong&gt; This term measures the divergence between the approximate posterior distribution for the gene kinetic state probabilities $\pi_{ng}$
@@ -7241,7 +7241,7 @@ $$
 &lt;li&gt;$s_{1A} = 0.2$
  (These are the inputs to our encoder)&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h4 id=&#34;learned-biophysical-parameters-hahahugoshortcode20s67hbhb-for-gene-a&#34;&gt;Learned Biophysical Parameters ($\theta$
+&lt;h4 id=&#34;learned-biophysical-parameters-hahahugoshortcode15s67hbhb-for-gene-a&#34;&gt;Learned Biophysical Parameters ($\theta$
 ) for Gene A:&lt;/h4&gt;
 &lt;p&gt;(These are fixed values after training)&lt;/p&gt;
 &lt;ul&gt;
@@ -7261,7 +7261,7 @@ $$
 &lt;p&gt;(For simplicity, let&amp;rsquo;s assume all state scaling factors $c_k = 1$
  for this example, though VeloVI uses a specific $c_4 = 0.1$
 )&lt;/p&gt;
-&lt;h4 id=&#34;learned-neural-network-parameters-hahahugoshortcode20s76hbhb-for-the-encoder-and-decoder&#34;&gt;Learned Neural Network Parameters ($\phi$
+&lt;h4 id=&#34;learned-neural-network-parameters-hahahugoshortcode15s76hbhb-for-the-encoder-and-decoder&#34;&gt;Learned Neural Network Parameters ($\phi$
 ) for the Encoder and Decoder:&lt;/h4&gt;
 &lt;p&gt;(These are the weights and biases of the networks. We don&amp;rsquo;t see the numbers directly, but we know their effect on the outputs.)&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Encoder&amp;rsquo;s Output for $z_1$
@@ -7563,7 +7563,7 @@ $$
 &lt;/ul&gt;
 &lt;p&gt;We sample a noise value from a standard normal distribution:  $\epsilon_{1,\text{dim1}} = 0.8$ 
  (a single random draw).&lt;/p&gt;
-&lt;h3 id=&#34;forward-pass-calculating-hahahugoshortcode22s58hbhb-and-its-contribution-to-loss&#34;&gt;Forward Pass (Calculating  $z_1^*$ 
+&lt;h3 id=&#34;forward-pass-calculating-hahahugoshortcode21s58hbhb-and-its-contribution-to-loss&#34;&gt;Forward Pass (Calculating  $z_1^*$ 
  and its contribution to Loss)&lt;/h3&gt;
 &lt;p&gt;&lt;strong&gt;Calculate  $z_1^*$ 
  using reparameterization&lt;/strong&gt;:
@@ -7586,13 +7586,13 @@ $$
 &lt;p&gt;(This means if  $z_{1,\text{dim1}}^*$ 
  were to increase by 1 unit, the loss would increase by 2.0 units, implying we want to decrease  $z_{1,\text{dim1}}^*$ 
  to reduce loss).&lt;/p&gt;
-&lt;h3 id=&#34;backward-pass-gradient-flow-to-hahahugoshortcode22s71hbhb-and-hahahugoshortcode22s72hbhb-parameters&#34;&gt;Backward Pass (Gradient Flow to  $\mu_{z_1}$ 
+&lt;h3 id=&#34;backward-pass-gradient-flow-to-hahahugoshortcode21s71hbhb-and-hahahugoshortcode21s72hbhb-parameters&#34;&gt;Backward Pass (Gradient Flow to  $\mu_{z_1}$ 
  and  $\Sigma_{z_1}$ 
  parameters)&lt;/h3&gt;
 &lt;p&gt;Now, we use the chain rule to propagate this gradient back to  $\mu_{z_{1,\text{dim1}}}$ 
  and  $\log \Sigma_{z_{1,\text{dim1}}}$ 
 .&lt;/p&gt;
-&lt;h4 id=&#34;1-gradient-for-hahahugoshortcode22s75hbhb&#34;&gt;1. Gradient for  $\mu_{z_{1,\text{dim1}}}$ 
+&lt;h4 id=&#34;1-gradient-for-hahahugoshortcode21s75hbhb&#34;&gt;1. Gradient for  $\mu_{z_{1,\text{dim1}}}$ 
 &lt;/h4&gt;
 &lt;p&gt;We know  $z_{1,\text{dim1}}^* = \mu_{z_{1,\text{dim1}}} + \sigma_{z_{1,\text{dim1}}} \times \epsilon_{1,\text{dim1}}$ 
 .&lt;/p&gt;
@@ -7610,7 +7610,7 @@ $$
  means that increasing  $\mu_{z_{1,\text{dim1}}}$ 
  would increase the loss. Therefore, the optimizer will decrease  $\mu_{z_{1,\text{dim1}}}$ 
  in the update step.&lt;/p&gt;
-&lt;h4 id=&#34;2-gradient-for-hahahugoshortcode22s85hbhb&#34;&gt;2. Gradient for  $\sigma_{z_{1,\text{dim1}}}$ 
+&lt;h4 id=&#34;2-gradient-for-hahahugoshortcode21s85hbhb&#34;&gt;2. Gradient for  $\sigma_{z_{1,\text{dim1}}}$ 
 &lt;/h4&gt;
 &lt;p&gt;The partial derivative of  $z_{1,\text{dim1}}^*$ 
  with respect to  $\sigma_{z_{1,\text{dim1}}}$ 
@@ -7628,7 +7628,7 @@ $$
  means increasing  $\sigma_{z_{1,\text{dim1}}}$ 
  would increase the loss. So, the optimizer will decrease  $\sigma_{z_{1,\text{dim1}}}$ 
 .&lt;/p&gt;
-&lt;h4 id=&#34;3-gradient-for-hahahugoshortcode22s95hbhb-if-encoder-outputs-log-variance&#34;&gt;3. Gradient for  $\log \Sigma_{z_{1,\text{dim1}}}$ 
+&lt;h4 id=&#34;3-gradient-for-hahahugoshortcode21s95hbhb-if-encoder-outputs-log-variance&#34;&gt;3. Gradient for  $\log \Sigma_{z_{1,\text{dim1}}}$ 
  (if encoder outputs log-variance)&lt;/h4&gt;
 &lt;p&gt;Often, neural networks output  $\log \Sigma$ 
  for numerical stability and to ensure the variance is positive. We need one more chain rule step:&lt;/p&gt;
@@ -7674,7 +7674,7 @@ $$
       <description>&lt;h1 id=&#34;velovi-intrinsic-uncertainty-quantification&#34;&gt;VeloVI Intrinsic Uncertainty Quantification&lt;/h1&gt;
 &lt;p&gt;This document explains how VeloVI quantifies the intrinsic uncertainty in the predicted velocity for a given cell. This uncertainty reflects how consistent the model&amp;rsquo;s velocity predictions are for a cell, given the inherent variability captured by the variational posterior.&lt;/p&gt;
 &lt;p&gt;Let&amp;rsquo;s break down the concepts and the formula step-by-step:&lt;/p&gt;
-&lt;h2 id=&#34;1-posterior-predictive-velocity-mean-hahahugoshortcode19s0hbhb&#34;&gt;1. Posterior Predictive Velocity Mean ($\bar{v}_n$
+&lt;h2 id=&#34;1-posterior-predictive-velocity-mean-hahahugoshortcode18s0hbhb&#34;&gt;1. Posterior Predictive Velocity Mean ($\bar{v}_n$
 )&lt;/h2&gt;
 &lt;p&gt;&lt;strong&gt;What it is:&lt;/strong&gt; $\bar{v}_n$
  is the average or mean velocity vector for cell n, taking into account the model&amp;rsquo;s uncertainty in the underlying latent variables ($z_n$
@@ -7734,7 +7734,7 @@ $$\text{Intrinsic Uncertainty} = \text{Var}_{q_\phi(v_n | u_n, s_n)}[c(v_n, \bar
 &lt;p&gt;This means we&amp;rsquo;re looking at how spread out the cosine similarity values are. If all $v_n^{(l)}$
  point in roughly the same direction as $\bar{v}_n$
 , the cosine similarities will be close to 1, and their variance will be low. If they point in wildly different directions, the cosine similarities will vary a lot, leading to high variance.&lt;/p&gt;
-&lt;h2 id=&#34;3-the-formula-for-hahahugoshortcode19s25hbhb-sample-variance&#34;&gt;3. The Formula for $\hat{\sigma}_n^2$
+&lt;h2 id=&#34;3-the-formula-for-hahahugoshortcode18s25hbhb-sample-variance&#34;&gt;3. The Formula for $\hat{\sigma}_n^2$
  (Sample Variance)&lt;/h2&gt;
 &lt;p&gt;The provided formula $\hat{\sigma}_n^2$
  is the standard sample variance applied to the set of scalar cosine similarity values.&lt;/p&gt;
@@ -7774,7 +7774,7 @@ $$\hat{\sigma}_n^2 = \frac{1}{L-1} \sum_{l=1}^{L} \left(C_l - \left(\frac{1}{L} 
 : This is the scaling factor for sample variance (using L-1 instead of L to provide an unbiased estimate of the population variance).&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&#34;interpretation-of-hahahugoshortcode19s40hbhb&#34;&gt;Interpretation of $\hat{\sigma}_n^2$
+&lt;h2 id=&#34;interpretation-of-hahahugoshortcode18s40hbhb&#34;&gt;Interpretation of $\hat{\sigma}_n^2$
 :&lt;/h2&gt;
 &lt;p&gt;&lt;strong&gt;High $\hat{\sigma}_n^2$
 :&lt;/strong&gt; Indicates high intrinsic uncertainty. The individual velocity samples $v_n^{(l)}$
@@ -7787,7 +7787,7 @@ $$\hat{\sigma}_n^2 = \frac{1}{L-1} \sum_{l=1}^{L} \left(C_l - \left(\frac{1}{L} 
 &lt;h1 id=&#34;velovi-future-cell-state-prediction-and-uncertainty-quantification&#34;&gt;VeloVI Future Cell State Prediction and Uncertainty Quantification&lt;/h1&gt;
 &lt;p&gt;This document explains how VeloVI uses the predicted velocities to predict future cell states and, crucially, how it quantifies the uncertainty in these future state predictions. This moves beyond just the uncertainty of a single cell&amp;rsquo;s velocity to the uncertainty of where a cell might move to in the future.&lt;/p&gt;
 &lt;p&gt;Let&amp;rsquo;s break down the explanation:&lt;/p&gt;
-&lt;h2 id=&#34;1-the-cell-cell-transition-matrix-hahahugoshortcode19s47hbhb&#34;&gt;1. The Cell-Cell Transition Matrix $T(v_{1:N}, s_{1:N})$
+&lt;h2 id=&#34;1-the-cell-cell-transition-matrix-hahahugoshortcode18s47hbhb&#34;&gt;1. The Cell-Cell Transition Matrix $T(v_{1:N}, s_{1:N})$
 &lt;/h2&gt;
 &lt;p&gt;&lt;strong&gt;Purpose:&lt;/strong&gt; This matrix describes the likelihood of a cell transitioning from one state to another (or from cell i to cell j). It&amp;rsquo;s a core component of RNA velocity analysis.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Inputs:&lt;/strong&gt;&lt;/p&gt;
@@ -7826,7 +7826,7 @@ $$\cos(\delta_{ij}, v_i) = \frac{\delta_{ij}^T v_i}{\|\delta_{ij}\| \|v_i\|} \qu
 &lt;p&gt;The matrix T will have dimensions N×N, where $T_{ij}$
  represents the probability of transitioning from cell i to cell j. (Or sometimes $T_{ji}$
  depending on convention).&lt;/p&gt;
-&lt;h2 id=&#34;2-predicted-future-cell-state-hahahugoshortcode19s62hbhb&#34;&gt;2. Predicted Future Cell State: $T(v_{1:N}, s_{1:N})S$
+&lt;h2 id=&#34;2-predicted-future-cell-state-hahahugoshortcode18s62hbhb&#34;&gt;2. Predicted Future Cell State: $T(v_{1:N}, s_{1:N})S$
 &lt;/h2&gt;
 &lt;p&gt;&lt;strong&gt;Concept:&lt;/strong&gt; Once we have the transition matrix T, we can use it to predict the future state of the entire cellular population.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Operation:&lt;/strong&gt; The matrix multiplication $T(v_{1:N}, s_{1:N})S$
