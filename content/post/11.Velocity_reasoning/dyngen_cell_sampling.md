@@ -3,7 +3,7 @@
 ## Backbone-Based Sampling from Multiple Simulations
 
 ### 📌 Context
-When dealing with simulated developmental trajectories, we need to represent the process compactly using snapshots. The "backbone" serves as a simplified representation—a skeleton path through cell states consisting of discrete states connected by transition edges.
+When dealing with simulated developmental trajectories, we need to represent the process compactly using snapshots. The "backbone" serves as a simplified representation, a skeleton path through cell states consisting of discrete states connected by transition edges.
 
 ### 🧠 Method Breakdown
 
@@ -152,7 +152,7 @@ For cell {{< math >}} $i$ {{< /math >}}, simulate gene expression counts by:
 
 - It mimics realistic technical noise (capture rates).
 - It preserves realistic library size variation across cells.
-- It produces synthetic count matrices that closely resemble real scRNA-seq data—useful for benchmarking methods like clustering, trajectory inference, or denoising.
+- It produces synthetic count matrices that closely resemble real scRNA-seq data,useful for benchmarking methods like clustering, trajectory inference, or denoising.
 
 In this context, the multinomial distribution models the process of randomly assigning a fixed number of transcript reads (or molecules) to different genes based on their relative probabilities (i.e. expression levels adjusted by capture rates).
 
@@ -209,4 +209,4 @@ Then:
 $$[x_A, x_B, x_C] \sim \text{Multinomial}(100; 0.2, 0.5, 0.3)$$
 {{< /math >}}
 
-Could result in something like: [19, 52, 29] — one random realization of the process.
+Could result in something like: [19, 52, 29], one random realization of the process.

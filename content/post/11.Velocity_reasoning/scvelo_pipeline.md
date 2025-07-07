@@ -1,5 +1,5 @@
 ---
-title: scVelo math derivation
+title: Math derivation for steady-state RNA velocity model
 math: true
 date: '2025-05-28'
 ---
@@ -112,14 +112,18 @@ Expanding this expression:
 
 Take derivative with respect to {{< math >}}$\gamma_0${{< /math >}} and set it to zero:
 
-{{< math >}}$$
+{{< math >}}
+$$
 \frac{d}{d\gamma_0} \left( \| u - \gamma_0 s \|^2 \right) = -2 u^\top s + 2\gamma_0 s^\top s = 0
+$$
 {{< /math >}}
 
 Solve for {{< math >}}$\gamma_0${{< /math >}}:
 
-{{< math >}}$$
+{{< math >}}
+$$
 \gamma_0 = \frac{u^\top s}{\|s\|^2}
+$$
 {{< /math >}}
 
 Where:
@@ -139,8 +143,10 @@ In RNA velocity, this slope {{< math >}}$\gamma_0${{< /math >}} serves as a refe
 
 **Expected:**
 
-{{< math >}}$$
+{{< math >}}
+$$
 u = \gamma_0 s
+$$
 {{< /math >}}
 
 Any deviation from this in other cells suggests that the gene is being upregulated or downregulated.
