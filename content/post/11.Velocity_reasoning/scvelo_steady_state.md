@@ -3,21 +3,22 @@ title: Math derivation for steady-state RNA velocity model
 math: true
 date: '2025-05-28'
 ---
-# Estimating Steady-State Ratio in scVelo
+# A. Estimating RNA velocity Using Steady-State Ratio in `scVelo` and `velocyto`
 
-This passage from the scVelo paper explains how the steady-state ratio  
+For steady-state models in `scVelo` and `velocyto`, RNA velocities are computed as deviations from this steady-state ratio:
+
+{{< math >}} $$ \nu_i = u_i - \gamma_0 s_i  $$ {{< /math >}}
+
+where 
 {{< math >}}  
 $$
 \gamma_0 = \frac{\beta}{\gamma}
 $$  
 {{< /math >}}  
-(i.e. the expected ratio of unspliced to spliced mRNA) is estimated analytically using least squares regression.
+(i.e. the expected ratio of unspliced to spliced mRNA) is estimated analytically using least squares regression. Lower and upper quantiles in phase space, that is, where mRNA levels
+reach minimum and maximum expression, respectively were assumed to be steady states and used for the estimation. Hence, the ratio can be approximated by a linear regression on these extreme quantiles.
 
----
-
-## 🔬 What They’re Estimating
-
-They want to estimate:
+Specifically, {{< math >}}$ \gamma_0 ${{< /math >}} is estimated as :
 
 {{< math >}}  
 $$
@@ -37,7 +38,7 @@ This means they model unspliced mRNA ({{< math >}}$\mathbf{u}${{< /math >}}) as 
 
 ---
 
-## 🔢 What Each Symbol Means
+## Symbol Definition
 
 - {{< math >}}$\mathbf{u} = (u_1, \ldots, u_n)${{< /math >}}: a vector of size-normalized unspliced mRNA counts for a single gene across a subset of cells.  
 - {{< math >}}$\mathbf{s} = (s_1, \ldots, s_n)${{< /math >}}: a vector of corresponding spliced mRNA counts for that gene in the same subset of cells.  
@@ -47,27 +48,7 @@ This means they model unspliced mRNA ({{< math >}}$\mathbf{u}${{< /math >}}) as 
 
 ---
 
-## 🧠 Why This Works
-
-This is equivalent to solving the optimization problem:
-
-{{< math >}}  
-$$
-\min_{\gamma_0} \lVert \mathbf{u} - \gamma_0 \mathbf{s} \rVert^2
-$$  
-{{< /math >}}
-
-The optimal {{< math >}}$\gamma_0${{< /math >}} in a least squares sense (no intercept) is given by:
-
-{{< math >}}  
-$$
-\gamma_0 = \frac{\mathbf{u}^\top \mathbf{s}}{\lVert \mathbf{s} \rVert^2}
-$$  
-{{< /math >}}
-
-So, it’s a simple linear regression without intercept, where {{< math >}}$\mathbf{u}${{< /math >}} is predicted from {{< math >}}$\mathbf{s}${{< /math >}}.
-
-# Full Derivation of the Least Squares Solution for Estimating the Steady-State Ratio {{< math >}}$\gamma_0${{< /math >}}
+# B. Derive Least Squares Solution for Estimating the Steady-State Ratio {{< math >}}$\gamma_0${{< /math >}}
 
 Let’s walk through the full derivation of the least squares solution for estimating the steady-state ratio {{< math >}}$\gamma_0${{< /math >}}, which minimizes the squared difference between the unspliced and spliced counts scaled by {{< math >}}$\gamma_0${{< /math >}}.
 
@@ -82,28 +63,36 @@ Given:
 
 We model the unspliced counts as linearly proportional to spliced counts:
 
-{{< math >}}$$
+{{< math >}}
+$$
 u \approx \gamma_0 s
+$$
 {{< /math >}}
 
 We want to find {{< math >}}$\gamma_0${{< /math >}} that minimizes the squared error:
 
-{{< math >}}$$
+{{< math >}}
+$$
 \min_{\gamma_0} \| u - \gamma_0 s \|^2
+$$
 {{< /math >}}
 
 ---
 
 ## 🧮 Expand the Norm
 
-{{< math >}}$$
+{{< math >}}
+$$
 \| u - \gamma_0 s \|^2 = (u - \gamma_0 s)^\top (u - \gamma_0 s)
+$$
 {{< /math >}}
 
 Expanding this expression:
 
-{{< math >}}$$
+{{< math >}}
+$$
 = u^\top u - 2\gamma_0 u^\top s + \gamma_0^2 s^\top s
+$$
 {{< /math >}}
 
 ---
@@ -112,14 +101,18 @@ Expanding this expression:
 
 Take derivative with respect to {{< math >}}$\gamma_0${{< /math >}} and set it to zero:
 
-{{< math >}}$$
+{{< math >}}
+$$
 \frac{d}{d\gamma_0} \left( \| u - \gamma_0 s \|^2 \right) = -2 u^\top s + 2\gamma_0 s^\top s = 0
+$$
 {{< /math >}}
 
 Solve for {{< math >}}$\gamma_0${{< /math >}}:
 
-{{< math >}}$$
+{{< math >}}
+$$
 \gamma_0 = \frac{u^\top s}{\|s\|^2}
+$$
 {{< /math >}}
 
 Where:
@@ -131,21 +124,21 @@ Where:
 
 ## ✅ Interpretation
 
-This is the slope of the best-fit line (through the origin) predicting unspliced from spliced counts.
-
-It's equivalent to projecting {{< math >}}$u${{< /math >}} onto {{< math >}}$s${{< /math >}} in vector space.
+This is the slope of the best-fit line (through the origin) predicting unspliced from spliced counts. It's equivalent to projecting {{< math >}}$u${{< /math >}} onto {{< math >}}$s${{< /math >}} in vector space.
 
 In RNA velocity, this slope {{< math >}}$\gamma_0${{< /math >}} serves as a reference ratio under the steady-state assumption:
 
 **Expected:**
 
-{{< math >}}$$
+{{< math >}}
+$$
 u = \gamma_0 s
+$$
 {{< /math >}}
 
 Any deviation from this in other cells suggests that the gene is being upregulated or downregulated.
 
-# Extending the Steady-State Model with Offset
+# C. Extending the Steady-State Model with Offset
 
 ## 🧩 Original Model (No Offset)
 
@@ -183,7 +176,7 @@ $$\hat{u} = \gamma_0 s + o$$
 OLS gives:
 
 
-### 🎯 Slope (Steady-State Ratio)
+### Slope (Steady-State Ratio)
 
 {{< math >}}
 $$\gamma_0 = \frac{\text{Cov}(u,s)}{\text{Var}(s)}$$
@@ -207,7 +200,7 @@ $$o = \bar{u} - \gamma_0\bar{s}$$
 
 This centers the regression line at the mean of the data points.
 
-# Detailed Derivation of Least Squares Solution with Intercept
+# D. Derive Least Squares Solution with Intercept
 
 Let's derive the least squares solution with an intercept (offset) step by step. Our goal is to estimate both:
 
@@ -222,7 +215,7 @@ $$u_i = \gamma_0 s_i + o + \varepsilon_i$$
 
 for each cell {{< math >}}$i${{< /math >}}, where {{< math >}}$\varepsilon_i${{< /math >}} is the residual.
 
-## 🧩 Step 1: Problem Setup
+## 🧩 1. Problem Setup
 
 Let {{< math >}}$u = [u_1, u_2, ..., u_n]^T${{< /math >}}, and {{< math >}}$s = [s_1, s_2, ..., s_n]^T${{< /math >}}
 
@@ -234,7 +227,7 @@ $$\min_{\gamma_0,o} \sum_{i=1}^n (u_i - \gamma_0 s_i - o)^2$$
 
 This is a linear least squares regression with intercept.
 
-## 🧮 Step 2: Matrix Form
+## 🧮 2. Matrix Form
 
 Rewriting the model:
 
@@ -260,19 +253,15 @@ The least squares solution is given by:
 $$\begin{bmatrix} \gamma_0 \\ o \end{bmatrix} = (X^T X)^{-1} X^T u$$
 {{< /math >}}
 
-Let's compute this explicitly to get formulas for {{< math >}}$\gamma_0${{< /math >}} and {{< math >}}$o${{< /math >}}.
+We can compute this explicitly to get formulas for {{< math >}}$\gamma_0${{< /math >}} and {{< math >}}$o${{< /math >}} as below.
 
-## 🔍 Step 3: Explicit Solution
-
-The standard solution from statistics for linear regression with intercept gives:
-
-### 🎯 Slope:
+### Slope:
 
 {{< math >}}
 $$\gamma_0 = \frac{\text{Cov}(u,s)}{\text{Var}(s)} = \frac{\sum_{i=1}^n (u_i-\bar{u})(s_i-\bar{s})}{\sum_{i=1}^n (s_i-\bar{s})^2}$$
 {{< /math >}}
 
-### 🧷 Offset:
+### Offset:
 
 {{< math >}}
 $$o = \bar{u} - \gamma_0\bar{s}$$
@@ -280,7 +269,7 @@ $$o = \bar{u} - \gamma_0\bar{s}$$
 
 These are the well-known results from simple linear regression that center the regression line at the mean of the data points.
 
-# Matrix Derivation of the Least Squares Solution
+## 🎯 3. Matrix Derivation of the Least Squares Solution
 
 Let's explicitly derive the solution:
 
@@ -294,7 +283,7 @@ for the model:
 $$u = \gamma_0 s + o \cdot 1 + \varepsilon$$
 {{< /math >}}
 
-## 🔧 Step 1: Define the Design Matrix and Vectors
+### 3.1 Define the Design Matrix and Vectors
 
 Let's say we have {{< math >}}$n${{< /math >}} samples (cells), with:
 
@@ -320,7 +309,7 @@ We want to minimize the residual sum of squares:
 $$\min_\theta \|u - X\theta\|^2$$
 {{< /math >}}
 
-## 📐 Step 2: Normal Equations
+### 3.2 Normal Equations
 
 We derive the optimal {{< math >}}$\theta${{< /math >}} by solving the normal equations:
 
@@ -336,7 +325,7 @@ $$\theta = (X^\top X)^{-1} X^\top u$$
 
 Let's compute each term step by step.
 
-## 🧮 Step 3: Compute {{< math >}}$X^\top X${{< /math >}}
+### 3.3 Compute {{< math >}}$X^\top X${{< /math >}}
 
 {{< math >}}
 $$X^\top X = \begin{bmatrix} \sum s_i^2 & \sum s_i \\ \sum s_i & n \end{bmatrix}$$
@@ -354,7 +343,7 @@ So:
 $$X^\top X = \begin{bmatrix} S_2 & S \\ S & n \end{bmatrix}$$
 {{< /math >}}
 
-## 🧮 Step 4: Compute {{< math >}}$X^\top u${{< /math >}}
+### 3.4 Compute {{< math >}}$X^\top u${{< /math >}}
 
 {{< math >}}
 $$X^\top u = \begin{bmatrix} \sum s_i u_i \\ \sum u_i \end{bmatrix}$$
@@ -371,7 +360,7 @@ So:
 $$X^\top u = \begin{bmatrix} SU \\ U \end{bmatrix}$$
 {{< /math >}}
 
-## 🧮 Step 5: Solve {{< math >}}$\theta = (X^\top X)^{-1} X^\top u${{< /math >}}
+### 3.5 Solve {{< math >}}$\theta = (X^\top X)^{-1} X^\top u${{< /math >}}
 
 The inverse of a {{< math >}}$2\times2${{< /math >}} matrix:
 
@@ -401,7 +390,7 @@ Second row:
 $$-S\cdot SU + S_2\cdot U$$
 {{< /math >}}
 
-## 📘 Final Expression
+### 3.6 Final Expression
 
 So we get:
 
@@ -413,11 +402,11 @@ $$\gamma_0 = \frac{n\cdot \sum s_i u_i - \sum s_i \cdot \sum u_i}{n\cdot \sum s_
 $$o = \bar{u} - \gamma_0\bar{s}$$
 {{< /math >}}
 
-This completes the derivation of the least squares solution with intercept, showing how we arrive at the covariance and variance expressions.
+This completes the derivation of the least squares solution with intercept, showing how to arrive at the covariance and variance expressions.
 
-# Why the Normal Equations Give the Optimal Solution
+# Why Normal Equations in 3.2 in Section D give the optimal solution
 
-Let's walk through why the normal equations
+Let's prove that the normal equations
 
 {{< math >}}
 $$X^\top X\theta = X^\top u$$
@@ -452,7 +441,7 @@ $$L(\theta) = u^\top u - 2\theta^\top X^\top u + \theta^\top X^\top X\theta$$
 Now take the gradient with respect to {{< math >}}$\theta${{< /math >}}:
 
 {{< math >}}
-$$\nabla_\theta L = -2X^\top u + 2X^\top X\theta$$
+$$\nabla_\theta L = -2X^\top u + 2X^\top X\theta \tag{gradient} $$
 {{< /math >}}
 
 Set the gradient to zero:
@@ -480,15 +469,15 @@ This solution minimizes the squared error because:
 
 Therefore, this solution gives us the global minimum of the least squares problem.
 
-# Computing the Gradient of the Least Squares Loss
+## Derive the Gradient Equation above for the Least Squares Loss Function
 
-Let's walk through how to compute the gradient of the least squares loss function with respect to the parameter vector {{< math >}}$\theta${{< /math >}}. We want to understand how we get:
+Let's walk through how we get:
 
 {{< math >}}
 $$\nabla_\theta L = -2X^\top u + 2X^\top X\theta$$
 {{< /math >}}
 
-## 🔧 Step 1: Write the Loss Function
+### 🔧 Step 1: Write the Loss Function
 
 The least squares loss is:
 
@@ -496,7 +485,7 @@ The least squares loss is:
 $$L(\theta) = \|u-X\theta\|^2 = (u-X\theta)^\top(u-X\theta)$$
 {{< /math >}}
 
-## 🧮 Step 2: Expand the Quadratic Form
+### 🧮 Step 2: Expand the Quadratic Form
 
 Let's expand this expression:
 
@@ -515,7 +504,7 @@ This follows from two key matrix properties:
 1. {{< math >}}$(AB)^T = B^T A^T${{< /math >}}
 2. {{< math >}}$u^\top X\theta = \theta^\top X^\top u${{< /math >}} (scalar equality)
 
-## 🧮 Step 3: Take the Gradient with Respect to {{< math >}}$\theta${{< /math >}}
+### 🧮 Step 3: Take the Gradient with Respect to {{< math >}}$\theta${{< /math >}}
 
 We differentiate term by term:
 
@@ -533,7 +522,7 @@ We differentiate term by term:
 
 3. Third term:
    {{< math >}}
-   $$\nabla_\theta(\theta^\top X^\top X\theta) = 2X^\top X\theta$$
+   $$\nabla_\theta(\theta^\top X^\top X\theta) = 2X^\top X\theta \tag{quadratic grad.}$$
    {{< /math >}}
    This is a quadratic form, and its derivative is a standard result from matrix calculus.
 
@@ -545,9 +534,9 @@ $$\nabla_\theta L = -2X^\top u + 2X^\top X\theta$$
 
 This gradient expression gives us the direction of steepest ascent of the loss function at any point {{< math >}}$\theta${{< /math >}}. Setting it to zero leads to the normal equations, which give us the optimal solution.
 
-# Understanding Vector Dot Product Commutativity
+### Note: Vector Dot Product Commutativity
 
-Let's understand why the identity
+Please note the identity
 
 {{< math >}}
 $$a^\top b = b^\top a$$
@@ -555,9 +544,7 @@ $$a^\top b = b^\top a$$
 
 holds true. This is a foundational property in linear algebra, and the key point is:
 
-Both {{< math >}}$a^\top b${{< /math >}} and {{< math >}}$b^\top a${{< /math >}} are scalars (i.e., single numbers), and they are equal because they compute the same dot product.
-
-## ✅ Let's break it down:
+Both {{< math >}}$a^\top b${{< /math >}} and {{< math >}}$b^\top a${{< /math >}} are scalars (i.e., single numbers), and they are equal because they compute the same dot product. Let's break it down:
 
 Let {{< math >}}$a = [a_1, a_2, \ldots, a_n]^\top${{< /math >}}, and {{< math >}}$b = [b_1, b_2, \ldots, b_n]^\top${{< /math >}}.
 
@@ -577,20 +564,18 @@ But since real number multiplication is commutative (i.e., {{< math >}}$a_i b_i 
 $$a^\top b = b^\top a$$
 {{< /math >}}
 
-## 📌 Note on shapes:
+#### Note on shapes and intuition:
 
 - {{< math >}}$a^\top b${{< /math >}} is a {{< math >}}$1\times1${{< /math >}} scalar (row vector × column vector)
 - {{< math >}}$b^\top a${{< /math >}} is also a {{< math >}}$1\times1${{< /math >}} scalar (same logic)
+- This is just the dot product: it doesn't matter which order you take the dot product in. It's symmetric. This property is crucial in many derivations in linear algebra and optimization, including our least squares derivation where we used {{< math >}}$u^\top X\theta = \theta^\top X^\top u${{< /math >}}.
 
 Since they're both just numbers, and equal by commutativity, the identity holds.
 
-## 🧠 Intuition:
 
-This is just the dot product — it doesn't matter which order you take the dot product in. It's symmetric. This property is crucial in many derivations in linear algebra and optimization, including our least squares derivation where we used {{< math >}}$u^\top X\theta = \theta^\top X^\top u${{< /math >}}.
+### Derive Quadratic Form Gradient in Equation (quadratic grad.) above
 
-# Proof of Quadratic Form Gradient with Matrix Calculus
-
-Let's prove the key gradient identity:
+Let's prove the key gradient identity with Matrix Calculus:
 
 {{< math >}}
 $$\nabla_\theta(\theta^\top A\theta) = (A + A^\top)\theta$$
@@ -602,22 +587,22 @@ And its special case when {{< math >}}$A${{< /math >}} is symmetric:
 $$\nabla_\theta(\theta^\top A\theta) = 2A\theta$$
 {{< /math >}}
 
-## 📝 Setup
+#### 📝 Setup
 
 Given:
 - {{< math >}}$\theta \in \mathbb{R}^p${{< /math >}} is a column vector
 - {{< math >}}$A \in \mathbb{R}^{p \times p}${{< /math >}} is a constant matrix
 - The scalar function is {{< math >}}$f(\theta) = \theta^\top A\theta = \sum_{i=1}^p \sum_{j=1}^p \theta_i A_{ij} \theta_j${{< /math >}}
 
-## 🔍 Step-by-Step Derivation
+#### Overview of Steps
 
-### Step 1: Write in Summation Form
+**Step 1**: Write in Summation Form
 
 {{< math >}}
 $$f(\theta) = \sum_{i=1}^p \sum_{j=1}^p \theta_i A_{ij} \theta_j$$
 {{< /math >}}
 
-### Step 2: Compute Partial Derivatives
+**Step 2**: Compute Partial Derivatives
 
 The gradient's k-th component is:
 
@@ -625,7 +610,7 @@ The gradient's k-th component is:
 $$\frac{\partial f}{\partial \theta_k} = \frac{\partial}{\partial \theta_k} \sum_{i=1}^p \sum_{j=1}^p \theta_i A_{ij} \theta_j$$
 {{< /math >}}
 
-### Step 3: Use Product Rule
+**Step 3**: Use Product Rule
 
 When differentiating:
 
@@ -639,13 +624,13 @@ where {{< math >}}$\delta_{ik}${{< /math >}} is the Kronecker delta:
 $$\delta_{ik} = \begin{cases} 1 & \text{if } i=k \\ 0 & \text{otherwise} \end{cases}$$
 {{< /math >}}
 
-### Step 4: Sum Terms
+**Step 4**: Sum Terms
 
 {{< math >}}
 $$\frac{\partial f}{\partial \theta_k} = \sum_{j=1}^p A_{kj}\theta_j + \sum_{i=1}^p \theta_i A_{ik}$$
 {{< /math >}}
 
-### Step 5: Express in Vector Form
+**Step 5**: Express in Vector Form
 
 This gives us:
 
@@ -659,7 +644,7 @@ Therefore:
 $$\nabla_\theta f = A\theta + A^\top\theta = (A + A^\top)\theta$$
 {{< /math >}}
 
-## 🎯 Special Case: Symmetric Matrix
+**Symmetric Matrix**: a special case 
 
 When {{< math >}}$A = A^\top${{< /math >}}, we get:
 
@@ -670,7 +655,7 @@ $$\nabla_\theta(\theta^\top A\theta) = 2A\theta$$
 This is the form we use in least squares optimization where {{< math >}}$A = X^\top X${{< /math >}} is symmetric.
 
 
-# Detailed Proof of Matrix Quadratic Form Derivative
+#### Detail Proof of Key Steps above
 
 Let's prove that:
 
@@ -678,7 +663,7 @@ Let's prove that:
 $$\frac{\partial}{\partial \theta_k} \left(\sum_{i=1}^p \sum_{j=1}^p \theta_i A_{ij} \theta_j\right) = \sum_{j=1}^p A_{kj}\theta_j + \sum_{i=1}^p \theta_i A_{ik}$$
 {{< /math >}}
 
-## 🔍 Step-by-step Derivation
+##### **Step-by-step Derivation**
 
 Start with the function:
 
@@ -726,7 +711,7 @@ $$\sum_{i=1}^p \sum_{j=1}^p A_{ij}\theta_i\delta_{jk} = \sum_{i=1}^p A_{ik}\thet
 
 (since {{< math >}}$\delta_{jk}=1${{< /math >}} only when {{< math >}}$j=k${{< /math >}})
 
-## ✅ Final Result
+##### **Interim Result**
 
 Combining both terms:
 
@@ -740,11 +725,7 @@ In vector form, this means:
 $$\nabla_\theta(\theta^\top A\theta) = A\theta + A^\top\theta = (A + A^\top)\theta$$
 {{< /math >}}
 
-# From Component-wise to Vector Form of Gradient
-
-Let's understand how to go from component-wise derivatives to the vector form of the gradient.
-
-## 🔍 Component-wise Form
+##### **From Component-wise to Vector Form of Gradient**
 
 For each coordinate {{< math >}}$k \in \{1,\ldots,p\}${{< /math >}}, we showed:
 
@@ -758,7 +739,7 @@ So each element of the gradient vector is:
 $$(\nabla_\theta f)_k = (A\theta)_k + (A^\top\theta)_k$$
 {{< /math >}}
 
-## 🧮 Stacking into Vector Form
+##### **Stacking into Vector Form**
 
 The full gradient vector is:
 
@@ -770,55 +751,11 @@ $$\nabla_\theta f = \begin{bmatrix}
 (A\theta)_p + (A^\top\theta)_p
 \end{bmatrix} = A\theta + A^\top\theta$$
 {{< /math >}}
-
-This follows because matrix-vector multiplication simply stacks the components:
+The notation {{< math >}}$(A\theta)_k${{< /math >}} which refers to the k-th component of the matrix-vector product {{< math >}}$A\theta${{< /math >}}. This follows because matrix-vector multiplication simply stacks the components:
 
 {{< math >}}
 $$(A\theta)_k = \sum_j A_{kj}\theta_j$$
 {{< /math >}}
-
-{{< math >}}
-$$(A^\top\theta)_k = \sum_i A_{ik}\theta_i$$
-{{< /math >}}
-
-## ✅ Final Result
-
-Therefore:
-
-{{< math >}}
-$$\nabla_\theta(\theta^\top A\theta) = A\theta + A^\top\theta = (A + A^\top)\theta$$
-{{< /math >}}
-
-## 📌 Special Case: Symmetric Matrix
-
-If {{< math >}}$A = A^\top${{< /math >}} (i.e., symmetric), then:
-
-{{< math >}}
-$$\nabla_\theta(\theta^\top A\theta) = 2A\theta$$
-{{< /math >}}
-
-# Understanding Matrix-Vector Product Components
-
-Let's understand the notation {{< math >}}$(A\theta)_k${{< /math >}} which refers to the k-th component of the matrix-vector product {{< math >}}$A\theta${{< /math >}}.
-
-## 📐 Definition
-
-Given:
-
-- {{< math >}}$A \in \mathbb{R}^{p\times p}${{< /math >}} is a matrix
-- {{< math >}}$\theta \in \mathbb{R}^p${{< /math >}} is a column vector
-
-Then:
-
-{{< math >}}
-$$(A\theta)_k = \sum_{j=1}^p A_{kj}\theta_j$$
-{{< /math >}}
-
-This represents the dot product of the k-th row of {{< math >}}$A${{< /math >}} with the vector {{< math >}}$\theta${{< /math >}}.
-
-## 🧠 Intuition
-
-The full product {{< math >}}$A\theta${{< /math >}} gives you a new vector:
 
 {{< math >}}
 $$A\theta = \begin{bmatrix} 
@@ -828,101 +765,22 @@ $$A\theta = \begin{bmatrix}
 \sum_{j=1}^p A_{pj}\theta_j
 \end{bmatrix}$$
 {{< /math >}}
-
-So the k-th entry is:
-
+Similarly, for the transpose:
 {{< math >}}
-$$(A\theta)_k = \sum_{j=1}^p A_{kj}\theta_j$$
+$$(A^\top\theta)_k = \sum_i A_{ik}\theta_i$$
 {{< /math >}}
 
-## ✅ Summary
+##### **Final Result**
 
-This notation appears in our derivative expression:
-
-{{< math >}}
-$$\frac{\partial f}{\partial \theta_k} = (A\theta)_k + (A^\top\theta)_k$$
-{{< /math >}}
-
-Where {{< math >}}$(A\theta)_k${{< /math >}} represents the k-th component of the matrix-vector product.
-
-# From Component-wise to Vector Form: A Detailed Guide
-
-Let's see how to go from the component-wise gradient expression:
+Therefore:
 
 {{< math >}}
-$$\frac{\partial f}{\partial \theta_k} = (A\theta)_k + (A^\top\theta)_k$$
+$$\nabla_\theta(\theta^\top A\theta) = A\theta + A^\top\theta = (A + A^\top)\theta$$
 {{< /math >}}
 
-to the full vector form:
 
-{{< math >}}
-$$\nabla_\theta f = A\theta + A^\top\theta = (A + A^\top)\theta$$
-{{< /math >}}
 
-## 🔢 Step 1: Understand Component-wise Gradient
-
-Given a scalar function:
-
-{{< math >}}
-$$f(\theta) = \theta^\top A\theta$$
-{{< /math >}}
-
-We already know:
-
-{{< math >}}
-$$\frac{\partial f}{\partial \theta_k} = (A\theta)_k + (A^\top\theta)_k$$
-{{< /math >}}
-
-This means the k-th component of the gradient is:
-
-{{< math >}}
-$$(\nabla_\theta f)_k = (A\theta)_k + (A^\top\theta)_k$$
-{{< /math >}}
-
-## 🧱 Step 2: Stack the Components
-
-Now construct the full gradient vector by stacking all the {{< math >}}$k${{< /math >}}-components:
-
-{{< math >}}
-$$\nabla_\theta f = \begin{bmatrix} 
-\frac{\partial f}{\partial \theta_1} \\
-\frac{\partial f}{\partial \theta_2} \\
-\vdots \\
-\frac{\partial f}{\partial \theta_p}
-\end{bmatrix} = 
-\begin{bmatrix}
-(A\theta)_1 + (A^\top\theta)_1 \\
-(A\theta)_2 + (A^\top\theta)_2 \\
-\vdots \\
-(A\theta)_p + (A^\top\theta)_p
-\end{bmatrix} = A\theta + A^\top\theta$$
-{{< /math >}}
-
-## ✅ Final Step
-
-So, you've shown that:
-
-{{< math >}}
-$$\nabla_\theta f = A\theta + A^\top\theta = (A + A^\top)\theta$$
-{{< /math >}}
-
-This is the vectorized form of the component-wise result.
-
-## 🚀 Summary
-
-If each component satisfies:
-
-{{< math >}}
-$$\frac{\partial f}{\partial \theta_k} = (A\theta)_k + (A^\top\theta)_k$$
-{{< /math >}}
-
-Then stacking all components gives:
-
-{{< math >}}
-$$\nabla_\theta f = (A + A^\top)\theta$$
-{{< /math >}}
-
-# From Normal Equations to Standard Regression Form
+# From Normal Equations to Standard Regression Form (3.6 in Section D)
 
 Let's derive how the normal equations solution:
 
