@@ -161,8 +161,8 @@
   
 
   
-  <link rel="icon" type="image/png" href="/media/icon_hu16496738209820128384.png" />
-  <link rel="apple-touch-icon" type="image/png" href="/media/icon_hu17763857046462676418.png" />
+  <link rel="icon" type="image/png" href="/media/icon_hu_c54cc46c793e1f2b.png" />
+  <link rel="apple-touch-icon" type="image/png" href="/media/icon_hu_68ea7b4ed3f6b794.png" />
 
   <link rel="canonical" href="http://localhost:1313/post/11c.velocity_steady_state/" />
 
@@ -237,6 +237,12 @@
   
 
 
+  
+  
+  
+  
+  
+  
   
   
   
@@ -1122,7 +1128,23 @@
       text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
     href="/post/11d.velocity_dynamic_model_derivation/"
     
-  >🧬 Math derivation for Dynamic RNA velocity model
+  >🧬 Dynamic RNA velocity model-- (1) math solutions
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/post/11e.velocity_dynamic_model_inference/"
+    
+  >🧬 Dynamic RNA velocity model-- (2) parameter inference
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/post/11f.velocity_dynamic_model_posthoc_calculation/scvelo_post-fitting_calculation/"
+    
+  >🧬 Dynamic RNA velocity model-- (3) post hoc computation
     </a>
               
             </li><li class="flex flex-col open"><a
@@ -1662,7 +1684,7 @@
         <a class="pl-8 rtl:pr-8 inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#symbol-definition">Symbol Definition</a>
       </li>
       <li class="my-2 scroll-my-6 scroll-py-6">
-        <a class="pl-4 rtl:pr-4 inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#b-derive-least-squares-solution-for-estimating-the-steady-state-ratio-gamma_0">B. Derive Least Squares Solution for Estimating the Steady-State Ratio </a>
+        <a class="pl-4 rtl:pr-4 inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#b-derive-least-squares-solution-for-estimating-the-steady-state-ratio">B. Derive Least Squares Solution for Estimating the Steady-State Ratio </a>
       </li>
       <li class="my-2 scroll-my-6 scroll-py-6">
         <a class="pl-8 rtl:pr-8 inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#-problem-setup">🔧 Problem Setup</a>
@@ -1671,7 +1693,7 @@
         <a class="pl-8 rtl:pr-8 inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#-expand-the-norm">🧮 Expand the Norm</a>
       </li>
       <li class="my-2 scroll-my-6 scroll-py-6">
-        <a class="pl-8 rtl:pr-8 inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#-minimize-with-respect-to-gamma_0">📉 Minimize with Respect to </a>
+        <a class="pl-8 rtl:pr-8 inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#-minimize-with-respect-to">📉 Minimize with Respect to </a>
       </li>
       <li class="my-2 scroll-my-6 scroll-py-6">
         <a class="pl-8 rtl:pr-8 inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#-interpretation">✅ Interpretation</a>
@@ -1719,13 +1741,13 @@
         <a class="pl-12 rtl:pr-12 inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#32-normal-equations">3.2 Normal Equations</a>
       </li>
       <li class="my-2 scroll-my-6 scroll-py-6">
-        <a class="pl-12 rtl:pr-12 inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#33-compute-xtop-x">3.3 Compute </a>
+        <a class="pl-12 rtl:pr-12 inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#33-compute">3.3 Compute </a>
       </li>
       <li class="my-2 scroll-my-6 scroll-py-6">
-        <a class="pl-12 rtl:pr-12 inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#34-compute-xtop-u">3.4 Compute </a>
+        <a class="pl-12 rtl:pr-12 inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#34-compute">3.4 Compute </a>
       </li>
       <li class="my-2 scroll-my-6 scroll-py-6">
-        <a class="pl-12 rtl:pr-12 inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#35-solve-theta--xtop-x-1-xtop-u">3.5 Solve </a>
+        <a class="pl-12 rtl:pr-12 inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#35-solve">3.5 Solve </a>
       </li>
       <li class="my-2 scroll-my-6 scroll-py-6">
         <a class="pl-12 rtl:pr-12 inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#36-final-expression">3.6 Final Expression</a>
@@ -1749,7 +1771,7 @@
         <a class="pl-12 rtl:pr-12 inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#step-2-expand-the-quadratic-form">Step 2: Expand the Quadratic Form</a>
       </li>
       <li class="my-2 scroll-my-6 scroll-py-6">
-        <a class="pl-12 rtl:pr-12 inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#step-3-take-the-gradient-with-respect-to-theta">Step 3: Take the Gradient with Respect to </a>
+        <a class="pl-12 rtl:pr-12 inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#step-3-take-the-gradient-with-respect-to">Step 3: Take the Gradient with Respect to </a>
       </li>
       <li class="my-2 scroll-my-6 scroll-py-6">
         <a class="pl-12 rtl:pr-12 inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#note-vector-dot-product-commutativity">Note: Vector Dot Product Commutativity</a>
@@ -1846,7 +1868,7 @@
           <div class="group inline-flex items-center text-current gap-x-1.5 mx-1">
             
             
-            <img src="/author/jiyuan-liu/avatar_hu2046400169900539793.webp" alt="Jiyuan Liu" class="inline-block h-4 w-4 rounded-full border border-current" loading="lazy" />
+            <img src="/author/jiyuan-liu/avatar_hu_98ce379ab30758a2.webp" alt="Jiyuan Liu" class="inline-block h-4 w-4 rounded-full border border-current" loading="lazy" />
             
             <div >Jiyuan Liu</div>
           </div>
@@ -1891,7 +1913,7 @@
       
       <div class="article-header article-container featured-image-wrapper mt-4 mb-16" style="max-width: 640px; max-height: 360px;">
         <div style="position: relative">
-          <img src="/post/11c.velocity_steady_state/featured_hu6262316954394960211.webp" width="640" height="360" alt="" class="featured-image">
+          <img src="/post/11c.velocity_steady_state/featured_hu_a2e02899236a6608.webp" width="640" height="360" alt="" class="featured-image">
           <span class="article-header-caption">Image credit: <a href="https://unsplash.com" target="_blank" rel="noopener"><strong>Logan Voss on Unsplash</strong></a></span>
         </div>
       </div>
@@ -1951,7 +1973,7 @@ $$
 , i.e., the steady-state ratio.</li>
 </ul>
 <hr>
-<h3 id="b-derive-least-squares-solution-for-estimating-the-steady-state-ratio-gamma_0">B. Derive Least Squares Solution for Estimating the Steady-State Ratio $\gamma_0$</h3>
+<h3 id="b-derive-least-squares-solution-for-estimating-the-steady-state-ratio">B. Derive Least Squares Solution for Estimating the Steady-State Ratio $\gamma_0$</h3>
 <p>Let’s walk through the full derivation of the least squares solution for estimating the steady-state ratio $\gamma_0$
 , which minimizes the squared difference between the unspliced and spliced counts scaled by $\gamma_0$
 .</p>
@@ -1997,7 +2019,7 @@ $$
 
 
 <hr>
-<h4 id="-minimize-with-respect-to-gamma_0">📉 Minimize with Respect to $\gamma_0$</h4>
+<h4 id="-minimize-with-respect-to">📉 Minimize with Respect to $\gamma_0$</h4>
 <p>Take derivative with respect to $\gamma_0$
  and set it to zero:</p>
 
@@ -2204,7 +2226,7 @@ $$\theta = (X^\top X)^{-1} X^\top u$$
 
 
 <p>Let&rsquo;s compute each term step by step.</p>
-<h5 id="33-compute-xtop-x">3.3 Compute $X^\top X$</h5>
+<h5 id="33-compute">3.3 Compute $X^\top X$</h5>
 
 $$X^\top X = \begin{bmatrix} \sum s_i^2 & \sum s_i \\ \sum s_i & n \end{bmatrix}$$
 
@@ -2223,7 +2245,7 @@ $$X^\top X = \begin{bmatrix} \sum s_i^2 & \sum s_i \\ \sum s_i & n \end{bmatrix}
 $$X^\top X = \begin{bmatrix} S_2 & S \\ S & n \end{bmatrix}$$
 
 
-<h5 id="34-compute-xtop-u">3.4 Compute $X^\top u$</h5>
+<h5 id="34-compute">3.4 Compute $X^\top u$</h5>
 
 $$X^\top u = \begin{bmatrix} \sum s_i u_i \\ \sum u_i \end{bmatrix}$$
 
@@ -2240,7 +2262,7 @@ $$X^\top u = \begin{bmatrix} \sum s_i u_i \\ \sum u_i \end{bmatrix}$$
 $$X^\top u = \begin{bmatrix} SU \\ U \end{bmatrix}$$
 
 
-<h5 id="35-solve-theta--xtop-x-1-xtop-u">3.5 Solve $\theta = (X^\top X)^{-1} X^\top u$</h5>
+<h5 id="35-solve">3.5 Solve $\theta = (X^\top X)^{-1} X^\top u$</h5>
 <p>The inverse of a $2\times2$
  matrix:</p>
 
@@ -2367,7 +2389,7 @@ $$(u-X\theta)^\top(u-X\theta) = u^\top u - 2\theta^\top X^\top u + \theta^\top X
 <li>$u^\top X\theta = \theta^\top X^\top u$
  (scalar equality)</li>
 </ol>
-<h5 id="step-3-take-the-gradient-with-respect-to-theta">Step 3: Take the Gradient with Respect to $\theta$</h5>
+<h5 id="step-3-take-the-gradient-with-respect-to">Step 3: Take the Gradient with Respect to $\theta$</h5>
 <p>We differentiate term by term:</p>
 <ol>
 <li>
@@ -2863,7 +2885,7 @@ $$\gamma_0 = \frac{\text{Cov}(u,s)}{\text{Var}(s)} \text{ and } o = \bar{u} - \g
     width="96"
     height="96"
     alt="Jiyuan Liu"
-  src="/author/jiyuan-liu/avatar_hu6328122812819896191.jpg"
+  src="/author/jiyuan-liu/avatar_hu_6297b4a1a274518.jpg"
   loading="lazy"
   />
   
@@ -2973,14 +2995,14 @@ $$\gamma_0 = \frac{\text{Cov}(u,s)}{\text{Var}(s)} \text{ and } o = \bar{u} - \g
   <div class="flex flex-col md:flex-row flex-nowrap justify-between gap-5 pt-2">
     <div class="">
       
-        <a class="group flex no-underline" href="/post/11d.velocity_dynamic_model_derivation/">
+        <a class="group flex no-underline" href="/post/11f.velocity_dynamic_model_posthoc_calculation/scvelo_post-fitting_calculation/">
           <span
             class="mt-[-0.3rem] me-2 text-neutral-700 transition-transform group-hover:-translate-x-[2px] group-hover:text-primary-600 dark:text-neutral dark:group-hover:text-primary-400"
           ><span class="ltr:inline rtl:hidden">&larr;</span></span>
           <span class="flex flex-col">
             <span
               class="mt-[0.1rem] leading-6 group-hover:underline group-hover:decoration-primary-500"
-            >🧬 Math derivation for Dynamic RNA velocity model</span>
+            >🧬 Dynamic RNA velocity model-- (3) post hoc computation</span>
             <span class="mt-[0.1rem] text-xs text-neutral-500 dark:text-neutral-400">
               
                 May 28, 2025

@@ -7,7 +7,7 @@
     <description>ScRNAseq RNA Velocity, Math</description>
     <generator>Hugo Blox Builder (https://hugoblox.com)</generator><language>en-us</language><lastBuildDate>Wed, 28 May 2025 00:00:00 +0000</lastBuildDate>
     <image>
-      <url>http://localhost:1313/media/icon_hu6671943710606299486.png</url>
+      <url>http://localhost:1313/media/icon_hu_fd2be5a69becaf9e.png</url>
       <title>ScRNAseq RNA Velocity, Math</title>
       <link>http://localhost:1313/tags/scrnaseq-rna-velocity-math/</link>
     </image>
@@ -67,7 +67,7 @@ $$
 , i.e., the steady-state ratio.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;hr&gt;
-&lt;h3 id=&#34;b-derive-least-squares-solution-for-estimating-the-steady-state-ratio-gamma_0&#34;&gt;B. Derive Least Squares Solution for Estimating the Steady-State Ratio $\gamma_0$&lt;/h3&gt;
+&lt;h3 id=&#34;b-derive-least-squares-solution-for-estimating-the-steady-state-ratio&#34;&gt;B. Derive Least Squares Solution for Estimating the Steady-State Ratio $\gamma_0$&lt;/h3&gt;
 &lt;p&gt;Let’s walk through the full derivation of the least squares solution for estimating the steady-state ratio $\gamma_0$
 , which minimizes the squared difference between the unspliced and spliced counts scaled by $\gamma_0$
 .&lt;/p&gt;
@@ -113,7 +113,7 @@ $$
 
 
 &lt;hr&gt;
-&lt;h4 id=&#34;-minimize-with-respect-to-gamma_0&#34;&gt;📉 Minimize with Respect to $\gamma_0$&lt;/h4&gt;
+&lt;h4 id=&#34;-minimize-with-respect-to&#34;&gt;📉 Minimize with Respect to $\gamma_0$&lt;/h4&gt;
 &lt;p&gt;Take derivative with respect to $\gamma_0$
  and set it to zero:&lt;/p&gt;
 
@@ -320,7 +320,7 @@ $$\theta = (X^\top X)^{-1} X^\top u$$
 
 
 &lt;p&gt;Let&amp;rsquo;s compute each term step by step.&lt;/p&gt;
-&lt;h5 id=&#34;33-compute-xtop-x&#34;&gt;3.3 Compute $X^\top X$&lt;/h5&gt;
+&lt;h5 id=&#34;33-compute&#34;&gt;3.3 Compute $X^\top X$&lt;/h5&gt;
 
 $$X^\top X = \begin{bmatrix} \sum s_i^2 &amp; \sum s_i \\ \sum s_i &amp; n \end{bmatrix}$$
 
@@ -339,7 +339,7 @@ $$X^\top X = \begin{bmatrix} \sum s_i^2 &amp; \sum s_i \\ \sum s_i &amp; n \end{
 $$X^\top X = \begin{bmatrix} S_2 &amp; S \\ S &amp; n \end{bmatrix}$$
 
 
-&lt;h5 id=&#34;34-compute-xtop-u&#34;&gt;3.4 Compute $X^\top u$&lt;/h5&gt;
+&lt;h5 id=&#34;34-compute&#34;&gt;3.4 Compute $X^\top u$&lt;/h5&gt;
 
 $$X^\top u = \begin{bmatrix} \sum s_i u_i \\ \sum u_i \end{bmatrix}$$
 
@@ -356,7 +356,7 @@ $$X^\top u = \begin{bmatrix} \sum s_i u_i \\ \sum u_i \end{bmatrix}$$
 $$X^\top u = \begin{bmatrix} SU \\ U \end{bmatrix}$$
 
 
-&lt;h5 id=&#34;35-solve-theta--xtop-x-1-xtop-u&#34;&gt;3.5 Solve $\theta = (X^\top X)^{-1} X^\top u$&lt;/h5&gt;
+&lt;h5 id=&#34;35-solve&#34;&gt;3.5 Solve $\theta = (X^\top X)^{-1} X^\top u$&lt;/h5&gt;
 &lt;p&gt;The inverse of a $2\times2$
  matrix:&lt;/p&gt;
 
@@ -483,7 +483,7 @@ $$(u-X\theta)^\top(u-X\theta) = u^\top u - 2\theta^\top X^\top u + \theta^\top X
 &lt;li&gt;$u^\top X\theta = \theta^\top X^\top u$
  (scalar equality)&lt;/li&gt;
 &lt;/ol&gt;
-&lt;h5 id=&#34;step-3-take-the-gradient-with-respect-to-theta&#34;&gt;Step 3: Take the Gradient with Respect to $\theta$&lt;/h5&gt;
+&lt;h5 id=&#34;step-3-take-the-gradient-with-respect-to&#34;&gt;Step 3: Take the Gradient with Respect to $\theta$&lt;/h5&gt;
 &lt;p&gt;We differentiate term by term:&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;

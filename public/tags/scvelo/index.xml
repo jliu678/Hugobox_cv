@@ -7,10 +7,681 @@
     <description>ScVelo</description>
     <generator>Hugo Blox Builder (https://hugoblox.com)</generator><language>en-us</language><lastBuildDate>Wed, 28 May 2025 00:00:00 +0000</lastBuildDate>
     <image>
-      <url>http://localhost:1313/media/icon_hu6671943710606299486.png</url>
+      <url>http://localhost:1313/media/icon_hu_fd2be5a69becaf9e.png</url>
       <title>ScVelo</title>
       <link>http://localhost:1313/tags/scvelo/</link>
     </image>
+    
+    <item>
+      <title>🧬 Dynamic RNA velocity model-- (1) math solutions</title>
+      <link>http://localhost:1313/post/11d.velocity_dynamic_model_derivation/</link>
+      <pubDate>Wed, 28 May 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/post/11d.velocity_dynamic_model_derivation/</guid>
+      <description>&lt;h3 id=&#34;introduction&#34;&gt;Introduction&lt;/h3&gt;
+&lt;p&gt;The steady‑state model’s reliance on true steady states is at odds with &lt;a href=&#34;https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1010492&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;known biophysical behavior&lt;/a&gt;. The dynamic model removes this requirement to broaden RNA velocity’s applicability but inevitably introduces new assumptions that may not hold for every dataset. Effective use of the dynamic model therefore demands a clear understanding of its strengths and limitations. Our blog series toward this goal begins by delving into the mathematical foundations of the dynamic model.&lt;/p&gt;
+&lt;h3 id=&#34;symbol-definitions&#34;&gt;Symbol definitions&lt;/h3&gt;
+&lt;p&gt;Please refer to the &lt;a href=&#34;https://www.nature.com/articles/s41587-020-0591-3&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Nature Biotechnology paper&lt;/a&gt; for the definitions of the symbols used in this derivation.&lt;/p&gt;
+&lt;h3 id=&#34;dynamic-solutions-for-rna-velocity-model&#34;&gt;Dynamic Solutions for RNA Velocity Model&lt;/h3&gt;
+&lt;p&gt;To derive the solution for s(t) from the given system of differential equations, we will follow a two-step process:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Solve the first differential equation for u(t) using the initial condition u(t₀)=u₀.&lt;/li&gt;
+&lt;li&gt;Substitute the expression for u(t) into the second differential equation and then solve for s(t) using the initial condition s(t₀)=s₀.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h4 id=&#34;step-1-solve-for-ut&#34;&gt;Step 1: Solve for u(t)&lt;/h4&gt;
+&lt;p&gt;The first differential equation is:&lt;/p&gt;
+  
+$$
+\frac{du(t)}{dt}=\alpha-\beta u(t)
+$$  
+
+
+&lt;p&gt;Rearrange it into the standard form for a first-order linear ODE:&lt;/p&gt;
+  
+$$
+\frac{du(t)}{dt}+\beta u(t)=\alpha
+$$  
+
+
+&lt;p&gt;This is a linear first-order differential equation of the form $\frac{dy}{dx}+P(x)y=Q(x)$, where P(t)=β and Q(t)=α.
+The integrating factor (IF) is $e^{\int P(t)dt}=e^{\int \beta dt}=e^{\beta t}$.&lt;/p&gt;
+&lt;p&gt;Multiply the entire equation by the integrating factor:&lt;/p&gt;
+  
+$$
+e^{\beta t}\frac{du(t)}{dt}+\beta u(t)e^{\beta t}=\alpha e^{\beta t}
+$$  
+
+
+&lt;p&gt;The left side is the derivative of the product $(u(t)e^{\beta t})$:&lt;/p&gt;
+  
+$$
+\frac{d}{dt}(u(t)e^{\beta t})=\alpha e^{\beta t}
+$$  
+
+
+&lt;p&gt;Integrate both sides with respect to t:&lt;/p&gt;
+  
+$$
+\int \frac{d}{dt}(u(t)e^{\beta t})dt=\int \alpha e^{\beta t}dt
+$$
+$$
+u(t)e^{\beta t}=\frac{\alpha}{\beta}e^{\beta t}+C_1
+$$  
+
+
+&lt;p&gt;Now, solve for u(t):&lt;/p&gt;
+  
+$$
+u(t)=\frac{\alpha}{\beta}+C_1e^{-\beta t}
+$$  
+
+
+&lt;p&gt;Use the initial condition u(t₀)=u₀ to find C₁:&lt;/p&gt;
+  
+$$
+u_0=\frac{\alpha}{\beta}+C_1e^{-\beta t_0}
+$$
+$$
+C_1e^{-\beta t_0}=u_0-\frac{\alpha}{\beta}
+$$
+$$
+C_1=(u_0-\frac{\alpha}{\beta})e^{\beta t_0}
+$$  
+
+
+&lt;p&gt;Substitute C₁ back into the equation for u(t):&lt;/p&gt;
+  
+$$
+u(t)=\frac{\alpha}{\beta}+(u_0-\frac{\alpha}{\beta})e^{\beta t_0}e^{-\beta t}
+$$
+$$
+u(t)=\frac{\alpha}{\beta}+(u_0-\frac{\alpha}{\beta})e^{-\beta(t-t_0)}
+$$  
+
+
+&lt;h4 id=&#34;step-2-solve-for-st&#34;&gt;Step 2: Solve for s(t)&lt;/h4&gt;
+&lt;p&gt;Now that we have u(t), we can solve the second differential equation:&lt;/p&gt;
+  
+$$
+\frac{ds(t)}{dt}=\beta u(t)-\gamma s(t)
+$$  
+
+
+&lt;p&gt;Substitute the expression for u(t):&lt;/p&gt;
+  
+$$
+\frac{ds(t)}{dt}=\beta[\frac{\alpha}{\beta}+(u_0-\frac{\alpha}{\beta})e^{-\beta(t-t_0)}]-\gamma s(t)
+$$
+$$
+\frac{ds(t)}{dt}+\gamma s(t)=\alpha+(u_0\beta-\alpha)e^{-\beta(t-t_0)}
+$$  
+
+
+&lt;p&gt;This is again a linear first-order differential equation. The integrating factor is $e^{\gamma t}$.&lt;/p&gt;
+&lt;p&gt;Multiply both sides by the integrating factor:&lt;/p&gt;
+  
+$$
+\frac{d}{dt}(s(t)e^{\gamma t})=\alpha e^{\gamma t}+(u_0\beta-\alpha)e^{\gamma t}e^{-\beta(t-t_0)}
+$$  
+
+
+&lt;p&gt;Integrate both sides:&lt;/p&gt;
+  
+$$
+s(t)e^{\gamma t}=\frac{\alpha}{\gamma}e^{\gamma t}+(u_0\beta-\alpha)\int e^{\gamma t}e^{-\beta(t-t_0)}dt+C_2
+$$  
+
+
+&lt;p&gt;Simplify the integral:&lt;/p&gt;
+  
+$$
+s(t)e^{\gamma t}=\frac{\alpha}{\gamma}e^{\gamma t}+(u_0\beta-\alpha)e^{\beta t_0}\int e^{(\gamma-\beta)t}dt+C_2
+$$
+$$
+s(t)e^{\gamma t}=\frac{\alpha}{\gamma}e^{\gamma t}+(u_0\beta-\alpha)e^{\beta t_0}\frac{e^{(\gamma-\beta)t}}{\gamma-\beta}+C_2
+$$  
+
+
+&lt;p&gt;Solve for s(t):&lt;/p&gt;
+  
+$$
+s(t)=\frac{\alpha}{\gamma}+(u_0\beta-\alpha)e^{\beta t_0}\frac{e^{-\beta t}}{\gamma-\beta}+C_2e^{-\gamma t}
+$$  
+
+
+&lt;p&gt;Use the initial condition s(t₀)=s₀ to find C₂:&lt;/p&gt;
+  
+$$
+s_0=\frac{\alpha}{\gamma}+(u_0\beta-\alpha)\frac{e^{-\beta t_0+\beta t_0}}{\gamma-\beta}+C_2e^{-\gamma t_0}
+$$
+$$
+C_2e^{-\gamma t_0}=s_0-\frac{\alpha}{\gamma}-(u_0\beta-\alpha)\frac{1}{\gamma-\beta}
+$$
+$$
+C_2=[s_0-\frac{\alpha}{\gamma}-(u_0\beta-\alpha)\frac{1}{\gamma-\beta}]e^{\gamma t_0}
+$$  
+
+
+&lt;p&gt;The complete solution for s(t) is:&lt;/p&gt;
+  
+$$
+s(t)=\frac{\alpha}{\gamma}+\frac{u_0\beta-\alpha}{\gamma-\beta}e^{-\beta(t-t_0)}+[s_0-\frac{\alpha}{\gamma}-\frac{u_0\beta-\alpha}{\gamma-\beta}]e^{-\gamma(t-t_0)}
+$$  
+
+
+&lt;h4 id=&#34;special-case-if-γβ&#34;&gt;Special case: If γ=β&lt;/h4&gt;
+&lt;p&gt;If γ=β, the integral becomes:&lt;/p&gt;
+  
+$$
+\int(βu_0-α)e^{(γ-β)t+βt_0}dt=(βu_0-α)e^{βt_0}\int dt=(βu_0-α)e^{βt_0}t
+$$  
+
+
+&lt;p&gt;Then,&lt;/p&gt;
+  
+$$
+s(t)e^{γt}=\frac{α}{γ}e^{γt}+(βu_0-α)e^{βt_0}t+C_2
+$$
+$$
+s(t)=\frac{α}{γ}+(βu_0-α)te^{-γt+βt_0}+C_2e^{-γt}
+$$  
+
+
+&lt;p&gt;Since γ=β:&lt;/p&gt;
+  
+$$
+s(t)=\frac{α}{γ}+(γu_0-α)te^{-γ(t-t_0)}+C_2e^{-γt}
+$$
+$$
+s(t)=\frac{α}{γ}+(γu_0-α)(t_0+τ)e^{-γτ}+C_2e^{-γ(t_0+τ)}
+$$  
+
+
+&lt;p&gt;This scenario is not covered by the target equation, which explicitly has a denominator (γ−β), implying γ≠β.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>🧬 Dynamic RNA velocity model-- (2) parameter inference</title>
+      <link>http://localhost:1313/post/11e.velocity_dynamic_model_inference/scvelo_parameter_inference/</link>
+      <pubDate>Wed, 28 May 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/post/11e.velocity_dynamic_model_inference/scvelo_parameter_inference/</guid>
+      <description>&lt;h3 id=&#34;introduction&#34;&gt;Introduction&lt;/h3&gt;
+&lt;p&gt;To effectively apply the dynamic model for revealing RNA velocity in single-cell RNA-seq data, this second installment of our blog series takes a deep dive into its parameter inference using a two-stage EM algorithm. In this approach, latent time is initially assigned using an explicit formula, and then refined through standard optimization during the &amp;ldquo;Expectation&amp;rdquo; step of the final EM iteration.&lt;/p&gt;
+&lt;h3 id=&#34;symbol-definitions&#34;&gt;Symbol definitions&lt;/h3&gt;
+&lt;p&gt;Please refer to the &lt;a href=&#34;https://www.nature.com/articles/s41587-020-0591-3&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Nature Biotechnology paper&lt;/a&gt; for the definitions of the symbols used in this derivation.&lt;/p&gt;
+&lt;h1 id=&#34;a-derivation-transforming-the-solution-for-st&#34;&gt;A) Derivation: Transforming the Solution for s(t)&lt;/h1&gt;
+&lt;p&gt;Let&amp;rsquo;s derive the relationship $\tilde{s}(t) - \tilde{s}_\infty = (\tilde{s}_0 - \tilde{s}_\infty)e^{-\gamma\tau}$ from the provided information.&lt;/p&gt;
+&lt;h2 id=&#34;given-information&#34;&gt;Given Information&lt;/h2&gt;
+&lt;h3 id=&#34;system-of-differential-equations&#34;&gt;System of Differential Equations:&lt;/h3&gt;
+
+$$
+\frac{du(t)}{dt} = \alpha^{(k)} - \beta u(t)
+$$
+
+
+
+$$
+\frac{ds(t)}{dt} = \beta u(t) - \gamma s(t)
+$$
+
+
+&lt;h3 id=&#34;solutions-for-ut-and-st&#34;&gt;Solutions for u(t) and s(t):&lt;/h3&gt;
+
+$$
+u(t) = u_0 e^{-\beta\tau} + \frac{\alpha^{(k)}}{\beta} (1 - e^{-\beta\tau})
+$$
+
+
+&lt;p&gt;(This can be rewritten as $u(t) = \frac{\alpha^{(k)}}{\beta} + (u_0 - \frac{\alpha^{(k)}}{\beta})e^{-\beta\tau}$)&lt;/p&gt;
+
+$$
+s(t) = s_0 e^{-\gamma\tau} + \frac{\alpha^{(k)}}{\gamma} (1 - e^{-\gamma\tau}) + \left(\frac{\alpha^{(k)} - \beta u_0}{\gamma - \beta}\right) (e^{-\gamma\tau} - e^{-\beta\tau})
+$$
+
+
+&lt;p&gt;(This can be expanded to $s(t) = \frac{\alpha^{(k)}}{\gamma} + (s_0 - \frac{\alpha^{(k)}}{\gamma} + \frac{\alpha^{(k)} - \beta u_0}{\gamma - \beta})e^{-\gamma\tau} - (\frac{\alpha^{(k)} - \beta u_0}{\gamma - \beta})e^{-\beta\tau}$)&lt;/p&gt;
+&lt;p&gt;Where $\tau = t - t_0$.&lt;/p&gt;
+&lt;h3 id=&#34;steady-state-values&#34;&gt;Steady-State Values:&lt;/h3&gt;
+&lt;p&gt;From setting the derivatives to zero:&lt;/p&gt;
+
+$$
+u_\infty^{(k)} = \frac{\alpha^{(k)}}{\beta}
+$$
+
+
+
+$$
+s_\infty = \frac{\beta u_\infty^{(k)}}{\gamma} = \frac{\alpha^{(k)}}{\gamma}
+$$
+
+
+&lt;h3 id=&#34;new-variable-definitions&#34;&gt;New Variable Definitions:&lt;/h3&gt;
+
+$$
+\tilde{\beta} := \frac{\beta}{\gamma - \beta}
+$$
+
+
+
+$$
+\tilde{s}(t) := s(t) - \tilde{\beta}u(t)
+$$
+
+
+
+$$
+\tilde{s}_\infty := s_\infty - \tilde{\beta}u_\infty^{(k)}
+$$
+
+
+&lt;h2 id=&#34;derivation-steps&#34;&gt;Derivation Steps&lt;/h2&gt;
+&lt;p&gt;Our goal is to demonstrate: $\tilde{s}(t) - \tilde{s}_\infty = (\tilde{s}_0 - \tilde{s}_\infty)e^{-\gamma\tau}$.&lt;/p&gt;
+&lt;h3 id=&#34;1-express-ut-in-a-convenient-form&#34;&gt;1. Express u(t) in a convenient form:&lt;/h3&gt;
+&lt;p&gt;Let&amp;rsquo;s rewrite u(t) using its steady-state value $u_\infty^{(k)}$:&lt;/p&gt;
+
+$$
+u(t) = u_\infty^{(k)} + (u_0 - u_\infty^{(k)})e^{-\beta\tau}
+$$
+
+
+&lt;h3 id=&#34;2-substitute-st-and-ut-into-the-definition-of-&#34;&gt;2. Substitute s(t) and u(t) into the definition of $\tilde{s}(t)$:&lt;/h3&gt;
+
+$$
+\tilde{s}(t) = \left[\frac{\alpha^{(k)}}{\gamma} + \left(s_0 - \frac{\alpha^{(k)}}{\gamma} + \frac{\alpha^{(k)} - \beta u_0}{\gamma - \beta}\right)e^{-\gamma\tau} - \left(\frac{\alpha^{(k)} - \beta u_0}{\gamma - \beta}\right)e^{-\beta\tau}\right] - \tilde{\beta}\left[u_\infty^{(k)} + (u_0 - u_\infty^{(k)})e^{-\beta\tau}\right]
+$$
+
+
+&lt;p&gt;Now, substitute the definition of $\tilde{\beta} = \frac{\beta}{\gamma - \beta}$ and $u_\infty^{(k)} = \frac{\alpha^{(k)}}{\beta}$:&lt;/p&gt;
+
+$$
+\tilde{s}(t) = \left[\frac{\alpha^{(k)}}{\gamma} + \left(s_0 - \frac{\alpha^{(k)}}{\gamma} + \frac{\alpha^{(k)} - \beta u_0}{\gamma - \beta}\right)e^{-\gamma\tau} - \left(\frac{\alpha^{(k)} - \beta u_0}{\gamma - \beta}\right)e^{-\beta\tau}\right] - \frac{\beta}{\gamma - \beta}\left[\frac{\alpha^{(k)}}{\beta} + \left(u_0 - \frac{\alpha^{(k)}}{\beta}\right)e^{-\beta\tau}\right]
+$$
+
+
+&lt;p&gt;Let&amp;rsquo;s simplify the terms multiplied by $\tilde{\beta}$:&lt;/p&gt;
+
+$$
+\tilde{\beta}u_\infty^{(k)} = \frac{\beta}{\gamma - \beta} \cdot \frac{\alpha^{(k)}}{\beta} = \frac{\alpha^{(k)}}{\gamma - \beta}
+$$
+
+
+
+$$
+\tilde{\beta}(u_0 - u_\infty^{(k)}) = \frac{\beta}{\gamma - \beta}\left(u_0 - \frac{\alpha^{(k)}}{\beta}\right) = \frac{\beta}{\gamma - \beta}\left(\frac{\beta u_0 - \alpha^{(k)}}{\beta}\right) = \frac{\beta u_0 - \alpha^{(k)}}{\gamma - \beta}
+$$
+
+
+&lt;p&gt;Substitute these back into the expression for $\tilde{s}(t)$:&lt;/p&gt;
+
+$$
+\tilde{s}(t) = \left[\frac{\alpha^{(k)}}{\gamma} + \left(s_0 - \frac{\alpha^{(k)}}{\gamma} + \frac{\alpha^{(k)} - \beta u_0}{\gamma - \beta}\right)e^{-\gamma\tau} - \left(\frac{\alpha^{(k)} - \beta u_0}{\gamma - \beta}\right)e^{-\beta\tau}\right] - \left[\frac{\alpha^{(k)}}{\gamma - \beta} + \left(\frac{\beta u_0 - \alpha^{(k)}}{\gamma - \beta}\right)e^{-\beta\tau}\right]
+$$
+
+
+&lt;h3 id=&#34;3-cancel-the--terms&#34;&gt;3. Cancel the $e^{-\beta\tau}$ terms:&lt;/h3&gt;
+&lt;p&gt;Observe the coefficients of $e^{-\beta\tau}$:&lt;/p&gt;
+
+$$
+-\left(\frac{\alpha^{(k)} - \beta u_0}{\gamma - \beta}\right) - \left(\frac{\beta u_0 - \alpha^{(k)}}{\gamma - \beta}\right)
+$$
+
+
+&lt;p&gt;Since $\frac{\beta u_0 - \alpha^{(k)}}{\gamma - \beta} = -\frac{\alpha^{(k)} - \beta u_0}{\gamma - \beta}$, this simplifies to:&lt;/p&gt;
+
+$$
+-\left(\frac{\alpha^{(k)} - \beta u_0}{\gamma - \beta}\right) - \left(-\frac{\alpha^{(k)} - \beta u_0}{\gamma - \beta}\right) = -\left(\frac{\alpha^{(k)} - \beta u_0}{\gamma - \beta}\right) + \left(\frac{\alpha^{(k)} - \beta u_0}{\gamma - \beta}\right) = 0
+$$
+
+
+&lt;p&gt;The terms containing $e^{-\beta\tau}$ indeed cancel out, as intended by the choice of $\tilde{\beta}$.&lt;/p&gt;
+&lt;h3 id=&#34;4-simplify-&#34;&gt;4. Simplify $\tilde{s}(t)$:&lt;/h3&gt;
+
+$$
+\tilde{s}(t) = \left(\frac{\alpha^{(k)}}{\gamma} - \frac{\alpha^{(k)}}{\gamma - \beta}\right) + \left(s_0 - \frac{\alpha^{(k)}}{\gamma} + \frac{\alpha^{(k)} - \beta u_0}{\gamma - \beta}\right)e^{-\gamma\tau}
+$$
+
+
+&lt;p&gt;Let&amp;rsquo;s simplify the constant term:&lt;/p&gt;
+
+$$
+\frac{\alpha^{(k)}}{\gamma} - \frac{\alpha^{(k)}}{\gamma - \beta} = \alpha^{(k)}\left(\frac{1}{\gamma} - \frac{1}{\gamma - \beta}\right) = \alpha^{(k)}\left(\frac{(\gamma - \beta) - \gamma}{\gamma(\gamma - \beta)}\right) = \alpha^{(k)}\left(\frac{-\beta}{\gamma(\gamma - \beta)}\right) = -\frac{\alpha^{(k)} \beta}{\gamma(\gamma - \beta)}
+$$
+
+
+&lt;p&gt;So, we have:&lt;/p&gt;
+
+$$
+\tilde{s}(t) = -\frac{\alpha^{(k)} \beta}{\gamma(\gamma - \beta)} + \left(s_0 - \frac{\alpha^{(k)}}{\gamma} + \frac{\alpha^{(k)} - \beta u_0}{\gamma - \beta}\right)e^{-\gamma\tau}
+$$
+
+
+&lt;h3 id=&#34;5-calculate--and-&#34;&gt;5. Calculate $\tilde{s}_0$ and $\tilde{s}_\infty$:&lt;/h3&gt;
+&lt;p&gt;Given  $u_\infty^{(k)} = \frac{\alpha^{(k)}}{\beta}$ 
+,  $ s_\infty = \frac{\beta u_\infty^{(k)}}{\gamma} = \frac{\alpha^{(k)}}{\gamma}
+$ 
+ and the definition of $\tilde{s}_\infty$ and $\tilde{\beta}$, we derive below. You may also consider view $\tilde{s}_\infty$  as Steady-state of $\tilde{s}(t)$  ($\tau \to \infty$, $e^{-\gamma\tau} \to 0$ ).&lt;/p&gt;
+
+$$
+\tilde{s}_\infty = -\frac{\alpha^{(k)} \beta}{\gamma(\gamma - \beta)} (= \lim_{\tau \to \infty} \tilde{s}(t) )
+$$
+
+
+&lt;p&gt;&lt;strong&gt;$\tilde{s}_0$ (Initial value of $\tilde{s}(t)$ at $\tau = 0$):&lt;/strong&gt;&lt;/p&gt;
+
+$$
+\tilde{s}_0 = s(t_0) - \tilde{\beta}u(t_0) = s_0 - \tilde{\beta}u_0 = s_0 - \frac{\beta}{\gamma - \beta}u_0
+$$
+
+
+&lt;h3 id=&#34;6-verify-the-target-relationship&#34;&gt;6. Verify the target relationship: $\tilde{s}(t) - \tilde{s}_\infty = (\tilde{s}_0 - \tilde{s}_\infty)e^{-\gamma\tau}$&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;Left-Hand Side (LHS):&lt;/strong&gt;&lt;/p&gt;
+
+$$
+\tilde{s}(t) - \tilde{s}_\infty = \left(-\frac{\alpha^{(k)} \beta}{\gamma(\gamma - \beta)} + \left(s_0 - \frac{\alpha^{(k)}}{\gamma} + \frac{\alpha^{(k)} - \beta u_0}{\gamma - \beta}\right)e^{-\gamma\tau}\right) - \left(-\frac{\alpha^{(k)} \beta}{\gamma(\gamma - \beta)}\right)
+$$
+
+
+
+$$
+\tilde{s}(t) - \tilde{s}_\infty = \left(s_0 - \frac{\alpha^{(k)}}{\gamma} + \frac{\alpha^{(k)} - \beta u_0}{\gamma - \beta}\right)e^{-\gamma\tau}
+$$
+
+
+&lt;p&gt;&lt;strong&gt;Right-Hand Side (RHS):&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;First, calculate $(\tilde{s}_0 - \tilde{s}_\infty)$:&lt;/p&gt;
+
+$$
+(\tilde{s}_0 - \tilde{s}_\infty) = \left(s_0 - \frac{\beta u_0}{\gamma - \beta}\right) - \left(-\frac{\alpha^{(k)} \beta}{\gamma(\gamma - \beta)}\right) = s_0 - \frac{\beta u_0}{\gamma - \beta} + \frac{\alpha^{(k)} \beta}{\gamma(\gamma - \beta)}
+$$
+
+
+&lt;p&gt;Now, multiply by $e^{-\gamma\tau}$:&lt;/p&gt;
+
+$$
+(\tilde{s}_0 - \tilde{s}_\infty)e^{-\gamma\tau} = \left(s_0 - \frac{\beta u_0}{\gamma - \beta} + \frac{\alpha^{(k)} \beta}{\gamma(\gamma - \beta)}\right)e^{-\gamma\tau}
+$$
+
+
+&lt;p&gt;Finally, let&amp;rsquo;s compare the coefficients of $e^{-\gamma\tau}$ from both the LHS and RHS. We need to confirm that:&lt;/p&gt;
+
+$$
+s_0 - \frac{\alpha^{(k)}}{\gamma} + \frac{\alpha^{(k)} - \beta u_0}{\gamma - \beta} \text{ equals } s_0 - \frac{\beta u_0}{\gamma - \beta} + \frac{\alpha^{(k)} \beta}{\gamma(\gamma - \beta)}
+$$
+
+
+&lt;p&gt;Let&amp;rsquo;s simplify the terms without $s_0$:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;From LHS coefficient:&lt;/strong&gt;&lt;/p&gt;
+
+$$
+-\frac{\alpha^{(k)}}{\gamma} + \frac{\alpha^{(k)} - \beta u_0}{\gamma - \beta} = -\frac{\alpha^{(k)}}{\gamma} + \frac{\alpha^{(k)}}{\gamma - \beta} - \frac{\beta u_0}{\gamma - \beta}
+$$
+$$
+= \alpha^{(k)}\left(\frac{1}{\gamma - \beta} - \frac{1}{\gamma}\right) - \frac{\beta u_0}{\gamma - \beta}
+$$
+$$
+= \alpha^{(k)}\left(\frac{\gamma - (\gamma - \beta)}{\gamma(\gamma - \beta)}\right) - \frac{\beta u_0}{\gamma - \beta}
+$$
+$$
+= \alpha^{(k)}\left(\frac{\beta}{\gamma(\gamma - \beta)}\right) - \frac{\beta u_0}{\gamma - \beta} = \frac{\alpha^{(k)} \beta}{\gamma(\gamma - \beta)} - \frac{\beta u_0}{\gamma - \beta}
+$$
+
+
+&lt;p&gt;&lt;strong&gt;From RHS coefficient:&lt;/strong&gt;&lt;/p&gt;
+
+$$
+-\frac{\beta u_0}{\gamma - \beta} + \frac{\alpha^{(k)} \beta}{\gamma(\gamma - \beta)}
+$$
+
+
+&lt;p&gt;As you can see, the simplified coefficients from both sides are indeed identical.&lt;/p&gt;
+&lt;h2 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h2&gt;
+&lt;p&gt;By introducing the carefully chosen auxiliary variable $\tilde{\beta} = \frac{\beta}{\gamma - \beta}$, the transformation $\tilde{s}(t) = s(t) - \tilde{\beta}u(t)$ strategically eliminates the $e^{-\beta\tau}$ dependence from the solution of s(t). This simplification reveals a clean, exponential decay relationship for $\tilde{s}(t)$ towards its new steady-state value $\tilde{s}_\infty$, as expressed by:&lt;/p&gt;
+
+$$
+\tilde{s}(t) - \tilde{s}_\infty = (\tilde{s}_0 - \tilde{s}_\infty)e^{-\gamma\tau}
+$$
+
+
+&lt;p&gt;This shows how a more complex system can be transformed into a simpler, recognizable form by defining appropriate auxiliary variables.&lt;/p&gt;
+&lt;h1 id=&#34;b-derivation--in-equation-10-11-in-scvelo-paper&#34;&gt;B) Derivation: $\tau$ in equation (10, 11) in &lt;a href=&#34;https://www.nature.com/articles/s41587-020-0591-3&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;scVelo paper&lt;/a&gt;&lt;/h1&gt;
+&lt;p&gt;Above smoothly gives Inverse Relationship for $\tau$ in equation (10) in the &lt;a href=&#34;https://www.nature.com/articles/s41587-020-0591-3&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;scVelo paper&lt;/a&gt;. Although equation (11) looks not obvious, it actually requires even simpler reasoning.&lt;/p&gt;
+&lt;h2 id=&#34;derive-hahahugoshortcode34s32hbhb-in-equation-11&#34;&gt;Derive  $\tau$ 
+ in equation (11)&lt;/h2&gt;
+
+$$
+\tau = -\frac{1}{\beta}\ln\left(\frac{u - u_\infty^{(k)}}{u_0 - u_\infty^{(k)}}\right)
+$$
+
+
+&lt;p&gt;This expression makes sense given the solution for  $u(t)$ 
+ can be rewritten as below by substituting  $u_\infty^{(k)} = \frac{\alpha^{(k)}}{\beta}$ 
+:&lt;/p&gt;
+
+$$
+u(t) = u_\infty^{(k)} + (u_0 - u_\infty^{(k)})e^{-\beta\tau}
+$$
+
+
+&lt;p&gt;If we solve this for  $\tau$ 
+, we get:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Rearrange:  $u(t) - u_\infty^{(k)} = (u_0 - u_\infty^{(k)})e^{-\beta\tau}$ 
+&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Divide both sides by  $(u_0 - u_\infty^{(k)})$ 
+:  $\frac{u(t) - u_\infty^{(k)}}{u_0 - u_\infty^{(k)}} = e^{-\beta\tau}$ 
+&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Take natural log:  $\ln\left(\frac{u(t) - u_\infty^{(k)}}{u_0 - u_\infty^{(k)}}\right) = -\beta\tau$ 
+&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Solve for  $\tau$ 
+:  $\tau = -\frac{1}{\beta}\ln\left(\frac{u(t) - u_\infty^{(k)}}{u_0 - u_\infty^{(k)}}\right)$ 
+&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h1 id=&#34;c-explicit-formula-is-less-accurate-than-exact-optimization-in-scvelo&#34;&gt;C) Explicit Formula is Less Accurate than Exact Optimization in scVelo&lt;/h1&gt;
+&lt;p&gt;The difference in accuracy between the explicit formula and exact optimization comes down to &lt;strong&gt;model assumptions versus reality&lt;/strong&gt;. Let me explain:&lt;/p&gt;
+&lt;h2 id=&#34;why-the-explicit-formula-is-less-accurate&#34;&gt;Why the Explicit Formula is Less Accurate&lt;/h2&gt;
+&lt;h3 id=&#34;1-single-gene-assumption&#34;&gt;1. Single-Gene Assumption&lt;/h3&gt;
+&lt;p&gt;The explicit formula:&lt;/p&gt;
+
+$$\tau_i = -\frac{1}{\beta}\ln\left(\frac{u_i - u_\infty^{(k)}}{u_0 - u_\infty^{(k)}}\right)$$
+
+
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Uses only unspliced RNA&lt;/strong&gt;  $(u)$ 
+ from one gene&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Ignores spliced RNA&lt;/strong&gt;  $(s)$ 
+ information completely&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Assumes perfect adherence&lt;/strong&gt; to the theoretical kinetic model for that single gene&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;2-no-cross-gene-integration&#34;&gt;2. No Cross-Gene Integration&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Each gene would give a &lt;strong&gt;different time estimate&lt;/strong&gt; for the same cell&lt;/li&gt;
+&lt;li&gt;The formula doesn&amp;rsquo;t reconcile these conflicting estimates&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Gene-specific noise&lt;/strong&gt; and measurement errors aren&amp;rsquo;t averaged out&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;3-model-violations&#34;&gt;3. Model Violations&lt;/h3&gt;
+&lt;p&gt;Real cells don&amp;rsquo;t perfectly follow the kinetic equations because:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Transcriptional bursting&lt;/strong&gt; creates noise&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Cell-to-cell variability&lt;/strong&gt; in kinetic parameters&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Measurement noise&lt;/strong&gt; in RNA counts&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Model approximations&lt;/strong&gt; (e.g., constant degradation rates)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;why-exact-optimization-is-more-accurate&#34;&gt;Why Exact Optimization is More Accurate&lt;/h2&gt;
+&lt;h3 id=&#34;1-multi-gene-integration&#34;&gt;1. Multi-Gene Integration&lt;/h3&gt;
+&lt;p&gt;The optimization objective:&lt;/p&gt;
+
+$$\tau_i^* = \arg\min_\tau \sum_j \left[ (u_{i,j} - u_j(\tau))^2 + (s_{i,j} - s_j(\tau))^2 \right]$$
+
+
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Uses both unspliced AND spliced&lt;/strong&gt; RNA information&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Integrates evidence across ALL genes&lt;/strong&gt; simultaneously&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Finds the time that best explains the entire transcriptome&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;2-noise-averaging&#34;&gt;2. Noise Averaging&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Gene-specific measurement errors &lt;strong&gt;cancel out&lt;/strong&gt; when averaged&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Outlier genes&lt;/strong&gt; have less impact on the final time estimate&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Statistical power increases&lt;/strong&gt; with more observations&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;3-comprehensive-model-fitting&#34;&gt;3. Comprehensive Model Fitting&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Accounts for &lt;strong&gt;both RNA species&lt;/strong&gt;  $u$ 
+ and  $s$ 
+ jointly&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Balances competing evidence&lt;/strong&gt; from different genes&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Robust to individual gene model violations&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;computational-trade-off&#34;&gt;Computational Trade-off&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;Explicit Formula&lt;/strong&gt;:  $O(1)$ 
+ per cell&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Fast but uses limited information&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Exact Optimization&lt;/strong&gt;:  $O(n_{iter} \times n_{genes})$ 
+ per cell&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Slower but uses all available information&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;mathematical-perspective&#34;&gt;Mathematical Perspective&lt;/h2&gt;
+&lt;h3 id=&#34;information-content-comparison&#34;&gt;Information Content Comparison&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;Explicit Formula Information&lt;/strong&gt;:
+
+$$I_{explicit} = f(u_{i,j}) \text{ for single gene } j$$
+
+&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Exact Optimization Information&lt;/strong&gt;:
+
+$$I_{exact} = f(\{u_{i,j}, s_{i,j}\}_{j=1}^{N_{genes}})$$
+
+&lt;/p&gt;
+&lt;p&gt;Where  $I_{exact} &gt;&gt; I_{explicit}$ 
+ in terms of information content.&lt;/p&gt;
+&lt;h3 id=&#34;error-propagation&#34;&gt;Error Propagation&lt;/h3&gt;
+&lt;p&gt;For the explicit formula, measurement error in a single gene directly affects the time estimate:&lt;/p&gt;
+
+$$\sigma_{\tau}^2 \propto \frac{\sigma_u^2}{(u_i - u_\infty)^2}$$
+
+
+&lt;p&gt;For exact optimization, errors are averaged across genes:&lt;/p&gt;
+
+$$\sigma_{\tau}^2 \propto \frac{1}{N_{genes}} \sum_j \frac{\sigma_{u,j}^2 + \sigma_{s,j}^2}{(u_{i,j} - u_j(\tau))^2 + (s_{i,j} - s_j(\tau))^2}$$
+
+
+&lt;h2 id=&#34;biological-analogy&#34;&gt;Biological Analogy&lt;/h2&gt;
+&lt;p&gt;Think of it like &lt;strong&gt;estimating someone&amp;rsquo;s age&lt;/strong&gt;:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Explicit Formula&lt;/strong&gt; = Looking at just their hair color&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Quick, but hair color alone is unreliable&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Exact Optimization&lt;/strong&gt; = Looking at hair, skin, posture, clothing style, speech patterns, etc.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Takes more time, but gives a much better estimate by integrating multiple sources of evidence&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;why-the-two-stage-strategy-works&#34;&gt;Why the Two-Stage Strategy Works&lt;/h2&gt;
+&lt;p&gt;The two-stage approach in scVelo is brilliant because:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Stage 1 (Explicit)&lt;/strong&gt;: Gets &amp;ldquo;close enough&amp;rdquo; quickly when parameters are changing rapidly&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Stage 2 (Exact)&lt;/strong&gt;: Refines to high accuracy when parameters have stabilized&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;convergence-analysis&#34;&gt;Convergence Analysis&lt;/h3&gt;
+&lt;p&gt;Early iterations:  $|\theta^{(t)} - \theta^{(t-1)}|$ 
+ is large&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Approximate times sufficient since parameters will change significantly anyway&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Later iterations:  $|\theta^{(t)} - \theta^{(t-1)}| \approx 0$ 
+&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Exact times needed for final parameter refinement&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;computational-efficiency&#34;&gt;Computational Efficiency&lt;/h3&gt;
+&lt;p&gt;Total computational cost:&lt;/p&gt;
+
+$$\text{Cost} = T_{approx} \times O(1) + T_{exact} \times O(n_{iter} \times n_{genes})$$
+
+
+&lt;p&gt;Where  $T_{approx} &gt;&gt; T_{exact}$ 
+, making the overall algorithm much faster than using exact optimization throughout.&lt;/p&gt;
+&lt;h2 id=&#34;key-insight&#34;&gt;Key Insight&lt;/h2&gt;
+&lt;p&gt;The explicit formula serves as an excellent &lt;strong&gt;initialization and approximation&lt;/strong&gt; tool, while exact optimization provides the &lt;strong&gt;precision needed for final convergence&lt;/strong&gt;. This hybrid approach captures the best of both worlds: computational efficiency and high accuracy.&lt;/p&gt;
+&lt;h1 id=&#34;supplement-em-implementation&#34;&gt;Supplement. EM implementation&lt;/h1&gt;
+&lt;h2 id=&#34;gmm-em&#34;&gt;GMM EM&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;initialize&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;mu_k&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;sigma_k&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;pi_k&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;k&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;in&lt;/span&gt; &lt;span class=&#34;mf&#34;&gt;1.&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;K&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;while&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;not&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;converged&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;c1&#34;&gt;# E-step&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;x_i&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;in&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;data&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;k&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;in&lt;/span&gt; &lt;span class=&#34;mf&#34;&gt;1.&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;K&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;n&#34;&gt;log_p_x_given_z&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;((&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;x_i&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;mu_k&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;^&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;/&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;sigma_k&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;^&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;n&#34;&gt;log_p_z&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;log&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;pi_k&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;n&#34;&gt;logliks&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;k&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;log_p_x_given_z&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;log_p_z&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;n&#34;&gt;q_i&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;softmax&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;logliks&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;c1&#34;&gt;# M-step&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;k&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;in&lt;/span&gt; &lt;span class=&#34;mf&#34;&gt;1.&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;K&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;n&#34;&gt;N_k&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;sum_i&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;q_i&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;k&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;n&#34;&gt;mu_k&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;sum_i&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;q_i&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;k&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;x_i&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;/&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;N_k&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;n&#34;&gt;sigma_k&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;sqrt&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sum_i&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;q_i&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;k&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;x_i&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;mu_k&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;^&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;/&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;N_k&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;n&#34;&gt;pi_k&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;N_k&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;/&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;N&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;scvelo-em&#34;&gt;scVelo EM&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;initialize&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;theta&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;α&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;β&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;γ&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;while&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;not&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;converged&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;c1&#34;&gt;# E-step&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;n&#34;&gt;mu_traj&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;solve_ODE&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;t&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;theta&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;t&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;in&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;time_grid&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;x_i&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;in&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;data&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;j&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;mu_t&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;in&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;enumerate&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;mu_traj&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;n&#34;&gt;logliks&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;j&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-||&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;x_i&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;mu_t&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;||^&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;/&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;σ&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;n&#34;&gt;q_i&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;softmax&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;logliks&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;c1&#34;&gt;# M-step&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;k&#34;&gt;def&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;loss_fn&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;theta&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;n&#34;&gt;loss&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;x_i&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;q_i&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;in&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;zip&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;data&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;q_all&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;j&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;t_j&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;in&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;enumerate&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;time_grid&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                &lt;span class=&#34;n&#34;&gt;mu_tj&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;solve_ODE&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;t_j&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;theta&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                &lt;span class=&#34;n&#34;&gt;loss&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;q_i&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;j&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;||&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;x_i&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;mu_tj&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;||^&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;loss&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;n&#34;&gt;theta&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;optimize&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;loss_fn&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;h2 id=&#34;scvelo-em-with-learnable-time-prior-π_j&#34;&gt;scVelo EM with Learnable Time Prior π_j&lt;/h2&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;initialize&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;theta&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;α&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;β&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;γ&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;initialize&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;π&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;T&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;T&lt;/span&gt;  &lt;span class=&#34;c1&#34;&gt;# uniform over time grid&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;while&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;not&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;converged&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;c1&#34;&gt;# E-step&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;n&#34;&gt;mu_traj&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;solve_ODE&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;t&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;theta&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;t&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;in&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;time_grid&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;x_i&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;in&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;data&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;j&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;mu_t&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;in&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;enumerate&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;mu_traj&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;n&#34;&gt;logliks&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;j&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-||&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;x_i&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;mu_t&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;||^&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;/&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;σ&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;log&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;π&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;j&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;])&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;n&#34;&gt;q_i&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;softmax&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;logliks&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;c1&#34;&gt;# M-step&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;n&#34;&gt;π&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;j&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;sum_i&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;q_i&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;j&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;/&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;N&lt;/span&gt;  &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;all&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;j&lt;/span&gt;  &lt;span class=&#34;c1&#34;&gt;# update time prior&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;k&#34;&gt;def&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;loss_fn&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;theta&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;n&#34;&gt;loss&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;x_i&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;q_i&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;in&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;zip&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;data&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;q_all&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;j&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;t_j&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;in&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;enumerate&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;time_grid&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                &lt;span class=&#34;n&#34;&gt;mu_tj&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;solve_ODE&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;t_j&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;theta&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                &lt;span class=&#34;n&#34;&gt;loss&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;q_i&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;j&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;||&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;x_i&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;mu_tj&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;||^&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;loss&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;n&#34;&gt;theta&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;optimize&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;loss_fn&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+    </item>
     
     <item>
       <title>🧬 Math derivation for steady-state RNA velocity model</title>
@@ -67,7 +738,7 @@ $$
 , i.e., the steady-state ratio.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;hr&gt;
-&lt;h3 id=&#34;b-derive-least-squares-solution-for-estimating-the-steady-state-ratio-gamma_0&#34;&gt;B. Derive Least Squares Solution for Estimating the Steady-State Ratio $\gamma_0$&lt;/h3&gt;
+&lt;h3 id=&#34;b-derive-least-squares-solution-for-estimating-the-steady-state-ratio&#34;&gt;B. Derive Least Squares Solution for Estimating the Steady-State Ratio $\gamma_0$&lt;/h3&gt;
 &lt;p&gt;Let’s walk through the full derivation of the least squares solution for estimating the steady-state ratio $\gamma_0$
 , which minimizes the squared difference between the unspliced and spliced counts scaled by $\gamma_0$
 .&lt;/p&gt;
@@ -113,7 +784,7 @@ $$
 
 
 &lt;hr&gt;
-&lt;h4 id=&#34;-minimize-with-respect-to-gamma_0&#34;&gt;📉 Minimize with Respect to $\gamma_0$&lt;/h4&gt;
+&lt;h4 id=&#34;-minimize-with-respect-to&#34;&gt;📉 Minimize with Respect to $\gamma_0$&lt;/h4&gt;
 &lt;p&gt;Take derivative with respect to $\gamma_0$
  and set it to zero:&lt;/p&gt;
 
@@ -320,7 +991,7 @@ $$\theta = (X^\top X)^{-1} X^\top u$$
 
 
 &lt;p&gt;Let&amp;rsquo;s compute each term step by step.&lt;/p&gt;
-&lt;h5 id=&#34;33-compute-xtop-x&#34;&gt;3.3 Compute $X^\top X$&lt;/h5&gt;
+&lt;h5 id=&#34;33-compute&#34;&gt;3.3 Compute $X^\top X$&lt;/h5&gt;
 
 $$X^\top X = \begin{bmatrix} \sum s_i^2 &amp; \sum s_i \\ \sum s_i &amp; n \end{bmatrix}$$
 
@@ -339,7 +1010,7 @@ $$X^\top X = \begin{bmatrix} \sum s_i^2 &amp; \sum s_i \\ \sum s_i &amp; n \end{
 $$X^\top X = \begin{bmatrix} S_2 &amp; S \\ S &amp; n \end{bmatrix}$$
 
 
-&lt;h5 id=&#34;34-compute-xtop-u&#34;&gt;3.4 Compute $X^\top u$&lt;/h5&gt;
+&lt;h5 id=&#34;34-compute&#34;&gt;3.4 Compute $X^\top u$&lt;/h5&gt;
 
 $$X^\top u = \begin{bmatrix} \sum s_i u_i \\ \sum u_i \end{bmatrix}$$
 
@@ -356,7 +1027,7 @@ $$X^\top u = \begin{bmatrix} \sum s_i u_i \\ \sum u_i \end{bmatrix}$$
 $$X^\top u = \begin{bmatrix} SU \\ U \end{bmatrix}$$
 
 
-&lt;h5 id=&#34;35-solve-theta--xtop-x-1-xtop-u&#34;&gt;3.5 Solve $\theta = (X^\top X)^{-1} X^\top u$&lt;/h5&gt;
+&lt;h5 id=&#34;35-solve&#34;&gt;3.5 Solve $\theta = (X^\top X)^{-1} X^\top u$&lt;/h5&gt;
 &lt;p&gt;The inverse of a $2\times2$
  matrix:&lt;/p&gt;
 
@@ -483,7 +1154,7 @@ $$(u-X\theta)^\top(u-X\theta) = u^\top u - 2\theta^\top X^\top u + \theta^\top X
 &lt;li&gt;$u^\top X\theta = \theta^\top X^\top u$
  (scalar equality)&lt;/li&gt;
 &lt;/ol&gt;
-&lt;h5 id=&#34;step-3-take-the-gradient-with-respect-to-theta&#34;&gt;Step 3: Take the Gradient with Respect to $\theta$&lt;/h5&gt;
+&lt;h5 id=&#34;step-3-take-the-gradient-with-respect-to&#34;&gt;Step 3: Take the Gradient with Respect to $\theta$&lt;/h5&gt;
 &lt;p&gt;We differentiate term by term:&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;

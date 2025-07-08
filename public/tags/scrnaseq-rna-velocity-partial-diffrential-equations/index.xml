@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>ScRNAseq RNA Velocity, Partial Diffrential Equations | Jiyuan Liu</title>
+    <link>http://localhost:1313/tags/scrnaseq-rna-velocity-partial-diffrential-equations/</link>
+      <atom:link href="http://localhost:1313/tags/scrnaseq-rna-velocity-partial-diffrential-equations/index.xml" rel="self" type="application/rss+xml" />
+    <description>ScRNAseq RNA Velocity, Partial Diffrential Equations</description>
+    <generator>Hugo Blox Builder (https://hugoblox.com)</generator><language>en-us</language><lastBuildDate>Wed, 28 May 2025 00:00:00 +0000</lastBuildDate>
+    <image>
+      <url>http://localhost:1313/media/icon_hu6671943710606299486.png</url>
+      <title>ScRNAseq RNA Velocity, Partial Diffrential Equations</title>
+      <link>http://localhost:1313/tags/scrnaseq-rna-velocity-partial-diffrential-equations/</link>
+    </image>
+    
+    <item>
+      <title>🧬 Dynamic RNA velocity model-- (1) math solutions</title>
+      <link>http://localhost:1313/post/11d.velocity_dynamic_model_derivation/</link>
+      <pubDate>Wed, 28 May 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/post/11d.velocity_dynamic_model_derivation/</guid>
+      <description>&lt;h3 id=&#34;introduction&#34;&gt;Introduction&lt;/h3&gt;
+&lt;p&gt;The steady‑state model’s reliance on true steady states is at odds with &lt;a href=&#34;https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1010492&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;known biophysical behavior&lt;/a&gt;. The dynamic model removes that requirement to broaden RNA velocity’s applicability, but inevitably introduces new assumptions that won’t hold for every dataset. Effective use of dynamic model therefore demands a clear understanding of its strengths and limitations. In this first installment of our blog series, we’ll delve into the mathematical foundations of the dynamic model.&lt;/p&gt;
+&lt;h3 id=&#34;symbol-definitions&#34;&gt;Symbol definitions&lt;/h3&gt;
+&lt;p&gt;Please refer to the &lt;a href=&#34;https://www.nature.com/articles/s41587-020-0591-3&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Nature Biotechnology paper&lt;/a&gt; for the definitions of the symbols used in this derivation.&lt;/p&gt;
+&lt;h3 id=&#34;dynamic-solutions-for-rna-velocity-model&#34;&gt;Dynamic Solutions for RNA Velocity Model&lt;/h3&gt;
+&lt;p&gt;To derive the solution for s(t) from the given system of differential equations, we will follow a two-step process:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Solve the first differential equation for u(t) using the initial condition u(t₀)=u₀.&lt;/li&gt;
+&lt;li&gt;Substitute the expression for u(t) into the second differential equation and then solve for s(t) using the initial condition s(t₀)=s₀.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h4 id=&#34;step-1-solve-for-ut&#34;&gt;Step 1: Solve for u(t)&lt;/h4&gt;
+&lt;p&gt;The first differential equation is:&lt;/p&gt;
+  
+$$
+\frac{du(t)}{dt}=\alpha-\beta u(t)
+$$  
+
+
+&lt;p&gt;Rearrange it into the standard form for a first-order linear ODE:&lt;/p&gt;
+  
+$$
+\frac{du(t)}{dt}+\beta u(t)=\alpha
+$$  
+
+
+&lt;p&gt;This is a linear first-order differential equation of the form $\frac{dy}{dx}+P(x)y=Q(x)$, where P(t)=β and Q(t)=α.
+The integrating factor (IF) is $e^{\int P(t)dt}=e^{\int \beta dt}=e^{\beta t}$.&lt;/p&gt;
+&lt;p&gt;Multiply the entire equation by the integrating factor:&lt;/p&gt;
+  
+$$
+e^{\beta t}\frac{du(t)}{dt}+\beta u(t)e^{\beta t}=\alpha e^{\beta t}
+$$  
+
+
+&lt;p&gt;The left side is the derivative of the product $(u(t)e^{\beta t})$:&lt;/p&gt;
+  
+$$
+\frac{d}{dt}(u(t)e^{\beta t})=\alpha e^{\beta t}
+$$  
+
+
+&lt;p&gt;Integrate both sides with respect to t:&lt;/p&gt;
+  
+$$
+\int \frac{d}{dt}(u(t)e^{\beta t})dt=\int \alpha e^{\beta t}dt
+$$
+$$
+u(t)e^{\beta t}=\frac{\alpha}{\beta}e^{\beta t}+C_1
+$$  
+
+
+&lt;p&gt;Now, solve for u(t):&lt;/p&gt;
+  
+$$
+u(t)=\frac{\alpha}{\beta}+C_1e^{-\beta t}
+$$  
+
+
+&lt;p&gt;Use the initial condition u(t₀)=u₀ to find C₁:&lt;/p&gt;
+  
+$$
+u_0=\frac{\alpha}{\beta}+C_1e^{-\beta t_0}
+$$
+$$
+C_1e^{-\beta t_0}=u_0-\frac{\alpha}{\beta}
+$$
+$$
+C_1=(u_0-\frac{\alpha}{\beta})e^{\beta t_0}
+$$  
+
+
+&lt;p&gt;Substitute C₁ back into the equation for u(t):&lt;/p&gt;
+  
+$$
+u(t)=\frac{\alpha}{\beta}+(u_0-\frac{\alpha}{\beta})e^{\beta t_0}e^{-\beta t}
+$$
+$$
+u(t)=\frac{\alpha}{\beta}+(u_0-\frac{\alpha}{\beta})e^{-\beta(t-t_0)}
+$$  
+
+
+&lt;h4 id=&#34;step-2-solve-for-st&#34;&gt;Step 2: Solve for s(t)&lt;/h4&gt;
+&lt;p&gt;Now that we have u(t), we can solve the second differential equation:&lt;/p&gt;
+  
+$$
+\frac{ds(t)}{dt}=\beta u(t)-\gamma s(t)
+$$  
+
+
+&lt;p&gt;Substitute the expression for u(t):&lt;/p&gt;
+  
+$$
+\frac{ds(t)}{dt}=\beta[\frac{\alpha}{\beta}+(u_0-\frac{\alpha}{\beta})e^{-\beta(t-t_0)}]-\gamma s(t)
+$$
+$$
+\frac{ds(t)}{dt}+\gamma s(t)=\alpha+(u_0\beta-\alpha)e^{-\beta(t-t_0)}
+$$  
+
+
+&lt;p&gt;This is again a linear first-order differential equation. The integrating factor is $e^{\gamma t}$.&lt;/p&gt;
+&lt;p&gt;Multiply both sides by the integrating factor:&lt;/p&gt;
+  
+$$
+\frac{d}{dt}(s(t)e^{\gamma t})=\alpha e^{\gamma t}+(u_0\beta-\alpha)e^{\gamma t}e^{-\beta(t-t_0)}
+$$  
+
+
+&lt;p&gt;Integrate both sides:&lt;/p&gt;
+  
+$$
+s(t)e^{\gamma t}=\frac{\alpha}{\gamma}e^{\gamma t}+(u_0\beta-\alpha)\int e^{\gamma t}e^{-\beta(t-t_0)}dt+C_2
+$$  
+
+
+&lt;p&gt;Simplify the integral:&lt;/p&gt;
+  
+$$
+s(t)e^{\gamma t}=\frac{\alpha}{\gamma}e^{\gamma t}+(u_0\beta-\alpha)e^{\beta t_0}\int e^{(\gamma-\beta)t}dt+C_2
+$$
+$$
+s(t)e^{\gamma t}=\frac{\alpha}{\gamma}e^{\gamma t}+(u_0\beta-\alpha)e^{\beta t_0}\frac{e^{(\gamma-\beta)t}}{\gamma-\beta}+C_2
+$$  
+
+
+&lt;p&gt;Solve for s(t):&lt;/p&gt;
+  
+$$
+s(t)=\frac{\alpha}{\gamma}+(u_0\beta-\alpha)e^{\beta t_0}\frac{e^{-\beta t}}{\gamma-\beta}+C_2e^{-\gamma t}
+$$  
+
+
+&lt;p&gt;Use the initial condition s(t₀)=s₀ to find C₂:&lt;/p&gt;
+  
+$$
+s_0=\frac{\alpha}{\gamma}+(u_0\beta-\alpha)\frac{e^{-\beta t_0+\beta t_0}}{\gamma-\beta}+C_2e^{-\gamma t_0}
+$$
+$$
+C_2e^{-\gamma t_0}=s_0-\frac{\alpha}{\gamma}-(u_0\beta-\alpha)\frac{1}{\gamma-\beta}
+$$
+$$
+C_2=[s_0-\frac{\alpha}{\gamma}-(u_0\beta-\alpha)\frac{1}{\gamma-\beta}]e^{\gamma t_0}
+$$  
+
+
+&lt;p&gt;The complete solution for s(t) is:&lt;/p&gt;
+  
+$$
+s(t)=\frac{\alpha}{\gamma}+\frac{u_0\beta-\alpha}{\gamma-\beta}e^{-\beta(t-t_0)}+[s_0-\frac{\alpha}{\gamma}-\frac{u_0\beta-\alpha}{\gamma-\beta}]e^{-\gamma(t-t_0)}
+$$  
+
+
+&lt;h4 id=&#34;special-case-if-γβ&#34;&gt;Special case: If γ=β&lt;/h4&gt;
+&lt;p&gt;If γ=β, the integral becomes:&lt;/p&gt;
+  
+$$
+\int(βu_0-α)e^{(γ-β)t+βt_0}dt=(βu_0-α)e^{βt_0}\int dt=(βu_0-α)e^{βt_0}t
+$$  
+
+
+&lt;p&gt;Then,&lt;/p&gt;
+  
+$$
+s(t)e^{γt}=\frac{α}{γ}e^{γt}+(βu_0-α)e^{βt_0}t+C_2
+$$
+$$
+s(t)=\frac{α}{γ}+(βu_0-α)te^{-γt+βt_0}+C_2e^{-γt}
+$$  
+
+
+&lt;p&gt;Since γ=β:&lt;/p&gt;
+  
+$$
+s(t)=\frac{α}{γ}+(γu_0-α)te^{-γ(t-t_0)}+C_2e^{-γt}
+$$
+$$
+s(t)=\frac{α}{γ}+(γu_0-α)(t_0+τ)e^{-γτ}+C_2e^{-γ(t_0+τ)}
+$$  
+
+
+&lt;p&gt;This scenario is not covered by the target equation, which explicitly has a denominator (γ−β), implying γ≠β.&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

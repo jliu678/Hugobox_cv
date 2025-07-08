@@ -7,7 +7,7 @@
     <description>Jiyuan Liu</description>
     <generator>Hugo Blox Builder (https://hugoblox.com)</generator><language>en-us</language><lastBuildDate>Mon, 24 Oct 2022 00:00:00 +0000</lastBuildDate>
     <image>
-      <url>http://localhost:1313/media/icon_hu6671943710606299486.png</url>
+      <url>http://localhost:1313/media/icon_hu_fd2be5a69becaf9e.png</url>
       <title>Jiyuan Liu</title>
       <link>http://localhost:1313/</link>
     </image>
@@ -34,11 +34,12 @@
     </item>
     
     <item>
-      <title>🧬 Math derivation for Dynamic RNA velocity model</title>
+      <title>🧬 Dynamic RNA velocity model-- (1) math solutions</title>
       <link>http://localhost:1313/post/11d.velocity_dynamic_model_derivation/</link>
       <pubDate>Wed, 28 May 2025 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/post/11d.velocity_dynamic_model_derivation/</guid>
-      <description>&lt;p&gt;The steady‑state model’s reliance on true steady states is at odds with &lt;a href=&#34;https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1010492&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;known biophysical behavior&lt;/a&gt;. The dynamic model removes that requirement to broaden RNA velocity’s applicability, but inevitably introduces new assumptions that won’t hold for every dataset. Effective use of dynamic model therefore demands a clear understanding of its strengths and limitations. In this first installment of our blog series, we’ll delve into the mathematical foundations of the dynamic model.&lt;/p&gt;
+      <description>&lt;h3 id=&#34;introduction&#34;&gt;Introduction&lt;/h3&gt;
+&lt;p&gt;The steady‑state model’s reliance on true steady states is at odds with &lt;a href=&#34;https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1010492&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;known biophysical behavior&lt;/a&gt;. The dynamic model removes this requirement to broaden RNA velocity’s applicability but inevitably introduces new assumptions that may not hold for every dataset. Effective use of the dynamic model therefore demands a clear understanding of its strengths and limitations. Our blog series toward this goal begins by delving into the mathematical foundations of the dynamic model.&lt;/p&gt;
 &lt;h3 id=&#34;symbol-definitions&#34;&gt;Symbol definitions&lt;/h3&gt;
 &lt;p&gt;Please refer to the &lt;a href=&#34;https://www.nature.com/articles/s41587-020-0591-3&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;Nature Biotechnology paper&lt;/a&gt; for the definitions of the symbols used in this derivation.&lt;/p&gt;
 &lt;h3 id=&#34;dynamic-solutions-for-rna-velocity-model&#34;&gt;Dynamic Solutions for RNA Velocity Model&lt;/h3&gt;
@@ -221,6 +222,622 @@ $$
     </item>
     
     <item>
+      <title>🧬 Dynamic RNA velocity model-- (2) parameter inference</title>
+      <link>http://localhost:1313/post/11e.velocity_dynamic_model_inference/</link>
+      <pubDate>Wed, 28 May 2025 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/post/11e.velocity_dynamic_model_inference/</guid>
+      <description>&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
+&lt;p&gt;To effectively apply the dynamic model for revealing RNA velocity in single-cell RNA-seq data, this second installment of our blog series takes a deep dive into its parameter inference using a two-stage EM algorithm. In this approach, latent time is initially assigned using an explicit formula, and then refined through standard optimization during the &amp;ldquo;Expectation&amp;rdquo; step of the final EM iteration.&lt;/p&gt;
+&lt;h2 id=&#34;overview&#34;&gt;Overview&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;section A) and B) derives the equations (9-11) in the &lt;a href=&#34;https://www.nature.com/articles/s41587-020-0591-3&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;scVelo paper&lt;/a&gt;, which together give the explicit formula for latent time  $\tau$ 
+ in terms of unspliced RNA  $u$ 
+, spliced RNA  $s$ 
+, and kinetic parameters  $\alpha^{(k)}$ 
+,  $\beta$ 
+, and  $\gamma$ 
+&lt;/li&gt;
+&lt;li&gt;section C) explains why the explicit formula is less accurate than exact optimization&lt;/li&gt;
+&lt;li&gt;section D) compares the EM implementation for scVelo parameter inference with classical Gaussian Mixture Model (GMM) EM algorithm, and proposes a sketch of EM for RNA velocity with learnable time prior  \pi_j 
+.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;symbol-definitions&#34;&gt;Symbol definitions&lt;/h2&gt;
+&lt;p&gt;Please refer to the &lt;a href=&#34;https://www.nature.com/articles/s41587-020-0591-3&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;scVelo paper&lt;/a&gt; for the definitions of the symbols used in this derivation.&lt;/p&gt;
+&lt;h2 id=&#34;a-derive-equations-9-10-in-scvelo-paper&#34;&gt;A) Derive equations (9-10) in &lt;a href=&#34;https://www.nature.com/articles/s41587-020-0591-3&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;scVelo paper&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;Let&amp;rsquo;s derive the relationship $\tilde{s}(t) - \tilde{s}_\infty = (\tilde{s}_0 - \tilde{s}_\infty)e^{-\gamma\tau}$ from the provided information.&lt;/p&gt;
+&lt;h3 id=&#34;given-information&#34;&gt;Given Information&lt;/h3&gt;
+&lt;h4 id=&#34;system-of-differential-equations&#34;&gt;System of Differential Equations:&lt;/h4&gt;
+
+$$
+\frac{du(t)}{dt} = \alpha^{(k)} - \beta u(t)
+$$
+
+
+
+$$
+\frac{ds(t)}{dt} = \beta u(t) - \gamma s(t)
+$$
+
+
+&lt;h4 id=&#34;solutions-for-ut-and-st&#34;&gt;Solutions for u(t) and s(t):&lt;/h4&gt;
+
+$$
+u(t) = u_0 e^{-\beta\tau} + \frac{\alpha^{(k)}}{\beta} (1 - e^{-\beta\tau})
+$$
+
+
+&lt;p&gt;(This can be rewritten as $u(t) = \frac{\alpha^{(k)}}{\beta} + (u_0 - \frac{\alpha^{(k)}}{\beta})e^{-\beta\tau}$)&lt;/p&gt;
+
+$$
+s(t) = s_0 e^{-\gamma\tau} + \frac{\alpha^{(k)}}{\gamma} (1 - e^{-\gamma\tau}) + \left(\frac{\alpha^{(k)} - \beta u_0}{\gamma - \beta}\right) (e^{-\gamma\tau} - e^{-\beta\tau})
+$$
+
+
+&lt;p&gt;(This can be expanded to $s(t) = \frac{\alpha^{(k)}}{\gamma} + (s_0 - \frac{\alpha^{(k)}}{\gamma} + \frac{\alpha^{(k)} - \beta u_0}{\gamma - \beta})e^{-\gamma\tau} - (\frac{\alpha^{(k)} - \beta u_0}{\gamma - \beta})e^{-\beta\tau}$)&lt;/p&gt;
+&lt;p&gt;Where $\tau = t - t_0$.&lt;/p&gt;
+&lt;h4 id=&#34;steady-state-values&#34;&gt;Steady-State Values:&lt;/h4&gt;
+&lt;p&gt;From setting the derivatives to zero:&lt;/p&gt;
+
+$$
+u_\infty^{(k)} = \frac{\alpha^{(k)}}{\beta}
+$$
+
+
+
+$$
+s_\infty = \frac{\beta u_\infty^{(k)}}{\gamma} = \frac{\alpha^{(k)}}{\gamma}
+$$
+
+
+&lt;h4 id=&#34;new-variable-definitions&#34;&gt;New Variable Definitions:&lt;/h4&gt;
+
+$$
+\tilde{\beta} := \frac{\beta}{\gamma - \beta}
+$$
+
+
+
+$$
+\tilde{s}(t) := s(t) - \tilde{\beta}u(t)
+$$
+
+
+
+$$
+\tilde{s}_\infty := s_\infty - \tilde{\beta}u_\infty^{(k)}
+$$
+
+
+&lt;h3 id=&#34;derivation-steps&#34;&gt;Derivation Steps&lt;/h3&gt;
+&lt;p&gt;Our goal is to demonstrate: $\tilde{s}(t) - \tilde{s}_\infty = (\tilde{s}_0 - \tilde{s}_\infty)e^{-\gamma\tau}$.&lt;/p&gt;
+&lt;h4 id=&#34;1-express-ut-in-a-convenient-form&#34;&gt;1. Express u(t) in a convenient form:&lt;/h4&gt;
+&lt;p&gt;Let&amp;rsquo;s rewrite u(t) using its steady-state value $u_\infty^{(k)}$:&lt;/p&gt;
+
+$$
+u(t) = u_\infty^{(k)} + (u_0 - u_\infty^{(k)})e^{-\beta\tau}
+$$
+
+
+&lt;h4 id=&#34;2-substitute-st-and-ut-into-the-definition-of-&#34;&gt;2. Substitute s(t) and u(t) into the definition of $\tilde{s}(t)$:&lt;/h4&gt;
+
+$$
+\tilde{s}(t) = \left[\frac{\alpha^{(k)}}{\gamma} + \left(s_0 - \frac{\alpha^{(k)}}{\gamma} + \frac{\alpha^{(k)} - \beta u_0}{\gamma - \beta}\right)e^{-\gamma\tau} - \left(\frac{\alpha^{(k)} - \beta u_0}{\gamma - \beta}\right)e^{-\beta\tau}\right] - \tilde{\beta}\left[u_\infty^{(k)} + (u_0 - u_\infty^{(k)})e^{-\beta\tau}\right]
+$$
+
+
+&lt;p&gt;Now, substitute the definition of $\tilde{\beta} = \frac{\beta}{\gamma - \beta}$ and $u_\infty^{(k)} = \frac{\alpha^{(k)}}{\beta}$:&lt;/p&gt;
+
+$$
+\tilde{s}(t) = \left[\frac{\alpha^{(k)}}{\gamma} + \left(s_0 - \frac{\alpha^{(k)}}{\gamma} + \frac{\alpha^{(k)} - \beta u_0}{\gamma - \beta}\right)e^{-\gamma\tau} - \left(\frac{\alpha^{(k)} - \beta u_0}{\gamma - \beta}\right)e^{-\beta\tau}\right] - \frac{\beta}{\gamma - \beta}\left[\frac{\alpha^{(k)}}{\beta} + \left(u_0 - \frac{\alpha^{(k)}}{\beta}\right)e^{-\beta\tau}\right]
+$$
+
+
+&lt;p&gt;Let&amp;rsquo;s simplify the terms multiplied by $\tilde{\beta}$:&lt;/p&gt;
+
+$$
+\tilde{\beta}u_\infty^{(k)} = \frac{\beta}{\gamma - \beta} \cdot \frac{\alpha^{(k)}}{\beta} = \frac{\alpha^{(k)}}{\gamma - \beta}
+$$
+
+
+
+$$
+\tilde{\beta}(u_0 - u_\infty^{(k)}) = \frac{\beta}{\gamma - \beta}\left(u_0 - \frac{\alpha^{(k)}}{\beta}\right) = \frac{\beta}{\gamma - \beta}\left(\frac{\beta u_0 - \alpha^{(k)}}{\beta}\right) = \frac{\beta u_0 - \alpha^{(k)}}{\gamma - \beta}
+$$
+
+
+&lt;p&gt;Substitute these back into the expression for $\tilde{s}(t)$:&lt;/p&gt;
+
+$$
+\tilde{s}(t) = \left[\frac{\alpha^{(k)}}{\gamma} + \left(s_0 - \frac{\alpha^{(k)}}{\gamma} + \frac{\alpha^{(k)} - \beta u_0}{\gamma - \beta}\right)e^{-\gamma\tau} - \left(\frac{\alpha^{(k)} - \beta u_0}{\gamma - \beta}\right)e^{-\beta\tau}\right] - \left[\frac{\alpha^{(k)}}{\gamma - \beta} + \left(\frac{\beta u_0 - \alpha^{(k)}}{\gamma - \beta}\right)e^{-\beta\tau}\right]
+$$
+
+
+&lt;h4 id=&#34;3-cancel-the--terms&#34;&gt;3. Cancel the $e^{-\beta\tau}$ terms:&lt;/h4&gt;
+&lt;p&gt;Observe the coefficients of $e^{-\beta\tau}$:&lt;/p&gt;
+
+$$
+-\left(\frac{\alpha^{(k)} - \beta u_0}{\gamma - \beta}\right) - \left(\frac{\beta u_0 - \alpha^{(k)}}{\gamma - \beta}\right)
+$$
+
+
+&lt;p&gt;Since $\frac{\beta u_0 - \alpha^{(k)}}{\gamma - \beta} = -\frac{\alpha^{(k)} - \beta u_0}{\gamma - \beta}$, this simplifies to:&lt;/p&gt;
+
+$$
+-\left(\frac{\alpha^{(k)} - \beta u_0}{\gamma - \beta}\right) - \left(-\frac{\alpha^{(k)} - \beta u_0}{\gamma - \beta}\right) = -\left(\frac{\alpha^{(k)} - \beta u_0}{\gamma - \beta}\right) + \left(\frac{\alpha^{(k)} - \beta u_0}{\gamma - \beta}\right) = 0
+$$
+
+
+&lt;p&gt;The terms containing $e^{-\beta\tau}$ indeed cancel out, as intended by the choice of $\tilde{\beta}$.&lt;/p&gt;
+&lt;h4 id=&#34;4-simplify-&#34;&gt;4. Simplify $\tilde{s}(t)$:&lt;/h4&gt;
+
+$$
+\tilde{s}(t) = \left(\frac{\alpha^{(k)}}{\gamma} - \frac{\alpha^{(k)}}{\gamma - \beta}\right) + \left(s_0 - \frac{\alpha^{(k)}}{\gamma} + \frac{\alpha^{(k)} - \beta u_0}{\gamma - \beta}\right)e^{-\gamma\tau}
+$$
+
+
+&lt;p&gt;Let&amp;rsquo;s simplify the constant term:&lt;/p&gt;
+
+$$
+\frac{\alpha^{(k)}}{\gamma} - \frac{\alpha^{(k)}}{\gamma - \beta} = \alpha^{(k)}\left(\frac{1}{\gamma} - \frac{1}{\gamma - \beta}\right) = \alpha^{(k)}\left(\frac{(\gamma - \beta) - \gamma}{\gamma(\gamma - \beta)}\right) = \alpha^{(k)}\left(\frac{-\beta}{\gamma(\gamma - \beta)}\right) = -\frac{\alpha^{(k)} \beta}{\gamma(\gamma - \beta)}
+$$
+
+
+&lt;p&gt;So, we have:&lt;/p&gt;
+
+$$
+\tilde{s}(t) = -\frac{\alpha^{(k)} \beta}{\gamma(\gamma - \beta)} + \left(s_0 - \frac{\alpha^{(k)}}{\gamma} + \frac{\alpha^{(k)} - \beta u_0}{\gamma - \beta}\right)e^{-\gamma\tau}
+$$
+
+
+&lt;h4 id=&#34;5-calculate--and-&#34;&gt;5. Calculate $\tilde{s}_0$ and $\tilde{s}_\infty$:&lt;/h4&gt;
+&lt;p&gt;Given  $u_\infty^{(k)} = \frac{\alpha^{(k)}}{\beta}$ 
+,  $ s_\infty = \frac{\beta u_\infty^{(k)}}{\gamma} = \frac{\alpha^{(k)}}{\gamma}
+$ 
+ and the definition of $\tilde{s}_\infty$ and $\tilde{\beta}$, we derive below. You may also consider view $\tilde{s}_\infty$  as Steady-state of $\tilde{s}(t)$  ($\tau \to \infty$, $e^{-\gamma\tau} \to 0$ ).&lt;/p&gt;
+
+$$
+\tilde{s}_\infty = -\frac{\alpha^{(k)} \beta}{\gamma(\gamma - \beta)} (= \lim_{\tau \to \infty} \tilde{s}(t) )
+$$
+
+
+&lt;p&gt;&lt;strong&gt;$\tilde{s}_0$ (Initial value of $\tilde{s}(t)$ at $\tau = 0$):&lt;/strong&gt;&lt;/p&gt;
+
+$$
+\tilde{s}_0 = s(t_0) - \tilde{\beta}u(t_0) = s_0 - \tilde{\beta}u_0 = s_0 - \frac{\beta}{\gamma - \beta}u_0
+$$
+
+
+&lt;h4 id=&#34;6-verify-the-target-relationship&#34;&gt;6. Verify the target relationship: $\tilde{s}(t) - \tilde{s}_\infty = (\tilde{s}_0 - \tilde{s}_\infty)e^{-\gamma\tau}$&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;Left-Hand Side (LHS):&lt;/strong&gt;&lt;/p&gt;
+
+$$
+\tilde{s}(t) - \tilde{s}_\infty = \left(-\frac{\alpha^{(k)} \beta}{\gamma(\gamma - \beta)} + \left(s_0 - \frac{\alpha^{(k)}}{\gamma} + \frac{\alpha^{(k)} - \beta u_0}{\gamma - \beta}\right)e^{-\gamma\tau}\right) - \left(-\frac{\alpha^{(k)} \beta}{\gamma(\gamma - \beta)}\right)
+$$
+
+
+
+$$
+\tilde{s}(t) - \tilde{s}_\infty = \left(s_0 - \frac{\alpha^{(k)}}{\gamma} + \frac{\alpha^{(k)} - \beta u_0}{\gamma - \beta}\right)e^{-\gamma\tau}
+$$
+
+
+&lt;p&gt;&lt;strong&gt;Right-Hand Side (RHS):&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;First, calculate $(\tilde{s}_0 - \tilde{s}_\infty)$:&lt;/p&gt;
+
+$$
+(\tilde{s}_0 - \tilde{s}_\infty) = \left(s_0 - \frac{\beta u_0}{\gamma - \beta}\right) - \left(-\frac{\alpha^{(k)} \beta}{\gamma(\gamma - \beta)}\right) = s_0 - \frac{\beta u_0}{\gamma - \beta} + \frac{\alpha^{(k)} \beta}{\gamma(\gamma - \beta)}
+$$
+
+
+&lt;p&gt;Now, multiply by $e^{-\gamma\tau}$:&lt;/p&gt;
+
+$$
+(\tilde{s}_0 - \tilde{s}_\infty)e^{-\gamma\tau} = \left(s_0 - \frac{\beta u_0}{\gamma - \beta} + \frac{\alpha^{(k)} \beta}{\gamma(\gamma - \beta)}\right)e^{-\gamma\tau}
+$$
+
+
+&lt;p&gt;Finally, let&amp;rsquo;s compare the coefficients of $e^{-\gamma\tau}$ from both the LHS and RHS. We need to confirm that:&lt;/p&gt;
+
+$$
+s_0 - \frac{\alpha^{(k)}}{\gamma} + \frac{\alpha^{(k)} - \beta u_0}{\gamma - \beta} \text{ equals } s_0 - \frac{\beta u_0}{\gamma - \beta} + \frac{\alpha^{(k)} \beta}{\gamma(\gamma - \beta)}
+$$
+
+
+&lt;p&gt;Let&amp;rsquo;s simplify the terms without $s_0$:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;From LHS coefficient:&lt;/strong&gt;&lt;/p&gt;
+
+$$
+-\frac{\alpha^{(k)}}{\gamma} + \frac{\alpha^{(k)} - \beta u_0}{\gamma - \beta} = -\frac{\alpha^{(k)}}{\gamma} + \frac{\alpha^{(k)}}{\gamma - \beta} - \frac{\beta u_0}{\gamma - \beta}
+$$
+$$
+= \alpha^{(k)}\left(\frac{1}{\gamma - \beta} - \frac{1}{\gamma}\right) - \frac{\beta u_0}{\gamma - \beta}
+$$
+$$
+= \alpha^{(k)}\left(\frac{\gamma - (\gamma - \beta)}{\gamma(\gamma - \beta)}\right) - \frac{\beta u_0}{\gamma - \beta}
+$$
+$$
+= \alpha^{(k)}\left(\frac{\beta}{\gamma(\gamma - \beta)}\right) - \frac{\beta u_0}{\gamma - \beta} = \frac{\alpha^{(k)} \beta}{\gamma(\gamma - \beta)} - \frac{\beta u_0}{\gamma - \beta}
+$$
+
+
+&lt;p&gt;&lt;strong&gt;From RHS coefficient:&lt;/strong&gt;&lt;/p&gt;
+
+$$
+-\frac{\beta u_0}{\gamma - \beta} + \frac{\alpha^{(k)} \beta}{\gamma(\gamma - \beta)}
+$$
+
+
+&lt;p&gt;As you can see, the simplified coefficients from both sides are indeed identical.&lt;/p&gt;
+&lt;h3 id=&#34;conclusion&#34;&gt;Conclusion&lt;/h3&gt;
+&lt;p&gt;By introducing the carefully chosen auxiliary variable $\tilde{\beta} = \frac{\beta}{\gamma - \beta}$, the transformation $\tilde{s}(t) = s(t) - \tilde{\beta}u(t)$ strategically eliminates the $e^{-\beta\tau}$ dependence from the solution of s(t). This simplification reveals a clean, exponential decay relationship for $\tilde{s}(t)$ towards its new steady-state value $\tilde{s}_\infty$, as expressed by:&lt;/p&gt;
+
+$$
+\tilde{s}(t) - \tilde{s}_\infty = (\tilde{s}_0 - \tilde{s}_\infty)e^{-\gamma\tau}
+$$
+
+
+&lt;p&gt;This shows how a more complex system can be transformed into a simpler, recognizable form by defining appropriate auxiliary variables.&lt;/p&gt;
+&lt;h2 id=&#34;b-derive-equation-11-in-scvelo-paper&#34;&gt;B) Derive equation (11) in &lt;a href=&#34;https://www.nature.com/articles/s41587-020-0591-3&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;scVelo paper&lt;/a&gt;&lt;/h2&gt;
+&lt;p&gt;Above smoothly gives Inverse Relationship for $\tau$ in equation (10) in the &lt;a href=&#34;https://www.nature.com/articles/s41587-020-0591-3&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;scVelo paper&lt;/a&gt;. Although equation (11) looks not obvious, it actually requires even simpler reasoning.&lt;/p&gt;
+
+$$
+\tau = -\frac{1}{\beta}\ln\left(\frac{u - u_\infty^{(k)}}{u_0 - u_\infty^{(k)}}\right)
+$$
+
+
+&lt;p&gt;This expression makes sense given the solution for  $u(t)$ 
+ can be rewritten as below by substituting  $u_\infty^{(k)} = \frac{\alpha^{(k)}}{\beta}$ 
+:&lt;/p&gt;
+
+$$
+u(t) = u_\infty^{(k)} + (u_0 - u_\infty^{(k)})e^{-\beta\tau}
+$$
+
+
+&lt;p&gt;If we solve this for  $\tau$ 
+, we get:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Rearrange:  $u(t) - u_\infty^{(k)} = (u_0 - u_\infty^{(k)})e^{-\beta\tau}$ 
+&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Divide both sides by  $(u_0 - u_\infty^{(k)})$ 
+:  $\frac{u(t) - u_\infty^{(k)}}{u_0 - u_\infty^{(k)}} = e^{-\beta\tau}$ 
+&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Take natural log:  $\ln\left(\frac{u(t) - u_\infty^{(k)}}{u_0 - u_\infty^{(k)}}\right) = -\beta\tau$ 
+&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Solve for  $\tau$ 
+:  $\tau = -\frac{1}{\beta}\ln\left(\frac{u(t) - u_\infty^{(k)}}{u_0 - u_\infty^{(k)}}\right)$ 
+&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;c-explicit-formula-is-less-accurate-than-exact-optimization&#34;&gt;C) Explicit Formula is Less Accurate than Exact Optimization&lt;/h2&gt;
+&lt;p&gt;The difference in accuracy between the explicit formula and exact optimization comes down to &lt;strong&gt;model assumptions versus reality&lt;/strong&gt;.&lt;/p&gt;
+&lt;h3 id=&#34;why-the-explicit-formula-is-less-accurate&#34;&gt;Why the Explicit Formula is Less Accurate&lt;/h3&gt;
+&lt;h4 id=&#34;1-single-gene-assumption&#34;&gt;1. Single-Gene Assumption&lt;/h4&gt;
+&lt;p&gt;The explicit formula:&lt;/p&gt;
+
+$$\tau_i = -\frac{1}{\beta}\ln\left(\frac{u_i - u_\infty^{(k)}}{u_0 - u_\infty^{(k)}}\right)$$
+
+
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Uses only unspliced RNA&lt;/strong&gt;  $(u)$ 
+ from one gene&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Ignores spliced RNA&lt;/strong&gt;  $(s)$ 
+ information completely&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Assumes perfect adherence&lt;/strong&gt; to the theoretical kinetic model for that single gene&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;2-no-cross-gene-integration&#34;&gt;2. No Cross-Gene Integration&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;Each gene would give a &lt;strong&gt;different time estimate&lt;/strong&gt; for the same cell&lt;/li&gt;
+&lt;li&gt;The formula doesn&amp;rsquo;t reconcile these conflicting estimates&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Gene-specific noise&lt;/strong&gt; and measurement errors aren&amp;rsquo;t averaged out&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;3-model-violations&#34;&gt;3. Model Violations&lt;/h4&gt;
+&lt;p&gt;Real cells don&amp;rsquo;t perfectly follow the kinetic equations because:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Transcriptional bursting&lt;/strong&gt; creates noise&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Cell-to-cell variability&lt;/strong&gt; in kinetic parameters&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Measurement noise&lt;/strong&gt; in RNA counts&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Model approximations&lt;/strong&gt; (e.g., constant degradation rates)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;why-exact-optimization-is-more-accurate&#34;&gt;Why Exact Optimization is More Accurate&lt;/h3&gt;
+&lt;h4 id=&#34;1-multi-gene-integration&#34;&gt;1. Multi-Gene Integration&lt;/h4&gt;
+&lt;p&gt;The optimization objective:&lt;/p&gt;
+
+$$\tau_i^* = \arg\min_\tau \sum_j \left[ (u_{i,j} - u_j(\tau))^2 + (s_{i,j} - s_j(\tau))^2 \right]$$
+
+
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Uses both unspliced AND spliced&lt;/strong&gt; RNA information&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Integrates evidence across ALL genes&lt;/strong&gt; simultaneously&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Finds the time that best explains the entire transcriptome&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;2-noise-averaging&#34;&gt;2. Noise Averaging&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;Gene-specific measurement errors &lt;strong&gt;cancel out&lt;/strong&gt; when averaged&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Outlier genes&lt;/strong&gt; have less impact on the final time estimate&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Statistical power increases&lt;/strong&gt; with more observations&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;3-comprehensive-model-fitting&#34;&gt;3. Comprehensive Model Fitting&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;Accounts for &lt;strong&gt;both RNA species&lt;/strong&gt;  $u$ 
+ and  $s$ 
+ jointly&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Balances competing evidence&lt;/strong&gt; from different genes&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Robust to individual gene model violations&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;computational-trade-off&#34;&gt;Computational Trade-off&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;Explicit Formula&lt;/strong&gt;:  $O(1)$ 
+ per cell&amp;ndash; Fast but uses limited information&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Exact Optimization&lt;/strong&gt;:  $O(n_{iter} \times n_{genes})$ 
+ per cell&amp;ndash; Slower but uses all available information&lt;/p&gt;
+&lt;h3 id=&#34;mathematical-perspective&#34;&gt;Mathematical Perspective&lt;/h3&gt;
+&lt;h4 id=&#34;information-content-comparison&#34;&gt;Information Content Comparison&lt;/h4&gt;
+&lt;p&gt;&lt;strong&gt;Explicit Formula Information&lt;/strong&gt;:
+
+$$I_{explicit} = f(u_{i,j}) \text{ for single gene } j$$
+
+&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Exact Optimization Information&lt;/strong&gt;:
+
+$$I_{exact} = f(\{u_{i,j}, s_{i,j}\}_{j=1}^{N_{genes}})$$
+
+&lt;/p&gt;
+&lt;p&gt;Where  $I_{exact} &gt;&gt; I_{explicit}$ 
+ in terms of information content.&lt;/p&gt;
+&lt;h4 id=&#34;error-propagation&#34;&gt;Error Propagation&lt;/h4&gt;
+&lt;p&gt;For the explicit formula, measurement error in a single gene directly affects the time estimate:&lt;/p&gt;
+
+$$\sigma_{\tau}^2 \propto \frac{\sigma_u^2}{(u_i - u_\infty)^2}$$
+
+
+&lt;p&gt;For exact optimization, errors are averaged across genes:&lt;/p&gt;
+
+$$\sigma_{\tau}^2 \propto \frac{1}{N_{genes}} \sum_j \frac{\sigma_{u,j}^2 + \sigma_{s,j}^2}{(u_{i,j} - u_j(\tau))^2 + (s_{i,j} - s_j(\tau))^2}$$
+
+
+&lt;h3 id=&#34;biological-analogy&#34;&gt;Biological Analogy&lt;/h3&gt;
+&lt;p&gt;Think of it like &lt;strong&gt;estimating someone&amp;rsquo;s age&lt;/strong&gt;:&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Explicit Formula&lt;/strong&gt; = Looking at just their hair color&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Quick, but hair color alone is unreliable&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Exact Optimization&lt;/strong&gt; = Looking at hair, skin, posture, clothing style, speech patterns, etc.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Takes more time, but gives a much better estimate by integrating multiple sources of evidence&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;why-the-two-stage-strategy-works&#34;&gt;Why the Two-Stage Strategy Works&lt;/h3&gt;
+&lt;p&gt;The two-stage approach in scVelo is brilliant because:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Stage 1 (Explicit)&lt;/strong&gt;: Gets &amp;ldquo;close enough&amp;rdquo; quickly when parameters are changing rapidly&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Stage 2 (Exact)&lt;/strong&gt;: Refines to high accuracy when parameters have stabilized&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h4 id=&#34;convergence-analysis&#34;&gt;Convergence Analysis&lt;/h4&gt;
+&lt;p&gt;Early iterations:  $|\theta^{(t)} - \theta^{(t-1)}|$ 
+ is large&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Approximate times sufficient since parameters will change significantly anyway&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Later iterations:  $|\theta^{(t)} - \theta^{(t-1)}| \approx 0$ 
+&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Exact times needed for final parameter refinement&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h4 id=&#34;computational-efficiency&#34;&gt;Computational Efficiency&lt;/h4&gt;
+&lt;p&gt;Total computational cost:&lt;/p&gt;
+
+$$\text{Cost} = T_{approx} \times O(1) + T_{exact} \times O(n_{iter} \times n_{genes})$$
+
+
+&lt;p&gt;Where  $T_{approx} &gt;&gt; T_{exact}$ 
+, making the overall algorithm much faster than using exact optimization throughout.&lt;/p&gt;
+&lt;h3 id=&#34;key-insight&#34;&gt;Key Insight&lt;/h3&gt;
+&lt;p&gt;The explicit formula serves as an excellent &lt;strong&gt;initialization and approximation&lt;/strong&gt; tool, while exact optimization provides the &lt;strong&gt;precision needed for final convergence&lt;/strong&gt;. This hybrid approach captures the best of both worlds: computational efficiency and high accuracy.&lt;/p&gt;
+&lt;h2 id=&#34;d-em-implementation&#34;&gt;D) EM implementation&lt;/h2&gt;
+&lt;h3 id=&#34;scvelo-em&#34;&gt;scVelo EM&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;initialize&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;theta&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;α&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;β&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;γ&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;  
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Initialize model parameters:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# α: transcription rate, β: splicing rate, γ: degradation rate&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;while&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;not&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;converged&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;  
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;c1&#34;&gt;# Repeat the EM steps until parameters stabilize&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;c1&#34;&gt;# E-step&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;n&#34;&gt;mu_traj&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;solve_ODE&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;t&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;theta&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;t&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;in&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;time_grid&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;  
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;c1&#34;&gt;# Simulate the ODE using current parameters to get the predicted gene expression (mu_t)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;c1&#34;&gt;# at each time point t in the predefined time grid&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;x_i&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;in&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;data&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;  
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;c1&#34;&gt;# Iterate over each observed cell x_i (expression vector)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;j&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;mu_t&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;in&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;enumerate&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;mu_traj&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;  
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;c1&#34;&gt;# For each time point t_j and corresponding model prediction mu_t&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;n&#34;&gt;logliks&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;j&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-||&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;x_i&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;mu_t&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;||^&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;/&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;σ&lt;/span&gt;  
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;c1&#34;&gt;# Compute (unnormalized) log-likelihood of x_i under the model at time t_j&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;c1&#34;&gt;# Assuming Gaussian noise: log P(x_i | t_j) ∝ -||x_i - mu_t||² / σ&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;n&#34;&gt;q_i&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;softmax&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;logliks&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;  
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;c1&#34;&gt;# Convert log-likelihoods into a probability distribution over time&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;c1&#34;&gt;# This is the posterior q_i[j] = P(t_j | x_i, θ) for each time point t_j&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;c1&#34;&gt;# M-step&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;k&#34;&gt;def&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;loss_fn&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;theta&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;  
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;c1&#34;&gt;# Define a loss function to optimize the model parameters θ&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;n&#34;&gt;loss&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;  
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;c1&#34;&gt;# Initialize total loss&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;x_i&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;q_i&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;in&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;zip&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;data&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;q_all&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;  
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;c1&#34;&gt;# Iterate over each cell x_i and its posterior time distribution q_i&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;j&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;t_j&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;in&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;enumerate&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;time_grid&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;  
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                &lt;span class=&#34;c1&#34;&gt;# For each possible time point t_j&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                &lt;span class=&#34;n&#34;&gt;mu_tj&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;solve_ODE&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;t_j&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;theta&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;  
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                &lt;span class=&#34;c1&#34;&gt;# Predict expression using current θ at time t_j&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                &lt;span class=&#34;n&#34;&gt;loss&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;q_i&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;j&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;||&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;x_i&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;mu_tj&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;||^&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt;  
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                &lt;span class=&#34;c1&#34;&gt;# Add the squared difference weighted by q_i[j] (soft assignment)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                &lt;span class=&#34;c1&#34;&gt;# This is the expected reconstruction error under the posterior q_i&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;loss&lt;/span&gt;  
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;c1&#34;&gt;# Return total expected loss to minimize&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;n&#34;&gt;theta&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;optimize&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;loss_fn&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;  
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;c1&#34;&gt;# Update model parameters by minimizing the loss using an optimizer (e.g. gradient descent)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Compared to the below GMM EM, the scVelo EM has not incorporated the time prior  \pi_j 
+.&lt;/p&gt;
+&lt;h3 id=&#34;gmm-em&#34;&gt;GMM EM&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;initialize&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;mu_k&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;sigma_k&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;pi_k&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;k&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;in&lt;/span&gt; &lt;span class=&#34;mf&#34;&gt;1.&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;K&lt;/span&gt;  
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Initialize the parameters for each of the K Gaussian components:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;#   - mu_k: mean of component k&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;#   - sigma_k: standard deviation of component k&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;#   - pi_k: prior probability (mixing coefficient) of component k&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# These are randomly initialized or via k-means, and will be updated iteratively.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;while&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;not&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;converged&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;  
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Repeat EM steps until the parameters stop changing significantly&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;c1&#34;&gt;# E-step&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;     &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;x_i&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;in&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;data&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;  
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;c1&#34;&gt;# Loop over each observed data point x_i&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;k&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;in&lt;/span&gt; &lt;span class=&#34;mf&#34;&gt;1.&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;K&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;  
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;c1&#34;&gt;# For each Gaussian component k&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;n&#34;&gt;log_p_x_given_z&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;((&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;x_i&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;mu_k&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;^&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;/&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;sigma_k&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;^&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;  
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;c1&#34;&gt;# Compute log-likelihood:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;c1&#34;&gt;# log P(x_i | z=k) under Gaussian N(mu_k, sigma_k^2), ignoring constants&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;c1&#34;&gt;# This measures how well component k explains data point x_i&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;n&#34;&gt;log_p_z&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;log&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;pi_k&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;  
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;c1&#34;&gt;# Log of prior probability of choosing component k&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;n&#34;&gt;logliks&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;k&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;log_p_x_given_z&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;log_p_z&lt;/span&gt;  
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;c1&#34;&gt;# Compute log posterior (up to normalization): log P(z=k | x_i)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;n&#34;&gt;q_i&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;softmax&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;logliks&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;  
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;c1&#34;&gt;# Normalize to get posterior probabilities:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;c1&#34;&gt;# q_i[k] = P(z=k | x_i), the &amp;#34;responsibility&amp;#34; of component k for x_i&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;c1&#34;&gt;# M-step&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;k&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;in&lt;/span&gt; &lt;span class=&#34;mf&#34;&gt;1.&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;K&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;  
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;c1&#34;&gt;# For each component k&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;n&#34;&gt;N_k&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;sum_i&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;q_i&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;k&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;  
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;c1&#34;&gt;# Effective number of points assigned to component k (soft count)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;n&#34;&gt;mu_k&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;sum_i&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;q_i&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;k&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;x_i&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;/&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;N_k&lt;/span&gt;  
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;c1&#34;&gt;# Update the mean of component k as the weighted average of data points,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;c1&#34;&gt;# weighted by how responsible k is for each point (q_i[k])&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;n&#34;&gt;sigma_k&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;sqrt&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;sum_i&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;q_i&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;k&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;x_i&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;mu_k&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;^&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;/&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;N_k&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;  
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;c1&#34;&gt;# Update standard deviation as the weighted standard deviation&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;c1&#34;&gt;# of the data points around the new mean&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;n&#34;&gt;pi_k&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;N_k&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;/&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;N&lt;/span&gt;  
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;c1&#34;&gt;# Update the mixing coefficient (prior) for component k&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;c1&#34;&gt;# as the proportion of total responsibility assigned to k&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;Incorporating the time prior  \pi_j 
+ into the scVelo EM algorithm allows it to leverage global temporal structure, improving the model&amp;rsquo;s ability to infer latent time points for each cell. Especially when biological markers are available to inform the temporal structure, the prior acts as a regularization term, guiding the model towards more plausible time assignments based on the overall distribution of cells across time points. I will test the effectiveness of this approach some time later, but below is the pseudo-code for the scVelo EM with learnable time prior  \pi_j 
+.&lt;/p&gt;
+&lt;h3 id=&#34;scvelo-em-with-learnable-time-prior-π_j&#34;&gt;scVelo EM with Learnable Time Prior π_j&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-python&#34; data-lang=&#34;python&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;initialize&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;theta&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;α&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;β&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;γ&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;  
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Initialize model parameters:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# α: transcription rate&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# β: splicing rate&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# γ: degradation rate&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# These govern the gene expression dynamics through an ODE model.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;initialize&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;π&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;1&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;T&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;T&lt;/span&gt;  &lt;span class=&#34;c1&#34;&gt;# uniform over time grid  &lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# Initialize time prior π as a uniform distribution over T discrete time points.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# This reflects no prior knowledge about the timing of each cell initially.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;k&#34;&gt;while&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;not&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;converged&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;  
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;c1&#34;&gt;# Repeat E-step and M-step until model parameters (θ and π) converge.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;c1&#34;&gt;# --- E-step: Estimate latent time distribution for each cell ---&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;n&#34;&gt;mu_traj&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;solve_ODE&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;t&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;theta&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt; &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;t&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;in&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;time_grid&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;  
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;c1&#34;&gt;# Simulate the dynamic model using current parameters θ&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;c1&#34;&gt;# This gives the expected gene expression μ(t) at each time point t in the grid.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;x_i&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;in&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;data&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;:&lt;/span&gt;  
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;c1&#34;&gt;# Loop over each observed cell x_i (expression vector)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;j&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;mu_t&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;in&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;enumerate&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;mu_traj&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;  
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;c1&#34;&gt;# For each time point t_j and its predicted expression μ_t:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;n&#34;&gt;logliks&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;j&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-||&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;x_i&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;mu_t&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;||^&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;/&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;σ&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;log&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;π&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;j&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;])&lt;/span&gt;  
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;c1&#34;&gt;# Compute an unnormalized log-posterior score for time point t_j:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;c1&#34;&gt;#&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;c1&#34;&gt;#   - The first term, -||x_i - mu_t||² / σ, is the log-likelihood.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;c1&#34;&gt;#     It measures how well the model at time t_j explains cell x_i,&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;c1&#34;&gt;#     assuming Gaussian noise with variance σ.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;c1&#34;&gt;#&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;c1&#34;&gt;#   - The second term, log(π[j]), is the log of the prior probability&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;c1&#34;&gt;#     of time t_j (learned in the previous M-step).&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;c1&#34;&gt;#&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;c1&#34;&gt;# Together, this computes:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;c1&#34;&gt;#&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;c1&#34;&gt;#   log P(t_j | x_i) ∝ log P(x_i | t_j) + log π[j]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;c1&#34;&gt;#&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;c1&#34;&gt;# This is a direct application of Bayes’ rule and balances:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;c1&#34;&gt;#   - Goodness-of-fit (how well the model explains the data)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;c1&#34;&gt;#   - Global structure (how likely time t_j is overall)&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;c1&#34;&gt;#&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;c1&#34;&gt;# This prevents overfitting rare time points that happen to fit x_i well.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;n&#34;&gt;q_i&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;softmax&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;logliks&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;  
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;c1&#34;&gt;# Normalize the log scores across all j using the softmax function&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;c1&#34;&gt;# to get a posterior distribution q_i[j] = P(t_j | x_i, θ, π).&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;c1&#34;&gt;# This soft assignment tells us how likely cell x_i came from each time point.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;c1&#34;&gt;# --- M-step: Update π and θ to maximize expected data fit ---&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;n&#34;&gt;π&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;j&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;sum_i&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;q_i&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;j&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;/&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;N&lt;/span&gt;  &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;all&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;j&lt;/span&gt;  
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;c1&#34;&gt;# Update the prior over time points:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;c1&#34;&gt;# For each time point t_j, π[j] becomes the average of q_i[j] over all cells.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;c1&#34;&gt;# This reflects how many cells the model currently thinks came from time t_j.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;c1&#34;&gt;# The prior π is now data-driven instead of uniform.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;k&#34;&gt;def&lt;/span&gt; &lt;span class=&#34;nf&#34;&gt;loss_fn&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;theta&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;  
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;c1&#34;&gt;# Define the objective function for re-estimating model parameters θ.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;n&#34;&gt;loss&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;mi&#34;&gt;0&lt;/span&gt;  
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;c1&#34;&gt;# Initialize the total loss to accumulate over all cells and times.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;x_i&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;q_i&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;in&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;zip&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;data&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;q_all&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;  
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;c1&#34;&gt;# For each observed cell x_i and its soft time assignment q_i:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;            &lt;span class=&#34;k&#34;&gt;for&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;j&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;t_j&lt;/span&gt; &lt;span class=&#34;ow&#34;&gt;in&lt;/span&gt; &lt;span class=&#34;nb&#34;&gt;enumerate&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;time_grid&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;):&lt;/span&gt;  
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                &lt;span class=&#34;c1&#34;&gt;# For each time point t_j in the grid:&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                &lt;span class=&#34;n&#34;&gt;mu_tj&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;solve_ODE&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;t_j&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;,&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;theta&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;  
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                &lt;span class=&#34;c1&#34;&gt;# Simulate the ODE to predict expression at time t_j using θ.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                &lt;span class=&#34;n&#34;&gt;loss&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;+=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;q_i&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;j&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;*&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;||&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;x_i&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;-&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;mu_tj&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;||^&lt;/span&gt;&lt;span class=&#34;mi&#34;&gt;2&lt;/span&gt;  
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                &lt;span class=&#34;c1&#34;&gt;# Add weighted squared error between observed x_i and predicted mu_tj.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                &lt;span class=&#34;c1&#34;&gt;# The weight q_i[j] reflects the model’s belief that x_i came from t_j.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;                &lt;span class=&#34;c1&#34;&gt;# This gives a soft, expectation-based loss function.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;k&#34;&gt;return&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;loss&lt;/span&gt;  
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;        &lt;span class=&#34;c1&#34;&gt;# Total expected reconstruction error across all cells and times.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;n&#34;&gt;theta&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;=&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;optimize&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;(&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;loss_fn&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;)&lt;/span&gt;  
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;c1&#34;&gt;# Optimize model parameters θ to minimize the expected error (loss).&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;    &lt;span class=&#34;c1&#34;&gt;# This is typically done using gradient descent or similar techniques.&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+    </item>
+    
+    <item>
       <title>🧬 Math derivation for steady-state RNA velocity model</title>
       <link>http://localhost:1313/post/11c.velocity_steady_state/</link>
       <pubDate>Wed, 28 May 2025 00:00:00 +0000</pubDate>
@@ -275,7 +892,7 @@ $$
 , i.e., the steady-state ratio.&lt;/li&gt;
 &lt;/ul&gt;
 &lt;hr&gt;
-&lt;h3 id=&#34;b-derive-least-squares-solution-for-estimating-the-steady-state-ratio-gamma_0&#34;&gt;B. Derive Least Squares Solution for Estimating the Steady-State Ratio $\gamma_0$&lt;/h3&gt;
+&lt;h3 id=&#34;b-derive-least-squares-solution-for-estimating-the-steady-state-ratio&#34;&gt;B. Derive Least Squares Solution for Estimating the Steady-State Ratio $\gamma_0$&lt;/h3&gt;
 &lt;p&gt;Let’s walk through the full derivation of the least squares solution for estimating the steady-state ratio $\gamma_0$
 , which minimizes the squared difference between the unspliced and spliced counts scaled by $\gamma_0$
 .&lt;/p&gt;
@@ -321,7 +938,7 @@ $$
 
 
 &lt;hr&gt;
-&lt;h4 id=&#34;-minimize-with-respect-to-gamma_0&#34;&gt;📉 Minimize with Respect to $\gamma_0$&lt;/h4&gt;
+&lt;h4 id=&#34;-minimize-with-respect-to&#34;&gt;📉 Minimize with Respect to $\gamma_0$&lt;/h4&gt;
 &lt;p&gt;Take derivative with respect to $\gamma_0$
  and set it to zero:&lt;/p&gt;
 
@@ -528,7 +1145,7 @@ $$\theta = (X^\top X)^{-1} X^\top u$$
 
 
 &lt;p&gt;Let&amp;rsquo;s compute each term step by step.&lt;/p&gt;
-&lt;h5 id=&#34;33-compute-xtop-x&#34;&gt;3.3 Compute $X^\top X$&lt;/h5&gt;
+&lt;h5 id=&#34;33-compute&#34;&gt;3.3 Compute $X^\top X$&lt;/h5&gt;
 
 $$X^\top X = \begin{bmatrix} \sum s_i^2 &amp; \sum s_i \\ \sum s_i &amp; n \end{bmatrix}$$
 
@@ -547,7 +1164,7 @@ $$X^\top X = \begin{bmatrix} \sum s_i^2 &amp; \sum s_i \\ \sum s_i &amp; n \end{
 $$X^\top X = \begin{bmatrix} S_2 &amp; S \\ S &amp; n \end{bmatrix}$$
 
 
-&lt;h5 id=&#34;34-compute-xtop-u&#34;&gt;3.4 Compute $X^\top u$&lt;/h5&gt;
+&lt;h5 id=&#34;34-compute&#34;&gt;3.4 Compute $X^\top u$&lt;/h5&gt;
 
 $$X^\top u = \begin{bmatrix} \sum s_i u_i \\ \sum u_i \end{bmatrix}$$
 
@@ -564,7 +1181,7 @@ $$X^\top u = \begin{bmatrix} \sum s_i u_i \\ \sum u_i \end{bmatrix}$$
 $$X^\top u = \begin{bmatrix} SU \\ U \end{bmatrix}$$
 
 
-&lt;h5 id=&#34;35-solve-theta--xtop-x-1-xtop-u&#34;&gt;3.5 Solve $\theta = (X^\top X)^{-1} X^\top u$&lt;/h5&gt;
+&lt;h5 id=&#34;35-solve&#34;&gt;3.5 Solve $\theta = (X^\top X)^{-1} X^\top u$&lt;/h5&gt;
 &lt;p&gt;The inverse of a $2\times2$
  matrix:&lt;/p&gt;
 
@@ -691,7 +1308,7 @@ $$(u-X\theta)^\top(u-X\theta) = u^\top u - 2\theta^\top X^\top u + \theta^\top X
 &lt;li&gt;$u^\top X\theta = \theta^\top X^\top u$
  (scalar equality)&lt;/li&gt;
 &lt;/ol&gt;
-&lt;h5 id=&#34;step-3-take-the-gradient-with-respect-to-theta&#34;&gt;Step 3: Take the Gradient with Respect to $\theta$&lt;/h5&gt;
+&lt;h5 id=&#34;step-3-take-the-gradient-with-respect-to&#34;&gt;Step 3: Take the Gradient with Respect to $\theta$&lt;/h5&gt;
 &lt;p&gt;We differentiate term by term:&lt;/p&gt;
 &lt;ol&gt;
 &lt;li&gt;
@@ -1216,7 +1833,7 @@ $$\text{ELBO}(q) = \mathbb{E}_{q(\theta)}[\log p(D \mid \theta)] - \text{KL}(q(\
       <description>&lt;h2 id=&#34;introduction&#34;&gt;Introduction&lt;/h2&gt;
 &lt;p&gt;Single-cell RNASeq could have a large amount of zero values, representing either missing data or no expression. Imputation approaches to deal with this issue have the risk of generating false positive or irreproducible results. Model-based imputation generate fewer false-positives compared with data smoothing based methods (MAGIC and knn-smooth), but this varied greatly depending on how well the model described the datasets.&lt;/p&gt;
 &lt;p&gt;&lt;a href=&#34;https://www.nature.com/articles/s41592-018-0033-z#Sec2&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;SAVER&lt;/a&gt; was the least likely to generate false or irreproducible results in &lt;a href=&#34;https://f1000research.com/articles/7-1740/v1&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;a benchmark of common imputation methods&lt;/a&gt;. It suggests the mathematical model used in SAVER could well depict the structure inherent to the scRNAseq datasets. Here we will derive the Poisson–gamma mixture model (also known as negative binomial model) and its Bayesian framework used in SAVER that leverage conjugate priors to estimate the posterior distribution of gene expression levels.&lt;/p&gt;
-&lt;h2 id=&#34;heading&#34;&gt;&lt;/h2&gt;
+&lt;h2&gt;&lt;/h2&gt;
 &lt;p&gt;more in another md file&lt;/p&gt;
 &lt;h2 id=&#34;-goal&#34;&gt;✅ Goal:&lt;/h2&gt;
  
@@ -1368,7 +1985,7 @@ $$ \hat{\lambda}_{gc} = \frac{s_c}{s_c + \hat{\beta}_{gc}} \cdot \frac{Y_{gc}}{s
 &lt;/li&gt;
 &lt;/ul&gt;
 &lt;p&gt;The normalization &amp;ldquo;just works&amp;rdquo; because we&amp;rsquo;re staying within the same distributional family where normalization constants are known.&lt;/p&gt;
-&lt;h2 id=&#34;math-derivationa-idmath-derivationa&#34;&gt;Math Derivation&lt;a id=&#34;math-derivation&#34;&gt;&lt;/a&gt;&lt;/h2&gt;
+&lt;h2 id=&#34;math-derivation&#34;&gt;Math Derivation&lt;a id=&#34;math-derivation&#34;&gt;&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;Below is a &lt;strong&gt;step-by-step derivation of the marginal likelihood integral for the Beta-Binomial conjugate prior relationship&lt;/strong&gt;. This shows how we can transform a potentially difficult integral into a simple ratio of Beta functions, which is the essence of why conjugate priors are so powerful in Bayesian inference.&lt;/p&gt;
 &lt;h3 id=&#34;starting-point-the-marginal-likelihood-integral&#34;&gt;Starting Point: The Marginal Likelihood Integral&lt;/h3&gt;
  $$P(D) = \int_0^1 \binom{n}{s}\theta^s(1-\theta)^{n-s} \cdot \frac{\theta^{\alpha-1}(1-\theta)^{\beta-1}}{B(\alpha,\beta)} d\theta \quad (1)$$ 
@@ -1503,7 +2120,7 @@ $$ \hat{\lambda}_{gc} = \frac{s_c}{s_c + \hat{\beta}_{gc}} \cdot \frac{Y_{gc}}{s
       <link>http://localhost:1313/post/11a.velocity_unraveled/</link>
       <pubDate>Fri, 04 Apr 2025 00:00:00 +0000</pubDate>
       <guid>http://localhost:1313/post/11a.velocity_unraveled/</guid>
-      <description>&lt;h2 id=&#34;overview-of-eq18-from-velocity-unraveledhttpsjournalsplosorgploscompbiolarticleid101371journalpcbi1010492&#34;&gt;Overview of Eq(18) from &lt;a href=&#34;https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1010492&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;velocity unraveled&lt;/a&gt;&lt;/h2&gt;
+      <description>&lt;h2 id=&#34;overview-of-eq18-from-velocity-unraveled&#34;&gt;Overview of Eq(18) from &lt;a href=&#34;https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1010492&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;velocity unraveled&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;The stochastic model defined by the Chemical Master Equation (CME) outperforms deterministic ODE models in capturing the inherent stochasticity of single-cell RNA sequencing (scRNA-seq) data. It is actively developed to provide a more accurate representation of feature counts and their underlying biological processes. And it has also enabled the generation of simulated data to evaluate deterministic ODE models and associated data processing methods commonly used in scRNA-seq analysis. Thus I derive the key equations from the paper &lt;a href=&#34;https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1010492&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;velocity unraveled&lt;/a&gt;, a pivotal paper demonstrating the transformative potential of stochastic approaches.&lt;/p&gt;
 &lt;h3 id=&#34;-1-probability-generating-function-pgf&#34;&gt;🧬 1. Probability generating function (PGF)&lt;/h3&gt;
 &lt;p&gt;We define the state of a cell as:&lt;/p&gt;
@@ -1529,7 +2146,7 @@ $$G(u_u, u_s, t) = \sum_x P(x,t)(u_u + 1)^{x_u}(u_s + 1)^{x_s}$$
  $$U_1(u_u, u_s, s) = \frac{u_s \beta}{\beta - \gamma} e^{-\gamma s} + \left(u_u - \frac{u_s \beta}{\beta - \gamma}\right) e^{-\beta s}$$ 
 
 &lt;p&gt;This expression arises from &lt;a href=&#34;#Derive-G&#34;&gt;solving a linear system of ODEs for the chemical master equation (CME) via generating functions&lt;/a&gt;, and it essentially encodes how the state propagates in time. It&amp;rsquo;s derived from how unspliced → spliced reactions occur over time.&lt;/p&gt;
-&lt;h3 id=&#34;-3-log-generating-function-fa-idlog-generating-function-first-introduceda&#34;&gt;🧠 3. Log-generating function $f$&lt;a id=&#34;log-generating-function-first-introduced&#34;&gt;&lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id=&#34;-3-log-generating-function&#34;&gt;🧠 3. Log-generating function $f$&lt;a id=&#34;log-generating-function-first-introduced&#34;&gt;&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt; 
 $$f(u_u, u_s, t) := \ln G(u_u, u_s, t) = \int_0^t \alpha(t-s) U_1(u_u, u_s, s) ds$$ 
 
@@ -1634,7 +2251,7 @@ $$ \frac{\partial^2 G}{\partial u_u^2}\bigg|_{u_u = u_s = 0} = E[x_u(x_u - 1)], 
 &lt;li&gt;&lt;strong&gt;Links stochastic biochemical kinetics&lt;/strong&gt; with observed scRNA-seq distributions&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;Supports modeling&lt;/strong&gt; of noise, burstiness, and cell-to-cell heterogeneity&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&#34;b-derive-u_us-via-method-of-characteristics-a-idderive-ga&#34;&gt;B) Derive $u_u(s)$ via method of characteristics &lt;a id=&#34;Derive-G&#34;&gt;&lt;/a&gt;&lt;/h2&gt;
+&lt;h2 id=&#34;b-derive--via-method-of-characteristics&#34;&gt;B) Derive $u_u(s)$ via method of characteristics &lt;a id=&#34;Derive-G&#34;&gt;&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt; $U_1(u_u, u_s, s)$ 
  is claimed to be  $u_u(s)$ 
 , which is the solution to the ODE derived from the Chemical Master Equation (CME) for the two-species birth-death process representing unspliced (u) and spliced (s) mRNA dynamics.&lt;/p&gt;
@@ -1674,10 +2291,10 @@ $$ \frac{\partial^2 G}{\partial u_u^2}\bigg|_{u_u = u_s = 0} = E[x_u(x_u - 1)], 
  $$\frac{du_u}{ds} = \beta(u_s - u_u), \quad \frac{du_s}{ds} = -\gamma u_s, \quad \frac{dG}{ds} = \alpha u_u G$$ 
 
 &lt;p&gt;Let&amp;rsquo;s solve these:&lt;/p&gt;
-&lt;h3 id=&#34;step-4-solve-for-u_ss&#34;&gt;Step 4: Solve for $u_s(s)$&lt;/h3&gt;
+&lt;h3 id=&#34;step-4-solve-for&#34;&gt;Step 4: Solve for $u_s(s)$&lt;/h3&gt;
  $$\frac{du_s}{ds} = -\gamma u_s \Rightarrow u_s(s) = u_s(0) e^{-\gamma s}$$ 
 
-&lt;h3 id=&#34;step-5-solve-for-u_us&#34;&gt;Step 5: Solve for $u_u(s)$&lt;/h3&gt;
+&lt;h3 id=&#34;step-5-solve-for&#34;&gt;Step 5: Solve for $u_u(s)$&lt;/h3&gt;
 &lt;p&gt;Use integrating factor method:&lt;/p&gt;
  $$\frac{du_u}{ds} + \beta u_u = \beta u_s(s) = \beta u_s(0) e^{-\gamma s}$$ 
 
@@ -1692,7 +2309,7 @@ $$ \frac{\partial^2 G}{\partial u_u^2}\bigg|_{u_u = u_s = 0} = E[x_u(x_u - 1)], 
 :&lt;/p&gt;
  $$u_u(s) = u_u(0) e^{-\beta s} + \frac{\beta u_s(0)}{\beta - \gamma}(e^{-\gamma s} - e^{-\beta s})$$ 
 
-&lt;h3 id=&#34;step-6-define-u_1u_u-u_s-s&#34;&gt;Step 6: Define $U_1(u_u, u_s, s)$&lt;/h3&gt;
+&lt;h3 id=&#34;step-6-define&#34;&gt;Step 6: Define $U_1(u_u, u_s, s)$&lt;/h3&gt;
 &lt;p&gt;We identify:&lt;/p&gt;
  $$U_1(u_u, u_s, s) := u_u(s) = \frac{u_s \beta}{\beta - \gamma} e^{-\gamma s} + \left(u_u - \frac{u_s \beta}{\beta - \gamma}\right) e^{-\beta s}$$ 
 
@@ -1718,7 +2335,7 @@ $$
 &lt;li&gt; $\gamma$ 
 : degradation rate of spliced RNA&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3 id=&#34;step-2-define-the-generating-function-gu_u-u_s-t&#34;&gt;Step 2: Define the generating function $G(u_u, u_s, t)$&lt;/h3&gt;
+&lt;h3 id=&#34;step-2-define-the-generating-function&#34;&gt;Step 2: Define the generating function $G(u_u, u_s, t)$&lt;/h3&gt;
 
 $$
 G(u_u, u_s, t) := \sum_{x_u=0}^{\infty} \sum_{x_s=0}^{\infty} P(x_u, x_s, t)(u_u + 1)^{x_u}(u_s + 1)^{x_s} \qquad (10)
@@ -1729,7 +2346,7 @@ $$
  instead of  $u_u^{x_u}$ 
  is a common shift to simplify derivatives later, but you can equivalently define with  $u_u^{x_u}$ 
 .&lt;/p&gt;
-&lt;h3 id=&#34;step-3-take-time-derivative-of-g&#34;&gt;Step 3: Take time derivative of $G$&lt;/h3&gt;
+&lt;h3 id=&#34;step-3-take-time-derivative-of&#34;&gt;Step 3: Take time derivative of $G$&lt;/h3&gt;
 &lt;p&gt;Using linearity of sums and derivatives:&lt;/p&gt;
 
 $$
@@ -1931,7 +2548,7 @@ $$
 $$
 
 
-&lt;h2 id=&#34;b2-why-double-sum-equivalence-holds-in-term-2-of-step4-in-b1why_sum_is_equivalence&#34;&gt;B.2) Why Double Sum Equivalence Holds &lt;a href=&#34;#why_sum_is_equivalence&#34;&gt;in Term 2 of Step4 in B.1)&lt;/a&gt;&lt;/h2&gt;
+&lt;h2 id=&#34;b2-why-double-sum-equivalence-holds-in-term-2-of-step4-in-b1&#34;&gt;B.2) Why Double Sum Equivalence Holds &lt;a href=&#34;#why_sum_is_equivalence&#34;&gt;in Term 2 of Step4 in B.1)&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;This equivalence depends on what values the indices range over and how the function being summed behaves.&lt;/p&gt;
 &lt;h3 id=&#34;1-notation&#34;&gt;1. Notation&lt;/h3&gt;
 &lt;p&gt;When we write:&lt;/p&gt;
@@ -2040,10 +2657,10 @@ $$
 \end{align}$$ 
 
 &lt;p&gt;These are much easier to solve analytically or numerically.&lt;/p&gt;
-&lt;h2 id=&#34;b4-legitimacy-to-choose-fracdtds--1-in-b3&#34;&gt;B.4) Legitimacy to choose $\frac{dt}{ds} = 1$ in B.3)&lt;/h2&gt;
+&lt;h2 id=&#34;b4-legitimacy-to-choose--in-b3&#34;&gt;B.4) Legitimacy to choose $\frac{dt}{ds} = 1$ in B.3)&lt;/h2&gt;
 &lt;p&gt;We choose  $\frac{dt}{ds} = 1$ 
  in the method of characteristics because it simplifies the partial differential equation (PDE) to a more tractable set of ordinary differential equations (ODEs) — and this choice is completely valid and standard in this method. Let me explain why:&lt;/p&gt;
-&lt;h3 id=&#34;what-does-fracdtds--1-mean&#34;&gt;What Does $\frac{dt}{ds} = 1$ Mean&lt;/h3&gt;
+&lt;h3 id=&#34;what-does--mean&#34;&gt;What Does $\frac{dt}{ds} = 1$ Mean&lt;/h3&gt;
 &lt;p&gt;In the method of characteristics, you introduce a new parameter  $s$ 
  that traces out a path (or characteristic curve) in the space of independent variables — here,  $(u_u, u_s, t)$ 
 . Along this path:&lt;/p&gt;
@@ -2080,7 +2697,7 @@ $$
 &lt;li&gt;This choice makes the equations easier to solve.&lt;/li&gt;
 &lt;li&gt;The physics or stochastic model (e.g. CME) remains unchanged.&lt;/li&gt;
 &lt;/ol&gt;
-&lt;h2 id=&#34;c-derive-log-generating-function-a-idderive-log-generating-functiona&#34;&gt;C) Derive log-generating function &lt;a id=&#34;Derive-log-generating-function&#34;&gt;&lt;/a&gt;&lt;/h2&gt;
+&lt;h2 id=&#34;c-derive-log-generating-function&#34;&gt;C) Derive log-generating function &lt;a id=&#34;Derive-log-generating-function&#34;&gt;&lt;/a&gt;&lt;/h2&gt;
 &lt;p&gt;Below derive the log-generating function first introduced &lt;a href=&#34;#log-generating-function-first-introduced&#34;&gt;here&lt;/a&gt;.&lt;/p&gt;
 &lt;h3 id=&#34;1-setup-use-the-method-of-characteristics&#34;&gt;1. Setup: Use the Method of Characteristics&lt;/h3&gt;
 &lt;p&gt;We rewrite the PDE:&lt;/p&gt;
@@ -2098,10 +2715,10 @@ $$
 
  $$\frac{dG}{ds} = \alpha u_u G$$ 
 
-&lt;h3 id=&#34;2-solve-the-ode-for-u_ss&#34;&gt;2. Solve the ODE for $u_s(s)$&lt;/h3&gt;
+&lt;h3 id=&#34;2-solve-the-ode-for&#34;&gt;2. Solve the ODE for $u_s(s)$&lt;/h3&gt;
  $$\frac{du_s}{ds} = -\gamma u_s \Rightarrow u_s(s) = u_s(0)e^{-\gamma s}$$ 
 
-&lt;h3 id=&#34;3-plug-into-the-ode-for-u_us&#34;&gt;3. Plug into the ODE for $u_u(s)$&lt;/h3&gt;
+&lt;h3 id=&#34;3-plug-into-the-ode-for&#34;&gt;3. Plug into the ODE for $u_u(s)$&lt;/h3&gt;
  $$\frac{du_u}{ds} = \beta(u_s(s) - u_u(s)) = \beta(u_s(0)e^{-\gamma s} - u_u(s))$$ 
 
 &lt;p&gt;This is a linear non-homogeneous ODE:&lt;/p&gt;
@@ -2127,7 +2744,7 @@ $$
 &lt;p&gt;So we now have:&lt;/p&gt;
  $$u_u(s) = \frac{\beta u_s(0)}{\beta - \gamma}e^{-\gamma s} + \left(u_u(0) - \frac{\beta u_s(0)}{\beta - \gamma}\right)e^{-\beta s}$$ 
 
-&lt;h3 id=&#34;4-define-u_1u_u-u_s-s&#34;&gt;4. Define $U_1(u_u, u_s, s)$&lt;/h3&gt;
+&lt;h3 id=&#34;4-define&#34;&gt;4. Define $U_1(u_u, u_s, s)$&lt;/h3&gt;
 &lt;p&gt;Recall that in the characteristic solution for  $G$ 
 , we solve:&lt;/p&gt;
  $$\frac{dG}{ds} = \alpha u_u(s)G \Rightarrow G(s) = \exp\left(\int_0^t \alpha(t-s)u_u(s)ds\right)$$ 
@@ -2136,7 +2753,7 @@ $$
 . So:&lt;/p&gt;
  $$U_1(u_u, u_s, s) = \frac{\beta u_s}{\beta - \gamma}e^{-\gamma s} + \left(u_u - \frac{\beta u_s}{\beta - \gamma}\right)e^{-\beta s}$$ 
 
-&lt;h3 id=&#34;5-compute-fu_u-u_s-t--ln-g&#34;&gt;5. Compute $f(u_u, u_s, t) = \ln G$&lt;/h3&gt;
+&lt;h3 id=&#34;5-compute&#34;&gt;5. Compute $f(u_u, u_s, t) = \ln G$&lt;/h3&gt;
 &lt;p&gt;Now integrate:&lt;/p&gt;
  $$\ln G(u_u, u_s, t) = \int_0^t \alpha(t-s)U_1(u_u, u_s, s) \, ds$$ 
 
@@ -3892,7 +4509,7 @@ $$
     &lt;/li&gt;
     &lt;li&gt;&lt;a href=&#34;#crowd-funded-open-source-software&#34;&gt;Crowd-funded open-source software&lt;/a&gt;
       &lt;ul&gt;
-        &lt;li&gt;&lt;a href=&#34;#-click-here-to-become-a-sponsor-and-help-support-hugo-bloxs-future-httpshugobloxcomsponsor&#34;&gt;&lt;a href=&#34;https://hugoblox.com/sponsor/&#34;&gt;❤️ Click here to become a sponsor and help support Hugo Blox&amp;rsquo;s future ❤️&lt;/a&gt;&lt;/a&gt;&lt;/li&gt;
+        &lt;li&gt;&lt;a href=&#34;#-click-here-to-become-a-sponsor-and-help-support-hugo-blox&#34;&gt;&lt;a href=&#34;https://hugoblox.com/sponsor/&#34;&gt;❤️ Click here to become a sponsor and help support Hugo Blox&amp;rsquo;s future ❤️&lt;/a&gt;&lt;/a&gt;&lt;/li&gt;
       &lt;/ul&gt;
     &lt;/li&gt;
     &lt;li&gt;&lt;a href=&#34;#ecosystem&#34;&gt;Ecosystem&lt;/a&gt;&lt;/li&gt;
@@ -3922,7 +4539,7 @@ $$
 &lt;/ul&gt;
 &lt;h2 id=&#34;crowd-funded-open-source-software&#34;&gt;Crowd-funded open-source software&lt;/h2&gt;
 &lt;p&gt;To help us develop this template and software sustainably under the MIT license, we ask all individuals and businesses that use it to help support its ongoing maintenance and development via sponsorship.&lt;/p&gt;
-&lt;h3 id=&#34;-click-here-to-become-a-sponsor-and-help-support-hugo-bloxs-future-httpshugobloxcomsponsor&#34;&gt;&lt;a href=&#34;https://hugoblox.com/sponsor/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;❤️ Click here to become a sponsor and help support Hugo Blox&amp;rsquo;s future ❤️&lt;/a&gt;&lt;/h3&gt;
+&lt;h3 id=&#34;-click-here-to-become-a-sponsor-and-help-support-hugo-blox&#34;&gt;&lt;a href=&#34;https://hugoblox.com/sponsor/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;❤️ Click here to become a sponsor and help support Hugo Blox&amp;rsquo;s future ❤️&lt;/a&gt;&lt;/h3&gt;
 &lt;p&gt;As a token of appreciation for sponsoring, you can &lt;strong&gt;unlock &lt;a href=&#34;https://hugoblox.com/sponsor/&#34; target=&#34;_blank&#34; rel=&#34;noopener&#34;&gt;these&lt;/a&gt; awesome rewards and extra features 🦄✨&lt;/strong&gt;&lt;/p&gt;
 &lt;h2 id=&#34;ecosystem&#34;&gt;Ecosystem&lt;/h2&gt;
 &lt;ul&gt;
@@ -4110,7 +4727,7 @@ $$
 
 
 
-&lt;div id=&#34;chart-924716538&#34; class=&#34;chart&#34;&gt;&lt;/div&gt;
+&lt;div id=&#34;chart-489625317&#34; class=&#34;chart&#34;&gt;&lt;/div&gt;
 &lt;script&gt;
   async function fetchChartJSON() {
     console.debug(&#39;Hugo Blox fetching chart JSON...&#39;)
@@ -4128,7 +4745,7 @@ $$
 
       fetchChartJSON().then(chart =&gt; {
         console.debug(&#39;Plotting chart...&#39;)
-        window.Plotly.newPlot(&#39;chart-924716538&#39;, chart.data, chart.layout, {responsive: true});
+        window.Plotly.newPlot(&#39;chart-489625317&#39;, chart.data, chart.layout, {responsive: true});
       });
     }, 500 );
   })();
@@ -4318,12 +4935,8 @@ Crash --&gt; [*]
 &lt;p&gt;&lt;strong&gt;Youtube&lt;/strong&gt;:&lt;/p&gt;
 &lt;pre&gt;&lt;code&gt;{{&amp;lt; youtube D2vj0WcvH5c &amp;gt;}}
 &lt;/code&gt;&lt;/pre&gt;
-
-
-    
-    &lt;div style=&#34;position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;&#34;&gt;
-      &lt;iframe allow=&#34;accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share&#34; allowfullscreen=&#34;allowfullscreen&#34; loading=&#34;eager&#34; referrerpolicy=&#34;strict-origin-when-cross-origin&#34; src=&#34;https://www.youtube.com/embed/D2vj0WcvH5c?autoplay=0&amp;controls=1&amp;end=0&amp;loop=0&amp;mute=0&amp;start=0&#34; style=&#34;position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;&#34; title=&#34;YouTube video&#34;
-      &gt;&lt;/iframe&gt;
+&lt;div style=&#34;position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;&#34;&gt;
+      &lt;iframe allow=&#34;accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share&#34; allowfullscreen=&#34;allowfullscreen&#34; loading=&#34;eager&#34; referrerpolicy=&#34;strict-origin-when-cross-origin&#34; src=&#34;https://www.youtube.com/embed/D2vj0WcvH5c?autoplay=0&amp;amp;controls=1&amp;amp;end=0&amp;amp;loop=0&amp;amp;mute=0&amp;amp;start=0&#34; style=&#34;position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;&#34; title=&#34;YouTube video&#34;&gt;&lt;/iframe&gt;
     &lt;/div&gt;
 
 &lt;p&gt;&lt;strong&gt;Bilibili&lt;/strong&gt;:&lt;/p&gt;
@@ -4437,12 +5050,8 @@ data.head()
 &lt;p&gt;On this page, you&amp;rsquo;ll find some examples of the types of technical content that can be rendered with Hugo Blox.&lt;/p&gt;
 &lt;h2 id=&#34;video&#34;&gt;Video&lt;/h2&gt;
 &lt;p&gt;Teach your course by sharing videos with your students. Choose from one of the following approaches:&lt;/p&gt;
-
-
-    
-    &lt;div style=&#34;position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;&#34;&gt;
-      &lt;iframe allow=&#34;accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share&#34; allowfullscreen=&#34;allowfullscreen&#34; loading=&#34;eager&#34; referrerpolicy=&#34;strict-origin-when-cross-origin&#34; src=&#34;https://www.youtube.com/embed/D2vj0WcvH5c?autoplay=0&amp;controls=1&amp;end=0&amp;loop=0&amp;mute=0&amp;start=0&#34; style=&#34;position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;&#34; title=&#34;YouTube video&#34;
-      &gt;&lt;/iframe&gt;
+&lt;div style=&#34;position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;&#34;&gt;
+      &lt;iframe allow=&#34;accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share&#34; allowfullscreen=&#34;allowfullscreen&#34; loading=&#34;eager&#34; referrerpolicy=&#34;strict-origin-when-cross-origin&#34; src=&#34;https://www.youtube.com/embed/D2vj0WcvH5c?autoplay=0&amp;amp;controls=1&amp;amp;end=0&amp;amp;loop=0&amp;amp;mute=0&amp;amp;start=0&#34; style=&#34;position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;&#34; title=&#34;YouTube video&#34;&gt;&lt;/iframe&gt;
     &lt;/div&gt;
 
 &lt;p&gt;&lt;strong&gt;Youtube&lt;/strong&gt;:&lt;/p&gt;
@@ -4563,12 +5172,8 @@ data.head()
 &lt;p&gt;On this page, you&amp;rsquo;ll find some examples of the types of technical content that can be rendered with Hugo Blox.&lt;/p&gt;
 &lt;h2 id=&#34;video&#34;&gt;Video&lt;/h2&gt;
 &lt;p&gt;Teach your course by sharing videos with your students. Choose from one of the following approaches:&lt;/p&gt;
-
-
-    
-    &lt;div style=&#34;position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;&#34;&gt;
-      &lt;iframe allow=&#34;accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share&#34; allowfullscreen=&#34;allowfullscreen&#34; loading=&#34;eager&#34; referrerpolicy=&#34;strict-origin-when-cross-origin&#34; src=&#34;https://www.youtube.com/embed/D2vj0WcvH5c?autoplay=0&amp;controls=1&amp;end=0&amp;loop=0&amp;mute=0&amp;start=0&#34; style=&#34;position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;&#34; title=&#34;YouTube video&#34;
-      &gt;&lt;/iframe&gt;
+&lt;div style=&#34;position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;&#34;&gt;
+      &lt;iframe allow=&#34;accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share&#34; allowfullscreen=&#34;allowfullscreen&#34; loading=&#34;eager&#34; referrerpolicy=&#34;strict-origin-when-cross-origin&#34; src=&#34;https://www.youtube.com/embed/D2vj0WcvH5c?autoplay=0&amp;amp;controls=1&amp;amp;end=0&amp;amp;loop=0&amp;amp;mute=0&amp;amp;start=0&#34; style=&#34;position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;&#34; title=&#34;YouTube video&#34;&gt;&lt;/iframe&gt;
     &lt;/div&gt;
 
 &lt;p&gt;&lt;strong&gt;Youtube&lt;/strong&gt;:&lt;/p&gt;
@@ -5401,17 +6006,17 @@ $$ = \frac{\beta(\alpha_1 - \alpha_0)(\gamma - \beta)}{(\beta - \lambda_\alpha)}
 
 &lt;p&gt;This is the third term of the ELBO for a single cell n (in your example, n=1), as seen in Equation (26) of the VeloVI model description.&lt;/p&gt;
 &lt;p&gt;Let&amp;rsquo;s dissect each part:&lt;/p&gt;
-&lt;h3 id=&#34;hahahugoshortcode19s1hbhb&#34;&gt; $z_1$ 
+&lt;h3 id=&#34;hahahugoshortcode15s1hbhb&#34;&gt; $z_1$ 
 &lt;/h3&gt;
 &lt;p&gt;This represents the low-dimensional latent variable for Cell 1. It&amp;rsquo;s a vector that summarizes the latent state of Cell 1 (e.g., its overall position in the developmental trajectory or cell cycle).&lt;/p&gt;
-&lt;h3 id=&#34;hahahugoshortcode19s2hbhb&#34;&gt; $u_1, s_1$ 
+&lt;h3 id=&#34;hahahugoshortcode15s2hbhb&#34;&gt; $u_1, s_1$ 
 &lt;/h3&gt;
 &lt;p&gt;These are the observed unspliced and spliced transcript abundances for Cell 1, across all genes. So,  $u_1$ 
  is a vector  $(u_{1A}, u_{1B}, u_{1C})$ 
  and  $s_1$ 
  is  $(s_{1A}, s_{1B}, s_{1C})$ 
  in your three-gene example.&lt;/p&gt;
-&lt;h3 id=&#34;hahahugoshortcode19s7hbhb&#34;&gt; $q_\phi(z_1|u_1,s_1)$ 
+&lt;h3 id=&#34;hahahugoshortcode15s7hbhb&#34;&gt; $q_\phi(z_1|u_1,s_1)$ 
 &lt;/h3&gt;
 &lt;p&gt;This is the approximate posterior distribution over the latent variable  $z_1$ 
 , conditioned on the observed data  $(u_1,s_1)$ 
@@ -5424,7 +6029,7 @@ $$ = \frac{\beta(\alpha_1 - \alpha_0)(\gamma - \beta)}{(\beta - \lambda_\alpha)}
 . Specifically, an &amp;ldquo;encoder&amp;rdquo; neural network takes  $(u_1,s_1)$ 
  as input and outputs the parameters (e.g., mean and variance if it&amp;rsquo;s a Gaussian) for this distribution.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3 id=&#34;hahahugoshortcode19s14hbhb&#34;&gt; $E_{q_\phi(z_1|u_1,s_1)}[\ldots]$ 
+&lt;h3 id=&#34;hahahugoshortcode15s14hbhb&#34;&gt; $E_{q_\phi(z_1|u_1,s_1)}[\ldots]$ 
 &lt;/h3&gt;
 &lt;p&gt;This denotes an expectation with respect to the distribution  $q_\phi(z_1|u_1,s_1)$ 
 .&lt;/p&gt;
@@ -5436,14 +6041,14 @@ $$ = \frac{\beta(\alpha_1 - \alpha_0)(\gamma - \beta)}{(\beta - \lambda_\alpha)}
 &lt;li&gt;The &amp;ldquo;reparameterization trick&amp;rdquo; is often used to make this sampling process differentiable, allowing gradients to flow back through the sampling process to update  $\phi$ 
 .&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3 id=&#34;hahahugoshortcode19s19hbhb&#34;&gt; $\sum_g$ 
+&lt;h3 id=&#34;hahahugoshortcode15s19hbhb&#34;&gt; $\sum_g$ 
 &lt;/h3&gt;
 &lt;p&gt;This simply means a summation over all genes g (Gene A, Gene B, Gene C in your example).&lt;/p&gt;
-&lt;h3 id=&#34;hahahugoshortcode19s20hbhb&#34;&gt; $\pi_{1g}$ 
+&lt;h3 id=&#34;hahahugoshortcode15s20hbhb&#34;&gt; $\pi_{1g}$ 
 &lt;/h3&gt;
 &lt;p&gt;This is the probability distribution over the four transcriptional states for gene g in cell 1 (i.e.,  $[\pi_{1g,k=1}, \pi_{1g,k=2}, \pi_{1g,k=3}, \pi_{1g,k=4}]$ 
 ).&lt;/p&gt;
-&lt;h3 id=&#34;hahahugoshortcode19s22hbhb&#34;&gt; $q_\phi(\pi_{1g}|z_1)$ 
+&lt;h3 id=&#34;hahahugoshortcode15s22hbhb&#34;&gt; $q_\phi(\pi_{1g}|z_1)$ 
 &lt;/h3&gt;
 &lt;p&gt;This is the approximate posterior distribution over the state assignment probabilities  $\pi_{1g}$ 
 , conditioned on the latent variable  $z_1$ 
@@ -5454,13 +6059,13 @@ $$ = \frac{\beta(\alpha_1 - \alpha_0)(\gamma - \beta)}{(\beta - \lambda_\alpha)}
 ) takes  $z_1$ 
  as input and outputs the parameters (e.g., concentration parameters for a Dirichlet distribution) for this distribution.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3 id=&#34;hahahugoshortcode19s27hbhb&#34;&gt; $p(\pi_{1g})$ 
+&lt;h3 id=&#34;hahahugoshortcode15s27hbhb&#34;&gt; $p(\pi_{1g})$ 
 &lt;/h3&gt;
 &lt;p&gt;This is the prior distribution over the state assignment probabilities  $\pi_{1g}$ 
 .&lt;/p&gt;
 &lt;p&gt;As specified in Eq. 14, it&amp;rsquo;s a uniform Dirichlet distribution:  $p(\pi_{1g}) = \text{Dirichlet}(0.25, 0.25, 0.25, 0.25)$ 
 . This means, a priori, all four states are considered equally likely for any gene in any cell.&lt;/p&gt;
-&lt;h3 id=&#34;hahahugoshortcode19s30hbhb&#34;&gt; $\text{KL}(Q \| P)$ 
+&lt;h3 id=&#34;hahahugoshortcode15s30hbhb&#34;&gt; $\text{KL}(Q \| P)$ 
 &lt;/h3&gt;
 &lt;p&gt;This is the Kullback-Leibler (KL) divergence between two probability distributions Q and P. It&amp;rsquo;s a measure of how one probability distribution Q diverges from a second, expected probability distribution P.&lt;/p&gt;
 &lt;ul&gt;
@@ -5482,7 +6087,7 @@ $$ = \frac{\beta(\alpha_1 - \alpha_0)(\gamma - \beta)}{(\beta - \lambda_\alpha)}
 &amp;rdquo; refers to the average value of a function or random variable, where the averaging is performed according to the probabilities defined by the distribution  $q_\phi(z_1|u_1,s_1)$ 
 .&lt;/p&gt;
 &lt;p&gt;Let&amp;rsquo;s break it down in the context of VeloVI:&lt;/p&gt;
-&lt;h2 id=&#34;hahahugoshortcode19s40hbhb&#34;&gt; $q_\phi(z_1|u_1,s_1)$ 
+&lt;h2 id=&#34;hahahugoshortcode15s40hbhb&#34;&gt; $q_\phi(z_1|u_1,s_1)$ 
 &lt;/h2&gt;
 &lt;ul&gt;
 &lt;li&gt;This is the approximate posterior distribution of the latent variable  $z_1$ 
@@ -5539,7 +6144,7 @@ $$ = \frac{\beta(\alpha_1 - \alpha_0)(\gamma - \beta)}{(\beta - \lambda_\alpha)}
 &lt;h2 id=&#34;how-is-it-calculated-in-practice-monte-carlo-approximation&#34;&gt;How is it calculated in practice (Monte Carlo Approximation)&lt;/h2&gt;
 &lt;p&gt;Since the integral (for continuous  $z_1$ 
 ) is usually intractable, this expectation is approximated using Monte Carlo sampling. The process is as follows:&lt;/p&gt;
-&lt;h3 id=&#34;1-sample-from-hahahugoshortcode19s71hbhb&#34;&gt;1. Sample from  $q_\phi(z_1|u_1,s_1)$ 
+&lt;h3 id=&#34;1-sample-from-hahahugoshortcode15s71hbhb&#34;&gt;1. Sample from  $q_\phi(z_1|u_1,s_1)$ 
 &lt;/h3&gt;
 &lt;p&gt;Draw one or more samples, say  $z_1^{(m)}$ 
  for  $m=1,\ldots,M$ 
@@ -6224,13 +6829,12 @@ $$\frac{3.9996 + 3.0844}{2} = 3.542 \tag{13}$$
       &lt;/tr&gt;
   &lt;/tbody&gt;
 &lt;/table&gt;
-&lt;h1 id=&#34;calculate-expected-velocity-for-a-sampled-hahahugoshortcode13s214hbhb&#34;&gt;Calculate Expected Velocity for a sampled $z_n$
+&lt;h1 id=&#34;calculate-expected-velocity-for-a-sampled-hahahugoshortcode16s214hbhb&#34;&gt;Calculate Expected Velocity for a sampled $z_n$
 &lt;/h1&gt;
 &lt;blockquote&gt;
 &lt;p&gt;&lt;strong&gt;Note: Posterior Velocity Distribution, i.e. the full posterior predictive velocity distribution, is just the distribution of all the expected velocity values for the sample $z_n^*$
  (drawn from $q_\phi(z_n|u_n, s_n)$
-).&lt;/strong&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
+).&lt;/strong&gt;&lt;/p&gt;&lt;/blockquote&gt;
 &lt;hr&gt;
 
 $$\mathbb{E}_{q_\phi(\pi_{ng}|z_n)} \left[v^{(g)}(t(k_{ng})_{ng}, k_{ng})\right] \tag{1}$$
@@ -6332,7 +6936,7 @@ $$v^{(g)}(t^{(k)}, k) = \beta_g \bar{u}^{(g)}(t^{(k)}, k) - \gamma_g \bar{s}^{(g
 &lt;p&gt;We need the expected unspliced ($\bar{u}$
 ) and spliced ($\bar{s}$
 ) counts for each state at its corresponding latent time. These are given by the kinetic equations in VeloVI.&lt;/p&gt;
-&lt;h3 id=&#34;calculations-for-each-state-k-and-its-corresponding-hahahugoshortcode13s261hbhb&#34;&gt;Calculations for each state k and its corresponding $t_{1A}^{(k)}$
+&lt;h3 id=&#34;calculations-for-each-state-k-and-its-corresponding-hahahugoshortcode16s261hbhb&#34;&gt;Calculations for each state k and its corresponding $t_{1A}^{(k)}$
 :&lt;/h3&gt;
 &lt;p&gt;&lt;strong&gt;State 1 (Induction, k=1): t=4.0&lt;/strong&gt;&lt;/p&gt;
 
@@ -6830,7 +7434,7 @@ $$z = \begin{bmatrix} 0.15 \\ -1.23 \\ 0.84 \end{bmatrix} \tag{13.3}$$
   &lt;/tbody&gt;
 &lt;/table&gt;
 &lt;h2 id=&#34;2-initialization-of-all-parameters&#34;&gt;2. Initialization of All Parameters&lt;/h2&gt;
-&lt;h3 id=&#34;a-biophysical-parameters-hahahugoshortcode14s5hbhb&#34;&gt;a. Biophysical Parameters ( $\theta$ 
+&lt;h3 id=&#34;a-biophysical-parameters-hahahugoshortcode18s5hbhb&#34;&gt;a. Biophysical Parameters ( $\theta$ 
 )&lt;/h3&gt;
 &lt;p&gt;&lt;strong&gt; $\alpha_{g1}$ 
  (Transcription Rate for Induction):&lt;/strong&gt;&lt;/p&gt;
@@ -6862,7 +7466,7 @@ $$z = \begin{bmatrix} 0.15 \\ -1.23 \\ 0.84 \end{bmatrix} \tag{13.3}$$
  (assuming  $t_{\max} = 20$ 
 )&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3 id=&#34;b-variance-parameters-hahahugoshortcode14s18hbhb&#34;&gt;b. Variance Parameters ( $\theta$ 
+&lt;h3 id=&#34;b-variance-parameters-hahahugoshortcode18s18hbhb&#34;&gt;b. Variance Parameters ( $\theta$ 
 )&lt;/h3&gt;
 &lt;p&gt;These are also part of the  $\theta$ 
  parameters learned by the model. They are gene-specific.&lt;/p&gt;
@@ -6878,7 +7482,7 @@ $$z = \begin{bmatrix} 0.15 \\ -1.23 \\ 0.84 \end{bmatrix} \tag{13.3}$$
  is a fixed scalar, not a learnable parameter, e.g.,  $c_4 = 0.1$ 
 , others  $c_k = 1.0$ 
 )&lt;/p&gt;
-&lt;h3 id=&#34;c-neural-network-parameters-hahahugoshortcode14s26hbhb&#34;&gt;c. Neural Network Parameters ( $\phi$ 
+&lt;h3 id=&#34;c-neural-network-parameters-hahahugoshortcode18s26hbhb&#34;&gt;c. Neural Network Parameters ( $\phi$ 
 )&lt;/h3&gt;
 &lt;p&gt;These are the weights and biases of all neural networks in the model.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Encoder Network Weights/Biases:&lt;/strong&gt; This network takes  $(u_n, s_n)$ 
@@ -6899,7 +7503,7 @@ $$z = \begin{bmatrix} 0.15 \\ -1.23 \\ 0.84 \end{bmatrix} \tag{13.3}$$
 &lt;p&gt;&lt;em&gt;Initialization:&lt;/em&gt; Also randomly initialized, similar to the encoder.&lt;/p&gt;
 &lt;h2 id=&#34;3-learning-process-one-iteration-of-optimization&#34;&gt;3. Learning Process (One Iteration of Optimization)&lt;/h2&gt;
 &lt;p&gt;Let&amp;rsquo;s trace one optimization step focusing on a mini-batch of Cell 1 and Cell 3.&lt;/p&gt;
-&lt;h3 id=&#34;a-forward-pass-calculate-loss-hahahugoshortcode14s35hbhb&#34;&gt;a. Forward Pass (Calculate Loss  $L_{\text{velo}}$ 
+&lt;h3 id=&#34;a-forward-pass-calculate-loss-hahahugoshortcode18s35hbhb&#34;&gt;a. Forward Pass (Calculate Loss  $L_{\text{velo}}$ 
 )&lt;/h3&gt;
 &lt;p&gt;&lt;strong&gt;For Cell 1&lt;/strong&gt; ( $u_1, s_1$ 
 ):&lt;/p&gt;
@@ -7123,7 +7727,7 @@ The optimizer (Adam) updates all parameters using the learning rate:  $\text{Par
 &lt;/ul&gt;
 &lt;h2 id=&#34;5-calculate-kl-divergence-terms-during-learning&#34;&gt;5. Calculate KL Divergence Terms During Learning&lt;/h2&gt;
 &lt;p&gt;KL divergence is a measure of how one probability distribution diverges from a second, expected probability distribution. In VAEs, it&amp;rsquo;s used as a regularization term to keep the learned approximate posterior distributions close to simple, predefined prior distributions.&lt;/p&gt;
-&lt;h3 id=&#34;1-kl-for-hahahugoshortcode14s171hbhb-hahahugoshortcode14s172hbhb&#34;&gt;1. KL for $z_n$
+&lt;h3 id=&#34;1-kl-for-hahahugoshortcode18s171hbhb-hahahugoshortcode18s172hbhb&#34;&gt;1. KL for $z_n$
 : $\text{KL}(q_\phi(z_1 \mid u_1, s_1) \| p(z))$
 &lt;/h3&gt;
 &lt;p&gt;&lt;strong&gt;What it represents:&lt;/strong&gt; This term measures the divergence between the approximate posterior distribution for the latent variable $z_n$
@@ -7164,7 +7768,7 @@ $$
 &lt;li&gt;By forcing $q_\phi(z_n \mid u_n, s_n)$
  to be similar to a standard normal distribution, the model encourages the latent representations of different cells to be compactly distributed around the origin. This helps with generalization and ensures that the latent space is &amp;ldquo;interpretable&amp;rdquo; or at least traversable for generating new samples.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3 id=&#34;2-hahahugoshortcode14s194hbhb-hahahugoshortcode14s195hbhb&#34;&gt;2. $\pi_{ng}$
+&lt;h3 id=&#34;2-hahahugoshortcode18s194hbhb-hahahugoshortcode18s195hbhb&#34;&gt;2. $\pi_{ng}$
 : $E_{q_\phi(z_1 \mid u_1, s_1)}[\sum_g \text{KL}(q_\phi(\pi_{1g} \mid z_1) \| p(\pi_{1g}))]$
 &lt;/h3&gt;
 &lt;p&gt;&lt;strong&gt;What it represents:&lt;/strong&gt; This term measures the divergence between the approximate posterior distribution for the gene kinetic state probabilities $\pi_{ng}$
@@ -7428,7 +8032,7 @@ $$
 &lt;li&gt;$s_{1A} = 0.2$
  (These are the inputs to our encoder)&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h4 id=&#34;learned-biophysical-parameters-hahahugoshortcode15s67hbhb-for-gene-a&#34;&gt;Learned Biophysical Parameters ($\theta$
+&lt;h4 id=&#34;learned-biophysical-parameters-hahahugoshortcode19s67hbhb-for-gene-a&#34;&gt;Learned Biophysical Parameters ($\theta$
 ) for Gene A:&lt;/h4&gt;
 &lt;p&gt;(These are fixed values after training)&lt;/p&gt;
 &lt;ul&gt;
@@ -7448,7 +8052,7 @@ $$
 &lt;p&gt;(For simplicity, let&amp;rsquo;s assume all state scaling factors $c_k = 1$
  for this example, though VeloVI uses a specific $c_4 = 0.1$
 )&lt;/p&gt;
-&lt;h4 id=&#34;learned-neural-network-parameters-hahahugoshortcode15s76hbhb-for-the-encoder-and-decoder&#34;&gt;Learned Neural Network Parameters ($\phi$
+&lt;h4 id=&#34;learned-neural-network-parameters-hahahugoshortcode19s76hbhb-for-the-encoder-and-decoder&#34;&gt;Learned Neural Network Parameters ($\phi$
 ) for the Encoder and Decoder:&lt;/h4&gt;
 &lt;p&gt;(These are the weights and biases of the networks. We don&amp;rsquo;t see the numbers directly, but we know their effect on the outputs.)&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Encoder&amp;rsquo;s Output for $z_1$
@@ -7750,7 +8354,7 @@ $$
 &lt;/ul&gt;
 &lt;p&gt;We sample a noise value from a standard normal distribution:  $\epsilon_{1,\text{dim1}} = 0.8$ 
  (a single random draw).&lt;/p&gt;
-&lt;h3 id=&#34;forward-pass-calculating-hahahugoshortcode21s58hbhb-and-its-contribution-to-loss&#34;&gt;Forward Pass (Calculating  $z_1^*$ 
+&lt;h3 id=&#34;forward-pass-calculating-hahahugoshortcode20s58hbhb-and-its-contribution-to-loss&#34;&gt;Forward Pass (Calculating  $z_1^*$ 
  and its contribution to Loss)&lt;/h3&gt;
 &lt;p&gt;&lt;strong&gt;Calculate  $z_1^*$ 
  using reparameterization&lt;/strong&gt;:
@@ -7773,13 +8377,13 @@ $$
 &lt;p&gt;(This means if  $z_{1,\text{dim1}}^*$ 
  were to increase by 1 unit, the loss would increase by 2.0 units, implying we want to decrease  $z_{1,\text{dim1}}^*$ 
  to reduce loss).&lt;/p&gt;
-&lt;h3 id=&#34;backward-pass-gradient-flow-to-hahahugoshortcode21s71hbhb-and-hahahugoshortcode21s72hbhb-parameters&#34;&gt;Backward Pass (Gradient Flow to  $\mu_{z_1}$ 
+&lt;h3 id=&#34;backward-pass-gradient-flow-to-hahahugoshortcode20s71hbhb-and-hahahugoshortcode20s72hbhb-parameters&#34;&gt;Backward Pass (Gradient Flow to  $\mu_{z_1}$ 
  and  $\Sigma_{z_1}$ 
  parameters)&lt;/h3&gt;
 &lt;p&gt;Now, we use the chain rule to propagate this gradient back to  $\mu_{z_{1,\text{dim1}}}$ 
  and  $\log \Sigma_{z_{1,\text{dim1}}}$ 
 .&lt;/p&gt;
-&lt;h4 id=&#34;1-gradient-for-hahahugoshortcode21s75hbhb&#34;&gt;1. Gradient for  $\mu_{z_{1,\text{dim1}}}$ 
+&lt;h4 id=&#34;1-gradient-for-hahahugoshortcode20s75hbhb&#34;&gt;1. Gradient for  $\mu_{z_{1,\text{dim1}}}$ 
 &lt;/h4&gt;
 &lt;p&gt;We know  $z_{1,\text{dim1}}^* = \mu_{z_{1,\text{dim1}}} + \sigma_{z_{1,\text{dim1}}} \times \epsilon_{1,\text{dim1}}$ 
 .&lt;/p&gt;
@@ -7797,7 +8401,7 @@ $$
  means that increasing  $\mu_{z_{1,\text{dim1}}}$ 
  would increase the loss. Therefore, the optimizer will decrease  $\mu_{z_{1,\text{dim1}}}$ 
  in the update step.&lt;/p&gt;
-&lt;h4 id=&#34;2-gradient-for-hahahugoshortcode21s85hbhb&#34;&gt;2. Gradient for  $\sigma_{z_{1,\text{dim1}}}$ 
+&lt;h4 id=&#34;2-gradient-for-hahahugoshortcode20s85hbhb&#34;&gt;2. Gradient for  $\sigma_{z_{1,\text{dim1}}}$ 
 &lt;/h4&gt;
 &lt;p&gt;The partial derivative of  $z_{1,\text{dim1}}^*$ 
  with respect to  $\sigma_{z_{1,\text{dim1}}}$ 
@@ -7815,7 +8419,7 @@ $$
  means increasing  $\sigma_{z_{1,\text{dim1}}}$ 
  would increase the loss. So, the optimizer will decrease  $\sigma_{z_{1,\text{dim1}}}$ 
 .&lt;/p&gt;
-&lt;h4 id=&#34;3-gradient-for-hahahugoshortcode21s95hbhb-if-encoder-outputs-log-variance&#34;&gt;3. Gradient for  $\log \Sigma_{z_{1,\text{dim1}}}$ 
+&lt;h4 id=&#34;3-gradient-for-hahahugoshortcode20s95hbhb-if-encoder-outputs-log-variance&#34;&gt;3. Gradient for  $\log \Sigma_{z_{1,\text{dim1}}}$ 
  (if encoder outputs log-variance)&lt;/h4&gt;
 &lt;p&gt;Often, neural networks output  $\log \Sigma$ 
  for numerical stability and to ensure the variance is positive. We need one more chain rule step:&lt;/p&gt;
@@ -7861,7 +8465,7 @@ $$
       <description>&lt;h1 id=&#34;velovi-intrinsic-uncertainty-quantification&#34;&gt;VeloVI Intrinsic Uncertainty Quantification&lt;/h1&gt;
 &lt;p&gt;This document explains how VeloVI quantifies the intrinsic uncertainty in the predicted velocity for a given cell. This uncertainty reflects how consistent the model&amp;rsquo;s velocity predictions are for a cell, given the inherent variability captured by the variational posterior.&lt;/p&gt;
 &lt;p&gt;Let&amp;rsquo;s break down the concepts and the formula step-by-step:&lt;/p&gt;
-&lt;h2 id=&#34;1-posterior-predictive-velocity-mean-hahahugoshortcode18s0hbhb&#34;&gt;1. Posterior Predictive Velocity Mean ($\bar{v}_n$
+&lt;h2 id=&#34;1-posterior-predictive-velocity-mean-hahahugoshortcode21s0hbhb&#34;&gt;1. Posterior Predictive Velocity Mean ($\bar{v}_n$
 )&lt;/h2&gt;
 &lt;p&gt;&lt;strong&gt;What it is:&lt;/strong&gt; $\bar{v}_n$
  is the average or mean velocity vector for cell n, taking into account the model&amp;rsquo;s uncertainty in the underlying latent variables ($z_n$
@@ -7921,7 +8525,7 @@ $$\text{Intrinsic Uncertainty} = \text{Var}_{q_\phi(v_n | u_n, s_n)}[c(v_n, \bar
 &lt;p&gt;This means we&amp;rsquo;re looking at how spread out the cosine similarity values are. If all $v_n^{(l)}$
  point in roughly the same direction as $\bar{v}_n$
 , the cosine similarities will be close to 1, and their variance will be low. If they point in wildly different directions, the cosine similarities will vary a lot, leading to high variance.&lt;/p&gt;
-&lt;h2 id=&#34;3-the-formula-for-hahahugoshortcode18s25hbhb-sample-variance&#34;&gt;3. The Formula for $\hat{\sigma}_n^2$
+&lt;h2 id=&#34;3-the-formula-for-hahahugoshortcode21s25hbhb-sample-variance&#34;&gt;3. The Formula for $\hat{\sigma}_n^2$
  (Sample Variance)&lt;/h2&gt;
 &lt;p&gt;The provided formula $\hat{\sigma}_n^2$
  is the standard sample variance applied to the set of scalar cosine similarity values.&lt;/p&gt;
@@ -7961,7 +8565,7 @@ $$\hat{\sigma}_n^2 = \frac{1}{L-1} \sum_{l=1}^{L} \left(C_l - \left(\frac{1}{L} 
 : This is the scaling factor for sample variance (using L-1 instead of L to provide an unbiased estimate of the population variance).&lt;/p&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&#34;interpretation-of-hahahugoshortcode18s40hbhb&#34;&gt;Interpretation of $\hat{\sigma}_n^2$
+&lt;h2 id=&#34;interpretation-of-hahahugoshortcode21s40hbhb&#34;&gt;Interpretation of $\hat{\sigma}_n^2$
 :&lt;/h2&gt;
 &lt;p&gt;&lt;strong&gt;High $\hat{\sigma}_n^2$
 :&lt;/strong&gt; Indicates high intrinsic uncertainty. The individual velocity samples $v_n^{(l)}$
@@ -7974,7 +8578,7 @@ $$\hat{\sigma}_n^2 = \frac{1}{L-1} \sum_{l=1}^{L} \left(C_l - \left(\frac{1}{L} 
 &lt;h1 id=&#34;velovi-future-cell-state-prediction-and-uncertainty-quantification&#34;&gt;VeloVI Future Cell State Prediction and Uncertainty Quantification&lt;/h1&gt;
 &lt;p&gt;This document explains how VeloVI uses the predicted velocities to predict future cell states and, crucially, how it quantifies the uncertainty in these future state predictions. This moves beyond just the uncertainty of a single cell&amp;rsquo;s velocity to the uncertainty of where a cell might move to in the future.&lt;/p&gt;
 &lt;p&gt;Let&amp;rsquo;s break down the explanation:&lt;/p&gt;
-&lt;h2 id=&#34;1-the-cell-cell-transition-matrix-hahahugoshortcode18s47hbhb&#34;&gt;1. The Cell-Cell Transition Matrix $T(v_{1:N}, s_{1:N})$
+&lt;h2 id=&#34;1-the-cell-cell-transition-matrix-hahahugoshortcode21s47hbhb&#34;&gt;1. The Cell-Cell Transition Matrix $T(v_{1:N}, s_{1:N})$
 &lt;/h2&gt;
 &lt;p&gt;&lt;strong&gt;Purpose:&lt;/strong&gt; This matrix describes the likelihood of a cell transitioning from one state to another (or from cell i to cell j). It&amp;rsquo;s a core component of RNA velocity analysis.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Inputs:&lt;/strong&gt;&lt;/p&gt;
@@ -8013,7 +8617,7 @@ $$\cos(\delta_{ij}, v_i) = \frac{\delta_{ij}^T v_i}{\|\delta_{ij}\| \|v_i\|} \qu
 &lt;p&gt;The matrix T will have dimensions N×N, where $T_{ij}$
  represents the probability of transitioning from cell i to cell j. (Or sometimes $T_{ji}$
  depending on convention).&lt;/p&gt;
-&lt;h2 id=&#34;2-predicted-future-cell-state-hahahugoshortcode18s62hbhb&#34;&gt;2. Predicted Future Cell State: $T(v_{1:N}, s_{1:N})S$
+&lt;h2 id=&#34;2-predicted-future-cell-state-hahahugoshortcode21s62hbhb&#34;&gt;2. Predicted Future Cell State: $T(v_{1:N}, s_{1:N})S$
 &lt;/h2&gt;
 &lt;p&gt;&lt;strong&gt;Concept:&lt;/strong&gt; Once we have the transition matrix T, we can use it to predict the future state of the entire cellular population.&lt;/p&gt;
 &lt;p&gt;&lt;strong&gt;Operation:&lt;/strong&gt; The matrix multiplication $T(v_{1:N}, s_{1:N})S$

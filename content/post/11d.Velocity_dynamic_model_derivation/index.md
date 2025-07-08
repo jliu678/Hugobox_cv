@@ -1,18 +1,19 @@
 ---
-title: 🧬 Math derivation for Dynamic RNA velocity model
-summary: The dynamic model removes that requirement of steady states to broaden RNA velocity’s applicability, but introduces new assumptions that won’t hold for every dataset. Effective use of dynamic model therefore demands a clear understanding of its strengths and limitations. In this first installment of our blog series, we’ll delve into the mathematical foundations of the dynamic model.
+title: 🧬 Dynamic RNA velocity model-- (1) math solutions 
+summary: Here we delve into the mathematical foundations of the dynamic model of RNA velocity. This is the 1st installment of our blog series to clearly understand strengths and limitations of the dynamic model that is required for its effective application. 
 date: 2025-05-28
 authors:
   - admin
 tags:
-  - scRNAseq RNA Velocity, Math
-  - steady-state model
+  - scRNAseq RNA Velocity, Partial Differential Equations
+  - Dynamic model
   - scVelo
-  - velocyto
+  - Differential equations
 image:
   caption: 'Image credit: [**Logan Voss on Unsplash**](https://unsplash.com)'
 ---
-The steady‑state model’s reliance on true steady states is at odds with [known biophysical behavior](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1010492). The dynamic model removes that requirement to broaden RNA velocity’s applicability, but inevitably introduces new assumptions that won’t hold for every dataset. Effective use of dynamic model therefore demands a clear understanding of its strengths and limitations. In this first installment of our blog series, we’ll delve into the mathematical foundations of the dynamic model.
+### Introduction
+The steady‑state model’s reliance on true steady states is at odds with [known biophysical behavior](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1010492). The dynamic model removes this requirement to broaden RNA velocity’s applicability but inevitably introduces new assumptions that may not hold for every dataset. Effective use of the dynamic model therefore demands a clear understanding of its strengths and limitations. Our blog series toward this goal begins by delving into the mathematical foundations of the dynamic model.
 
 ### Symbol definitions
 Please refer to the [Nature Biotechnology paper](https://www.nature.com/articles/s41587-020-0591-3) for the definitions of the symbols used in this derivation.

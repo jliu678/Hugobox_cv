@@ -41,7 +41,7 @@
   
     
   
-  <meta name="description" content="The dynamic model removes that requirement of steady states to broaden RNA velocity’s applicability, but introduces new assumptions that won’t hold for every dataset. Effective use of dynamic model therefore demands a clear understanding of its strengths and limitations. In this first installment of our blog series, we’ll delve into the mathematical foundations of the dynamic model." />
+  <meta name="description" content="Here we delve into the mathematical foundations of the dynamic model of RNA velocity. This is the 1st installment of our blog series to clearly understand strengths and limitations of the dynamic model that is required for its effective application." />
 
   
   <link rel="alternate" hreflang="en-us" href="http://localhost:1313/post/11d.velocity_dynamic_model_derivation/" />
@@ -161,8 +161,8 @@
   
 
   
-  <link rel="icon" type="image/png" href="/media/icon_hu16496738209820128384.png" />
-  <link rel="apple-touch-icon" type="image/png" href="/media/icon_hu17763857046462676418.png" />
+  <link rel="icon" type="image/png" href="/media/icon_hu_c54cc46c793e1f2b.png" />
+  <link rel="apple-touch-icon" type="image/png" href="/media/icon_hu_68ea7b4ed3f6b794.png" />
 
   <link rel="canonical" href="http://localhost:1313/post/11d.velocity_dynamic_model_derivation/" />
 
@@ -190,8 +190,8 @@
   
   <meta property="og:site_name" content="Jiyuan Liu" />
   <meta property="og:url" content="http://localhost:1313/post/11d.velocity_dynamic_model_derivation/" />
-  <meta property="og:title" content="🧬 Math derivation for Dynamic RNA velocity model | Jiyuan Liu" />
-  <meta property="og:description" content="The dynamic model removes that requirement of steady states to broaden RNA velocity’s applicability, but introduces new assumptions that won’t hold for every dataset. Effective use of dynamic model therefore demands a clear understanding of its strengths and limitations. In this first installment of our blog series, we’ll delve into the mathematical foundations of the dynamic model." /><meta property="og:image" content="http://localhost:1313/post/11d.velocity_dynamic_model_derivation/featured.png" />
+  <meta property="og:title" content="🧬 Dynamic RNA velocity model-- (1) math solutions | Jiyuan Liu" />
+  <meta property="og:description" content="Here we delve into the mathematical foundations of the dynamic model of RNA velocity. This is the 1st installment of our blog series to clearly understand strengths and limitations of the dynamic model that is required for its effective application." /><meta property="og:image" content="http://localhost:1313/post/11d.velocity_dynamic_model_derivation/featured.png" />
     <meta property="twitter:image" content="http://localhost:1313/post/11d.velocity_dynamic_model_derivation/featured.png" /><meta property="og:locale" content="en-us" />
   
     
@@ -210,7 +210,7 @@
   
 
 
-  <title>🧬 Math derivation for Dynamic RNA velocity model | Jiyuan Liu</title>
+  <title>🧬 Dynamic RNA velocity model-- (1) math solutions | Jiyuan Liu</title>
 
   
   
@@ -237,6 +237,12 @@
   
 
 
+  
+  
+  
+  
+  
+  
   
   
   
@@ -1122,7 +1128,7 @@
       sidebar-active-item bg-primary-100 font-semibold text-primary-800 dark:bg-primary-300 dark:text-primary-900"
     href="/post/11d.velocity_dynamic_model_derivation/"
     
-  >🧬 Math derivation for Dynamic RNA velocity model
+  >🧬 Dynamic RNA velocity model-- (1) math solutions
     </a>
   
     <ul class="hb-sidebar-mobile-toc"><li>
@@ -1133,6 +1139,22 @@
             </li>
           </ul>
   
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/post/11e.velocity_dynamic_model_inference/"
+    
+  >🧬 Dynamic RNA velocity model-- (2) parameter inference
+    </a>
+              
+            </li><li class="flex flex-col "><a
+    class="hb-sidebar-custom-link
+      text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-primary-800 dark:hover:text-gray-50"
+    href="/post/11f.velocity_dynamic_model_posthoc_calculation/scvelo_post-fitting_calculation/"
+    
+  >🧬 Dynamic RNA velocity model-- (3) post hoc computation
+    </a>
               
             </li><li class="flex flex-col "><a
     class="hb-sidebar-custom-link
@@ -1656,6 +1678,9 @@
 
   <div class="hb-scrollbar text-sm [hyphens:auto] sticky top-16 overflow-y-auto pr-4 pt-6 max-h-[calc(100vh-var(--navbar-height)-env(safe-area-inset-bottom))] -mr-4 rtl:-ml-4"><p class="mb-4 font-semibold tracking-tight">On this page</p><ul>
       <li class="my-2 scroll-my-6 scroll-py-6">
+        <a class="pl-4 rtl:pr-4 inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#introduction">Introduction</a>
+      </li>
+      <li class="my-2 scroll-my-6 scroll-py-6">
         <a class="pl-4 rtl:pr-4 inline-block text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-300 w-full break-words" href="#symbol-definitions">Symbol definitions</a>
       </li>
       <li class="my-2 scroll-my-6 scroll-py-6">
@@ -1701,7 +1726,7 @@
 
       
 
-      <h1 class="mt-2 text-4xl font-bold tracking-tight text-slate-900 dark:text-slate-100">🧬 Math derivation for Dynamic RNA velocity model</h1>
+      <h1 class="mt-2 text-4xl font-bold tracking-tight text-slate-900 dark:text-slate-100">🧬 Dynamic RNA velocity model-- (1) math solutions</h1>
 
       <div class="mt-4 mb-16">
       <div class="text-gray-500 dark:text-gray-300 text-sm flex items-center flex-wrap gap-y-2"><span class="mr-1">May 28, 2025</span><span class="mx-1">·</span>
@@ -1711,7 +1736,7 @@
           <div class="group inline-flex items-center text-current gap-x-1.5 mx-1">
             
             
-            <img src="/author/jiyuan-liu/avatar_hu2046400169900539793.webp" alt="Jiyuan Liu" class="inline-block h-4 w-4 rounded-full border border-current" loading="lazy" />
+            <img src="/author/jiyuan-liu/avatar_hu_98ce379ab30758a2.webp" alt="Jiyuan Liu" class="inline-block h-4 w-4 rounded-full border border-current" loading="lazy" />
             
             <div >Jiyuan Liu</div>
           </div>
@@ -1756,7 +1781,7 @@
       
       <div class="article-header article-container featured-image-wrapper mt-4 mb-16" style="max-width: 720px; max-height: 404px;">
         <div style="position: relative">
-          <img src="/post/11d.velocity_dynamic_model_derivation/featured_hu16416076830064971548.webp" width="720" height="404" alt="" class="featured-image">
+          <img src="/post/11d.velocity_dynamic_model_derivation/featured_hu_1244dbdf1a49952c.webp" width="720" height="404" alt="" class="featured-image">
           <span class="article-header-caption">Image credit: <a href="https://unsplash.com" target="_blank" rel="noopener"><strong>Logan Voss on Unsplash</strong></a></span>
         </div>
       </div>
@@ -1766,7 +1791,8 @@
       
 
       <div class="prose prose-slate lg:prose-xl dark:prose-invert">
-        <p>The steady‑state model’s reliance on true steady states is at odds with <a href="https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1010492" target="_blank" rel="noopener">known biophysical behavior</a>. The dynamic model removes that requirement to broaden RNA velocity’s applicability, but inevitably introduces new assumptions that won’t hold for every dataset. Effective use of dynamic model therefore demands a clear understanding of its strengths and limitations. In this first installment of our blog series, we’ll delve into the mathematical foundations of the dynamic model.</p>
+        <h3 id="introduction">Introduction</h3>
+<p>The steady‑state model’s reliance on true steady states is at odds with <a href="https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1010492" target="_blank" rel="noopener">known biophysical behavior</a>. The dynamic model removes this requirement to broaden RNA velocity’s applicability but inevitably introduces new assumptions that may not hold for every dataset. Effective use of the dynamic model therefore demands a clear understanding of its strengths and limitations. Our blog series toward this goal begins by delving into the mathematical foundations of the dynamic model.</p>
 <h3 id="symbol-definitions">Symbol definitions</h3>
 <p>Please refer to the <a href="https://www.nature.com/articles/s41587-020-0591-3" target="_blank" rel="noopener">Nature Biotechnology paper</a> for the definitions of the symbols used in this derivation.</p>
 <h3 id="dynamic-solutions-for-rna-velocity-model">Dynamic Solutions for RNA Velocity Model</h3>
@@ -1963,13 +1989,13 @@ $$
 
 <div class="flex justify-center">
   
-  <a class="no-underline bg-primary-100 hover:bg-primary-300 text-primary-800 text-xs font-medium mr-2 px-2.5 py-0.5 lg:px-5 lg:py-2 rounded dark:bg-primary-900 dark:hover:bg-primary-700 dark:text-primary-300" href="/tags/scrnaseq-rna-velocity-math/">ScRNAseq RNA Velocity, Math</a>
+  <a class="no-underline bg-primary-100 hover:bg-primary-300 text-primary-800 text-xs font-medium mr-2 px-2.5 py-0.5 lg:px-5 lg:py-2 rounded dark:bg-primary-900 dark:hover:bg-primary-700 dark:text-primary-300" href="/tags/scrnaseq-rna-velocity-partial-differential-equations/">ScRNAseq RNA Velocity, Partial Differential Equations</a>
   
-  <a class="no-underline bg-primary-100 hover:bg-primary-300 text-primary-800 text-xs font-medium mr-2 px-2.5 py-0.5 lg:px-5 lg:py-2 rounded dark:bg-primary-900 dark:hover:bg-primary-700 dark:text-primary-300" href="/tags/steady-state-model/">Steady-State Model</a>
+  <a class="no-underline bg-primary-100 hover:bg-primary-300 text-primary-800 text-xs font-medium mr-2 px-2.5 py-0.5 lg:px-5 lg:py-2 rounded dark:bg-primary-900 dark:hover:bg-primary-700 dark:text-primary-300" href="/tags/dynamic-model/">Dynamic Model</a>
   
   <a class="no-underline bg-primary-100 hover:bg-primary-300 text-primary-800 text-xs font-medium mr-2 px-2.5 py-0.5 lg:px-5 lg:py-2 rounded dark:bg-primary-900 dark:hover:bg-primary-700 dark:text-primary-300" href="/tags/scvelo/">ScVelo</a>
   
-  <a class="no-underline bg-primary-100 hover:bg-primary-300 text-primary-800 text-xs font-medium mr-2 px-2.5 py-0.5 lg:px-5 lg:py-2 rounded dark:bg-primary-900 dark:hover:bg-primary-700 dark:text-primary-300" href="/tags/velocyto/">Velocyto</a>
+  <a class="no-underline bg-primary-100 hover:bg-primary-300 text-primary-800 text-xs font-medium mr-2 px-2.5 py-0.5 lg:px-5 lg:py-2 rounded dark:bg-primary-900 dark:hover:bg-primary-700 dark:text-primary-300" href="/tags/differential-equations/">Differential Equations</a>
   
 </div>
 
@@ -1987,7 +2013,7 @@ $$
   <a
     target="_blank" rel="noopener"
     class="m-1 rounded-md bg-neutral-300 p-1.5 text-neutral-700 hover:bg-primary-500 hover:text-neutral-300 dark:bg-neutral-700 dark:text-neutral-300 dark:hover:bg-primary-400 dark:hover:text-neutral-800"
-    href="https://twitter.com/intent/tweet?url=http%3A%2F%2Flocalhost%3A1313%2Fpost%2F11d.velocity_dynamic_model_derivation%2F&amp;text=%F0%9F%A7%AC&#43;Math&#43;derivation&#43;for&#43;Dynamic&#43;RNA&#43;velocity&#43;model"
+    href="https://twitter.com/intent/tweet?url=http%3A%2F%2Flocalhost%3A1313%2Fpost%2F11d.velocity_dynamic_model_derivation%2F&amp;text=%F0%9F%A7%AC&#43;Dynamic&#43;RNA&#43;velocity&#43;model--&#43;%281%29&#43;math&#43;solutions"
     title="X"
     aria-label="X"
     id="share-link-x"
@@ -2005,7 +2031,7 @@ $$
   <a
     target="_blank" rel="noopener"
     class="m-1 rounded-md bg-neutral-300 p-1.5 text-neutral-700 hover:bg-primary-500 hover:text-neutral-300 dark:bg-neutral-700 dark:text-neutral-300 dark:hover:bg-primary-400 dark:hover:text-neutral-800"
-    href="https://www.facebook.com/sharer.php?u=http%3A%2F%2Flocalhost%3A1313%2Fpost%2F11d.velocity_dynamic_model_derivation%2F&amp;t=%F0%9F%A7%AC&#43;Math&#43;derivation&#43;for&#43;Dynamic&#43;RNA&#43;velocity&#43;model"
+    href="https://www.facebook.com/sharer.php?u=http%3A%2F%2Flocalhost%3A1313%2Fpost%2F11d.velocity_dynamic_model_derivation%2F&amp;t=%F0%9F%A7%AC&#43;Dynamic&#43;RNA&#43;velocity&#43;model--&#43;%281%29&#43;math&#43;solutions"
     title="Facebook"
     aria-label="Facebook"
     id="share-link-facebook"
@@ -2025,7 +2051,7 @@ $$
   <a
     target="_blank" rel="noopener"
     class="m-1 rounded-md bg-neutral-300 p-1.5 text-neutral-700 hover:bg-primary-500 hover:text-neutral-300 dark:bg-neutral-700 dark:text-neutral-300 dark:hover:bg-primary-400 dark:hover:text-neutral-800"
-    href="mailto:?subject=%F0%9F%A7%AC%20Math%20derivation%20for%20Dynamic%20RNA%20velocity%20model&amp;body=http%3A%2F%2Flocalhost%3A1313%2Fpost%2F11d.velocity_dynamic_model_derivation%2F"
+    href="mailto:?subject=%F0%9F%A7%AC%20Dynamic%20RNA%20velocity%20model--%20%281%29%20math%20solutions&amp;body=http%3A%2F%2Flocalhost%3A1313%2Fpost%2F11d.velocity_dynamic_model_derivation%2F"
     title="Email"
     aria-label="Email"
     id="share-link-email"
@@ -2043,7 +2069,7 @@ $$
   <a
     target="_blank" rel="noopener"
     class="m-1 rounded-md bg-neutral-300 p-1.5 text-neutral-700 hover:bg-primary-500 hover:text-neutral-300 dark:bg-neutral-700 dark:text-neutral-300 dark:hover:bg-primary-400 dark:hover:text-neutral-800"
-    href="https://www.linkedin.com/shareArticle?url=http%3A%2F%2Flocalhost%3A1313%2Fpost%2F11d.velocity_dynamic_model_derivation%2F&amp;title=%F0%9F%A7%AC&#43;Math&#43;derivation&#43;for&#43;Dynamic&#43;RNA&#43;velocity&#43;model"
+    href="https://www.linkedin.com/shareArticle?url=http%3A%2F%2Flocalhost%3A1313%2Fpost%2F11d.velocity_dynamic_model_derivation%2F&amp;title=%F0%9F%A7%AC&#43;Dynamic&#43;RNA&#43;velocity&#43;model--&#43;%281%29&#43;math&#43;solutions"
     title="LinkedIn"
     aria-label="LinkedIn"
     id="share-link-linkedin"
@@ -2061,7 +2087,7 @@ $$
   <a
     target="_blank" rel="noopener"
     class="m-1 rounded-md bg-neutral-300 p-1.5 text-neutral-700 hover:bg-primary-500 hover:text-neutral-300 dark:bg-neutral-700 dark:text-neutral-300 dark:hover:bg-primary-400 dark:hover:text-neutral-800"
-    href="whatsapp://send?text=%F0%9F%A7%AC&#43;Math&#43;derivation&#43;for&#43;Dynamic&#43;RNA&#43;velocity&#43;model%20http%3A%2F%2Flocalhost%3A1313%2Fpost%2F11d.velocity_dynamic_model_derivation%2F"
+    href="whatsapp://send?text=%F0%9F%A7%AC&#43;Dynamic&#43;RNA&#43;velocity&#43;model--&#43;%281%29&#43;math&#43;solutions%20http%3A%2F%2Flocalhost%3A1313%2Fpost%2F11d.velocity_dynamic_model_derivation%2F"
     title="WhatsApp"
     aria-label="WhatsApp"
     id="share-link-whatsapp"
@@ -2103,7 +2129,7 @@ $$
     width="96"
     height="96"
     alt="Jiyuan Liu"
-  src="/author/jiyuan-liu/avatar_hu6328122812819896191.jpg"
+  src="/author/jiyuan-liu/avatar_hu_6297b4a1a274518.jpg"
   loading="lazy"
   />
   
@@ -2216,11 +2242,11 @@ $$
     </div>
     <div class="">
       
-        <a class="group flex text-right no-underline" href="/post/11c.velocity_steady_state/">
+        <a class="group flex text-right no-underline" href="/post/11e.velocity_dynamic_model_inference/">
           <span class="flex flex-col">
             <span
               class="mt-[0.1rem] leading-6 group-hover:underline group-hover:decoration-primary-500"
-            >🧬 Math derivation for steady-state RNA velocity model</span
+            >🧬 Dynamic RNA velocity model-- (2) parameter inference</span
             >
             <span class="mt-[0.1rem] text-xs text-neutral-500 dark:text-neutral-400">
               
