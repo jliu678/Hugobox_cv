@@ -1,3 +1,17 @@
+---
+title: 🧬 Dynamic RNA velocity model-- (5) Global time normalization 
+summary: Here derives the mathematics underpinning the parameter inference of dynamic RNA velocity model, which is the second installment of our blog series to effectively apply the dynamic model in revealing the RNA velocity of single-cell RNAseq.
+date: 2025-05-28
+authors:
+  - admin
+tags:
+  - scRNAseq RNA Velocity, parameter inference, EM algorithm
+  - Dynamic model
+  - scVelo
+  - Differential equations
+image:
+  caption: 'Image credit: [**Logan Voss on Unsplash**](https://unsplash.com)'
+---
 # Global Time Normalization in scVelo
 This is **not described** in the original scVelo paper, and **newer papers identify this as a key weakness** of the original scVelo implementation and propose improvements.
 

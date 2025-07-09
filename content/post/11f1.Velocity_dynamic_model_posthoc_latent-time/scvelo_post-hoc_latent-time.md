@@ -1,5 +1,5 @@
 ---
-title: 🧬 Dynamic RNA velocity model-- (3) post hoc computation 
+title: 🧬 Dynamic RNA velocity model-- (4) latent time 
 summary: Here derives the mathematics underpinning the parameter inference of dynamic RNA velocity model, which is the second installment of our blog series to effectively apply the dynamic model in revealing the RNA velocity of single-cell RNAseq.
 date: 2025-05-28
 authors:

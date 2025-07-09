@@ -1,3 +1,18 @@
+---
+title: 🧬 Dynamic RNA velocity model-- (6) "Neighbors" implemented  
+summary: Here derives the mathematics underpinning the parameter inference of dynamic RNA velocity model, which is the second installment of our blog series to effectively apply the dynamic model in revealing the RNA velocity of single-cell RNAseq.
+date: 2025-05-28
+authors:
+  - admin
+tags:
+  - scRNAseq RNA Velocity, parameter inference, EM algorithm
+  - Dynamic model
+  - scVelo
+  - Differential equations
+image:
+  caption: 'Image credit: [**Logan Voss on Unsplash**](https://unsplash.com)'
+---
+
 # scVelo Functions: Random Seed Dependencies
 
 This guide outlines which scVelo functions depend on random seeds and which are deterministic.
@@ -24,7 +39,7 @@ These functions contain stochastic elements and will produce different results w
 
 ## Steps that **do not depend** on random seed
 
-{{% callout info %}}
+{{% callout note %}}
 These functions are deterministic and will produce identical results given the same input data.
 {{% /callout %}}
 
@@ -36,7 +51,6 @@ These functions are deterministic and will produce identical results given the s
 
 ## Best Practices for Reproducibility
 
-{{% callout tip %}}
 **Setting Random Seeds**
 
 ```python
@@ -50,7 +64,6 @@ random.seed(42)
 # For specific functions, you can also set seeds locally
 scv.settings.set_figure_params('scvelo', dpi_save=300, dpi=80, transparent=True, fontsize=14, color_map='viridis')
 ```
-{{% /callout %}}
 
 ### Workflow Recommendations
 
