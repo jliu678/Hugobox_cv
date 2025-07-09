@@ -22,6 +22,18 @@
     <lastmod>2025-05-28T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
+    <loc>http://localhost:1313/tags/embedding/</loc>
+    <lastmod>2025-05-28T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+  </url><url>
+    <loc>http://localhost:1313/tags/exponential-kernel/</loc>
+    <lastmod>2025-05-28T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+  </url><url>
+    <loc>http://localhost:1313/tags/scrnaseq-rna-velocity-cosine-similarity-velocity-graph/</loc>
+    <lastmod>2025-05-28T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+  </url><url>
     <loc>http://localhost:1313/tags/scrnaseq-rna-velocity-math/</loc>
     <lastmod>2025-05-28T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
@@ -54,7 +66,15 @@
     <lastmod>2025-05-28T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
-    <loc>http://localhost:1313/post/11e.velocity_dynamic_model_inference/scvelo_parameter_inference/</loc>
+    <loc>http://localhost:1313/post/11e.velocity_dynamic_model_inference/</loc>
+    <lastmod>2025-05-28T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+  </url><url>
+    <loc>http://localhost:1313/post/11f1.velocity_dynamic_model_posthoc_latent-time/scvelo_post-hoc_latent-time/</loc>
+    <lastmod>2025-05-28T00:00:00+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+  </url><url>
+    <loc>http://localhost:1313/post/11f.velocity_dynamic_model_posthoc_velocity-graph/scvelo_post-hoc_cosine-similarity/</loc>
     <lastmod>2025-05-28T00:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
   </url><url>
@@ -627,6 +647,24 @@
     <changefreq>weekly</changefreq>
   </url><url>
     <loc>http://localhost:1313/post/11b.velocity_velovi/velovi_uncertainty_calculation/</loc>
+    <changefreq>weekly</changefreq>
+  </url><url>
+    <loc>http://localhost:1313/post/11f2.velocity_dynamic_model_posthoc_global-time/scvelo_global_time_norm/</loc>
+    <changefreq>weekly</changefreq>
+  </url><url>
+    <loc>http://localhost:1313/post/11g.velocity_dynamic_model_implement/scvelo_fitting_based_on_neighbors_/</loc>
+    <changefreq>weekly</changefreq>
+  </url><url>
+    <loc>http://localhost:1313/post/11g.velocity_dynamic_model_implement/scvelo_global_time_norm/</loc>
+    <changefreq>weekly</changefreq>
+  </url><url>
+    <loc>http://localhost:1313/post/11g.velocity_dynamic_model_implement/scvelo_parameter_structure/</loc>
+    <changefreq>weekly</changefreq>
+  </url><url>
+    <loc>http://localhost:1313/post/11g.velocity_dynamic_model_implement/scvelo_post-fitting_calculation/</loc>
+    <changefreq>weekly</changefreq>
+  </url><url>
+    <loc>http://localhost:1313/post/11g.velocity_dynamic_model_implement/scvelo_seed_dependency/</loc>
     <changefreq>weekly</changefreq>
   </url>
 </urlset>

@@ -5,10 +5,11 @@ date: 2025-05-28
 authors:
   - admin
 tags:
-  - scRNAseq RNA Velocity, parameter inference, EM algorithm
+  - scRNAseq RNA Velocity, cosine similarity, velocity graph
   - Dynamic model
   - scVelo
-  - Differential equations
+  - exponential kernel
+  - embedding
 image:
   caption: 'Image credit: [**Logan Voss on Unsplash**](https://unsplash.com)'
 ---
