@@ -1,3 +1,9 @@
+---
+title: "Velovi Parameter Initialize N Learn"
+date: 2025-07-10
+draft: True
+---
+
 # VeloVI Parameter Initialization and Learning Process
 
 Illustration of the initiation and learning process for all parameters in VeloVI for our scenario of three genes (Gene A, Gene B, Gene C) in four cells (Cell 1, Cell 2, Cell 3, Cell 4).

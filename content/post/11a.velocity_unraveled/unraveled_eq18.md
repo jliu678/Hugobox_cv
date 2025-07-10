@@ -1,3 +1,9 @@
+---
+title: "Unraveled Eq18"
+date: 2025-07-10
+draft: True
+---
+
 # Equation 18 from [velocity unraveled](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1010492)
 
 ## 🧬 1. Probability generating function (PGF)

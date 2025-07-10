@@ -1,3 +1,9 @@
+---
+title: "Dyngen Propensity N Transcriptor"
+date: 2025-07-10
+draft: True
+---
+
 # A) Generalized Transcription Propensity Function for N Transcription Factors
 
 This generalizes the transcription propensity function to the case where an arbitrary number {{< math >}}$N${{< /math >}} of transcription factors (TFs) regulate a gene by binding to its promoter. Here's a step-by-step breakdown:

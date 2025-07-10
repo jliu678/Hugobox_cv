@@ -1,3 +1,9 @@
+---
+title: "Velovi Reparameterization Trick"
+date: 2025-07-10
+draft: True
+---
+
 # The Reparameterization Trick
 
 The "reparameterization trick" is fundamental to how Variational Autoencoders (VAEs) and models like VeloVI (which uses VAE principles) can be trained using gradient-based optimization methods like backpropagation.

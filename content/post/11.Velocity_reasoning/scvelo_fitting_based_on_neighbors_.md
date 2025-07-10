@@ -1,3 +1,9 @@
+---
+title: "Scvelo Fitting Based On Neighbors "
+date: 2025-07-10
+draft: True
+---
+
 # Steps in scVelo that Use Neighbors
 
 ## 1. scv.pp.moments(adata, ...)

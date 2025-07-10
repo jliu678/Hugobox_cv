@@ -1,3 +1,9 @@
+---
+title: "Velovi Posterior Predictive Distribution"
+date: 2025-07-10
+draft: True
+---
+
 # VeloVI Posterior Predictive Distribution: Theory and Numerical Example
 
 ## Introduction

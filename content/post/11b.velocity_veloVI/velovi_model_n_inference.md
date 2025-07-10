@@ -1,3 +1,9 @@
+---
+title: "Velovi Model N Inference"
+date: 2025-07-10
+draft: True
+---
+
 # VeloVI Model Description
 
 Let {{< math >}} $\alpha_{gk}$ {{< /math >}} be the gene-state-specific reaction rate of transcription.

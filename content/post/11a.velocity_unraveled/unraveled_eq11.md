@@ -1,3 +1,9 @@
+---
+title: "Unraveled Eq11"
+date: 2025-07-10
+draft: True
+---
+
 # A) Proof: A Linear Birth-Death Process Preserves Poisson Distribution
 
 We aim to prove that if a system characterized by constant production (α) and first-order degradation (β) starts with a Poisson-distributed number of molecules, it will remain Poisson-distributed for all subsequent times, and its mean will evolve according to a simple deterministic ODE.

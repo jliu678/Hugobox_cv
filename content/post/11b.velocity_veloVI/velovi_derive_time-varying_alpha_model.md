@@ -1,3 +1,9 @@
+---
+title: "Velovi Derive Time Varying Alpha Model"
+date: 2025-07-10
+draft: True
+---
+
 # RNA Kinetics Derivation for Time-Varying Transcription
 
 This derivation focuses on the general case for {{< math >}}$k \in \{1,2\}${{< /math >}}, as states {{< math >}}$k \in \{3,4\}${{< /math >}} correspond to steady-state or fully repressed ({{< math >}}$\alpha=0${{< /math >}}) conditions, which simplify the general solution. The derivation appears to be for a general time {{< math >}}$t${{< /math >}}, and {{< math >}}$\tau^{(k)} = t - t_0^{(k)}${{< /math >}} is the time elapsed since the start of the current kinetic phase. {{< math >}}$t_0^{(k)}${{< /math >}} is the starting time of the current kinetic phase {{< math >}}$k${{< /math >}}.

@@ -1,3 +1,9 @@
+---
+title: "Scvelo Seed Dependency"
+date: 2025-07-10
+draft: True
+---
+
 # scVelo Functions: Random Seed Dependencies
 
 This guide outlines which scVelo functions depend on random seeds and which are deterministic.

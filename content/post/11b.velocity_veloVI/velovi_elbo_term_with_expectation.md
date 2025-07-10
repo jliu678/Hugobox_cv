@@ -1,3 +1,9 @@
+---
+title: "Velovi Elbo Term With Expectation"
+date: 2025-07-10
+draft: True
+---
+
 # VeloVI ELBO Third Term with Expectation
 
 ## The Expression

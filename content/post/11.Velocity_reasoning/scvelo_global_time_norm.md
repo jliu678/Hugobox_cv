@@ -1,3 +1,9 @@
+---
+title: "Scvelo Global Time Norm"
+date: 2025-07-10
+draft: True
+---
+
 # Global Time Normalization in scVelo
 This is **not described** in the original scVelo paper, and **newer papers identify this as a key weakness** of the original scVelo implementation and propose improvements.
 

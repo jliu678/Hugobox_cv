@@ -1,3 +1,9 @@
+---
+title: "Scvelo Stochastic Eq21"
+date: 2025-07-10
+draft: True
+---
+
 # Proof of scVelo Equation 21 (2nd Row) - Improved with Numbered Equations
 
 ## Target Equation

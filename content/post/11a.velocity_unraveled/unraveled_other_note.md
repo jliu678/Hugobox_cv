@@ -1,3 +1,9 @@
+---
+title: "Unraveled Other Note"
+date: 2025-07-10
+draft: True
+---
+
 # 🧭 What is an Occupation Measure?
 
 An occupation measure describes the expected amount of time a stochastic process spends in a given state or set of states over a certain time interval.

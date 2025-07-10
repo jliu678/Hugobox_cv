@@ -1,3 +1,9 @@
+---
+title: "Scvelo Post Fitting Calculation"
+date: 2025-07-10
+draft: True
+---
+
 # D) Cosine Similarity with Variance-Stabilized Transformation
 
 ### **Example Setup**

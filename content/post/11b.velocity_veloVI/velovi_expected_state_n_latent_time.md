@@ -1,3 +1,9 @@
+---
+title: "Velovi Expected State N Latent Time"
+date: 2025-07-10
+draft: True
+---
+
 # Expected Value of Kinetic State Probability Vector
 
 This document explains how to calculate the expected value of the kinetic state probability vector {{< math >}}$\pi_{ng}${{< /math >}}, where this expectation is taken twice: first conditional on a latent variable {{< math >}}$z_n${{< /math >}}, and then averaged over the possible values of {{< math >}}$z_n${{< /math >}} for a given cell.

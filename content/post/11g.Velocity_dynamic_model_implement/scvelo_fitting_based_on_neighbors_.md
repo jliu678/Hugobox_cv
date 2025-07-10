@@ -1,3 +1,9 @@
+---
+title: "Scvelo Fitting Based On Neighbors "
+date: 2025-07-10
+draft: True
+---
+
 <!-- ---
 title: 🧬 Dynamic RNA velocity model-- (6) "Neighbors" implemented  
 summary: Here derives the mathematics underpinning the parameter inference of dynamic RNA velocity model, which is the second installment of our blog series to effectively apply the dynamic model in revealing the RNA velocity of single-cell RNAseq.

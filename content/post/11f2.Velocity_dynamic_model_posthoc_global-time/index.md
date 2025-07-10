@@ -1,22 +1,22 @@
 ---
 title: 🧬 Dynamic RNA velocity model-- (5) Global time normalization 
-summary: tbd.
+summary: scVelo source codes shows a ad-hoc voting method to calculate a global latent time, which was identified as key weaknees. Here present alternative methods to potentially address the relative scale of different genes and avoid the assumption of equal full cycle time for all genes. 
 date: 2025-05-28
 authors:
   - admin
 tags:
-  - scRNAseq RNA Velocity, parameter inference, EM algorithm
+  - scRNAseq RNA Velocity, Global time normalization
   - Dynamic model
   - scVelo
   - Differential equations
 image:
   caption: 'Image credit: [**Logan Voss on Unsplash**](https://unsplash.com)'
 ---
-## Global Time Normalization in scVelo
+## Introduction
 
-In scVelo paper, the first step to calculate the Gene-shared latent time, after inferring parameters of kinetic rates, is that gene-specific time points of well-fitted genes (with a likelihood of at least 0.1) are normalized to a common global (overall) time scale. Global time normalization in scVelo addresses the challenge that different genes may have different intrinsic timescales for their kinetic processes. Without normalization, genes with faster kinetics would dominate the velocity field, while slower genes would contribute less to trajectory inference.
+In scVelo paper, the first step to calculate the Gene-shared latent time, after inferring parameters of kinetic rates, is that gene-specific time points of well-fitted genes (with a likelihood of at least 0.1) are normalized to a common global (overall) time scale. Global time normalization is to address the challenge that different genes may have different intrinsic timescales for their kinetic processes. Without normalization, genes with faster kinetics would dominate the velocity field, while slower genes would contribute less to trajectory inference.
 
-However, the method of Global Time Normalization is **not described** in the original scVelo paper. Its source codes [`latent_time()`](https://github.com/theislab/scvelo/blob/f89590b5912ff3c47c7a486fd02e45589632e766/scvelo/tools/_em_model_core.py#L779) and [`compute_shared_time()`](https://github.com/theislab/scvelo/blob/f89590b5912ff3c47c7a486fd02e45589632e766/scvelo/tools/_em_model_utils.py#L82) shows a multi-step ad-hoc voting method to calculate a global latent time for the cells by considering the fitted latent times from multiple high-likelihood genes. **[newer papers](https://pmc.ncbi.nlm.nih.gov/articles/PMC9550177/) identify Global Time Normalization as a key weakness** of the original scVelo implementation. Below are the alternative methods to calculate the global time normalization, which I want to try some time later to potentially address the relative scale of different genes and avoid the the assumption of equal full cycle time for all genes.
+However, the method of Global Time Normalization is **not described** in the original scVelo paper. Its source codes [`latent_time()`](https://github.com/theislab/scvelo/blob/f89590b5912ff3c47c7a486fd02e45589632e766/scvelo/tools/_em_model_core.py#L779) and [`compute_shared_time()`](https://github.com/theislab/scvelo/blob/f89590b5912ff3c47c7a486fd02e45589632e766/scvelo/tools/_em_model_utils.py#L82) shows a multi-step ad-hoc voting method to calculate a global latent time for the cells by considering the fitted latent times from multiple high-likelihood genes. **[Newer papers](https://pmc.ncbi.nlm.nih.gov/articles/PMC9550177/) identify Global Time Normalization as a key weakness** of the original scVelo implementation. Below are the alternative methods to calculate the global time normalization, which I want to try some time later to potentially address the relative scale of different genes and avoid the assumption of equal full cycle time for all genes.
 
 ## Problem Statement
 

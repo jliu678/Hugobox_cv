@@ -1,19 +1,28 @@
 ---
 title: 🧬 Dynamic RNA velocity model-- (4) latent time 
-summary: tbd.
+summary: Here reveals the mathematical foundations of **latent time**, which enables in-depth grasp and interpretation of the latent time of RNA velocity. This is the fourth installment of our blog series on effectively applying the dynamic model to infer RNA velocity from single-cell RNA-seq. 
 date: 2025-05-28
 authors:
   - admin
 tags:
-  - scRNAseq RNA Velocity, parameter inference, EM algorithm
-  - Dynamic model
+  - scRNAseq RNA Velocity, latent time, root cell
+  - Transport maps
+  - Neighborhood convolution
   - scVelo
-  - Differential equations
 image:
   caption: 'Image credit: [**Logan Voss on Unsplash**](https://unsplash.com)'
 ---
 ## Introduction
-In this post, we will explore the mathematical foundations of **latent time** in the context of RNA velocity analysis, particularly focusing on how it is used to identify root cells in differentiation pathways. We will also discuss the transport maps used to analyze cell development and provide numerical examples to illustrate these concepts.
+
+In this fourth installment of our blog series on effectively applying the dynamic model to infer RNA velocity from single-cell RNA-seq, we reveal the mathematical foundations of **latent time** in the context of RNA velocity analysis, which enables in-depth grasp and interpretation of the latent time of RNA velocity.
+
+Latent time is a crucial interpretation of RNA velocity independent of pre-defined (never perfect) dimentional reduction and it embedding. And latent time provide expressive visulization of the **temporal dynamics of cell differentiation** according to RNA velocity. 
+
+Here specifically focuses on:
+- Identification of root cells in section A)
+- Discussion and numeric examples of transport maps in section B)
+- Gene and cell dependence of latent time in section C)
+- Neighborhood-convolved latent time in section D)
 
 ## A) Identify Starting Points Using Markov Chain Analysis
 

@@ -1,3 +1,9 @@
+---
+title: "Gillespie Ssa"
+date: 2025-07-10
+draft: True
+---
+
 # Gillespie's SSA for Cyclic Reactions
 
 ## 1. Theory: Gillespie's SSA for Cyclic Reactions

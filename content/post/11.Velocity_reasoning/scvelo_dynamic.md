@@ -1,3 +1,9 @@
+---
+title: "Scvelo Dynamic"
+date: 2025-07-10
+draft: True
+---
+
 # Dynamic Solutions for RNA Velocity Model
 
 To derive the solution for s(t) from the given system of differential equations, we will follow a two-step process:

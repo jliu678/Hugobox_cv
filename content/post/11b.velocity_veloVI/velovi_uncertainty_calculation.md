@@ -1,3 +1,9 @@
+---
+title: "Velovi Uncertainty Calculation"
+date: 2025-07-10
+draft: True
+---
+
 # VeloVI Intrinsic Uncertainty Quantification
 
 This document explains how VeloVI quantifies the intrinsic uncertainty in the predicted velocity for a given cell. This uncertainty reflects how consistent the model's velocity predictions are for a cell, given the inherent variability captured by the variational posterior.

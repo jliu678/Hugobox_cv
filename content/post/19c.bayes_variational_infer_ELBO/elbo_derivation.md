@@ -1,3 +1,9 @@
+---
+title: "Elbo Derivation"
+date: 2025-07-10
+draft: True
+---
+
 # 🔍 Problem in Bayesian Inference
 
 In Bayesian inference, we want the posterior distribution:

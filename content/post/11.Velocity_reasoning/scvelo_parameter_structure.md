@@ -1,3 +1,9 @@
+---
+title: "Scvelo Parameter Structure"
+date: 2025-07-10
+draft: True
+---
+
 # A) scVelo parameter structure
 
 ## Gene-specific parameters (same for all cells)

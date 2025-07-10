@@ -1,3 +1,9 @@
+---
+title: "Velovi Elbo Kl Breakdown"
+date: 2025-07-10
+draft: True
+---
+
 # Breaking KL Terms into Manageable, Conditional Pieces
 
 **break the KL terms into manageable, conditional pieces** in the context of your ELBO--

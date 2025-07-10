@@ -1,3 +1,9 @@
+---
+title: "Unraveled Eq15 16"
+date: 2025-07-10
+draft: True
+---
+
 # Stochastic Gene Expression Analysis
 
 ## 🔍 The Expression

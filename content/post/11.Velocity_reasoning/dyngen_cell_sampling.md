@@ -1,3 +1,9 @@
+---
+title: "Dyngen Cell Sampling"
+date: 2025-07-10
+draft: True
+---
+
 # A) Cell Sampling Methods
 
 ## Backbone-Based Sampling from Multiple Simulations

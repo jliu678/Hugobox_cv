@@ -1,3 +1,9 @@
+---
+title: "SAVER Model Structure"
+date: 2025-07-10
+draft: True
+---
+
 # 🔢 Model Structure and Fitting
 
 ## 1. Observation Model

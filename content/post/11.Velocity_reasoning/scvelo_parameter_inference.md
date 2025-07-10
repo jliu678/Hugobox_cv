@@ -1,3 +1,9 @@
+---
+title: "Scvelo Parameter Inference"
+date: 2025-07-10
+draft: True
+---
+
 # A) Derivation: Transforming the Solution for s(t)
 
 Let's derive the relationship $\tilde{s}(t) - \tilde{s}_\infty = (\tilde{s}_0 - \tilde{s}_\infty)e^{-\gamma\tau}$ from the provided information.

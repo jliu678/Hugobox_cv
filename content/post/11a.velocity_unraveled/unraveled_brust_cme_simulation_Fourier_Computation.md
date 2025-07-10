@@ -1,3 +1,9 @@
+---
+title: "Unraveled Brust Cme Simulation Fourier Computation"
+date: 2025-07-10
+draft: True
+---
+
 # A) Step-by-Step Summary of the Simulation Pipeline for Modeling Transcriptional Bursting Using the Chemical Master Equation (CME)
 
 ## 🔁 Overall Goal
