@@ -2,6 +2,7 @@
 title: Math derivation for steady-state RNA velocity model
 math: true
 date: '2025-05-28'
+draft: true
 ---
 # A. Estimating RNA velocity Using Steady-State Ratio in `scVelo` and `velocyto`
 

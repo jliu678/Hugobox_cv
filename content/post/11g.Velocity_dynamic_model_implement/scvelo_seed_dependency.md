@@ -1,18 +1,8 @@
 ---
-title: 🧬 Dynamic RNA velocity model-- (6) "Neighbors" implemented  
-summary: Here derives the mathematics underpinning the parameter inference of dynamic RNA velocity model, which is the second installment of our blog series to effectively apply the dynamic model in revealing the RNA velocity of single-cell RNAseq.
-date: 2025-05-28
-authors:
-  - admin
-tags:
-  - scRNAseq RNA Velocity, parameter inference, EM algorithm
-  - Dynamic model
-  - scVelo
-  - Differential equations
-image:
-  caption: 'Image credit: [**Logan Voss on Unsplash**](https://unsplash.com)'
+title: "Scvelo Fitting Based On Neighbors "
+date: 2025-07-10
+draft: True
 ---
-
 # scVelo Functions: Random Seed Dependencies
 
 This guide outlines which scVelo functions depend on random seeds and which are deterministic.
