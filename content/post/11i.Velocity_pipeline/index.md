@@ -112,7 +112,7 @@ scv.pl.scatter(adata, color='latent_time', color_map='gnuplot', size=80,dpi=300,
 ### scVelo performance depends on dataset 'complexity' and embedding space
 When embeded in PCA space:
 {{< figure
-  src="b2b_pca.png"
+  src="b2b_velocity-stream_pca.png"
   alt=""
   link=""
   caption="scVelo performance on datasets with varied 'complexity' in PCA space"
@@ -121,21 +121,49 @@ When embeded in PCA space:
 
 When embeded in UMAP space:
 {{< figure
-  src="b2b_umap.png"
+  src="b2b_velocity-stream_umap.png"
   alt=""
   link=""
   caption="scVelo performance on datasets with varied 'complexity' in UMAP space"
   class="ma0 w-75"
 >}}
 
+### Prior knowledge of root cells improves accuracy of latent time
+{{< figure
+  src="b2b_latent-time.png"
+  alt=""
+  link=""
+  caption="scVelo performance on datasets with varied 'complexity' in UMAP space"
+  class="ma0 w-75"
+>}}
+
+
 ### Borrow velocity, PCA and/or neighbor from larger population of cells
 
 {{< figure
-  src="b2b_borrow2.png"
+  src="b2b_borrow3.png"
   alt=""
   link=""
   caption=""
   class="ma0"
 >}}
 
+## Observations and discussions
 
+1. The default scVelo pipeline fails to capture the ground truth of the bifurcation process, as shown in the figures above.
+
+Prior knowledge of root cells and ... is required. Otherwise, no way to evaluate the accuracy of the inferred velocity stream or latent time.
+
+2. The performance of scVelo is highly dependent on the dataset's 'complexity' and the embedding space used. The results show that scVelo performs better in PCA space than in UMAP space, which may be due to the fact that PCA distorted data less than UMAP. But we have to consider that UMAP often resolve high dimensional data better than PCA as PCA is linear, UMAP is nonlinear.
+- High-dimensional biological data (e.g., single-cell RNA-seq) often lies on nonlinear manifolds. UMAP can model this nonlinear structure, such as branching trajectories, subtle gradients and clusters that PCA would flatten or blur.
+
+3. Borrowing velocity, PCA, and/or neighbor information from a larger population of cells can significantly improve the performance of scVelo, as shown in the last figure. This suggests that scVelo can benefit from leveraging information from other populations to enhance its analysis.
+
+## real-world data: tumor development
+{{< figure
+  src="ut.png"
+  alt=""
+  link=""
+  caption=""
+  class="ma0"
+>}}
