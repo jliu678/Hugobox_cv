@@ -1,5 +1,5 @@
 ---
-title: 🧮 Math Derivation for scRNAseq Imputation (SAVER)
+title: 🧮 Math Derivation of a Top-Ranked scRNA-seq Imputation Method (SAVER)
 summary: Mathematical models used in SAVER, a tool of scRNAseq imputation, could well depict the structure inherent to the scRNAseq datasets as suggested by its superior performance. Here we derive SAVER's Poisson–gamma mixture model (also known as negative binomial model) and its Bayesian framework that leverage conjugate priors to estimate the posterior distribution of gene expression levels.
 date: 2025-04-24
 authors:
@@ -19,8 +19,9 @@ Single-cell RNASeq could have a large amount of zero values, representing either
 
 [SAVER](https://www.nature.com/articles/s41592-018-0033-z#Sec2) was the least likely to generate false or irreproducible results in [a benchmark of common imputation methods](https://f1000research.com/articles/7-1740/v1). It suggests the mathematical model used in SAVER could well depict the structure inherent to the scRNAseq datasets. Here we will derive the Poisson–gamma mixture model (also known as negative binomial model) and its Bayesian framework used in SAVER that leverage conjugate priors to estimate the posterior distribution of gene expression levels.
 
+---
 
-## 🔢 Model Structure and Fitting
+## Model Structure and Fitting
 
 ### 1. Observation Model
 
@@ -36,12 +37,14 @@ Single-cell RNASeq could have a large amount of zero values, representing either
 
 This introduces a **Gamma prior** on the Poisson rate, forming a **Poisson-Gamma compound model**, which is equivalent to a **Negative Binomial** model for marginal counts.
 
+---
+
 ## A. Prior Mean Estimation
 To estimate the prior mean {{< math >}}$\mu_{gc}${{< /math >}}, the model uses a **Poisson generalized linear model (GLM)** with a **log link** and **LASSO penalty**:
 
 {{< math >}}$$\log E\left(\frac{s_c Y_{gc}}{Y_{g'c}}\right) = \log \mu_{gc} = \gamma_{g0} + \sum_{g' \neq g} \gamma_{gg'} \log\left[\frac{s_c Y_{g'c} + 1}{s_c}\right]$${{< /math >}}
 
-### a. 🔍 Explanation of Terms
+### 🔍 Explanation of Terms
 
 - **{{< math >}}$Y_{gc}${{< /math >}}**: Observed expression count for gene {{< math >}}$g${{< /math >}} in cell {{< math >}}$c${{< /math >}}.
 - **{{< math >}}$s_c${{< /math >}}**: Size factor for cell {{< math >}}$c${{< /math >}}, used for normalization.
@@ -50,7 +53,7 @@ To estimate the prior mean {{< math >}}$\mu_{gc}${{< /math >}}, the model uses a
 - **{{< math >}}$\gamma_{gg'}${{< /math >}}**: Regression coefficient for the predictor gene {{< math >}}$g'${{< /math >}} when modeling gene {{< math >}}$g${{< /math >}}.
 - **{{< math >}}$\log\left[\frac{s_c Y_{g'c} + 1}{s_c}\right]${{< /math >}}**: Log-normalized expression of gene {{< math >}}$g'${{< /math >}} in cell {{< math >}}$c${{< /math >}}, with a +1 pseudocount to avoid log(0).
 
-### b. 📉 Loss Function
+### 📉 Loss Function
 
 The **penalized loss function** minimized during fitting is [derived later](#poisson_lasso_loss_function) and is expressed as:
 
@@ -60,23 +63,26 @@ Where:
 - The first term is the **Poisson negative log-likelihood**.
 - The second term is the **L1 penalty** on the regression coefficients (excluding the intercept {{< math >}}$\gamma_{g0}${{< /math >}}).
 
-### c. ⚙️ Fitting Procedure
+### ⚙️ Fitting Procedure
 
 - **Tool Used**: `glmnet` R package (version 2.0–5)
 - **Penalty**: LASSO (L1 regularization)
 - **Model Selection**: The penalty parameter {{< math >}}$\lambda${{< /math >}} is chosen via **fivefold cross-validation**, selecting the model with the **lowest cross-validation error** 
 [(see later for details)](#lasso_cross_validation).
 
-### 🧠 How It Relates to the Empirical Bayes-like Technique
+### 🧠 Relation to the Bayes-like Technique
 
 - This model is used to **predict the prior mean** {{< math >}}$\mu_{gc}${{< /math >}} for each gene in each cell.
 - The **Poisson GLM with LASSO penalty** selects a sparse set of predictor genes {{< math >}}$g'${{< /math >}} that best explain the expression of gene {{< math >}}$g${{< /math >}}, reflecting biological sparsity (i.e., gene interactions are limited).
 - The **LASSO penalty** (via the `glmnet` package) ensures that only a subset of genes with strong predictive power have nonzero coefficients {{< math >}}$\gamma_{gg'}${{< /math >}}.
 - The **predicted** {{< math >}}$\mu_{gc}${{< /math >}} from this model is then treated as the **prior mean** in a Bayesian framework, enabling **shrinkage** and **denoising** of gene expression estimates.
 
+---
+
+
 ## A.1 Derive Loss Function of the Poisson-LASSO Model<a id="poisson_lasso_loss_function"></a>
 
-### 🔢 Step 1: Poisson Probability Mass Function
+### Step 1: Poisson Probability Mass Function
 
 For a Poisson-distributed random variable {{< math >}} $Y_c \sim \text{Poisson}(\lambda_c)$ {{< /math >}}, the probability of observing {{< math >}} $Y_c = y_c$ {{< /math >}} is:
 
@@ -84,7 +90,7 @@ For a Poisson-distributed random variable {{< math >}} $Y_c \sim \text{Poisson}(
 $$P(Y_c = y_c) = \frac{e^{-\lambda_c} \lambda_c^{y_c}}{y_c!}$$
 {{< /math >}}
 
-### 🧮 Step 2: Log-Likelihood for All Observations
+### Step 2: Log-Likelihood for All Observations
 
 Assuming we have {{< math >}} $C$ {{< /math >}} independent observations {{< math >}} $\{Y_1, Y_2, \ldots, Y_C\}$ {{< /math >}}, the likelihood is the product of individual probabilities:
 
@@ -98,7 +104,7 @@ Taking the log of the likelihood:
 $$\log L(\lambda) = \sum_{c=1}^C \left[-\lambda_c + Y_c \log(\lambda_c) - \log(Y_c!)\right]$$
 {{< /math >}}
 
-### 🔍 Step 3: Negative Log-Likelihood (NLL)
+### Step 3: Negative Log-Likelihood (NLL)
 
 The negative log-likelihood (which we minimize during model fitting) is:
 
@@ -120,7 +126,7 @@ $$\mathcal{L}(\gamma) = \sum_{c=1}^C [\exp(\eta_c) - Y_c \eta_c + \log(Y_c!)]$$
 
 The term **{{< math >}} $\log(Y_c!)$ {{< /math >}} is constant with respect to the parameters {{< math >}} $\gamma$ {{< /math >}}, so it's often omitted during optimization.**
 
-### ➕ Adding LASSO Penalty
+### Adding LASSO Penalty
 
 To enforce sparsity in the coefficients {{< math >}} $\gamma$ {{< /math >}}, we add an L1 penalty:
 
@@ -139,16 +145,19 @@ This is the Poisson LASSO loss function used in your model.
 - **Compound Distribution**: Poisson-Gamma yields Negative Binomial for overdispersed counts
 
 
+---
+
+
 ## A.2 LASSO Cross-Validation<a id="lasso_cross_validation"></a>
 
-### 🔧 What is the Penalty Parameter {{< math >}} $\lambda$ {{< /math >}}?
+### What is the Penalty Parameter $\lambda$?
 
 In LASSO regression, the penalty parameter {{< math >}} $\lambda$ {{< /math >}} controls the strength of the L1 regularization:
 
 - **Large {{< math >}} $\lambda$ {{< /math >}}**: More shrinkage → more coefficients set to zero → simpler model.
 - **Small {{< math >}} $\lambda$ {{< /math >}}**: Less shrinkage → more coefficients retained → more complex model.
 
-### 🔁 What is Fivefold Cross-Validation?
+### What is Fivefold Cross-Validation?
 
 Cross-validation is a technique to evaluate how well a model generalizes to unseen data. In fivefold cross-validation:
 
@@ -157,7 +166,7 @@ Cross-validation is a technique to evaluate how well a model generalizes to unse
 3. This process is repeated 5 times, each time using a different fold as the test set.
 4. The average error across the 5 test sets is computed.
 
-### 📉 How is {{< math >}} $\lambda$ {{< /math >}} Chosen?
+### How is $\lambda$ Chosen?
 
 1. A range of {{< math >}} $\lambda$ {{< /math >}} values is tested.
 2. For each {{< math >}} $\lambda$ {{< /math >}}, fivefold cross-validation is performed.
@@ -166,7 +175,7 @@ Cross-validation is a technique to evaluate how well a model generalizes to unse
 
 This ensures that the chosen {{< math >}} $\lambda$ {{< /math >}} balances model complexity and predictive accuracy, avoiding both underfitting and overfitting.
 
-### ✅ Why It Matters
+### Why It Matters
 
 In your Poisson LASSO regression model, this process ensures that the selected genes (nonzero coefficients) are reliable predictors of the target gene's expression, based on how well they generalize across different subsets of the data.
 
@@ -193,9 +202,12 @@ $$CV(\lambda) = \frac{1}{5} \sum_{k=1}^{5} L(y_k, \hat{y}_k(\lambda))$$
 
 Where {{< math >}} $L(y_k, \hat{y}_k(\lambda))$ {{< /math >}} is the loss function evaluated on the {{< math >}} $k$ {{< /math >}}-th fold.
 
+---
+
+
 ## B. Prior Variance Estimation
 
-### 🧠 Goal: Estimate Prior Variance for Gene {{< math >}} $g$ {{< /math >}}
+### 🧠 Goal: Estimate Prior Variance for Gene $g$
 
 We already estimated the prior mean {{< math >}} $\mu_{gc}$ {{< /math >}} using Poisson LASSO regression. Now, we want to estimate the prior variance of the latent expression {{< math >}} $\lambda_{gc}$ {{< /math >}}, which is modeled using a Gamma distribution:
 
@@ -236,9 +248,12 @@ For each model:
 2. Choose the model with the highest maximum likelihood.
 3. The corresponding {{< math >}} $\phi_g$ {{< /math >}} is set to the maximum likelihood estimate {{< math >}} $\hat{\phi}_g$ {{< /math >}}.
 
-### 📌 Final Step: Compute Prior Variance {{< math >}} $\hat{v}_{gc}$ {{< /math >}}
+### 📌 Final Step: Compute Prior Variance $\hat{v}_{gc}$
 
 Once the best model and {{< math >}} $\hat{\phi}_g$ {{< /math >}} are selected, you can derive the prior variance {{< math >}} $\hat{v}_{gc}$ {{< /math >}} for each gene-cell pair using the Gamma distribution formula, depending on the chosen model.
+
+---
+
 
 ## B.1 Noise Models
 
@@ -248,7 +263,7 @@ If {{< math >}} $\lambda_{gc} \sim \text{Gamma}(\alpha_{gc}, \beta_{gc})$ {{< /m
 
 **Variance:** {{< math >}} $\text{Var}(\lambda_{gc}) = \frac{\alpha_{gc}}{\beta_{gc}^2}$ {{< /math >}}
 
-### 1. 📈 Constant Coefficient of Variation (CV)
+### 1. Constant Coefficient of Variation (CV)
 
 **Assumption:**
 The coefficient of variation (CV) is constant across cells for gene {{< math >}} $g$ {{< /math >}}.
@@ -265,7 +280,7 @@ So, under this model:
 
 The rate parameter {{< math >}} $\beta_{gc}$ {{< /math >}} varies with {{< math >}} $\mu_{gc}$ {{< /math >}}, since {{< math >}} $\mu_{gc} = \frac{\alpha_g}{\beta_{gc}} \Rightarrow \beta_{gc} = \frac{\alpha_g}{\mu_{gc}}$ {{< /math >}}
 
-### 2. 📊 Constant Fano Factor
+### 2. Constant Fano Factor
 
 **Assumption:**
 The Fano factor is constant across cells for gene {{< math >}} $g$ {{< /math >}}.
@@ -282,7 +297,7 @@ So, under this model:
 
 The shape parameter {{< math >}} $\alpha_{gc}$ {{< /math >}} varies with {{< math >}} $\mu_{gc}$ {{< /math >}}, since {{< math >}} $\mu_{gc} = \frac{\alpha_{gc}}{\beta_g} \Rightarrow \alpha_{gc} = \mu_{gc} \beta_g$ {{< /math >}}
 
-### 3. 📐 Constant Variance
+### 3. Constant Variance
 
 **Assumption:**
 The variance of {{< math >}} $\lambda_{gc}$ {{< /math >}} is constant across cells for gene {{< math >}} $g$ {{< /math >}}.
@@ -296,7 +311,7 @@ From the Gamma variance formula:
 
 This model allows both {{< math >}} $\alpha_{gc}$ {{< /math >}} and {{< math >}} $\beta_{gc}$ {{< /math >}} to vary with {{< math >}} $\mu_{gc}$ {{< /math >}}, but constrains their relationship to maintain constant variance.
 
-### ✅ Summary Table
+### Summary Table
 
 | Model | Assumption | Fixed Parameter | Varying Parameter | Derived Relationship |
 |-------|------------|----------------|-------------------|---------------------|
@@ -304,7 +319,7 @@ This model allows both {{< math >}} $\alpha_{gc}$ {{< /math >}} and {{< math >}}
 | **Constant Fano Factor** | {{< math >}} $\text{Fano} = \frac{1}{\beta_g}$ {{< /math >}} | {{< math >}} $\beta_{gc} = \beta_g$ {{< /math >}} | {{< math >}} $\alpha_{gc} = \mu_{gc} \beta_g$ {{< /math >}} | {{< math >}} $\text{Var} = \mu_{gc}/\beta_g$ {{< /math >}} |
 | **Constant Variance** | {{< math >}} $\text{Var} = \phi_g^v$ {{< /math >}} | None | Both vary | {{< math >}} $\frac{\alpha_{gc}}{\beta_{gc}^2} = \phi_g^v$ {{< /math >}} |
 
-### 🔁 How {{< math >}} $\hat{v}_{gc}$ {{< /math >}} is Computed
+### How $\hat{v}_{gc}$ is Computed
 
 Depending on the model:
 
@@ -315,6 +330,9 @@ Depending on the model:
 | **Constant Variance** | {{< math >}} $\text{Var}(\lambda_{gc}) = \phi_g$ {{< /math >}} | {{< math >}} $\hat{v}_{gc} = \hat{\phi}_g$ {{< /math >}} |
 
 So in all cases, **{{< math >}} $\hat{v}_{gc}$ {{< /math >}} is an estimate of the variance** of the latent expression {{< math >}} $\lambda_{gc}$ {{< /math >}}, derived from the Gamma prior and the selected noise model.
+
+---
+
 
 ## B.2 Marginal Likelihood for Model Selection
 ### Poisson-Gamma to Negative Binomial: Step-by-Step Derivation
@@ -384,7 +402,7 @@ This is the **Negative Binomial distribution** with parameters:
 - Mean: {{< math >}}$\mathbb{E}[Y_{gc}] = \frac{s_c \alpha_{gc}}{\beta_{gc}}${{< /math >}}
 - Variance: {{< math >}}$\text{Var}[Y_{gc}] = \frac{s_c \alpha_{gc}}{\beta_{gc}} + \frac{s_c^2 \alpha_{gc}}{\beta_{gc}^2}${{< /math >}} (overdispersed relative to Poisson)
 
-### 🧮 Result of the Integration
+### Result of the Integration
 
 The symbolic integration yields:
 
@@ -395,7 +413,7 @@ This is the probability mass function of a **Negative Binomial distribution** wi
 - **Number of failures**: {{< math >}}$r = \alpha_{gc}${{< /math >}}
 - **Success probability**: {{< math >}}$p = \frac{\beta_{gc}}{\beta_{gc} + s_c}${{< /math >}}
 
-### ✅ Summary
+### Summary
 
 This proves that:
 
@@ -403,11 +421,14 @@ This proves that:
 
 So, the **Poisson-Gamma compound model** naturally leads to a **Negative Binomial marginal distribution**, which is why it's widely used in modeling overdispersed count data like gene expression.
 
+---
+
+
 ## B.3 Fitting to decide noise model and variance expectation
 
 When fitting the maximum marginal likelihood to estimate the dispersion parameter {{< math >}} $\phi_g$ {{< /math >}} for a gene {{< math >}} $g$ {{< /math >}}, here's what is known and what is being estimated:
 
-### ✅ Known Quantities
+### Known Quantities
 
 These are available from earlier steps in the model:
 
@@ -416,7 +437,7 @@ These are available from earlier steps in the model:
 - **Prior means**: {{< math >}} $\mu_{gc}$ {{< /math >}}, estimated from Poisson LASSO regression
 - **Noise model**: One of the three (constant CV, constant Fano factor, constant variance)
 
-### 🧮 size factor
+### size factor
 The size factor {{< math >}} $s_c$ {{< /math >}} is a cell-specific scaling factor used to normalize raw gene expression counts. It accounts for differences in:
 
 - **Sequencing depth** (total number of reads per cell)
@@ -448,7 +469,7 @@ The dispersion parameter {{< math >}} $\phi_g$ {{< /math >}} for gene {{< math >
 
 This is the only free parameter in the marginal likelihood optimization.
 
-### 🧮 How the Fitting Works
+### How the Fitting Works
 
 1. For a given value of {{< math >}} $\phi_g$ {{< /math >}}, use the selected noise model to derive the Gamma parameters {{< math >}} $\alpha_{gc}$ {{< /math >}}, {{< math >}} $\beta_{gc}$ {{< /math >}} for each cell.
 
@@ -462,7 +483,7 @@ $$\log L(\phi_g) = \sum_c \log P(Y_{gc} \mid \mu_{gc}, \phi_g)$$
 
 4. Optimize {{< math >}} $\phi_g$ {{< /math >}} to maximize this log-likelihood.
 
-### ✅ Summary
+### Summary
 
 | Category | Items |
 |----------|-------|
@@ -471,9 +492,12 @@ $$\log L(\phi_g) = \sum_c \log P(Y_{gc} \mid \mu_{gc}, \phi_g)$$
 | **Derived** | {{< math >}} $\alpha_{gc}$ {{< /math >}}, {{< math >}} $\beta_{gc}$ {{< /math >}} (from {{< math >}} $\mu_{gc}$ {{< /math >}} and {{< math >}} $\phi_g$ {{< /math >}}) |
 | **Objective** | Maximize marginal likelihood {{< math >}} $\log L(\phi_g)$ {{< /math >}} |
 
+---
+
+
 ## C. Full Derivation of the Bayesian Posterior of $λ_{gc}$
 
-### 🧾 Model Setup
+### Model Setup
 
 **Likelihood:**
 
@@ -506,7 +530,7 @@ Then we will prove that the posterior is:
 
 {{< math >}} $$\lambda | Y \sim \text{Gamma}(Y + \alpha, s + \beta)$$ {{< /math >}}
 
-#### 🔢 1. Define the Distributions
+#### Define the Distributions
 
 **Likelihood:**
 {{< math >}} $$p(Y|\lambda) = \frac{(s\lambda)^Y e^{-s\lambda}}{Y!}$$ {{< /math >}}
@@ -570,6 +594,9 @@ Cancel out constants:
 Where the general Gamma pdf is:
 
 {{< math >}} $$\text{Gamma}(\lambda|a,b) = \frac{b^a}{\Gamma(a)} \lambda^{a-1} e^{-b\lambda}$$ {{< /math >}}
+
+---
+
 
 ## Conclusion
 The above math derivation has achieved the goal of SAVER--
