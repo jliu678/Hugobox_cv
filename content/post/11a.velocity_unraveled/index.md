@@ -475,7 +475,7 @@ That is, summing over all nonnegative integer pairs {{< math >}} $(x_u', x_s') \
 
 ### 2. 'Suspect' in the derivation
 
-In your original sum:
+In our original sum:
 
 {{< math >}} $$\sum_{x_u' = 1}^{\infty} \sum_{x_s' = 0}^{\infty} x_u' P(x_u', x_s') (u_u + 1)^{x_u' - 1} (u_s + 1)^{x_s'}$$ {{< /math >}}
 

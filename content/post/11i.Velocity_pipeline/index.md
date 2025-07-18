@@ -149,7 +149,7 @@ Below summarizes the performance of scVelo when borrowing velocity, PCA, and/or 
 - column 'batch' is the batch ID of the dataset
 - column 'AB', 'BD', 'AC', 'CE', or 'ABCED' are velocity analysis outcomes. Green indicates successful recovery of ground truth trajectories, pink denotes failure, and grey indicates the analysis could not be computed.
 
-The results show that scVelo performance well when leveraging velocity, PCA and/or neighbor from larger populations, as 'B->D' and 'C->E' are able to recover the ground truth trajectories. 
+The results show that scVelo performs well when leveraging velocity, PCA and/or neighbor from larger populations, as 'B->D' and 'C->E' are able to recover the ground truth trajectories. 
 
 {{% callout note %}}
 Later in this post, I will demonstrate that leveraging velocity, PCA, and/or neighborhood information from larger populations can effectively enhance the accuracy of velocity analysis in real-world, large-scale single-cell RNA-seq datasets.
@@ -203,10 +203,10 @@ In real-world applications, it is crucial to **strike a balance: to find a scope
 Consistent with the above discussion:
 1. scVelo captured well the velocity of the dataset with minimal trajectory structures, such as A->B, B->D and C->E, but struggled with datasets that involve more complex trajectories. 
 
-2. The results show that scVelo performs better in PCA space than in UMAP space, which may be due to the fact that PCA distorted data less than UMAP. But we have to consider that UMAP often resolves high-dimensional data better than PCA as PCA is linear, UMAP is nonlinear.
+2. The results show that scVelo performs better in PCA space than in UMAP space, which may be due to the fact that [PCA distorted data less than UMAP](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1010492). But we have to consider that UMAP often resolves high-dimensional data better than PCA as PCA is linear, UMAP is nonlinear.
    - High-dimensional biological data (e.g., single-cell RNA-seq) often lies on nonlinear manifolds. UMAP can model this nonlinear structure, such as branching trajectories, subtle gradients, and clusters that PCA would flatten or blur.
 
-3. scVelo performance well when borrowing velocity, PCA, and/or neighbor information from a larger population of cells, and later using real world scRNAseq data, we can see even improvement resulted from leveraging these calculations on a larger population of cells.
+3. scVelo performs well when borrowing velocity, PCA, and/or neighbor information from a larger population of cells, and later using real world scRNAseq data, we can see even improvement resulted from leveraging these calculations on a larger population of cells.
 
 ### 3. Prior knowledge of root cells is required
 
@@ -698,7 +698,8 @@ Key summary are:
 - Reduce the number of cell types in the input dataset to enforce greater cell-state similarity, and leverage velocity, PCA, or neighbor information from a larger reference population to improve the statistical robustness of velocity estimation in large-scale single-cell RNA-seq datasets.
 - Prior knowledge of root cells is required to evaluate the accuracy of the inferred velocity stream and to improve the accuracy of latent time computation.
 
-### Heatmap of meaningful genes assocated with latent time
+### Heatmap of biologically significant genes assocated with latent time
+The default scVelo heatmap is pretty but it dose not label genes, and the color bar is not restored. Below are customized scripts to generate heatmap that labels the genes with known biological significance and highly correlated with latent time. The customized heatmap alsp restores the color bar and group legend.
 
 #### Rank genes by correlation with latent time
 Key function `L_rank_genes_by_latent_time()` and other ccodes is available in my [github repo](tbd).
@@ -1102,7 +1103,8 @@ def L_add_gene_labels(cm, df, label_genes,
         )
 ```
 
-#### Visualization
+#### Visualize heatmap that labels genes with known biological functions and significantly correlated with latent time
+
 Below shows the root cells (tumor_Ki67+Ovgp1+) expressed highly genes associated with stemness and proliferation, such as Mki67, Ezh2, B2m and Pdgfra, while tumor_1 cells have more terminal differentiated gene expression.
 
 {{< figure
