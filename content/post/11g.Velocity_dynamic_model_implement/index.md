@@ -1,5 +1,5 @@
 ---
-title: 🧬 Dynamic RNA velocity model-- (6) Computational handling in implementation  
+title: 🧬 Dynamic RNA velocity model-- (6) computational handling in implementation  
 summary: Here begins the deep dive into scVelo’s computational handling that is only unveiled in its implementation but reshapes visualization and interpretation. We look into neighbor reliance, seed dependency and object structure of scVelo in this sixth blog on effectively applying the dynamic model of RNA velocity. 
 date: 2025-05-28
 authors:

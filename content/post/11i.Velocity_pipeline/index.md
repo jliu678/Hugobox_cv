@@ -1,20 +1,29 @@
 ---
-title: 🧬 Dynamic RNA velocity model-- (8) scVelo pipeline  
+title: 🧬 Dynamic RNA velocity model-- (8) effective scVelo analysis  
 # draft: True
-summary: Here delves into. 
+summary: Here reveals biologically significant tumor development trajectory from real-world scRNAseq dataset by tweaking the key steps and parameters in scVelo pipeline to align with the math foundations of dynamic RNA velocity model and to improve the estimation accuracy. 
 date: 2025-05-28
 authors:
   - admin
 tags:
-  - scRNAseq RNA Velocity, 
+  - scRNAseq RNA Velocity, Pipeline tweaking, Improved accuracy
   - Dynamic model
   - scVelo
   - 
 image:
   caption: 'Image credit: [**Logan Voss on Unsplash**](https://unsplash.com)'
 ---
+## Introduction and GitHub repo
+scVelo, like many other tools, like many other tools, computes mathematical models based on assumptions that are often unmet by real-world single-cell RNA-seq datasets.
 
-The dyn
+Empowered by the in-depth conceptual and implementation foundations unveiled in my earlier blog posts, this post continues to explore effective applications of the dynamic RNA velocity model by:
+
+- Identifying key steps and parameters in scVelo pipeline and math models that are tunable to align with the mathematical foundations of dynamic RNA velocity model and to improve the estimation accuracy
+- Benchmarking strategies using simulated datasets with ground-truth velocities generated through state-of-the-art stochastic simulations
+- Revealing biologically significant tumor development trajectory by applying the strategies on real-world scRNAseq dataset
+- Providing tools to visualize the results and to generate heatmap that labels genes with known biological significance and highly correlated with latent time
+
+The full code is available in my [github repo](tbd)
 
 ## Run scVelo on simulated data
 
@@ -1103,7 +1112,7 @@ def L_add_gene_labels(cm, df, label_genes,
         )
 ```
 
-#### Visualize heatmap that labels genes with known biological functions and significantly correlated with latent time
+#### Heatmap highlighting latent-time correlated genes with known biological significance
 
 Below shows the root cells (tumor_Ki67+Ovgp1+) expressed highly genes associated with stemness and proliferation, such as Mki67, Ezh2, B2m and Pdgfra, while tumor_1 cells have more terminal differentiated gene expression.
 

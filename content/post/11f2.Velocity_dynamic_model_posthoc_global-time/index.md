@@ -1,5 +1,5 @@
 ---
-title: 🧬 Dynamic RNA velocity model-- (5) Global time normalization 
+title: 🧬 Dynamic RNA velocity model-- (5) global time normalization 
 summary: scVelo source codes shows a ad-hoc voting method to calculate a global latent time, which was identified as key weaknees. Here present alternative methods to potentially address the relative scale of different genes and avoid the assumption of equal full cycle time for all genes. 
 date: 2025-05-28
 authors:
