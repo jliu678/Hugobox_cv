@@ -1,184 +1,182 @@
-# Dirichlet-Multinomial ≈ Independent Negative Binomials
+# NOTE
+the derivation did not show Dirichlet-Multinomial is Equivalent to Negative Binomial without condition!
 
-## Step 1: Dirichlet-Multinomial PMF
+# Dirichlet-Multinomial Equivalent to Negative Binomial Conditioned on Sum
 
-Let {{< math >}} $\mathbf{y} = (y_1, \dots, y_J) \sim \text{DirMult}(n, \boldsymbol\alpha)$ {{< /math >}}, where {{< math >}} $\sum_j y_j = n$ {{< /math >}}, and {{< math >}} $\boldsymbol\alpha = (\alpha_1, \dots, \alpha_J)$ {{< /math >}}, with {{< math >}} $\alpha_0 = \sum_j \alpha_j$ {{< /math >}}. Then:
+A Dirichlet-Multinomial distribution can indeed be equivalently characterized as a collection of independent Negative Binomial distributions with the same success probability ({{< math >}}$p${{< /math >}}), when conditioned on their sum. This property is a fundamental result in compound probability distributions and is widely used in statistical modeling, particularly for overdispersed count data.
 
-{{< math >}}
-$$P(\mathbf{y}) = \frac{n!}{\prod_j y_j!} \cdot \frac{\Gamma(\alpha_0)}{\Gamma(n + \alpha_0)} \cdot \prod_j \frac{\Gamma(y_j + \alpha_j)}{\Gamma(\alpha_j)} \tag{1}$$
-{{< /math >}}
+Here's the proof, demonstrating the equivalence of the joint probability mass functions (PMFs) under the specified conditions.
 
-Taking logs:
+## Proof of Equivalence
 
-{{< math >}}
-$$\log P(\mathbf{y}) = \log n! - \sum_j \log y_j! + \log \Gamma(\alpha_0) - \log \Gamma(n + \alpha_0) + \sum_j \log \Gamma(y_j + \alpha_j) - \sum_j \log \Gamma(\alpha_j) \tag{2}$$
-{{< /math >}}
+We aim to show that the joint distribution of {{< math >}}$(x_1, \ldots, x_K)${{< /math >}} from independent Negative Binomials, when conditioned on their sum {{< math >}}$x_{\cdot} = \sum x_k${{< /math >}}, is equivalent to the Dirichlet-Multinomial distribution.
 
-## Step 2: Stirling's Approximation
+Let's define the two scenarios:
 
-Recall the full Stirling approximation:
+### Scenario 1: Independent Negative Binomials Conditioned on Their Sum
 
-{{< math >}}
-$$\log \Gamma(z) \approx z \log z - z + \tfrac{1}{2} \log(2\pi) + \tfrac{1}{2} \log z \tag{3}$$
-{{< /math >}}
+Let {{< math >}}$x_k \sim \text{NB}(r_k, p)${{< /math >}} independently for {{< math >}}$k = 1, \ldots, K${{< /math >}}.
 
-In particular:
+The PMF for {{< math >}}$x_k${{< /math >}} (number of failures before {{< math >}}$r_k${{< /math >}} successes with success probability {{< math >}}$p${{< /math >}}) is:
 
 {{< math >}}
-$$\log n! = \log \Gamma(n+1) \approx (n+1) \log(n+1) - (n+1) + \tfrac{1}{2} \log(2\pi) + \tfrac{1}{2} \log(n+1) \tag{4}$$
+$$P(x_k) = \binom{x_k + r_k - 1}{x_k} p^{r_k} (1-p)^{x_k} \quad (1)$$
 {{< /math >}}
 
-But in large {{< math >}} $n$ {{< /math >}}, we approximate:
+Since the {{< math >}}$x_k${{< /math >}} are independent, their joint PMF is:
 
 {{< math >}}
-$$\boxed{ \log n! \approx n \log n - n + \tfrac{1}{2} \log(2\pi n) } \tag{5}$$
+$$P(x_1, \ldots, x_K) = \prod_{k=1}^K \left[\binom{x_k + r_k - 1}{x_k} p^{r_k} (1-p)^{x_k}\right] \quad (2)$$
 {{< /math >}}
 
-This comes from:
+Let {{< math >}}$r_{\cdot} = \sum_{k=1}^K r_k${{< /math >}} and {{< math >}}$x_{\cdot} = \sum_{k=1}^K x_k${{< /math >}}.
 
 {{< math >}}
-$$\log \Gamma(n+1) = \log n! \approx \left(n + \tfrac{1}{2} \right) \log n - n + \tfrac{1}{2} \log(2\pi) = n \log n - n + \tfrac{1}{2} \log(2\pi n) \tag{6}$$
+$$P(x_1, \ldots, x_K) = \left(\prod_{k=1}^K \binom{x_k + r_k - 1}{x_k}\right) p^{r_{\cdot}} (1-p)^{x_{\cdot}} \quad (3)$$
 {{< /math >}}
 
-## Step 3: Apply Stirling to All Terms
+Now, let {{< math >}}$x_{\cdot} = \sum_{k=1}^K x_k${{< /math >}}. A key property of Negative Binomial distributions is that the sum of independent Negative Binomial random variables with the same success probability {{< math >}}$p${{< /math >}} is also a Negative Binomial random variable.
 
-Apply the approximation to every term:
+So, {{< math >}}$x_{\cdot} \sim \text{NB}(r_{\cdot}, p)${{< /math >}}.
 
-**3.1** {{< math >}} $\log n! \approx n \log n - n + \tfrac{1}{2} \log(2\pi n)$ {{< /math >}}
-
-**3.2** {{< math >}} $\sum_j \log y_j! \approx \sum_j \left[ y_j \log y_j - y_j + \tfrac{1}{2} \log(2\pi y_j) \right]$ {{< /math >}}
-
-**3.3** {{< math >}} $\log \Gamma(n + \alpha_0) \approx (n + \alpha_0) \log(n + \alpha_0) - (n + \alpha_0) + \tfrac{1}{2} \log(2\pi(n + \alpha_0))$ {{< /math >}}
-
-**3.4** {{< math >}} $\sum_j \log \Gamma(y_j + \alpha_j) \approx \sum_j \left[ (y_j + \alpha_j) \log(y_j + \alpha_j) - (y_j + \alpha_j) + \tfrac{1}{2} \log(2\pi(y_j + \alpha_j)) \right]$ {{< /math >}}
-
-**3.5** {{< math >}} $\sum_j \log \Gamma(\alpha_j) \approx \sum_j \left[ \alpha_j \log \alpha_j - \alpha_j + \tfrac{1}{2} \log(2\pi \alpha_j) \right]$ {{< /math >}}
-
-## Step 4: Combine and Cancel Terms
-
-Plug everything back into {{< math >}} $\log P(\mathbf{y})$ {{< /math >}} and group terms.
-
-Let's expand and combine:
+The PMF for {{< math >}}$x_{\cdot}${{< /math >}} is:
 
 {{< math >}}
-$$
-\begin{align}
-\log P(\mathbf{y}) &\approx [n \log n - n + \tfrac{1}{2} \log(2\pi n)] - \sum_j [y_j \log y_j - y_j + \tfrac{1}{2} \log(2\pi y_j)] \\
-&\quad + \log \Gamma(\alpha_0) - [(n + \alpha_0) \log(n + \alpha_0) - (n + \alpha_0) + \tfrac{1}{2} \log(2\pi(n + \alpha_0))] \\
-&\quad + \sum_j \left[(y_j + \alpha_j) \log(y_j + \alpha_j) - (y_j + \alpha_j) + \tfrac{1}{2} \log(2\pi(y_j + \alpha_j)) \right] \\
-&\quad - \sum_j \left[ \alpha_j \log \alpha_j - \alpha_j + \tfrac{1}{2} \log(2\pi \alpha_j) \right] \tag{7}
-\end{align}
-$$
+$$P(x_{\cdot}) = \binom{x_{\cdot} + r_{\cdot} - 1}{x_{\cdot}} p^{r_{\cdot}} (1-p)^{x_{\cdot}} \quad (4)$$
 {{< /math >}}
 
-### Cancel Constants Directly
-
-1. **Cancel additive constants from factorial terms**: Since {{< math >}} $\sum_j y_j = n$ {{< /math >}}, we have:
+We are interested in the conditional distribution of {{< math >}}$(x_1, \ldots, x_K)${{< /math >}} given their sum {{< math >}}$x_{\cdot}${{< /math >}}:
 
 {{< math >}}
-$$-n + \sum_j y_j = 0 \quad \text{and} \quad -\sum_j \alpha_j + \alpha_0 = 0 \tag{8}$$
+$$P(x_1, \ldots, x_K \mid x_{\cdot}) = \frac{P(x_1, \ldots, x_K \text{ and } x_{\cdot})}{P(x_{\cdot})} \quad (5)$$
 {{< /math >}}
 
-So all standalone linear {{< math >}} $-n$ {{< /math >}}, {{< math >}} $-y_j$ {{< /math >}}, {{< math >}} $-\alpha_j$ {{< /math >}}, {{< math >}} $-\alpha_0$ {{< /math >}} terms cancel.
-
-2. **Group and cancel all {{< math >}} $\log(2\pi \cdot)$ {{< /math >}} terms**: These include:
+Since {{< math >}}$x_{\cdot}${{< /math >}} is simply the sum of {{< math >}}$x_1, \ldots, x_K${{< /math >}}, the numerator {{< math >}}$P(x_1, \ldots, x_K \text{ and } x_{\cdot})${{< /math >}} is just {{< math >}}$P(x_1, \ldots, x_K)${{< /math >}} itself (provided {{< math >}}$\sum x_k = x_{\cdot}${{< /math >}}).
 
 {{< math >}}
-$$\tfrac{1}{2} \log(2\pi n) - \sum_j \tfrac{1}{2} \log(2\pi y_j) - \tfrac{1}{2} \log(2\pi(n + \alpha_0)) + \sum_j \tfrac{1}{2} \log(2\pi(y_j + \alpha_j)) - \sum_j \tfrac{1}{2} \log(2\pi \alpha_j) \tag{9}$$
+$$P(x_1, \ldots, x_K \mid x_{\cdot}) = \frac{\left(\prod_{k=1}^K \binom{x_k + r_k - 1}{x_k}\right) p^{r_{\cdot}} (1-p)^{x_{\cdot}}}{\binom{x_{\cdot} + r_{\cdot} - 1}{x_{\cdot}} p^{r_{\cdot}} (1-p)^{x_{\cdot}}} \quad (6)$$
 {{< /math >}}
 
-This full expression is of order:
+The terms {{< math >}}$p^{r_{\cdot}}${{< /math >}} and {{< math >}}$(1-p)^{x_{\cdot}}${{< /math >}} cancel out, leaving:
 
 {{< math >}}
-$$\boxed{o(n)} \quad \text{(i.e., grows slower than linearly in } n \text{)} \tag{10}$$
+$$P(x_1, \ldots, x_K \mid x_{\cdot}) = \frac{\prod_{k=1}^K \binom{x_k + r_k - 1}{x_k}}{\binom{x_{\cdot} + r_{\cdot} - 1}{x_{\cdot}}} \quad (7)$$
 {{< /math >}}
 
-✅ **What does asymptotically {{< math >}} $o(n)$ {{< /math >}} mean?** It means these terms **vanish relative to {{< math >}} $n$ {{< /math >}}** as {{< math >}} $n \to \infty$ {{< /math >}}, i.e.
+We can express the binomial coefficients using Gamma functions: {{< math >}}$\binom{n}{k} = \frac{\Gamma(n+1)}{\Gamma(k+1)\Gamma(n-k+1)}${{< /math >}}.
+
+More generally, {{< math >}}$\binom{x+r-1}{x} = \frac{\Gamma(x+r)}{\Gamma(x+1)\Gamma(r)}${{< /math >}}.
+
+So,
 
 {{< math >}}
-$$\frac{o(n)}{n} \to 0 \text{ as } n \to \infty \tag{11}$$
+$$P(x_1, \ldots, x_K \mid x_{\cdot}) = \frac{\Gamma(x_{\cdot} + 1)\Gamma(r_{\cdot})}{\Gamma(x_{\cdot} + r_{\cdot})} \prod_{k=1}^K \frac{\Gamma(x_k + r_k)}{\Gamma(x_k + 1)\Gamma(r_k)} \quad (8)$$
 {{< /math >}}
 
-So for large {{< math >}} $n$ {{< /math >}}, these have **negligible** effect on likelihood comparisons and can be dropped.
-
-## Step 5: Main Terms After Cancellation
-
-After canceling the constants, we are left with:
+Rearranging the terms:
 
 {{< math >}}
-$$
-\begin{align}
-\log P(\mathbf{y}) &\approx n \log n - \sum_j y_j \log y_j - (n + \alpha_0) \log(n + \alpha_0) \\
-&\quad + \sum_j (y_j + \alpha_j) \log(y_j + \alpha_j) - \sum_j \alpha_j \log \alpha_j + \log \Gamma(\alpha_0) \tag{12}
-\end{align}
-$$
+$$P(x_1, \ldots, x_K \mid x_{\cdot}) = \frac{x_{\cdot}!}{\prod_{k=1}^K x_k!} \cdot \frac{\Gamma(r_{\cdot})}{\Gamma(x_{\cdot} + r_{\cdot})} \cdot \prod_{k=1}^K \frac{\Gamma(x_k + r_k)}{\Gamma(r_k)} \quad (9)$$
 {{< /math >}}
 
-## Step 6: Expand Log Terms via Taylor Approximation
+This is the PMF of a Dirichlet-Multinomial distribution with parameters {{< math >}}$n = x_{\cdot}${{< /math >}} (total count) and {{< math >}}$\alpha = (r_1, \ldots, r_K)${{< /math >}} (concentration parameters).
 
-Focus on the key expansion:
-{{< math >}}
-$$(y_j + \alpha_j) \log(y_j + \alpha_j) \tag{13}$$
-{{< /math >}}
+### Scenario 2: Dirichlet-Multinomial Distribution
 
-Use Taylor expansion at {{< math >}} $y_j \gg \alpha_j$ {{< /math >}}:
+A random vector {{< math >}}$(y_1, \ldots, y_K)${{< /math >}} follows a Dirichlet-Multinomial distribution with parameters {{< math >}}$n${{< /math >}} (total trials) and {{< math >}}$\alpha = (\alpha_1, \ldots, \alpha_K)${{< /math >}} if its PMF is:
 
 {{< math >}}
-$$\log(y_j + \alpha_j) = \log y_j + \frac{\alpha_j}{y_j} - \frac{1}{2} \left( \frac{\alpha_j}{y_j} \right)^2 + \cdots \tag{14}$$
+$$P(y_1, \ldots, y_K) = \frac{n!}{y_1! \cdots y_K!} \cdot \frac{\Gamma(\sum \alpha_k)}{\Gamma(n + \sum \alpha_k)} \cdot \prod_{k=1}^K \frac{\Gamma(y_k + \alpha_k)}{\Gamma(\alpha_k)} \quad (10)$$
 {{< /math >}}
 
-Then multiply:
+In our context, if we set {{< math >}}$n = x_{\cdot}${{< /math >}} and {{< math >}}$\alpha_k = r_k${{< /math >}}, then the PMF becomes:
 
 {{< math >}}
-$$
-\begin{align}
-(y_j + \alpha_j) \log(y_j + \alpha_j) &= y_j \log y_j + \alpha_j \log y_j + \alpha_j \\
-&\quad + \underbrace{\alpha_j \cdot \frac{\alpha_j}{y_j} - \tfrac{1}{2} \cdot \frac{\alpha_j^2}{y_j}}_{\text{order } o(1)} + \cdots \tag{15}
-\end{align}
-$$
+$$P(y_1, \ldots, y_K) = \frac{x_{\cdot}!}{y_1! \cdots y_K!} \cdot \frac{\Gamma(\sum r_k)}{\Gamma(x_{\cdot} + \sum r_k)} \cdot \prod_{k=1}^K \frac{\Gamma(y_k + r_k)}{\Gamma(r_k)} \quad (11)$$
 {{< /math >}}
 
-So:
+Since {{< math >}}$r_{\cdot} = \sum r_k${{< /math >}} and {{< math >}}$y_{\cdot} = \sum y_k = x_{\cdot}${{< /math >}}:
 
 {{< math >}}
-$$\boxed{ (y_j + \alpha_j) \log(y_j + \alpha_j) = y_j \log y_j + \alpha_j \log y_j + \alpha_j + o(1) } \tag{16}$$
+$$P(y_1, \ldots, y_K) = \frac{x_{\cdot}!}{y_1! \cdots y_K!} \cdot \frac{\Gamma(r_{\cdot})}{\Gamma(x_{\cdot} + r_{\cdot})} \cdot \prod_{k=1}^K \frac{\Gamma(y_k + r_k)}{\Gamma(r_k)} \quad (12)$$
 {{< /math >}}
 
-## Step 7: Approximate the Full Log Likelihood
+## Conclusion
 
-Apply the expansion to the sum:
+Comparing the PMF derived from conditioning independent Negative Binomials on their sum (equation 9) with the PMF of the Dirichlet-Multinomial distribution (equation 12), we see they are identical when {{< math >}}$y_k = x_k${{< /math >}}.
+
+This proves that a Dirichlet-Multinomial distribution is equivalent to a collection of independent Negative Binomial distributions with the same scale parameter ({{< math >}}$p${{< /math >}}) conditioned on their sum.
+
+This equivalence is powerful because it provides two different generative processes for the same multivariate count data distribution, which can be useful for modeling and inference. It highlights that the overdispersion inherent in the Dirichlet-Multinomial can arise from underlying independent Negative Binomial processes, and the constraint of a fixed total sum then gives it the specific Dirichlet-Multinomial form.
+
+
+
+# Probability Intersection and Implication: P(A and B) = P(A) When A Implies B
+
+The numerator {{< math >}}$P(x_1, \ldots, x_K \text{ and } x_{\cdot})${{< /math >}} is equivalent to {{< math >}}$P(x_1, \ldots, x_K)${{< /math >}} because the event "{{< math >}}$(x_1, \ldots, x_K)${{< /math >}} occurs" implicitly **implies** that "their sum {{< math >}}$x_{\cdot} = \sum x_k${{< /math >}} occurs." In probability, if event A implies event B, then the probability of A and B occurring is simply the probability of A occurring, i.e., {{< math >}}$P(A \cap B) = P(A)${{< /math >}}.
+
+## Detailed Explanation
+
+Let's break this down:
+
+### 1. Define Event A
+Let {{< math >}}$A${{< /math >}} be the event that the specific values {{< math >}}$(x_1, \ldots, x_K)${{< /math >}} occur. This means {{< math >}}$X_1 = x_1, X_2 = x_2, \ldots, X_K = x_K${{< /math >}}. The probability of this event is:
 
 {{< math >}}
-$$\sum_j (y_j + \alpha_j) \log(y_j + \alpha_j) \approx \sum_j \left[ y_j \log y_j + \alpha_j \log y_j + \alpha_j \right] + o(1) \tag{17}$$
+$$P(A) = P(x_1, \ldots, x_K) \quad (1)$$
 {{< /math >}}
 
-Now plug into the full log PMF:
+### 2. Define Event B
+Let {{< math >}}$B${{< /math >}} be the event that their sum {{< math >}}$x_{\cdot}${{< /math >}} occurs. This means {{< math >}}$\sum_{k=1}^K X_k = x_{\cdot}${{< /math >}}. The probability of this event is:
 
 {{< math >}}
-$$
-\begin{align}
-\log P(\mathbf{y}) &\approx n \log n - \sum_j y_j \log y_j - (n + \alpha_0) \log(n + \alpha_0) \\
-&\quad + \sum_j \left[ y_j \log y_j + \alpha_j \log y_j + \alpha_j \right] \\
-&\quad - \sum_j \alpha_j \log \alpha_j + \log \Gamma(\alpha_0) \tag{18}
-\end{align}
-$$
+$$P(B) = P(x_{\cdot}) \quad (2)$$
 {{< /math >}}
 
-Cancel {{< math >}} $y_j \log y_j$ {{< /math >}} terms:
+### 3. The Implication
+If event {{< math >}}$A${{< /math >}} occurs (i.e., we have specific values for {{< math >}}$x_1, \ldots, x_K${{< /math >}}), then it automatically follows that their sum {{< math >}}$\sum_{k=1}^K x_k${{< /math >}} must equal some value, which we've defined as {{< math >}}$x_{\cdot}${{< /math >}}. Therefore, event {{< math >}}$A${{< /math >}} (the specific values) **implies** event {{< math >}}$B${{< /math >}} (the specific sum). In set notation, the set of outcomes corresponding to event {{< math >}}$A${{< /math >}} is a subset of the set of outcomes corresponding to event {{< math >}}$B${{< /math >}} (i.e., {{< math >}}$A \subseteq B${{< /math >}}).
+
+This implication can be written as:
 
 {{< math >}}
-$$
-\begin{align}
-\log P(\mathbf{y}) &\approx - (n + \alpha_0) \log(n + \alpha_0) + n \log n + \sum_j \alpha_j \log y_j \\
-&\quad + \sum_j \alpha_j - \sum_j \alpha_j \log \alpha_j + \log \Gamma(\alpha_0) + o(1) \tag{19}
-\end{align}
-$$
+$$A \Rightarrow B \quad (3)$$
 {{< /math >}}
 
-## Final Log-PMF Approximation
+### 4. Probability of Intersection
+The probability {{< math >}}$P(A \text{ and } B)${{< /math >}}, or {{< math >}}$P(A \cap B)${{< /math >}}, represents the probability that both events {{< math >}}$A${{< /math >}} and {{< math >}}$B${{< /math >}} occur. Since {{< math >}}$A${{< /math >}} implies {{< math >}}$B${{< /math >}}, whenever {{< math >}}$A${{< /math >}} occurs, {{< math >}}$B${{< /math >}} must also occur. Thus, the outcomes where {{< math >}}$A${{< /math >}} and {{< math >}}$B${{< /math >}} both occur are exactly the outcomes where {{< math >}}$A${{< /math >}} occurs. Therefore:
 
 {{< math >}}
-$$\log P(\mathbf{y}) \approx \sum_j \left[ \alpha_j \log y_j \right] + \text{constant} \tag{20}$$
+$$P(A \cap B) = P(A) \quad (4)$$
 {{< /math >}}
 
-But this form suggests a connection to the **log-pmf of NB**. Let's formalize that connection in the next steps.
+## Applying This to Our Specific Case
+
+{{< math >}}$P(x_1, \ldots, x_K \text{ and } x_{\cdot})${{< /math >}} means "the vector {{< math >}}$(X_1, \ldots, X_K)${{< /math >}} takes on the values {{< math >}}$(x_1, \ldots, x_K)${{< /math >}} **AND** the sum of these values is {{< math >}}$x_{\cdot}${{< /math >}}."
+
+Since it's necessarily true that if {{< math >}}$(X_1, \ldots, X_K)${{< /math >}} takes on values {{< math >}}$(x_1, \ldots, x_K)${{< /math >}}, then their sum is {{< math >}}$\sum x_k = x_{\cdot}${{< /math >}}, the second part of the "AND" condition provides no additional restriction or information. It's redundant.
+
+Hence:
+
+{{< math >}}
+$$P(x_1, \ldots, x_K \text{ and } x_{\cdot}) = P(x_1, \ldots, x_K) \quad (5)$$
+{{< /math >}}
+
+## Mathematical Formulation
+
+More formally, we can express this relationship as:
+
+{{< math >}}
+$$P\left(\bigcap_{k=1}^K \{X_k = x_k\} \cap \left\{\sum_{k=1}^K X_k = x_{\cdot}\right\}\right) = P\left(\bigcap_{k=1}^K \{X_k = x_k\}\right) \quad (6)$$
+{{< /math >}}
+
+This equality holds because:
+
+{{< math >}}
+$$\bigcap_{k=1}^K \{X_k = x_k\} \subseteq \left\{\sum_{k=1}^K X_k = x_{\cdot}\right\} \quad (7)$$
+{{< /math >}}
+
+whenever {{< math >}}$x_{\cdot} = \sum_{k=1}^K x_k${{< /math >}}.
+
+## Conclusion
+
+This fundamental principle of probability theory—that {{< math >}}$P(A \cap B) = P(A)${{< /math >}} when {{< math >}}$A \Rightarrow B${{< /math >}}—is what allows us to simplify the numerator in the conditional probability calculation, making the derivation of the Dirichlet-Multinomial equivalence proof both elegant and mathematically rigorous.
